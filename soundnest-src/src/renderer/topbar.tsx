@@ -2,7 +2,7 @@ function TopBar() {
   return (
     <div id="titlebar">
       <div id="searchBar">
-    <input type="text" id='searchInput' placeholder='Search' />
+    <input type="text" id='searchInput'/>
   </div>
 </div>);
 }
