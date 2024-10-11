@@ -13,7 +13,7 @@ export default function Katalog() {
           <SideBar />
         </div>
         <div className='main'>
-          <h1>SIEMA FAJNY KATALOG BOSKO</h1>
+          <h1>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h1>
         </div>
       </div>
       <div className='bottombar'>

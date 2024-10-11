@@ -2,7 +2,8 @@ function TopBar() {
   return (
     <div className="topBarContent">
         <input type="text" className='searchInput' />
-    </div>);
+    </div>
+  );
 }
 
 export default TopBar;
