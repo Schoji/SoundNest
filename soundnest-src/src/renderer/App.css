@@ -26,11 +26,16 @@ body {
 .topbar {
   -webkit-app-region: drag;
   height: 60px;
-  background-color: var(--dark-window);
+  display: flex;
+}
+
+.topBarContent {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .content {
   margin-top: -10px;
   display: flex;
@@ -67,10 +72,14 @@ body {
   height: 100px;
   font-size: 30px;
   border: none;
+  transition: border-color 150ms linear;
+  transition: background-color 150ms linear;
 }
 .sideobject:hover {
   background-color: var(--dark-button);
   border-radius: 10px;
+  transition: border-color 150ms linear;
+  transition: background-color 150ms linear;
   }
 .main {
   margin: 10px;
@@ -125,33 +134,35 @@ a:hover {
   -webkit-app-region: no-drag;
 }
 
-#searchInput {
-  align-items: center;
-  background-color: #222222;
-  -webkit-transition: background-color 250ms linear;
-  transition: background-color 250ms linear;
-
-  border-width: 0px;
-  border-radius: 18px;
-
-  width: 100%;
+.searchInput {
+  -webkit-app-region: no-drag;
+  padding-left: 10px;
   height: 40px;
-
-  padding-left: 7px;
-
+  width: 30%;
+  background-color: #202020;
   color: #ffffff;
+  border-width: 0px;
+  border-radius: 22px;
+  transition: background-color 150ms linear;
 }
 
-#searchInput:focus {
-  border: 2px solid #3e3e3e;
-  background-color: #2f2f2f;
-  -webkit-transition: background-color 250ms linear;
-  transition: background-color 250ms linear;
+.searchInput:focus {
   outline: none;
+  background-color: #292929;
+  border-width: 2px;
+  border-color: #aaaaaa;
+  border-style: solid;
+  transition: border-color 150ms linear;
+  transition: background-color 150ms linear;
 }
 
-#searchInput:hover {
-  background-color: #2f2f2f;
-  -webkit-transition: background-color 250ms linear;
-  transition: background-color 250ms linear;
+.searchInput:hover {
+  background-color: #292929;
+  transition: background-color 150ms linear;
+}
+
+.link1 {
+  display: flex;
+  width: 100%;
+  height: auto;
 }

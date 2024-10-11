@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
+import './App.css';
 
 export let CurrentWindow = 0;
 
@@ -19,27 +21,21 @@ export default function SideBar() {
   }
 
   return (
-    <div className='sidebuttons'>
-      <div className='sideobject'>
-          <div onClick={jedynka}>
-            <FontAwesomeIcon icon={faCoffee} />
-          </div>
-          <div>
-            <button onClick={jedynka}>
-           lol </button>
-          </div>
+    <div className="sidebuttons">
+      <div className="sideobject">
+        <Link to="/main" className="link1">
+              <FontAwesomeIcon icon={faCoffee} />
+              <p>dupa</p>
+          </Link>
       </div>
       <div className="sideobject">
-      <div>
-      <button onClick={dwojka}>
-           lol </button>
+        <Link to="/" className="link1">
+        <div>
           <FontAwesomeIcon icon={faCoffee} />
           </div>
-          <div>
-            <p>XD</p>
-          </div>
+          </Link>
       </div>
-      <div className='sideobject'>
+      <div className="sideobject">
           <div>
             <FontAwesomeIcon icon={faCoffee} />
           </div>

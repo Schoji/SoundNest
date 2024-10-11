@@ -22,7 +22,7 @@ export function AppBody() {
           <SideBar />
         </div>
         <div className='main'>
-          <Link to="/main">XD</Link>
+
 
         </div>
       </div>

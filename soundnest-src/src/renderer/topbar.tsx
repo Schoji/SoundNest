@@ -1,10 +1,8 @@
 function TopBar() {
   return (
-    <div id="titlebar">
-      <div id="searchBar">
-    <input type="text" id='searchInput'/>
-  </div>
-</div>);
+    <div className="topBarContent">
+        <input type="text" className='searchInput' />
+    </div>);
 }
 
 export default TopBar;

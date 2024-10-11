@@ -1,9 +1,6 @@
-import { NavLink, Outlet, Link } from 'react-router-dom';
-import { AppBody } from './App';
-import { CurrentWindow } from "./sidebar";
-import React, { useState, useEffect} from "react";
 import TopBar from './topbar';
 import SideBar, { CurrentWindow } from "./sidebar";
+import './App.css';
 
 export default function Main() {
   return (
@@ -15,8 +12,8 @@ export default function Main() {
         <div className='sidebar'>
           <SideBar />
         </div>
-        <div className='/main'>
-          <Link to="main">XD</Link>
+        <div className='main'>
+          
         </div>
       </div>
       <div className='bottombar'>
