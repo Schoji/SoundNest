@@ -1,46 +1,17 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'react';
+import { MemoryRouter as Router, Routes, Route, NavLink, Outlet, Link } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import Main from './main';
 import TopBar from './topbar';
+import SideBar, { CurrentWindow } from "./sidebar";
 
-function Content() {
+export function Content() {
   return <h1>Siema</h1>;
 }
 
-function SideBar() {
-  return (
-    <div className='sidebuttons'>
-      <div className='sideobject'>
-          <div>
-            <FontAwesomeIcon icon={faCoffee} />
-          </div>
-          <div>
-            <p>XD</p>
-          </div>
-      </div>
-      <div className='sideobject'>
-          <div>
-            <FontAwesomeIcon icon={faCoffee} />
-          </div>
-          <div>
-            <p>XD</p>
-          </div>
-      </div>
-      <div className='sideobject'>
-          <div>
-            <FontAwesomeIcon icon={faCoffee} />
-          </div>
-          <div>
-            <p>XD</p>
-          </div>
-      </div>
-    </div>
-  );
-}
-
-function AppBody() {
+export function AppBody() {
   return (
     <div className='all'>
       <div className='topbar'>
@@ -51,7 +22,8 @@ function AppBody() {
           <SideBar />
         </div>
         <div className='main'>
-          <Content />
+          <Link to="/main">XD</Link>
+
         </div>
       </div>
       <div className='bottombar'>
@@ -66,6 +38,8 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AppBody />} />
+        <Route path="main" element={<Main />} />
+
       </Routes>
     </Router>
   );
