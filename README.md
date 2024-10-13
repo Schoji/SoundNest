@@ -1,4 +1,4 @@
-##🎵 Recording Studio Management Application 🎵
+## 🎵 Recording Studio Management Application 🎵
 
 This project is a Recording Studio Management Application designed to help manage music albums, creators, and tracks. The platform allows users to register, log in, and perform actions based on their roles, such as managing albums and selling music. The app features a clean, intuitive, and multi-window interface that supports various user functions, from browsing music to administrative controls. Below is a high-level overview of the app's main functionalities and goals.
 
@@ -21,14 +21,14 @@ This project is a Recording Studio Management Application designed to help manag
 * File Transfer: Transfer purchased music between users.
 * Demo Mode: Available with limited options, with the ability to unlock full functionality via a license key.
 
-##🚀 Technologies Used
+## 🚀 Technologies Used
 The application is built using the following technologies:
 
 * Electron: For building the cross-platform desktop application.
 * React: For creating a dynamic and user-friendly UI.
 * Flask (REST API): Powers the backend, handling authentication, database operations, and data exchanges.
 
-##🛠️ Installation
+## 🛠️ Installation
 Prerequisites
 Ensure you have the following installed:
 
