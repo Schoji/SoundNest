@@ -5,7 +5,6 @@ from transaction import *
 from flask import request
 import werkzeug
 from PIL import Image
-
 #instruction
 #1. Make a new file
 #2. Make a model

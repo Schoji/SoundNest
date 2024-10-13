@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
-
+import flask
 #instruction
 #1. Make a new file
 #2. Make a model
@@ -58,7 +58,7 @@ class Users(Resource):
         db.session.add(user)
         db.session.commit()
         users = UserModel.query.all()
-        return users, 201
+        return users
 
 class User(Resource):
     @marshal_with(userFields)
