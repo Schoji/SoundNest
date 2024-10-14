@@ -42,13 +42,6 @@ export default function Main() {
               <p>{value.artist}</p>
             </div>
           )}
-        {data.map((value, key) =>
-            <div className='product'>
-              <p>{value.album}</p>
-              <p>{value.desc}</p>
-              <p>{value.artist}</p>
-            </div>
-          )}
         </div>
       </div>
       <div className='bottombar'>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Routes, Route, NavLink, Outlet, Link } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import './TopBar.css';
 import Main from './main';
 import TopBar from './topbar';
 import SideBar from "./sidebar";
