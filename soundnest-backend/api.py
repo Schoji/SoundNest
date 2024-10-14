@@ -98,6 +98,7 @@ api.add_resource(Products, "/api/products/")
 api.add_resource(Product, "/api/product/<int:id>")
 api.add_resource(Transactions, "/api/transactions/")
 api.add_resource(Transaction, "/api/transaction/<int:id>")
+# api.add_resource(Transaction, "/api/transaction/<int:id>/<int:id_user>") // MOŻNA COŚ TAKIEGO ZROBIĆ!!!!!!!!
 
 @app.route("/")
 def home():

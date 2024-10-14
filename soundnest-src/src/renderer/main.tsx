@@ -12,7 +12,7 @@ export default function Main() {
   const [data, setData] = useState([]);
   const Fetch = () => {
 
-    fetch(backend_address + "/api/users/")
+    fetch(backend_address + "/api/products/")
     .then(response => response.json())
     .then((d) => setData(d))
     .catch((error) => {
@@ -35,8 +35,20 @@ export default function Main() {
           <SideBar />
         </div>
         <div className='main'>
-          {backend_integration ? JSON.stringify(data, null, 2) : null}
-          <h1>AHAHAH</h1>
+        {data.map((value, key) =>
+            <div className='product'>
+              <p>{value.album}</p>
+              <p>{value.desc}</p>
+              <p>{value.artist}</p>
+            </div>
+          )}
+        {data.map((value, key) =>
+            <div className='product'>
+              <p>{value.album}</p>
+              <p>{value.desc}</p>
+              <p>{value.artist}</p>
+            </div>
+          )}
         </div>
       </div>
       <div className='bottombar'>
