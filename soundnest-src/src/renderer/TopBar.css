@@ -15,8 +15,9 @@
 .iconDiv {
   flex: 0 1 200px;
   margin-left: 10px;
+  display: flex;
+  vertical-align: center;
 }
-
 .searchInputDiv {
   flex: 0 1 400px;
 }

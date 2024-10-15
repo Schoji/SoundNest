@@ -6,6 +6,8 @@
   --dark-bg: #191414;
   --dark-window: #000000;
   --dark-button: #1f1f1f;
+  --dark-darker: #2a2a2a;
+  --accent-gradient: linear-gradient(140deg, rgb(33, 33, 255) 0%, rgb(26, 26, 252) 100%);
 }
 body {
   position: relative;
@@ -73,13 +75,14 @@ body {
   font-size: 24px;
   border: none;
   margin-top: 5px;
-  transition: border-color 150ms linear;
+  transition: opacity 150ms linear;
   transition: background-color 150ms linear;
 }
 .sideobject:hover {
+  opacity: 0.8;
   background-color: var(--dark-button);
   border-radius: 10px;
-  transition: border-color 150ms linear;
+  transition: opacity 150ms linear;
   transition: background-color 150ms linear;
   }
 .main {
@@ -92,7 +95,7 @@ body {
   height: 600px;
   border-radius: 10px;
   flex-wrap: wrap;
-  justify-content:space-between;
+  overflow: auto;
 }
 
 .bottombar {
@@ -124,21 +127,6 @@ a {
   transition: background-color 150ms linear;
 }
 
-.searchInput:focus {
-  outline: none;
-  background-color: #292929;
-  border-width: 2px;
-  border-color: #aaaaaa;
-  border-style: solid;
-  transition: border-color 150ms linear;
-  transition: background-color 150ms linear;
-}
-
-.searchInput:hover {
-  background-color: #292929;
-  transition: background-color 150ms linear;
-}
-
 .link1 {
   margin: 0;
   flex-direction: row;
@@ -159,7 +147,7 @@ a {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 1, 255, 1);
-background-image: linear-gradient(140deg, rgba(0, 1, 255, 1) 0%, rgba(73, 79, 228, 1) 100%);
+  background-image: var(--accent-gradient);
 }
 
 
@@ -176,4 +164,53 @@ background-image: linear-gradient(140deg, rgba(0, 1, 255, 1) 0%, rgba(73, 79, 22
   flex: 0 1 300px;
   margin: 10px;
   height: auto;
+  display: flex;
+  vertical-align: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  transition: opacity 150ms linear;
+}
+.product:hover {
+  transition: opacity 150ms linear;
+  opacity:0.8;
+  cursor: pointer;
+}
+.product p{
+  flex: 1;
+}
+.product img {
+  border-radius: 20px 20px 0 0;
+}
+.product .desc {
+  font-size: small;
+}
+.product button {
+  border-radius: 0 0 20px 20px;
+  font-size: large;
+  height: 50px;
+  color: white;
+  background-image: var(--accent-gradient);
+  border-style: none;
+  cursor: pointer;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--dark-button);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-darker);
 }

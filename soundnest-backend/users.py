@@ -89,3 +89,13 @@ class User(Resource):
         db.session.commit()
         users = UserModel.query.all()
         return users, 204
+
+class UserCall(Resource):
+    @marshal_with(userFields)
+
+    def get(self, username, password):
+        user = UserModel.query.filter_by(username=username, password=password).first()
+        if not user:
+            print("user not found")
+            return user, 404
+        return user

@@ -2,11 +2,10 @@ import TopBar from './topbar';
 import SideBar from "./sidebar";
 import React, { useState, useEffect } from "react";
 import './App.css';
+import default_album from "../../assets/album.png"
 const backend_address = "http://localhost:5000"
 
 const backend_integration = true
-
-
 
 export default function Main() {
   const [data, setData] = useState([]);
@@ -37,9 +36,11 @@ export default function Main() {
         <div className='main'>
         {data.map((value, key) =>
             <div className='product'>
-              <p>{value.album}</p>
-              <p>{value.desc}</p>
+              {value.item_path == "/" ? <img src={default_album}></img> : null}
+              <h1>{value.album}</h1>
               <p>{value.artist}</p>
+              <p className="product desc">{value.desc}</p>
+              <button>Learn more</button>
             </div>
           )}
         </div>

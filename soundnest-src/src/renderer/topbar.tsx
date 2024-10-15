@@ -1,7 +1,10 @@
+import logo from "../../assets/logo-title.png"
+
 function TopBar() {
   return (
     <div className="topBarContent">
       <div className="iconDiv">
+        {/* {<img src={logo}></img>} */}
         <p>SoundNest</p>
       </div>
       <div className="searchInputDiv">
@@ -9,7 +12,7 @@ function TopBar() {
       </div>
       <div className="profileDiv">
         <div className="walletValueDiv">
-          <p>6,9 zł</p>
+          {sessionStorage.getItem("id") === null ? <p>6,9$</p> : <p>{sessionStorage.getItem("credits")}$</p>  }
         </div>
         <div className="profileButtonDiv">
           <input type="button" className="profileButton" />
