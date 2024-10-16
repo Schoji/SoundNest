@@ -2,7 +2,7 @@ from users import *
 from studios import *
 from product import *
 from transaction import *
-from flask import request
+from flask import request, jsonify
 import werkzeug
 from PIL import Image
 #instruction
@@ -87,6 +87,28 @@ class UploadAvatar(Resource):
      else:
         print("User not found")
 
+   
+class ProductByUser(Resource):
+   def get(self, id_user):
+      transactions = TransactionModel.query.filter_by(id_user = id_user).all()
+      products = []
+      for item in transactions:
+         product = ProductModel.query.filter_by(id = item.id_product).first()
+         product_dict = {
+            "id" : product.id,
+            "id_studio" : product.id_studio,
+            "album" : product.album,
+            "artist" : product.artist,
+            "desc" : product.desc,
+            "price" : product.price,
+            "amount" : product.amount,
+            "item_path" : product.item_path
+         }
+         products.append(product_dict)
+         # print(products)
+      print(products)
+      return products
+
 api.add_resource(UploadAvatar, "/api/upload_avatar")
 api.add_resource(UploadStudio, "/api/upload_studio")
 api.add_resource(UploadProduct, "/api/upload_product")
@@ -99,6 +121,7 @@ api.add_resource(Products, "/api/products/")
 api.add_resource(Product, "/api/product/<int:id>")
 api.add_resource(Transactions, "/api/transactions/")
 api.add_resource(Transaction, "/api/transaction/<int:id>")
+api.add_resource(ProductByUser, "/api/userproducts/<int:id_user>/")
 # api.add_resource(Transaction, "/api/transaction/<int:id>/<int:id_user>") // MOŻNA COŚ TAKIEGO ZROBIĆ!!!!!!!!
 
 @app.route("/")

@@ -21,7 +21,7 @@ class TransactionModel(db.Model):
     date = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def __repr__(self):
-        return f"yes"
+        return f"{self.id_product}"
 
 transactionFields = {
     "id":fields.Integer,

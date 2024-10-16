@@ -51,7 +51,7 @@ Ensure you have the following installed:
 
 4. Run the Flask API:
 `py create_db.py`
-`py main.py`
+`py api.py`
 
 5. Start the Electron app:
 `cd ..`

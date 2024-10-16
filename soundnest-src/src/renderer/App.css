@@ -21,21 +21,12 @@ body {
   justify-content: center;
   align-items: center; */
 }
+a {
+  text-decoration: none;
+}
 .all {
   margin: 0;
   padding: 0;
-}
-.topbar {
-  -webkit-app-region: drag;
-  height: 60px;
-  display: flex;
-}
-
-.topBarContent {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .content {
@@ -102,29 +93,6 @@ body {
   border-radius: 10px;
   margin: 10px;
   background-color: var(--dark-window);
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  height: fit-content;
-  width: fit-content;
-  margin: 10px;
-}
-
-.searchInput {
-  -webkit-app-region: no-drag;
-  padding-left: 10px;
-  height: 40px;
-  width: 30%;
-  background-color: #202020;
-  color: #ffffff;
-  border-width: 0px;
-  border-radius: 22px;
-  transition: background-color 150ms linear;
 }
 
 .link1 {
@@ -213,4 +181,23 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--dark-darker);
+}
+.library {
+  width: 100%;
+}
+.header {
+  text-align: center;
+  margin: 10px;
+  width: 100%;
+  height: auto;
+}
+.albums {
+  display: flex;
+  height: auto;
+  justify-content: center;
+  vertical-align: top;
+  gap: 10px;
+}
+.album-singular {
+  border-radius: 10px;
 }

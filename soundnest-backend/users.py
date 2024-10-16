@@ -1,6 +1,5 @@
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
-import flask
 #instruction
 #1. Make a new file
 #2. Make a model
@@ -99,3 +98,14 @@ class UserCall(Resource):
             print("user not found")
             return user, 404
         return user
+    
+class ProductByUser(Resource):
+    pass
+#     @marshal_with(userFields)
+
+#     # def get(self, id):
+#     #     transaction = TransactionModel.query.filter_by(id_user = id).first()
+#     #     if not user:
+#     #         print("user not found")
+#     #         return user, 404
+#     #     return user

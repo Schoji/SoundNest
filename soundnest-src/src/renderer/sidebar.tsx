@@ -7,7 +7,7 @@ export default function SideBar() {
   return (
     <div className="sidebuttons">
       <div className="sideobject">
-        <Link to="/" className="link1">
+        <Link to="/library" className="link1">
           <div className='linkAreaLeft'>
             <FontAwesomeIcon icon={faCoffee} />
           </div>

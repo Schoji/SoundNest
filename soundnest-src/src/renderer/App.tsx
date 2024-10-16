@@ -8,6 +8,7 @@ import Main from './main';
 import TopBar from './topbar';
 import SideBar from "./sidebar";
 import Katalog from './katalog';
+import Library from './library'
 
 export function Content() {
   return <h1>Siema</h1>;
@@ -40,7 +41,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AppBody />} />
+        <Route path="/" element={<AppBody/>} />
+        <Route path="library" element={<Library />} />
         <Route path="main" element={<Main />} />
         <Route path="katalog" element={<Katalog />} />
       </Routes>

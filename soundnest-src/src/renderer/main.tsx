@@ -5,8 +5,6 @@ import './App.css';
 import default_album from "../../assets/album.png"
 const backend_address = "http://localhost:5000"
 
-const backend_integration = true
-
 export default function Main() {
   const [data, setData] = useState([]);
   const Fetch = () => {
