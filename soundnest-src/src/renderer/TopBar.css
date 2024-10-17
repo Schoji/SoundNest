@@ -13,7 +13,7 @@
 }
 
 .iconDiv {
-  flex: 0 1 200px;
+  flex: 0 1 160px;
   display: flex;
   vertical-align: center;
   align-items: center;
@@ -24,6 +24,7 @@
 
 .searchInput {
   -webkit-app-region: no-drag;
+  box-sizing: border-box;
   padding-left: 10px;
   height: 40px;
   width: 100%;
@@ -79,7 +80,7 @@
   height: 44px;
   width: 44px;
   background-color: #292929;
-  border-width: 5px;
+  border-width: 3px;
   transition: background-color 150ms linear;
 }
 
@@ -87,7 +88,16 @@
   background-color: #000000;
 }
 
-@media only screen and (max-width: 780px) {
+@media only screen and (max-width: 950px) {
+  .topBarContent {
+    gap: 0px;
+  }
+  .iconDiv > p {
+    display: none;
+  }
+  .iconDiv {
+    flex: 0 1 50px;
+  }
   .walletValueDiv {
     display: none;
   }
