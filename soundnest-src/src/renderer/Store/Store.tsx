@@ -1,11 +1,12 @@
-import TopBar from './topbar';
-import SideBar from "./sidebar";
+import TopBar from '.././TopBar/TopBar';
+import SideBar from ".././SideBar/SideBar";
 import React, { useState, useEffect } from "react";
-import './App.css';
-import default_album from "../../assets/album.png"
+import '.././App.css';
+import default_album from "../../../assets/album.png"
+import BottomBar from '../BottomBar/BottomBar';
 const backend_address = "http://localhost:5000"
 
-export default function Main() {
+export default function Katalog() {
   const [data, setData] = useState([]);
   const Fetch = () => {
 
@@ -24,13 +25,9 @@ export default function Main() {
 
   return (
     <div className='all'>
-      <div className='topbar'>
-        <TopBar />
-      </div>
+      <TopBar />
       <div className='content'>
-        <div className='sidebar'>
-          <SideBar />
-        </div>
+        <SideBar/>
         <div className='main'>
         {data.map((value, key) =>
             <div className='product'>
@@ -43,9 +40,7 @@ export default function Main() {
           )}
         </div>
       </div>
-      <div className='bottombar'>
-          <h1>123</h1>
-      </div>
+      <BottomBar/>
     </div>
   );
 }

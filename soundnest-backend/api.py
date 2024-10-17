@@ -105,8 +105,6 @@ class ProductByUser(Resource):
             "item_path" : product.item_path
          }
          products.append(product_dict)
-         # print(products)
-      print(products)
       return products
 
 api.add_resource(UploadAvatar, "/api/upload_avatar")

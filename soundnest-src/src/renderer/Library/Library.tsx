@@ -1,18 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { MemoryRouter as Router, Routes, Route, NavLink, Outlet, Link } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
-import './TopBar.css';
-import Main from './main';
-import TopBar from './topbar';
-import SideBar from "./sidebar";
-import Katalog from './katalog';
+import '.././App.css';
+import TopBar from '../TopBar/TopBar';
+import SideBar from "../SideBar/SideBar";
+import BottomBar from '../BottomBar/BottomBar';
+import default_album from "../../../assets/album.png"
+
+import "./Library.css"
 const backend_address = "http://localhost:5000"
-import default_album from "../../assets/album.png"
-export function Content() {
-  return <h1>Siema</h1>;
-}
 
 export default function Library() {
   const [data, setData] = useState([]);
@@ -23,21 +18,16 @@ export default function Library() {
     .catch((error) => {
       console.log(error)
     })
-    console.log(data)
+    // console.log(data)
   }
   useEffect(() => {
-    console.log(data)
     Fetch();
   }, []);
   return (
     <div className='all'>
-      <div className='topbar'>
-        <TopBar />
-      </div>
+      <TopBar />
       <div className='content'>
-        <div className='sidebar'>
-          <SideBar />
-        </div>
+      <SideBar/>
         <div className='main'>
           <div className="library">
             <div className="header">
@@ -58,9 +48,7 @@ export default function Library() {
           </div>
         </div>
       </div>
-      <div className='bottombar'>
-        <Content />
-      </div>
+      <BottomBar/>
     </div>
   );
 }

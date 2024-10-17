@@ -1,49 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import { MemoryRouter as Router, Routes, Route, NavLink, Outlet, Link } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import './TopBar.css';
-import Main from './main';
-import TopBar from './topbar';
-import SideBar from "./sidebar";
-import Katalog from './katalog';
-import Library from './library'
-
-export function Content() {
-  return <h1>Siema</h1>;
-}
-
-export function AppBody() {
-  return (
-    <div className='all'>
-      <div className='topbar'>
-        <TopBar />
-      </div>
-      <div className='content'>
-        <div className='sidebar'>
-          <SideBar />
-        </div>
-        <div className='main'>
-
-
-        </div>
-      </div>
-      <div className='bottombar'>
-        <Content />
-      </div>
-    </div>
-  );
-}
+import './TopBar/TopBar.css';
+import Studio from './Studio/Studio';
+import Katalog from './Store/Store';
+import Library from './Library/Library';
+import Login from './Login/Login'
 
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AppBody/>} />
+        <Route path="/" element={<Login/>} />
         <Route path="library" element={<Library />} />
-        <Route path="main" element={<Main />} />
+        <Route path="studio" element={<Studio />} />
         <Route path="katalog" element={<Katalog />} />
       </Routes>
     </Router>

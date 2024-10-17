@@ -42,6 +42,7 @@ user_args.add_argument("surname", type=str, required=True, help="Surname cannot 
 user_args.add_argument("username", type=str, required=True, help="Username cannot be blank")
 user_args.add_argument("email", type=str, required=True, help="Email cannot be blank")
 user_args.add_argument("password", type=str, required=True, help="Password cannot be blank")
+user_args.add_argument("credits", type=float, help="Password cannot be blank")
 user_args.add_argument("avatar_dir", type=str, required=False, help="Dir")
 
 class Users(Resource):

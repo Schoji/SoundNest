@@ -1,0 +1,53 @@
+.library {
+  width: 100%;
+}
+.header {
+  text-align: center;
+  margin: 10px;
+  width: 100%;
+  height: auto;
+}
+.albums {
+  display: flex;
+  height: auto;
+  justify-content: center;
+  vertical-align: top;
+  gap: 10px;
+}
+.album-singular {
+  border-radius: 10px;
+}
+.product {
+  background-color: var(--dark-button);
+  border-radius: 20px;
+  padding: 5px;
+  display: flex;
+  vertical-align: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  transition: opacity 150ms linear;
+}
+.product:hover {
+  transition: opacity 150ms linear;
+  opacity:0.8;
+  cursor: pointer;
+}
+.product p{
+  flex: 1;
+}
+.product img {
+  border-radius: 20px 20px 0 0;
+}
+.product .desc {
+  font-size: small;
+}
+.product button {
+  border-radius: 0 0 20px 20px;
+  font-size: large;
+  height: 50px;
+  color: white;
+  background-image: var(--accent-gradient);
+  border-style: none;
+  cursor: pointer;
+}
