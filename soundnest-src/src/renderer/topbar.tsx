@@ -4,7 +4,7 @@ function TopBar() {
   return (
     <div className="topBarContent">
       <div className="iconDiv">
-        {/* {<img src={logo}></img>} */}
+        <img src={logo}></img>
         <p>SoundNest</p>
       </div>
       <div className="searchInputDiv">

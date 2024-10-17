@@ -40,7 +40,7 @@ products = {
 }
 
 transactions = {
-  "id_user": [1, 2, 3, 4, 5, 2],
+  "id_user": [1, 2, 3, 4, 5, 1],
   "id_product": [1, 2, 3, 4, 5, 4],
   "amount": [2, 1, 3, 1, 4, 1],
 }
