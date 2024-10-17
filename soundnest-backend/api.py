@@ -12,7 +12,7 @@ from PIL import Image
 #4. Make args
 #5. Make singular class
 #6. Make plural class
-#7. Add resource
+#7. Add resources
 
 class UploadProduct(Resource):
    def post(self):
