@@ -14,9 +14,9 @@
 
 .iconDiv {
   flex: 0 1 200px;
-  margin-left: 10px;
   display: flex;
   vertical-align: center;
+  align-items: center;
 }
 .searchInputDiv {
   flex: 0 1 400px;
@@ -69,7 +69,7 @@
   height: 42px;
   width: 42px;
   background-color: #202020;
-  border: 6px solid #aaaaaa;
+  border: 5px solid #5a5a5a;
   border-radius: 22px;
   transition: background-color 150ms linear;
 }
@@ -78,7 +78,7 @@
   height: 44px;
   width: 44px;
   background-color: #292929;
-  border-width: 5px;
+  border-width: 3px;
   transition: background-color 150ms linear;
 }
 
@@ -86,7 +86,7 @@
   background-color: #000000;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 780px) {
   .walletValueDiv {
     display: none;
   }
