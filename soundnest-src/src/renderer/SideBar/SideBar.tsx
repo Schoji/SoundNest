@@ -3,7 +3,8 @@ import {
   faStore,
   faRecordVinyl,
   faMicrophoneLines,
-  faUser
+  faUser,
+  faGear
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import './SideBar.css';
@@ -49,6 +50,16 @@ export default function SideBar() {
             </div>
             <div className="linkAreaRight">
               <p>Login</p>
+            </div>
+          </Link>
+        </div>
+        <div className="sideobject">
+          <Link to="/settings" className="link1">
+            <div className="linkAreaLeft">
+              <FontAwesomeIcon icon={faGear} size="xl" />
+            </div>
+            <div className="linkAreaRight">
+              <p>Settings</p>
             </div>
           </Link>
         </div>

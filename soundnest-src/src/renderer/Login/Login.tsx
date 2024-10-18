@@ -35,6 +35,7 @@ export default function Login() {
             sessionStorage.setItem("email", data["email"])
             sessionStorage.setItem("prefered_theme", data["prefered_theme"])
             sessionStorage.setItem("credits", data["credits"])
+            sessionStorage.setItem("avatar_dir", data["avatar_dir"])
             navigate("library", {replace:true})//can replace with login-successful or something
           }
         })

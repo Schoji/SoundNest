@@ -6,6 +6,7 @@ import Studio from './Studio/Studio';
 import Katalog from './Store/Store';
 import Library from './Library/Library';
 import Login from './Login/Login'
+import Settings from './Settings/Settings';
 
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="library" element={<Library />} />
         <Route path="studio" element={<Studio />} />
         <Route path="katalog" element={<Katalog />} />
+        <Route path="settings" element={<Settings />} />
       </Routes>
     </Router>
   );

@@ -21,7 +21,7 @@ function TopBar() {
             )}
           </div>
           <div className="profileButtonDiv">
-            <input type="button" className="profileButton" />
+            {sessionStorage.getItem('id') === null ? <img src={logo} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
           </div>
         </div>
       </div>

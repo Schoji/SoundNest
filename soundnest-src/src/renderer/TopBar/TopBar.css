@@ -72,11 +72,12 @@
   width: 42px;
   background-color: #202020;
   border: 5px solid #5a5a5a;
-  border-radius: 22px;
+  border-radius: 50%;
   transition: background-color 150ms linear;
 }
 
 .profileButton:hover {
+  opacity: 0.8;
   height: 44px;
   width: 44px;
   background-color: #292929;

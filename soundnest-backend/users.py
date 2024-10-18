@@ -1,5 +1,7 @@
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
+import base64
+import os
 #instruction
 #1. Make a new file
 #2. Make a model
@@ -49,6 +51,12 @@ class Users(Resource):
     @marshal_with(userFields)
     def get(self):
         users = UserModel.query.all()
+        for user in users:
+            if os.path.exists(UPLOAD_FOLDER + "/avatars/" + str(user.id) + ".jpg"):
+                image_path = UPLOAD_FOLDER + "/avatars/" + str(user.id) + ".jpg"
+                with open(image_path, "rb") as image_file:
+                    data = base64.b64encode(image_file.read()).decode('ascii')
+                user.avatar_dir = data   
         return users
     
     @marshal_with(userFields)
@@ -63,10 +71,16 @@ class Users(Resource):
 class User(Resource):
     @marshal_with(userFields)
 
-    def get(self, id):
+
+    def get(self, id):  
         user = UserModel.query.filter_by(id=id).first()
         if not user:
-            abort(404, "User not found")
+            abort(404, "User not found")  
+        if os.path.exists(UPLOAD_FOLDER + "/avatars/" + str(user.id) + ".jpg"):
+            image_path = UPLOAD_FOLDER + "/avatars/" + str(user.id) + ".jpg"
+            with open(image_path, "rb") as image_file:
+                data = base64.b64encode(image_file.read()).decode('ascii')
+            user.avatar_dir = data      
         return user
     
     @marshal_with(userFields)
@@ -98,6 +112,11 @@ class UserCall(Resource):
         if not user:
             print("user not found")
             return user, 404
+        if os.path.exists(UPLOAD_FOLDER + "/avatars/" + str(user.id) + ".jpg"):
+            image_path = UPLOAD_FOLDER + "/avatars/" + str(user.id) + ".jpg"
+            with open(image_path, "rb") as image_file:
+                data = base64.b64encode(image_file.read()).decode('ascii')
+            user.avatar_dir = data
         return user
     
 class ProductByUser(Resource):

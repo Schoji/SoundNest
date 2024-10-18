@@ -1,6 +1,8 @@
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
 from studios import *
+import base64
+import os
 
 #instruction
 #1. Make a new file
@@ -46,8 +48,16 @@ product_args.add_argument("amount", type=int, required=True, help="Studio descri
 class Products(Resource):
     @marshal_with(productFields)
     def get(self):
-        Products = ProductModel.query.all()
-        return Products
+        products = ProductModel.query.all()
+        for product in products:
+            if not product:
+                abort(404, "Product not found")
+            if os.path.exists(UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"):
+                image_path = UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"
+                with open(image_path, "rb") as image_file:
+                    data = base64.b64encode(image_file.read()).decode('ascii')
+                product.item_path = data
+        return products
     
     @marshal_with(productFields)
     def post(self):
@@ -64,7 +74,12 @@ class Product(Resource):
     def get(self, id):
         product = ProductModel.query.filter_by(id=id).first()
         if not product:
-            abort(404, "User not found")
+                abort(404, "Product not found")
+        if os.path.exists(UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"):
+            image_path = UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"
+            with open(image_path, "rb") as image_file:
+                data = base64.b64encode(image_file.read()).decode('ascii')
+            product.item_path = data
         return product
     
     @marshal_with(productFields)

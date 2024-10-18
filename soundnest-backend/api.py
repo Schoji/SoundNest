@@ -94,6 +94,13 @@ class ProductByUser(Resource):
       products = []
       for item in transactions:
          product = ProductModel.query.filter_by(id = item.id_product).first()
+         if not product:
+                abort(404, "Product not found")
+         if os.path.exists(UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"):
+               image_path = UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"
+               with open(image_path, "rb") as image_file:
+                  data = base64.b64encode(image_file.read()).decode('ascii')
+               product.item_path = data
          product_dict = {
             "id" : product.id,
             "id_studio" : product.id_studio,

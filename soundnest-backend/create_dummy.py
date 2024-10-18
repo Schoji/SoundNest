@@ -9,7 +9,8 @@ users = {
   "email": ["johndoe@example.com", "janesmith@example.com", "mikebrown@example.com", "emilyjones@example.com", "davidclark@example.com"],
   "name": ["John", "Jane", "Mike", "Emily", "David"],
   "surname": ["Doe", "Smith", "Brown", "Jones", "Clark"],
-  "password": ["P@ssw0rd123", "S3cur3P@ss", "Br0wnM1k3!", "EmilyJ0nes#", "D@v1dC!ark"]
+  "password": ["P@ssw0rd123", "S3cur3P@ss", "Br0wnM1k3!", "EmilyJ0nes#", "D@v1dC!ark"],
+  "credits": [50.0, 20.0, 10.0, 0.0, 35.0]
 }
 
 studios = {
@@ -36,7 +37,7 @@ products = {
     "A deep, bass-heavy album perfect for ambient and chill sessions."
   ],
   "price": [19.99, 15.50, 22.00, 18.75, 20.99],
-  "amount": [50, 30, 75, 40, 60]
+  "amount": [50, 30, 75, 40, 60],
 }
 
 transactions = {
@@ -48,13 +49,14 @@ transactions = {
 with app.app_context():
     db.drop_all()
     db.create_all()
-    for i in range(len(users.items())):
+    for i in range(len(users[str(list(users.keys())[0])])):
         username = users["username"][i]
         email = users["email"][i]
         name = users["name"][i]
         surname = users["surname"][i]
         password = users["password"][i]
-        user = UserModel(username=username, email=email, name=name, surname=surname, password=password)
+        credits = users["credits"][i]
+        user = UserModel(username=username, email=email, name=name, surname=surname, password=password, credits=credits)
         db.session.add(user)
         db.session.commit()
 

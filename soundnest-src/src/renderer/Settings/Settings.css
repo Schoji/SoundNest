@@ -1,0 +1,40 @@
+@import url("../App.css");
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.settingsContent {
+  border-radius: 10px;
+  flex: 0 1 700px;
+  height: 100%;
+  background-color: var(--dark-darker);
+  display: grid;
+  row-gap: 5px;
+  column-gap: 5px;
+  grid-template-columns:  1fr
+}
+.avatar {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  /* background-color: var(--dark-darker); */
+  border-radius: 10px;
+  /* grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr; */
+}
+.avatarIMG {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+}
+.userdata {
+  display: flex;
+  justify-content: center;
+  /* background-color: var(--dark-darker); */
+  border-radius: 10px;
+}

@@ -37,7 +37,7 @@ export default function Library() {
             <div className="albums">
                 {data.map((value, key) =>
                 <div className='product'>
-                  {value.item_path == "/" ? <img src={default_album}></img> : null}
+                  {value.item_path == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.item_path}`} />}
                   <h1>{value.album}</h1>
                   <p>{value.artist}</p>
                   <p className="product desc">{value.desc}</p>
