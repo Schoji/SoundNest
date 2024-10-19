@@ -38,6 +38,12 @@ class Studios(Resource):
     @marshal_with(studioFields)
     def get(self):
         Studios = StudioModel.query.all()
+        for studio in Studios:
+            if os.path.exists(UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"):
+                image_path = UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"
+                with open(image_path, "rb") as image_file:
+                    data = base64.b64encode(image_file.read()).decode('ascii')
+                studio.studio_dir = data   
         return Studios
     
     @marshal_with(studioFields)
@@ -55,7 +61,13 @@ class Studio(Resource):
     def get(self, id):
         studio = StudioModel.query.filter_by(id=id).first()
         if not studio:
-            abort(404, "User not found")
+            print("user not found")
+            return studio, 404
+        if os.path.exists(UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"):
+            image_path = UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"
+            with open(image_path, "rb") as image_file:
+                data = base64.b64encode(image_file.read()).decode('ascii')
+            studio.studio_dir = data
         return studio
     
     @marshal_with(studioFields)

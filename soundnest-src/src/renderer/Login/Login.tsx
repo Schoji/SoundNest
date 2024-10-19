@@ -4,8 +4,9 @@ import TopBar from '.././TopBar/TopBar';
 import SideBar from ".././SideBar/SideBar";
 import BottomBar from '.././BottomBar/BottomBar';
 import { useNavigate } from 'react-router-dom';
-const backend_address = "http://localhost:5000"
-
+import Button from "@mui/material/Button";
+const backend_address = "http://localhost:5000";
+import "./Login.css"
 
 
 export default function Login() {
@@ -53,7 +54,7 @@ export default function Login() {
       <div className='content'>
         <SideBar />
         <div className='main'>
-          <div>
+          <div className='login'>
             <h1>Login</h1>
             <form onSubmit={SessionStorage} >
               <input name='username' placeholder="username" defaultValue="johndoe123" />
@@ -63,9 +64,7 @@ export default function Login() {
           </div>
           <div>
             <h1>Logout</h1>
-            <form onSubmit={Logout} >
-              <input type="submit" value="logout" />
-            </form>
+            <Button variant="contained" onClick={Logout}>Logout</Button>
           </div>
         </div>
       </div>

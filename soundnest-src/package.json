@@ -102,15 +102,21 @@
   },
   "dependencies": {
     "@electron/notarize": "^2.3.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource/roboto": "^5.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@mui/material": "^6.1.4",
+    "@mui/styled-engine-sc": "^6.1.4",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-updater": "^6.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
     "@electron/rebuild": "^3.3.0",
