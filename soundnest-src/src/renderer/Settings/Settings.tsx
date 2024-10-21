@@ -3,10 +3,40 @@ import SideBar from ".././SideBar/SideBar";
 import React, { useState, useEffect } from "react";
 import '.././App.css';
 import './Settings.css'
-import default_album from "../../../assets/album.png"
 import BottomBar from '../BottomBar/BottomBar';
-import { session } from 'electron';
 const backend_address = "http://localhost:5000"
+import Toggle from "react-toggle";
+
+export const Theme = () => {
+  var dark;
+  if (sessionStorage.getItem("theme") == "dark") {
+    sessionStorage.setItem("theme", "dark");
+    dark = true
+  }
+  else {
+    sessionStorage.setItem("theme", "light");
+    dark = false
+  }
+  const [isDark, setIsDark] = useState(dark);
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark")
+      sessionStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark")
+      sessionStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+  return (
+  <Toggle
+      className="DarkToggle"
+      checked={isDark}
+      onChange={event => setIsDark(event.target.checked)}
+      icons={{ checked: "🌙", unchecked: "🔆" }}
+      aria-label="Dark mode"
+    />
+  )
+}
 
 export default function Settings() {
 
@@ -35,6 +65,7 @@ export default function Settings() {
                   <h1>{sessionStorage.getItem("email")} </h1>
                 </div>
                 <div className="userdata">
+                  <Theme />
                   {sessionStorage.getItem("prefered_theme") == 0 ? <h1>Dark theme</h1> : <h1>Light theme</h1>}
                 </div>
               </div>

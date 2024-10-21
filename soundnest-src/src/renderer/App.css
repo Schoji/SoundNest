@@ -3,14 +3,22 @@
 * {
   margin: 0;
 }
-:root {
+:root.dark {
   --dark-bg: #191414;
   --dark-window: #000000;
   --dark-button: #1f1f1f;
   --dark-darker: #2a2a2a;
   --accent-gradient: linear-gradient(140deg, rgb(33, 33, 255) 0%, rgb(26, 26, 252) 100%);
-
 }
+
+:root {
+  --dark-bg: #ffffff;
+  --dark-window: #c4c4c4;
+  --dark-button: #1f1f1f;
+  --dark-darker: #2a2a2a;
+  --accent-gradient: linear-gradient(140deg, rgb(33, 33, 255) 0%, rgb(26, 26, 252) 100%);
+}
+
 body {
   position: relative;
   color: white;
