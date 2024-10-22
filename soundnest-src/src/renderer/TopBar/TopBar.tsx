@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import logo from '../../../assets/icons/logo-title.png';
+import BasicMenu from './Menu';
+import * as React from 'react';
 
 function TopBar() {
   return (
@@ -21,7 +23,7 @@ function TopBar() {
             )}
           </div>
           <div className="profileButtonDiv">
-            {sessionStorage.getItem('id') === null ? <img src={logo} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
+            <BasicMenu/>
           </div>
         </div>
       </div>
