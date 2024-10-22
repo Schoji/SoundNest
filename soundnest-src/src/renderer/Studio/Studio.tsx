@@ -8,12 +8,17 @@ import default_album from "../../../assets/album.png";
 import BottomBar from '../BottomBar/BottomBar';
 const backend_address = "http://localhost:5000";
 import Button from "@mui/material/Button";
+import { useNavigate } from 'react-router-dom';
 
 import {
   faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Studio() {
+  const navigate = useNavigate()
+  function toCreateStudio() {
+    navigate("/createstudio", {replace:true})
+  }
   const [data, setData] = useState([]);
   const Fetch = () => {
 
@@ -69,7 +74,7 @@ function RenderData() {
               <div className='myStudios'>
                 <RenderData/>
                 <div className='studio'>
-                  <Button variant='contained' className='buttonek'><FontAwesomeIcon icon={faPlus} size="2xl" beat /></Button>
+                  <Button variant='contained' className='buttonek' onClick={toCreateStudio}><FontAwesomeIcon icon={faPlus} size="2xl" beat /></Button>
                 </div>
               </div>
             </div>
@@ -81,7 +86,7 @@ function RenderData() {
                   {value.studio_dir == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
                   <h1>{value.name}</h1>
                   <p>{value.desc}</p>
-                  <Button variant="contained" >LEARN MORE</Button>
+                  <Button variant="contained">LEARN MORE</Button>
                 </div>
           )}
             </div>

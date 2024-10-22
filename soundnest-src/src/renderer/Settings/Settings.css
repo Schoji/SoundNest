@@ -11,7 +11,7 @@
   border-radius: 10px;
   flex: 0 1 700px;
   height: 100%;
-  background-color: var(--dark-darker);
+  background-color: var(--section);
   display: grid;
   row-gap: 5px;
   column-gap: 5px;
@@ -22,7 +22,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-  /* background-color: var(--dark-darker); */
+  /* background-color: var(--section); */
   border-radius: 10px;
   /* grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr 1fr; */
@@ -35,6 +35,6 @@
 .userdata {
   display: flex;
   justify-content: center;
-  /* background-color: var(--dark-darker); */
+  /* background-color: var(--section); */
   border-radius: 10px;
 }

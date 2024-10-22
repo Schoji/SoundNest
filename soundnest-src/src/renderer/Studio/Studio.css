@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 .myStudio {
   flex: 1 1 100%;
@@ -29,7 +30,7 @@
 }
 .studio {
   flex: 1 1;
-  background-color: var(--dark-button);
+  background-color: var(--button);
   border-radius: 10px;
   text-align: center;
 }
@@ -45,4 +46,12 @@
 .buttonek {
   width: 100%;
   height: 100%;
+}
+.studioForm {
+  border-radius: 20px;
+  background-color: var(--button);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }

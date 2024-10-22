@@ -1,7 +1,7 @@
 .bottombar {
   border-radius: 10px;
   margin: 10px;
-  background-color: var(--dark-window);
+  background-color: var(--window);
   display: flex;
 }
 .bottombar h1 {

@@ -2,14 +2,14 @@
   flex: 0 1 200px;
   margin: 10px;
   border-radius: 10px;
-  background-color: var(--dark-bg);
+  background-color: var(--bg);
   height: 600px;
 }
 .sidebuttons {
   margin: 10px;
 }
 .sideobject {
-  background-color: #252525;
+  background-color: var(--section);
   height: 75px;
   font-size: 24px;
   border-radius: 10px;
@@ -19,7 +19,7 @@
 }
 .sideobject:hover {
   opacity: 0.8;
-  background-color: var(--dark-button);
+  background-color: var(--button);
   transition: opacity 150ms linear;
   transition: background-color 150ms linear;
 }
@@ -30,7 +30,7 @@
   justify-content: space-evenly;
   height: 100%;
   width: 100%;
-  color: white;
+  color: var(--font-color);
   gap: 10px;
 }
 .linkAreaRight {
@@ -43,7 +43,7 @@
   justify-content: center;
   flex: 0 0 60px;
   height: 60px;
-  color: #d4d4d4;
+  color: var(--font-color);
   border-radius: 8px;
   background-color: rgba(0, 1, 255, 1);
   background-image: var(--accent-gradient);

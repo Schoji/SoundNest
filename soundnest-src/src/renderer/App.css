@@ -6,26 +6,32 @@
 }
 
 :root.dark {
-  --dark-bg: #191414;
-  --dark-window: #000000;
-  --dark-button: #1f1f1f;
-  --dark-darker: #2a2a2a;
+  --bg: #191414;
+  --window: #000000;
+  --button: #1f1f1f;
+  --section: #2a2a2a;
+  --searchBar: #202020;
+  --searchBarFocused: #292929;
+  --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, rgb(33, 33, 255) 0%, rgb(26, 26, 252) 100%);
 }
 
 :root {
-  --dark-bg: #ffffff;
-  --dark-window: #c4c4c4;
-  --dark-button: #1f1f1f;
-  --dark-darker: #2a2a2a;
-  --accent-gradient: linear-gradient(140deg, rgb(33, 33, 255) 0%, rgb(26, 26, 252) 100%);
+  --bg: #ffffff;
+  --window: #c4c4c4;
+  --button: #e0e0e0;
+  --section: #d5d5d5;
+  --searchBar: #dfdfdf;
+  --searchBarFocused: #d6d6d6;
+  --font-color: #222; /* Nigdy nie dajesz white/black tylko ich odcienie */
+  --accent-gradient: linear-gradient(140deg, #00b8d9 0%, #008ba4 100%);
 }
 
 body {
   position: relative;
   color: white;
   height: auto;
-  background-color: var(--dark-window);
+  background-color: var(--window);
   font-family: Poppins, sans-serif;
   overflow-y: hidden;
   margin: 0;
@@ -36,6 +42,7 @@ a {
 }
 
 .all {
+  color: var(--font-color);
   margin: 0;
   padding: 0;
 }
@@ -54,7 +61,7 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
-  background-color: var(--dark-bg);
+  background-color: var(--bg);
   height: 600px;
   border-radius: 10px;
   overflow: auto;
@@ -67,16 +74,16 @@ a {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: var(--dark-bg);
+  background: var(--bg);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--dark-button);
+  background-color: var(--button);
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--dark-darker);
+  background: var(--section);
 }

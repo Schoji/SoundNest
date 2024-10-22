@@ -28,8 +28,8 @@
   padding-left: 10px;
   height: 40px;
   width: 100%;
-  background-color: #202020;
-  color: #ffffff;
+  background-color: var(--searchBarFocused);
+  color: var(--font-color);
   border-width: 0px;
   border-radius: 22px;
   transition: background-color 150ms linear;
@@ -37,13 +37,13 @@
 
 .searchInput:focus {
   outline: none;
-  background-color: #292929;
+  background-color: var(--searchBarFocused);
   border: 2px solid #aaaaaa;
   transition: background-color 150ms linear;
 }
 
 .searchInput:hover {
-  background-color: #292929;
+  background-color: var(--searchBarFocused);
   transition: background-color 150ms linear;
 }
 

@@ -18,7 +18,7 @@
   border-radius: 10px;
 }
 .product {
-  background-color: var(--dark-button);
+  background-color: var(--button);
   border-radius: 20px;
   padding: 5px;
   display: flex;
@@ -46,7 +46,7 @@
   border-radius: 0 0 20px 20px;
   font-size: large;
   height: 50px;
-  color: white;
+  color: var(--font-color);
   background-image: var(--accent-gradient);
   border-style: none;
   cursor: pointer;
