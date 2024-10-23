@@ -8,14 +8,33 @@ import default_album from "../../../assets/album.png";
 import BottomBar from '../BottomBar/BottomBar';
 const backend_address = "http://localhost:5000";
 import Button from "@mui/material/Button";
-import { Input, TextField } from '@mui/material';
+import { Input, TextField, FormControl, IconButton} from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import {
   faPlus
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateStudio() {
-
+  const navigate = useNavigate()
+  function AddStudio(event) {
+    event.preventDefault();
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+       },
+      body: JSON.stringify({
+        "id_user" : sessionStorage.getItem("id"),
+        "name" : event.target.name.value,
+        "desc" : event.target.desc.value
+      })
+  };
+  fetch(backend_address + "/api/studios/", requestOptions)
+        .then(response => response.json())
+        .then(response => console.log(response))
+  navigate("/Studio", {replace:true})
+}
   return (
     <div className='all'>
       <TopBar />
@@ -24,14 +43,21 @@ export default function CreateStudio() {
         <div className='main'>
           <div className='studios'>
             <div className='myStudio'>
+              <IconButton color='primary' onClick={() => {navigate("/Studio", {replace:true})}}>
+                <ArrowBackIosIcon/>
+              </IconButton>
               <h1>Create your studio</h1>
             </div>
             <div className='studioForm'>
-              <img src={default_album}></img>
-              <TextField type="file" />
-              <TextField id="outlined-basic" label="Name" variant="outlined"/>
-              <TextField id="outlined-basic" label="Description" variant="outlined"/>
-              <Button variant="outlined">Create studio</Button>
+              <form onSubmit={AddStudio}>
+              <FormControl>
+                <img src={default_album}></img>
+                <TextField type="file" />
+                <TextField id="name" label="Name" variant="outlined"/>
+                <TextField id="desc" label="Description" variant="outlined"/>
+                <Button variant="outlined" type="submit">Create studio</Button>
+              </FormControl>
+              </form>
             </div>
           </div>
         </div>

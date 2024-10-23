@@ -52,8 +52,7 @@ class Studios(Resource):
         studio = StudioModel(id_user=args["id_user"], name=args["name"], desc=args["desc"])
         db.session.add(studio)
         db.session.commit()
-        Studios = StudioModel.query.all()
-        return Studios, 201
+        return studio
 
 class Studio(Resource):
     @marshal_with(studioFields)

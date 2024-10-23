@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, Enum
 import os
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 ALLOWED_EXTENSIONS = set(["jpg", "png", "jpeg"])
 UPLOAD_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "Uploads/"))

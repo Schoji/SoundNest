@@ -5,21 +5,23 @@ import '.././App.css';
 import './Store.css'
 import default_album from "../../../assets/album.png"
 import BottomBar from '../BottomBar/BottomBar';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const backend_address = "http://localhost:5000"
 
-export default function Katalog() {
-  const navigate = useNavigate()
+export default function Item() {
   const [data, setData] = useState([]);
-  const Fetch = () => {
+  const { item_id } = useParams()
 
-    fetch(backend_address + "/api/products/")
+  const Fetch = () => {
+    fetch(backend_address + "/api/product/" + item_id)
     .then(response => response.json())
     .then((d) => setData(d))
     .catch((error) => {
+      console.log("ERRORR")
       console.log(error)
     })
-    console.log(data)
+
+
   }
   useEffect(() => {
     Fetch();
@@ -32,17 +34,8 @@ export default function Katalog() {
       <div className='content'>
         <SideBar/>
         <div className='main'>
-        {data.map((value, key) =>
-            <div className='product'>
-              {value.item_path == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.item_path}`} />}
-              <h1>{value.album}</h1>
-              <p>{value.artist}</p>
-              <p className="product desc">{value.desc}</p>
-              <button onClick={() => {
-                navigate("/item/" + value.id, {replace:true})
-              }}>Learn more</button>
-            </div>
-          )}
+          Gieura
+          {JSON.stringify(data)}
         </div>
       </div>
       <BottomBar/>
