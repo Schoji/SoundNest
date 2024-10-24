@@ -16,12 +16,72 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const backend_address = 'http://localhost:5000';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+export function AlertDialog({ studio_id }) {
+  const [open, setOpen] = React.useState(false);
+  const DeleteStudio = (studio_id) => {
+    fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
+      .then((response) => console.log(response.json()))
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(data);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Button variant="contained" color="error" onClick={handleClickOpen}>
+        Delete
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you really sure?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This action cannot be undone. Once you do this you will remove it from database.
+            {studio_id}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color='error' onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" color='success' onClick={() => {
+            handleClose
+            DeleteStudio(studio_id)
+            }} autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+
 export default function Studio() {
   const navigate = useNavigate();
   function toCreateStudio() {
     navigate('/createstudio', { replace: true });
   }
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const Fetch = () => {
     fetch(`${backend_address}/api/studios/`)
       .then((response) => response.json())
@@ -52,6 +112,9 @@ export default function Studio() {
     // )
     let returnik;
     // eslint-disable-next-line array-callback-return
+    //
+    // BUG
+    //
     data.map((value) => {
       if (value.id_user === sessionStorage.getItem('id')) {
         returnik = (
@@ -106,6 +169,8 @@ export default function Studio() {
                 <h3>{value.name}</h3>
                 <p>{value.desc}</p>
                 <Button variant="contained">LEARN MORE</Button>
+                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/> : null}
+
               </div>
             ))}
           </div>

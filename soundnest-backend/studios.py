@@ -88,5 +88,4 @@ class Studio(Resource):
             abort(404, "User not found")
         db.session.delete(studio)
         db.session.commit()
-        Studios = StudioModel.query.all()
-        return Studios, 204
+        return studio, 204

@@ -21,6 +21,7 @@ class UserModel(db.Model):
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
     credits = db.Column(db.Float, default=0)
     avatar_dir = db.Column(db.String(80), default="/") 
+    is_admin = db.Column(db.Boolean, default=False)
 
 
     def __repr__(self):
@@ -36,6 +37,7 @@ userFields = {
     "prefered_theme":fields.Integer,
     "credits":fields.Float,
     "avatar_dir":fields.String,
+    "is_admin":fields.Boolean,
 }
 
 user_args = reqparse.RequestParser()
@@ -46,6 +48,7 @@ user_args.add_argument("email", type=str, required=True, help="Email cannot be b
 user_args.add_argument("password", type=str, required=True, help="Password cannot be blank")
 user_args.add_argument("credits", type=float, help="Password cannot be blank")
 user_args.add_argument("avatar_dir", type=str, required=False, help="Dir")
+user_args.add_argument("is_admin", type=str, required=False, help="isAdmin? True/False")
 
 class Users(Resource):
     @marshal_with(userFields)
@@ -62,7 +65,7 @@ class Users(Resource):
     @marshal_with(userFields)
     def post(self):
         args = user_args.parse_args()
-        user = UserModel(username=args["username"], email=args["email"], name=args["name"], surname=args["surname"], password=args["password"])
+        user = UserModel(username=args["username"], email=args["email"], name=args["name"], surname=args["surname"], password=args["password"], is_admin=args["is_admin"])
         db.session.add(user)
         db.session.commit()
         users = UserModel.query.all()
@@ -98,11 +101,10 @@ class User(Resource):
     def delete(self, id):
         user = UserModel.query.filter_by(id=id).first()
         if not user:
-            abort(404, "User not found")
+            return user, 404
         db.session.delete(user)
         db.session.commit()
-        users = UserModel.query.all()
-        return users, 204
+        return user, 204
 
 class UserCall(Resource):
     @marshal_with(userFields)

@@ -5,6 +5,7 @@ import {
   faMicrophoneLines,
   faUser,
   faGear,
+  faUserCog,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import './SideBar.css';
@@ -63,6 +64,18 @@ export default function SideBar() {
             </div>
           </Link>
         </div>
+        {sessionStorage.getItem("is_admin") == "true" ? (
+          <div className="sideobject">
+            <Link to="/adminpanel" className="link1">
+              <div className="linkAreaLeft">
+                <FontAwesomeIcon icon={faUserCog} size="xl" />
+              </div>
+              <div className="linkAreaRight">
+                <p>Admin</p>
+              </div>
+            </Link>
+          </div>
+        ) : (null)}
       </div>
     </div>
   );

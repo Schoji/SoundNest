@@ -10,6 +10,7 @@ import Settings from './Settings/Settings';
 import CreateStudio from './Studio/CreateStudio';
 import Item from './Store/Item';
 import EditStudio from './Studio/EditStudio';
+import AdminPanel from './Admin/AdminPanel';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="createstudio" element={<CreateStudio />} />
         <Route path="item/:item_id" element={<Item />} />
         <Route path="editstudio/:studio_id" element={<EditStudio />} />
+        <Route path="adminpanel" element={<AdminPanel />} />
       </Routes>
     </Router>
   );

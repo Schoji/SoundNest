@@ -10,7 +10,8 @@ users = {
   "name": ["John", "Jane", "Mike", "Emily", "David"],
   "surname": ["Doe", "Smith", "Brown", "Jones", "Clark"],
   "password": ["P@ssw0rd123", "S3cur3P@ss", "Br0wnM1k3!", "EmilyJ0nes#", "D@v1dC!ark"],
-  "credits": [50.0, 20.0, 10.0, 0.0, 35.0]
+  "credits": [50.0, 20.0, 10.0, 0.0, 35.0],
+  "is_admin": [True, False, False, False, False]
 }
 
 studios = {
@@ -56,7 +57,8 @@ with app.app_context():
         surname = users["surname"][i]
         password = users["password"][i]
         credits = users["credits"][i]
-        user = UserModel(username=username, email=email, name=name, surname=surname, password=password, credits=credits)
+        is_admin = users["is_admin"][i]
+        user = UserModel(username=username, email=email, name=name, surname=surname, password=password, credits=credits, is_admin=is_admin)
         db.session.add(user)
         db.session.commit()
 

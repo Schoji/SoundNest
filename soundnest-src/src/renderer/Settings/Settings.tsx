@@ -45,6 +45,10 @@ export default function Settings() {
                   <Theme />
                   {sessionStorage.getItem("prefered_theme") == 0 ? <h1>Dark theme</h1> : <h1>Light theme</h1>}
                 </div> */}
+                {sessionStorage.getItem('is_admin') ? (<div>
+                  <p>You are an Admin</p>
+                  <Button color="error" variant="contained">Resign from Administrator</Button>
+                </div>) : null}
                 <Button color="success" variant="contained">
                   Save
                 </Button>

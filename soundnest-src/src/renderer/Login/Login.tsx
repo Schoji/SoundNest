@@ -41,6 +41,7 @@ export default function Login() {
             sessionStorage.setItem('prefered_theme', data.prefered_theme);
             sessionStorage.setItem('credits', data.credits);
             sessionStorage.setItem('avatar_dir', data.avatar_dir);
+            sessionStorage.setItem('is_admin', data.is_admin);
             navigate('library', { replace: true }); // can replace with login-successful or something
           }
         })

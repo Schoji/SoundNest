@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function OtherItems() {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
 
   const Fetch = () => {
     fetch(backend_address + "/api/products/")
