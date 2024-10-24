@@ -1,67 +1,45 @@
 .studios {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto min-content auto 1fr;
   gap: 10px;
-  justify-content: center;
 }
 .myStudio {
-  flex: 1 1 100%;
+  background-color: var(--section);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 4fr 1fr;
+  gap: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 10px;
 }
-.myStudios {
-  flex: 1 1 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  height: 300px;
-  gap: 10px;
+.myStudio > img {
+  grid-row: 1/4;
+  width: 270px;
+  border-radius: 10px;
 }
-.lowerStudios {
-
+h1, .otherStudios {
+  grid-column: 1/3;
 }
 .otherStudios {
-  flex: 1 1 100%;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  height: 300px;
   gap: 10px;
+  overflow-x: auto;
 }
 .studio {
-  flex: 1 1;
-  background-color: var(--button);
-  border-radius: 10px;
-  text-align: center;
-}
-.studio h1 {
-  font-size: medium;
-}
-.studio p {
+  background-color: var(--section);
   font-size: small;
-}
-.studio img {
-  width: 150px;
-}
-.buttonek {
-  width: 100%;
-  height: 100%;
-}
-.studioForm {
-  border-radius: 20px;
-  background-color: var(--button);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-.studioSettings {
-  background-color: var(--button);
+  display: grid;
+  grid-template-columns: minmax(150px, 250px);
+  grid-template-rows:150px auto 1fr 40px;
+  gap: 5px;
+  box-sizing: border-box;
+  padding: 5px;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
-.studioSettings img {
-  width: 250px;
+.studio > img {
+  width: 100%;
+  border-radius: 10px;
 }

@@ -1,0 +1,30 @@
+.createStudio {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content min-content;
+  gap: 10px;
+}
+.createStudioTitle {
+  grid-column: 1/3;
+  display: inline-flex;
+  gap: 5px;
+}
+.createStudioForm {
+  background-color: var(--section);
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 10px;
+}
+.form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  gap: 5px;
+}
+.form > img {
+  width: 270px;
+  border-radius: 10px;
+}
+.formTextFields {
+  display: grid;
+}

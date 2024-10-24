@@ -1,51 +1,61 @@
-import TopBar from '.././TopBar/TopBar';
-import SideBar from ".././SideBar/SideBar";
-import React, { useState, useEffect } from "react";
-import '.././App.css';
-import './Store.css'
-import default_album from "../../../assets/album.png"
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable import/order */
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from 'react';
+import TopBar from '../TopBar/TopBar';
+import SideBar from '../SideBar/SideBar';
+import '../App.css';
+import './Store.css';
+import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
-import { Navigate, useNavigate } from 'react-router-dom';
-const backend_address = "http://localhost:5000"
+import { useNavigate } from 'react-router-dom';
+
+const backend_address = 'http://localhost:5000';
 
 export default function Katalog() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const Fetch = () => {
-
-    fetch(backend_address + "/api/products/")
-    .then(response => response.json())
-    .then((d) => setData(d))
-    .catch((error) => {
-      console.log(error)
-    })
-    console.log(data)
-  }
+    fetch(`${backend_address}/api/products/`)
+      .then((response) => response.json())
+      .then((d) => setData(d))
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(data);
+  };
   useEffect(() => {
     Fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
-    <div className='all'>
+    <div className="all">
       <TopBar />
-      <div className='content'>
-        <SideBar/>
-        <div className='main'>
-        {data.map((value, key) =>
-            <div className='product'>
-              {value.item_path == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.item_path}`} />}
-              <h1>{value.album}</h1>
-              <p>{value.artist}</p>
-              <p className="product desc">{value.desc}</p>
-              <button onClick={() => {
-                navigate("/item/" + value.id, {replace:true})
-              }}>Learn more</button>
-            </div>
-          )}
-        </div>
+      <SideBar />
+      <div className="main">
+        {data.map((value) => (
+          <div className="product">
+            {value.item_path === '/' ? (
+              <img src={default_album} />
+            ) : (
+              <img src={`data:image/jpeg;base64,${value.item_path}`} />
+            )}
+            <h1>{value.album}</h1>
+            <p>{value.artist}</p>
+            <p className="product desc">{value.desc}</p>
+            <button
+              onClick={() => {
+                navigate(`/item/${value.id}`, { replace: true });
+              }}
+            >
+              Learn more
+            </button>
+          </div>
+        ))}
       </div>
-      <BottomBar/>
+      <BottomBar />
     </div>
   );
 }

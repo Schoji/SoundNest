@@ -4,14 +4,14 @@ import {
   faRecordVinyl,
   faMicrophoneLines,
   faUser,
-  faGear
+  faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import './SideBar.css';
 
 export default function SideBar() {
   return (
-    <div className='sidebar'>
+    <div className="sidebar">
       <div className="sidebuttons">
         <div className="sideobject">
           <Link to="/library" className="link1">

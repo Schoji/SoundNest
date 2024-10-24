@@ -5,6 +5,10 @@
   margin: 0;
 }
 
+html, body, #root, .all {
+  height: 100%;
+}
+
 :root.dark {
   --bg: #191414;
   --window: #000000;
@@ -28,13 +32,9 @@
 }
 
 body {
-  position: relative;
-  color: white;
-  height: auto;
   background-color: var(--window);
   font-family: Poppins, sans-serif;
-  overflow-y: hidden;
-  margin: 0;
+  overflow: hidden;
 }
 
 a {
@@ -43,27 +43,22 @@ a {
 
 .all {
   color: var(--font-color);
-  margin: 0;
-  padding: 0;
-}
-
-.content {
-  margin-top: -10px;
-  display: flex;
-  align-items: center;
+  box-sizing: border-box;
+  padding: 0 8px 8px 8px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 60px 1fr 60px;
+  column-gap: 5px;
 }
 
 .main {
-  margin: 10px 10px 10px 0px;
+  background-color: var(--bg);
+  border-radius: 10px;
   box-sizing: border-box;
   padding: 10px;
-  flex: 1 1 600px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
-  background-color: var(--bg);
-  height: 600px;
-  border-radius: 10px;
   overflow: auto;
 }
 
@@ -75,6 +70,7 @@ a {
 /* Track */
 ::-webkit-scrollbar-track {
   background: var(--bg);
+  border-radius: 0 10px 10px 0;
 }
 
 /* Handle */

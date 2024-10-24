@@ -1,9 +1,6 @@
 .sidebar {
-  flex: 0 1 200px;
-  margin: 10px;
   border-radius: 10px;
   background-color: var(--bg);
-  height: 600px;
 }
 .sidebuttons {
   margin: 10px;
