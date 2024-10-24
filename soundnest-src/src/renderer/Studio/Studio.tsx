@@ -17,50 +17,54 @@ import {
 export default function Studio() {
   const navigate = useNavigate()
   function toCreateStudio() {
-    navigate("/createstudio", {replace:true})
+    navigate("/createstudio", { replace: true })
   }
   const [data, setData] = useState([]);
   const Fetch = () => {
 
     fetch(backend_address + "/api/studios/")
-    .then(response => response.json())
-    .then((d) => setData(d))
-    .catch((error) => {
-      console.log(error)
-    })
+      .then(response => response.json())
+      .then((d) => setData(d))
+      .catch((error) => {
+        console.log(error)
+      })
     console.log(data)
   }
   useEffect(() => {
     Fetch();
   }, []);
 
-function RenderData() {
-  //   return (
-  //   data.map((value) =>
-  //     {value.id_user == sessionStorage.getItem('id') ? (
-  //     <div className='studio'>
-  //       {value.studio_dir == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
-  //       <h1>{sessionStorage.getItem('id')}</h1>
-  //       <h1>{value.name}</h1>
-  //       <p>{value.desc}</p>
-  //       <Button variant="contained" >Learn more</Button>
-  //     </div>
-  //     ) : <h1>nic</h1>}
-  //   )
-  // )
-  let returnik;
-  data.map((value) => {
-    if (value.id_user == sessionStorage.getItem('id')) {
-      returnik = <div className='studio'>
-      {value.studio_dir == "/" ? <img src={default_album}>
-      </img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
-      <h1>{value.name}</h1>
-      <p>{value.desc}</p>
-      </div>;
-      }}
-      )
-  return(returnik)
-}
+  function RenderData() {
+    //   return (
+    //   data.map((value) =>
+    //     {value.id_user == sessionStorage.getItem('id') ? (
+    //     <div className='studio'>
+    //       {value.studio_dir == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
+    //       <h1>{sessionStorage.getItem('id')}</h1>
+    //       <h1>{value.name}</h1>
+    //       <p>{value.desc}</p>
+    //       <Button variant="contained" >Learn more</Button>
+    //     </div>
+    //     ) : <h1>nic</h1>}
+    //   )
+    // )
+    let returnik;
+    data.map((value) => {
+      if (value.id_user == sessionStorage.getItem('id')) {
+        returnik = <div className='studio'>
+          {value.studio_dir == "/" ? <img src={default_album}>
+          </img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
+          <h1>{value.name}</h1>
+          <p>{value.desc}</p>
+          <Button variant='outlined' onClick={() => {
+            navigate("/editstudio/" + value.id, { replace: true })
+          }}>Edit</Button>
+        </div>;
+      }
+    }
+    )
+    return (returnik)
+  }
 
   return (
     <div className='all'>
@@ -72,7 +76,7 @@ function RenderData() {
             <div className='myStudio'>
               <h1>Studios</h1>
               <div className='myStudios'>
-                <RenderData/>
+                <RenderData />
                 <div className='studio'>
                   <Button variant='contained' className='buttonek' onClick={toCreateStudio}><FontAwesomeIcon icon={faPlus} size="2xl" beat /></Button>
                 </div>
@@ -81,20 +85,20 @@ function RenderData() {
             <div className="lowerStudios">
               <h1>Other Studios</h1>
               <div className='otherStudios'>
-              {data.map((value, key) =>
-                <div className='studio'>
-                  {value.studio_dir == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
-                  <h1>{value.name}</h1>
-                  <p>{value.desc}</p>
-                  <Button variant="contained">LEARN MORE</Button>
-                </div>
-          )}
-            </div>
+                {data.map((value, key) =>
+                  <div className='studio'>
+                    {value.studio_dir == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
+                    <h1>{value.name}</h1>
+                    <p>{value.desc}</p>
+                    <Button variant="contained">LEARN MORE</Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <BottomBar/>
+      <BottomBar />
     </div>
   );
 }

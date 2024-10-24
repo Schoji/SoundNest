@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import '.././App.css';
 import './Settings.css'
 import BottomBar from '../BottomBar/BottomBar';
+import { Button } from '@mui/material';
 const backend_address = "http://localhost:5000"
 
 
@@ -37,6 +38,8 @@ export default function Settings() {
                   <Theme />
                   {sessionStorage.getItem("prefered_theme") == 0 ? <h1>Dark theme</h1> : <h1>Light theme</h1>}
                 </div> */}
+                <Button color="success" variant='contained'>Save</Button>
+                <Button color="error" variant='contained'>Cancel</Button>
               </div>
             </div>
           </div>

@@ -55,3 +55,13 @@
   align-items: center;
   gap: 10px;
 }
+.studioSettings {
+  background-color: var(--button);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.studioSettings img {
+  width: 250px;
+}

@@ -9,7 +9,7 @@ import Login from './Login/Login'
 import Settings from './Settings/Settings';
 import CreateStudio from './Studio/CreateStudio';
 import Item from './Store/Item';
-
+import EditStudio from './Studio/EditStudio';
 
 export default function App() {
   return (
@@ -22,6 +22,7 @@ export default function App() {
         <Route path="settings" element={<Settings />} />
         <Route path="createstudio" element={<CreateStudio />} />
         <Route path="item/:item_id" element={<Item />} />
+        <Route path="editstudio/:studio_id" element={<EditStudio />} />
       </Routes>
     </Router>
   );

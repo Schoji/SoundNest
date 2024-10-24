@@ -1,0 +1,40 @@
+.ItemSite {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.Item {
+  gap: 10px;
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.ItemLeft {
+  border-radius: 10px;
+  background-color: var(--button);
+  flex: 0 1 50%;
+  display: flex;
+  justify-content: center;
+}
+.ItemRight {
+  border-radius: 10px;
+  text-align: center;
+  background-color: var(--button);
+  flex: 0 1 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.ItemBottom {
+  border-radius: 10px;
+  flex: 1 1 100%;
+  background-color: var(--button);
+  height: 400px;
+}
+.OtherItems {
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  overflow-x: scroll;
+}
