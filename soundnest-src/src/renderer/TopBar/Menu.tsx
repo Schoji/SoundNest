@@ -140,6 +140,14 @@ export default function AccountMenu() {
           <Theme />
         </MenuItem>
         <MenuItem onClick={() => {
+          navigate("/regulamin", {replace:true});
+        }}>
+          <ListItemIcon>
+            <DarkModeIcon fontSize="small" />
+          </ListItemIcon>
+          Regulamin
+        </MenuItem>
+        <MenuItem onClick={() => {
           navigate("/settings", {replace:true});
         }}>
           <ListItemIcon>

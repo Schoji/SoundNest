@@ -11,6 +11,7 @@ import CreateStudio from './Studio/CreateStudio';
 import Item from './Store/Item';
 import EditStudio from './Studio/EditStudio';
 import AdminPanel from './Admin/AdminPanel';
+import Regulamin from './Regulamin/reg';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="item/:item_id" element={<Item />} />
         <Route path="editstudio/:studio_id" element={<EditStudio />} />
         <Route path="adminpanel" element={<AdminPanel />} />
+        <Route path="Regulamin" element={<Regulamin />} />
       </Routes>
     </Router>
   );
