@@ -10,13 +10,47 @@ import '../App.css';
 import './CreateStudio.css';
 import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
+import { useState, useEffect } from 'react';
 
 const backend_address = 'http://localhost:5000';
 
 export default function CreateStudio() {
   const navigate = useNavigate();
+  const [pic, setPic] = useState(default_album);
+
+  const [selectedFile, setSelectedFile] = useState();
+  const [fileBase64String, setFileBase64String] = useState("");
+  const onFileChange = (e) => {
+    setSelectedFile(e.target.files);
+
+  }
+  const encodeFileBase64 = (file) => {
+    var reader = new FileReader()
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        var Base64 = reader.result
+        setFileBase64String(Base64);
+      };
+      reader.onerror = function (error) {
+        console.log("error", error)
+      }
+    }
+  }
+  var picChanged = false;
+  function ChangePicture(event) {
+    event.preventDefault();
+
+
+    const cachedURL = URL.createObjectURL(event.target.files[0])
+    encodeFileBase64(event.target.files[0])
+    setPic(cachedURL)
+    picChanged = true;
+  }
+
   function AddStudio(event) {
     event.preventDefault();
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -24,6 +58,7 @@ export default function CreateStudio() {
         id_user: sessionStorage.getItem('id'),
         name: event.target.name.value,
         desc: event.target.desc.value,
+        studio_dir: fileBase64String,
       }),
     };
     // eslint-disable-next-line promise/catch-or-return
@@ -31,6 +66,7 @@ export default function CreateStudio() {
       .then((response) => response.json())
       .then((response) => console.log(response));
     navigate('/Studio', { replace: true });
+
   }
   return (
     <div className="all">
@@ -51,11 +87,11 @@ export default function CreateStudio() {
             <h1>Create your studio</h1>
           </div>
           <div className="createStudioForm">
-            <form onSubmit={AddStudio}>
+            <form onSubmit={AddStudio}  encType="multipart/form-data">
               <FormControl className="form">
-                <img src={default_album} />
+                <img src={pic} />
                 <div className="formTextFields">
-                  <TextField type="file" />
+                  <TextField type="file" onChange={ChangePicture} />
                   <TextField id="name" label="Name" variant="outlined" />
                   <TextField id="desc" label="Description" variant="outlined" />
                   <Button

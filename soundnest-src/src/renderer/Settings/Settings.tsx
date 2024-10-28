@@ -2,16 +2,100 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Button, FormControl, TextField } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Settings.css';
 import BottomBar from '../BottomBar/BottomBar';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const backend_address = 'http://localhost:5000';
 
 export default function Settings() {
+  const navigate = useNavigate();
+  const [data, setData] = useState({});
+  const { studio_id } = useParams();
+  const [pic, setPic] = useState("data:image/jpeg;base64," + String(sessionStorage.getItem("avatar_dir")));
+  const [selectedFile, setSelectedFile] = useState([]);
+  const [fileBase64String, setFileBase64String] = useState("");
+  const onFileChange = (e) => {
+    setSelectedFile(e.target.files);
+
+  }
+
+  var picChanged = false;
+
+  const encodeFileBase64 = (file) => {
+    var reader = new FileReader()
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        var Base64 = reader.result
+        setFileBase64String(Base64);
+      };
+      reader.onerror = function (error) {
+        console.log("error", error)
+      }
+    }
+  }
+
+function ChangePicture(event) {
+    event.preventDefault();
+
+    const cachedURL = URL.createObjectURL(event.target.files[0])
+    encodeFileBase64(event.target.files[0])
+    setPic(cachedURL)
+    picChanged = true;
+    console.log("PicChanged")
+  }
+
+  function AlterUser(event) {
+    event.preventDefault();
+    fetch(`${backend_address}/api/users/${sessionStorage.getItem("id")}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method:"PATCH",
+      body: JSON.stringify({
+        'username' : event.target.username.value,
+        'name' : event.target.name.value,
+        'surname' : event.target.surname.value,
+        'email' : event.target.email.value,
+        'avatar_dir': fileBase64String
+      })
+    }).catch((error) => console.log(error))
+
+
+    fetch(
+      `${backend_address}/api/users/${sessionStorage.getItem("id")}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // eslint-disable-next-line promise/always-return
+        if (data.length === 0) {
+        } else {
+          console.log(JSON.stringify(data));
+          sessionStorage.clear();
+          sessionStorage.setItem('id', data.id);
+          sessionStorage.setItem('username', data.username);
+          sessionStorage.setItem('name', data.name);
+          sessionStorage.setItem('surname', data.surname);
+          sessionStorage.setItem('email', data.email);
+          sessionStorage.setItem('prefered_theme', data.prefered_theme);
+          sessionStorage.setItem('credits', data.credits);
+          sessionStorage.setItem('avatar_dir', data.avatar_dir);
+          sessionStorage.setItem('is_admin', data.is_admin);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    navigate("/studio", {replace:true});
+  }
+
+
   return (
     <div className="all">
       <TopBar />
@@ -23,38 +107,28 @@ export default function Settings() {
           <div className="settings">
             <div className="settingsContent">
               <div className="avatar">
-                <div className="avatarIMG">
-                  <img
-                    src={`data:image/jpeg;base64,${sessionStorage.getItem('avatar_dir')}`}
-                    className="avatarIMG"
-                  />
-                </div>
-                <div className="userdata">
-                  <h1>
-                    {sessionStorage.getItem('name')}{' '}
-                    {sessionStorage.getItem('surname')}
-                  </h1>
-                </div>
-                <div className="userdata">
-                  <h1>{sessionStorage.getItem('username')} </h1>
-                </div>
-                <div className="userdata">
-                  <h1>{sessionStorage.getItem('email')} </h1>
-                </div>
-                {/* <div className="userdata">
-                  <Theme />
-                  {sessionStorage.getItem("prefered_theme") == 0 ? <h1>Dark theme</h1> : <h1>Light theme</h1>}
-                </div> */}
-                {sessionStorage.getItem('is_admin') ? (<div>
-                  <p>You are an Admin</p>
-                  <Button color="error" variant="contained">Resign from Administrator</Button>
-                </div>) : null}
-                <Button color="success" variant="contained">
-                  Save
-                </Button>
-                <Button color="error" variant="contained">
-                  Cancel
-                </Button>
+                <form encType="multipart/form-data" onSubmit={AlterUser}>
+                  <FormControl>
+                  <img src={pic}></img>
+                    <TextField id="file" type="file" onChange={ChangePicture}/>
+                    <TextField id="name" label="Name" variant="outlined" defaultValue={sessionStorage.getItem('name')}/>
+                    <TextField id="surname" label="Surname" variant="outlined" defaultValue={sessionStorage.getItem('surname')}/>
+                    <TextField id="username" label="Username" variant="outlined" defaultValue={sessionStorage.getItem('username')}/>
+                    <TextField id="email" label="Email" variant="outlined" defaultValue={sessionStorage.getItem('email')}/>
+                    <TextField id="bio" label="Your bio" multiline variant="outlined" defaultValue="TODO"/>
+                    <Button color="success" variant="contained" type="submit">
+                      Save
+                    </Button>
+                    <Button color="error" variant="contained">
+                      Cancel
+                    </Button>
+                    {sessionStorage.getItem('is_admin') ? (<div>
+                      <p>You are an Admin</p>
+                      <Button color="error" variant="contained">Resign from Administrator</Button>
+                    </div>) : null}
+                  </FormControl>
+                </form>
+
               </div>
             </div>
           </div>

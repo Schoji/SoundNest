@@ -1,7 +1,11 @@
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
 from users import *
-
+from io import BytesIO
+import base64
+from PIL import Image
+import img_resize
+from sqlalchemy import desc
 #instruction
 #1. Make a new file
 #2. Make a model
@@ -30,17 +34,18 @@ studioFields = {
 }
 
 studio_args = reqparse.RequestParser()
-studio_args.add_argument("id_user", required=True, help="User id cannot be blank")
+studio_args.add_argument("id_user", required=False, help="User id cannot be blank")
 studio_args.add_argument("name", type=str, required=True, help="Name cannot be blank")
 studio_args.add_argument("desc", type=str, required=False, help="Studio description")
+studio_args.add_argument("studio_dir", type=str, required=False, help="IMAGE")
 
 class Studios(Resource):
     @marshal_with(studioFields)
     def get(self):
         Studios = StudioModel.query.all()
         for studio in Studios:
-            if os.path.exists(UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"):
-                image_path = UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"
+            if studio.studio_dir != "/":
+                image_path = studio.studio_dir
                 with open(image_path, "rb") as image_file:
                     data = base64.b64encode(image_file.read()).decode('ascii')
                 studio.studio_dir = data   
@@ -50,6 +55,15 @@ class Studios(Resource):
     def post(self):
         args = studio_args.parse_args()
         studio = StudioModel(id_user=args["id_user"], name=args["name"], desc=args["desc"])
+        if args["studio_dir"]:
+            file = args["studio_dir"]
+            file = file.split(",")[1]
+            img = Image.open(BytesIO(base64.b64decode(file)))
+            img = img_resize.resizeImage(img)
+            last_studio = StudioModel.query.order_by(desc("id")).first()
+            studio_path = UPLOAD_FOLDER + "/studios/" + str(last_studio.id) + ".jpg"
+            img.save(studio_path)
+            studio.studio_dir = studio_path
         db.session.add(studio)
         db.session.commit()
         return studio
@@ -62,8 +76,8 @@ class Studio(Resource):
         if not studio:
             print("user not found")
             return studio, 404
-        if os.path.exists(UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"):
-            image_path = UPLOAD_FOLDER + "/studios/" + str(studio.id) + ".jpg"
+        if studio.studio_dir != "/":
+            image_path = studio.studio_dir
             with open(image_path, "rb") as image_file:
                 data = base64.b64encode(image_file.read()).decode('ascii')
             studio.studio_dir = data
@@ -74,8 +88,16 @@ class Studio(Resource):
         args = studio_args.parse_args()
         studio = StudioModel.query.filter_by(id=id).first()
         if not studio:
-            abort(404, "User not found")
-        studio.id_user = args["id_user"]
+            abort(404, "Studio not found")
+        if args["file"]:
+            file = args["file"]
+            file = file.split(",")[1]
+
+            img = Image.open(BytesIO(base64.b64decode(file)))
+            img = img_resize.resizeImage(img)
+            studio_path = UPLOAD_FOLDER + "/studios/" + str(id) + ".jpg"
+            img.save(studio_path)
+            studio.studio_dir = studio_path
         studio.name = args["name"]
         studio.desc = args["desc"]
         db.session.commit()

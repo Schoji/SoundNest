@@ -64,7 +64,6 @@ export default function Item() {
   return (
     <div className='all'>
       <TopBar />
-      <div className='content'>
         <SideBar/>
         <div className='main'>
           <div className="ItemSite">
@@ -88,7 +87,6 @@ export default function Item() {
             </div>
           </div>
         </div>
-      </div>
       <BottomBar/>
     </div>
   );

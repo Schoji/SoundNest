@@ -17,7 +17,7 @@ from PIL import Image
 class UploadProduct(Resource):
    def post(self):
      parse = reqparse.RequestParser()
-     parse.add_argument("id", type=int, required=True, help="ID", location="form")
+     parse.add_argument('id', type=int, required=True, help="ID", location="form")
      parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
      args = parse.parse_args()
      Product_file = args['file']
@@ -42,7 +42,7 @@ class UploadProduct(Resource):
 class UploadStudio(Resource):
    def post(self):
      parse = reqparse.RequestParser()
-     parse.add_argument("id", type=int, required=True, help="ID", location="form")
+     parse.add_argument('id', type=str, required=True, help="XDDDD", location="form")
      parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
      args = parse.parse_args()
      Avatar_file = args['file']
@@ -70,6 +70,7 @@ class UploadAvatar(Resource):
      parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
      args = parse.parse_args()
      Avatar_file = args['file']
+     print(args["file"])
      id = args["id"]
      if UserModel.query.filter_by(id=id):
         print("User exists, saving")

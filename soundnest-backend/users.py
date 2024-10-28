@@ -2,6 +2,11 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
 import base64
 import os
+import base64
+from io import BytesIO
+from PIL import Image
+import img_resize
+from sqlalchemy import desc
 #instruction
 #1. Make a new file
 #2. Make a model
@@ -45,7 +50,7 @@ user_args.add_argument("name", type=str, required=True, help="Name cannot be bla
 user_args.add_argument("surname", type=str, required=True, help="Surname cannot be blank")
 user_args.add_argument("username", type=str, required=True, help="Username cannot be blank")
 user_args.add_argument("email", type=str, required=True, help="Email cannot be blank")
-user_args.add_argument("password", type=str, required=True, help="Password cannot be blank")
+user_args.add_argument("password", type=str, required=False, help="Password cannot be blank")
 user_args.add_argument("credits", type=float, help="Password cannot be blank")
 user_args.add_argument("avatar_dir", type=str, required=False, help="Dir")
 user_args.add_argument("is_admin", type=str, required=False, help="isAdmin? True/False")
@@ -92,8 +97,23 @@ class User(Resource):
         user = UserModel.query.filter_by(id=id).first()
         if not user:
             abort(404, "User not found")
-        user.username = args["username"]
-        user.email = args["email"]
+        if args["avatar_dir"]:
+            file = args["avatar_dir"]
+            file = file.split(",")[1]
+
+            img = Image.open(BytesIO(base64.b64decode(file)))
+            img = img_resize.resizeImage(img)
+            avatar_dir = UPLOAD_FOLDER + "/avatars/" + str(id) + ".jpg"
+            img.save(avatar_dir)
+            user.avatar_dir = avatar_dir
+        if args["name"]: 
+            user.name = args["name"]
+        if args["username"]: 
+            user.username = args["username"]
+        if args["email"]:      
+            user.email = args["email"]
+        if args["surname"]:
+            user.surname = args["surname"]
         db.session.commit()
         return user
     

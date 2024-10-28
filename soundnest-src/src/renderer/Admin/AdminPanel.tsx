@@ -47,14 +47,13 @@ export default function AdminPanel() {
     {field: 'credits', headerName: "Credits"},
     {field: 'is_admin', headerName: "Admin"},
     {field: 'Delete', headerName: "Delete",renderCell: (params) => (
-      <Button variant='contained' color='error' onClick={() => {
+      params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='error' onClick={() => {
         DeleteUser(params.row.id)}}>
-          Delete</Button>
+          Delete</Button> : null
     ),},
     {field: 'Admin', headerName: "Add Admin",renderCell: (params) => (
-      <Button variant='contained' color='info' onClick={() => {
-        DeleteUser(params.row.id)}}>
-          Add admin</Button>
+      params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='info'>
+          Make admin</Button> : <Button variant='contained' color='error'>Resign</Button>
     ),},
   ]
   const paginationModel = { page: 0, pageSize: 5 };
