@@ -15,7 +15,7 @@ export default function EditStudio() {
   const navigate = useNavigate();
   const [data, setData] = useState({});
   const { studio_id } = useParams();
-  const [pic, setPic] = useState();
+  const [pic, setPic] = useState(default_album);
 
 
   const [selectedFile, setSelectedFile] = useState([]);
@@ -44,8 +44,10 @@ export default function EditStudio() {
       .then((response) => response.json())
       .then((d) => {
         setData(d)
-        let picture = "data:image/jpeg;base64," + String(d.studio_dir);
-        setPic(picture)})
+        if (d.studio_dir != "/") {
+          let picture = "data:image/jpeg;base64," + String(d.studio_dir);
+          setPic(picture);
+        }})
       .catch((error) => {
         console.log('ERRORR');
         console.log(error);
@@ -58,17 +60,14 @@ export default function EditStudio() {
 
   function ChangePicture(event) {
     event.preventDefault();
-
-
     const cachedURL = URL.createObjectURL(event.target.files[0])
     encodeFileBase64(event.target.files[0])
     setPic(cachedURL)
     picChanged = true;
   }
-
   function AlterStudio(event) {
     event.preventDefault();
-    fetch(`${backend_address}/api/studios/${studio_id}`, {
+    fetch(backend_address + "/api/studios/" + studio_id, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -76,7 +75,7 @@ export default function EditStudio() {
       body: JSON.stringify({
         'name' : event.target.studio_name.value,
         'desc' : event.target.desc.value,
-        'file': fileBase64String
+        'studio_dir': fileBase64String
       })
     }).catch((error) => console.log(error))
     navigate("/studio", {replace:true});
@@ -88,11 +87,7 @@ export default function EditStudio() {
       <SideBar />
       <div className="main">
         <div className="studioSettings">
-          {data.studio_dir === '/' ? (
-            <img src={default_album} />
-          ) : (
-            <img src={pic} />
-          )}
+          <img src={pic}/>
           <form encType="multipart/form-data" onSubmit={AlterStudio}>
             <FormControl>
               <TextField id="file" type="file" onChange={ChangePicture}/>

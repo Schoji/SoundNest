@@ -116,6 +116,7 @@ export default function Studio() {
     // BUG
     //
     data.map((value) => {
+      console.log(data);
       if (value.id_user === sessionStorage.getItem('id')) {
         returnik = (
           <div className="myStudio">

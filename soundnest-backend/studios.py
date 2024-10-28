@@ -45,7 +45,7 @@ class Studios(Resource):
         Studios = StudioModel.query.all()
         for studio in Studios:
             if studio.studio_dir != "/":
-                image_path = studio.studio_dir
+                image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
                 with open(image_path, "rb") as image_file:
                     data = base64.b64encode(image_file.read()).decode('ascii')
                 studio.studio_dir = data   
@@ -61,9 +61,9 @@ class Studios(Resource):
             img = Image.open(BytesIO(base64.b64decode(file)))
             img = img_resize.resizeImage(img)
             last_studio = StudioModel.query.order_by(desc("id")).first()
-            studio_path = UPLOAD_FOLDER + "/studios/" + str(last_studio.id) + ".jpg"
+            studio_path = UPLOAD_FOLDER + "/studios/" + str(int(last_studio.id) + 1) + ".jpg"
             img.save(studio_path)
-            studio.studio_dir = studio_path
+            studio.studio_dir = str(last_studio.id + 1) + ".jpg"
         db.session.add(studio)
         db.session.commit()
         return studio
@@ -77,7 +77,7 @@ class Studio(Resource):
             print("user not found")
             return studio, 404
         if studio.studio_dir != "/":
-            image_path = studio.studio_dir
+            image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
             with open(image_path, "rb") as image_file:
                 data = base64.b64encode(image_file.read()).decode('ascii')
             studio.studio_dir = data
@@ -88,16 +88,16 @@ class Studio(Resource):
         args = studio_args.parse_args()
         studio = StudioModel.query.filter_by(id=id).first()
         if not studio:
-            abort(404, "Studio not found")
-        if args["file"]:
-            file = args["file"]
+            return 404, "Studio not found in database."
+        if args["studio_dir"]:
+            file = args["studio_dir"]
             file = file.split(",")[1]
 
             img = Image.open(BytesIO(base64.b64decode(file)))
             img = img_resize.resizeImage(img)
             studio_path = UPLOAD_FOLDER + "/studios/" + str(id) + ".jpg"
             img.save(studio_path)
-            studio.studio_dir = studio_path
+            studio.studio_dir = str(id) + ".jpg"
         studio.name = args["name"]
         studio.desc = args["desc"]
         db.session.commit()

@@ -44,6 +44,8 @@ product_args.add_argument("artist", type=str, required=True, help="Studio descri
 product_args.add_argument("desc", type=str, required=True, help="Studio description")
 product_args.add_argument("price", type=str, required=True, help="Studio description")
 product_args.add_argument("amount", type=int, required=True, help="Studio description")
+product_args.add_argument("item_path", type=str, required=False, help="Studio description")
+
 
 class Products(Resource):
     @marshal_with(productFields)
@@ -51,9 +53,10 @@ class Products(Resource):
         products = ProductModel.query.all()
         for product in products:
             if not product:
-                abort(404, "Product not found")
-            if os.path.exists(UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"):
-                image_path = UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"
+                return 404, "Product not found in database."
+
+            if product.item_path != "/":
+                image_path = UPLOAD_FOLDER + "/products/" + product.item_path
                 with open(image_path, "rb") as image_file:
                     data = base64.b64encode(image_file.read()).decode('ascii')
                 product.item_path = data
@@ -62,7 +65,7 @@ class Products(Resource):
     @marshal_with(productFields)
     def post(self):
         args = product_args.parse_args()
-        product = ProductModel(id_studio=args["id_studio"], album=args["album"], artist=args["artist"],desc=args["desc"],price=args["price"],amount=args["amount"])
+        product = ProductModel(id_studio=args["id_studio"], album=args["album"], artist=args["artist"],desc=args["desc"],item_path=args["item_path"], price=args["price"],amount=args["amount"])
         db.session.add(product)
         db.session.commit()
         Products = ProductModel.query.all()
@@ -75,8 +78,8 @@ class Product(Resource):
         product = ProductModel.query.filter_by(id=id).first()
         if not product:
                 abort(404, "Product not found")
-        if os.path.exists(UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"):
-            image_path = UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"
+        if product.item_path != "/":
+            image_path = UPLOAD_FOLDER + "/products/" + product.item_path
             with open(image_path, "rb") as image_file:
                 data = base64.b64encode(image_file.read()).decode('ascii')
             product.item_path = data
@@ -86,8 +89,20 @@ class Product(Resource):
     def patch(self, id):
         args = product_args.parse_args()
         product = ProductModel.query.filter_by(id=id).first()
+
+        if args["file"]:
+            file = args["file"]
+            file = file.split(",")[1]
+
+            img = Image.open(BytesIO(base64.b64decode(file)))
+            img = img_resize.resizeImage(img)
+            item_path = UPLOAD_FOLDER + "/products/" + str(id) + ".jpg"
+            img.save(item_path)
+            product.item_path = str(id) + ".jpg"
+
         if not product:
-            abort(404, "User not found")
+            return 404, "Product not found in database."
+
         product.id_studio = args["id_studio"]
         product.album = args["name"]
         product.artist = args["artist"]
