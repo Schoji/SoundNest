@@ -20,7 +20,6 @@ class ProductModel(db.Model):
     artist = db.Column(db.String(80), nullable=False)
     desc = db.Column(db.String(80), nullable=False)
     price = db.Column(db.Float, nullable=False) #todo
-    amount = db.Column(db.Integer, nullable=False) #todo
     item_path = db.Column(db.String(80), default="/")
 
     def __repr__(self):
@@ -33,7 +32,6 @@ productFields = {
     "artist":fields.String,
     "desc": fields.String,
     "price":fields.Float,
-    "amount":fields.Integer,
     "item_path":fields.String,
 }
 
@@ -43,7 +41,6 @@ product_args.add_argument("album", type=str, required=True, help="Name cannot be
 product_args.add_argument("artist", type=str, required=True, help="Studio description")
 product_args.add_argument("desc", type=str, required=True, help="Studio description")
 product_args.add_argument("price", type=str, required=True, help="Studio description")
-product_args.add_argument("amount", type=int, required=True, help="Studio description")
 product_args.add_argument("item_path", type=str, required=False, help="Studio description")
 
 
@@ -57,6 +54,8 @@ class Products(Resource):
 
             if product.item_path != "/":
                 image_path = UPLOAD_FOLDER + "/products/" + product.item_path
+                print("XDDD")
+                print(image_path)
                 with open(image_path, "rb") as image_file:
                     data = base64.b64encode(image_file.read()).decode('ascii')
                 product.item_path = data
@@ -65,7 +64,16 @@ class Products(Resource):
     @marshal_with(productFields)
     def post(self):
         args = product_args.parse_args()
-        product = ProductModel(id_studio=args["id_studio"], album=args["album"], artist=args["artist"],desc=args["desc"],item_path=args["item_path"], price=args["price"],amount=args["amount"])
+        product = ProductModel(id_studio=args["id_studio"], album=args["album"], artist=args["artist"],desc=args["desc"], price=args["price"])
+        if [args["item_path"]]:
+            file = args["item_path"]
+            file = file.split(",")[1]
+            img = Image.open(BytesIO(base64.b64decode(file)))
+            img = img_resize.resizeImage(img)
+            last_product = ProductModel.query.order_by(desc("id")).first()
+            product_path = UPLOAD_FOLDER + "/products/" + str(int(last_product.id) + 1) + ".jpg"
+            img.save(product_path)
+            product.item_path = str(last_product.id + 1) + ".jpg"
         db.session.add(product)
         db.session.commit()
         Products = ProductModel.query.all()
@@ -108,7 +116,6 @@ class Product(Resource):
         product.artist = args["artist"]
         product.desc = args["desc"]
         product.price = args["price"]
-        product.amount = args["amount"]
         db.session.commit()
         return product
     

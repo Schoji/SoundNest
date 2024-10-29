@@ -12,6 +12,7 @@ import Item from './Store/Item';
 import EditStudio from './Studio/EditStudio';
 import AdminPanel from './Admin/AdminPanel';
 import Regulamin from './Regulamin/reg';
+import CreateItem from './Store/CreateItem';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="katalog" element={<Katalog />} />
         <Route path="settings" element={<Settings />} />
         <Route path="createstudio" element={<CreateStudio />} />
+        <Route path="createitem" element={<CreateItem />} />
         <Route path="item/:item_id" element={<Item />} />
         <Route path="editstudio/:studio_id" element={<EditStudio />} />
         <Route path="adminpanel" element={<AdminPanel />} />

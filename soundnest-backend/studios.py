@@ -107,7 +107,7 @@ class Studio(Resource):
     def delete(self, id):
         studio = StudioModel.query.filter_by(id=id).first()
         if not studio:
-            abort(404, "User not found")
+            abort(404, "Studio was not found in database.")
         db.session.delete(studio)
         db.session.commit()
-        return studio, 204
+        return 204, "Studio was deleted succesfully."

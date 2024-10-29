@@ -33,7 +33,7 @@ h1, .otherStudios {
   font-size: small;
   display: grid;
   grid-template-columns: minmax(150px, 250px);
-  grid-template-rows:150px auto 1fr 40px;
+  grid-template-rows:auto 1fr 5fr 40px;
   gap: 5px;
   box-sizing: border-box;
   padding: 5px;

@@ -23,14 +23,15 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export function AlertDialog({ studio_id }) {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const DeleteStudio = (studio_id) => {
     fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
-      .then((response) => console.log(response.json()))
+      // .then((response) => console.log(response.json()))
       .catch((error) => {
         console.log(error);
       });
-    console.log(data);
+      navigate('/studio', { replace: true });
   };
 
   const handleClickOpen = () => {
@@ -89,7 +90,7 @@ export default function Studio() {
       .catch((error) => {
         console.log(error);
       });
-    console.log(data);
+    // console.log(data);
   };
   useEffect(() => {
     Fetch();
@@ -110,15 +111,13 @@ export default function Studio() {
     //     ) : <h1>nic</h1>}
     //   )
     // )
-    let returnik;
     // eslint-disable-next-line array-callback-return
     //
     // BUG
     //
-    data.map((value) => {
-      console.log(data);
-      if (value.id_user === sessionStorage.getItem('id')) {
-        returnik = (
+
+    const returnik = data.map((value) =>
+      value.id_user === sessionStorage.getItem('id') ?
           <div className="myStudio">
             {value.studio_dir === '/' ? (
               <img src={default_album} />
@@ -135,10 +134,9 @@ export default function Studio() {
             >
               Edit
             </Button>
-          </div>
-        );
-      }
-    });
+          </div> : null
+    );
+    console.log(returnik)
     return returnik;
   }
 

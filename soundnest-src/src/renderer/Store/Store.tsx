@@ -10,6 +10,9 @@ import './Store.css';
 import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const backend_address = 'http://localhost:5000';
 
@@ -25,6 +28,9 @@ export default function Katalog() {
       });
     console.log(data);
   };
+  function toCreateItem() {
+    console.log("XD")
+  }
   useEffect(() => {
     Fetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,6 +60,16 @@ export default function Katalog() {
             </button>
           </div>
         ))}
+        <Button
+            variant="contained"
+            className="addStudio"
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={() => {
+              navigate("/createitem", { replace: true });
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} size="2xl" beat />
+          </Button>
       </div>
       <BottomBar />
     </div>

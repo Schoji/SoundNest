@@ -62,7 +62,6 @@ products = {
     "A deep, bass-heavy album perfect for ambient and chill sessions."
   ],
   "price": [19.99, 15.50, 22.00, 18.75, 20.99],
-  "amount": [50, 30, 75, 40, 60],
   "item_path": ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"],
 }
 
@@ -105,9 +104,8 @@ with app.app_context():
         desc = products["desc"][i]
         artist = products["artist"][i]
         price = products["price"][i]
-        amount = products["amount"][i]
         item_path = products["item_path"][i]
-        product = ProductModel(id_studio=id_studio, desc=desc, artist=artist, album=album, price=price, item_path=item_path, amount=amount)
+        product = ProductModel(id_studio=id_studio, desc=desc, artist=artist, album=album, price=price, item_path=item_path)
         db.session.add(product)
         db.session.commit()
     

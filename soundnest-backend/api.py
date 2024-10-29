@@ -34,7 +34,6 @@ class UserProducts(Resource):
             "artist" : product.artist,
             "desc" : product.desc,
             "price" : product.price,
-            "amount" : product.amount,
             "item_path" : product.item_path
          }
          products.append(product_dict)
