@@ -155,6 +155,7 @@ export function CustomizedTables() {
         sessionStorage.setItem('credits', new_balance)
 
         setOpen(true);
+        navigate("/cart", {replace:true});
       }
 
     const table = data.map((row) => (

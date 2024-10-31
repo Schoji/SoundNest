@@ -13,8 +13,15 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 
 const backend_address = 'http://localhost:5000';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export default function Katalog() {
   const navigate = useNavigate();
@@ -28,9 +35,6 @@ export default function Katalog() {
       });
     console.log(data);
   };
-  function toCreateItem() {
-    console.log("XD")
-  }
   useEffect(() => {
     Fetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,26 +45,31 @@ export default function Katalog() {
       <TopBar />
       <SideBar />
       <div className="main">
-        {data.map((value) => (
-          <div className="product">
-            {value.item_path === '/' ? (
-              <img src={default_album} />
-            ) : (
-              <img src={`data:image/jpeg;base64,${value.item_path}`} />
-            )}
-            <h1>{value.album}</h1>
-            <p>{value.artist}</p>
-            <p className="product desc">{value.desc}</p>
-            <button
-              onClick={() => {
-                navigate(`/item/${value.id}`, { replace: true });
-              }}
-            >
-              Learn more
-            </button>
-          </div>
-        ))}
-        <Button
+        <div className="store">
+          {data.map((value) => (
+            <div className="storeProduct">
+              <CacheProvider value={cache}>
+                <div className="storeProductImage">
+                  {value.item_path === '/' ? (
+                    <img src={default_album} />
+                  ) : (
+                    <img src={`data:image/jpeg;base64,${value.item_path}`} />
+                  )}
+                </div>
+                <h2>{value.album}</h2>
+                <p>{value.artist}</p>
+                <p>{value.desc}</p>
+                <Button
+                  onClick={() => {
+                    navigate(`/item/${value.id}`, { replace: true });
+                  }}
+                >
+                  Learn more
+                </Button>
+              </CacheProvider>
+            </div>
+          ))}
+          <Button
             variant="contained"
             className="addStudio"
             // eslint-disable-next-line react/jsx-no-bind
@@ -70,6 +79,7 @@ export default function Katalog() {
           >
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
+        </div>
       </div>
       <BottomBar />
     </div>

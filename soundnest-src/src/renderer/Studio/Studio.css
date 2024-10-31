@@ -1,6 +1,6 @@
 .studios {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 2fr;
   grid-template-rows: auto min-content auto 1fr;
   gap: 10px;
 }
@@ -19,6 +19,19 @@
   width: 270px;
   border-radius: 10px;
 }
+.addStudio {
+  min-height: 280px;
+}
+.editStudio, .addStudio, .learnMore {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.editStudio:hover, .addStudio:hover, .learnMore:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
 h1, .otherStudios {
   grid-column: 1/3;
 }
@@ -33,11 +46,16 @@ h1, .otherStudios {
   font-size: small;
   display: grid;
   grid-template-columns: minmax(150px, 250px);
-  grid-template-rows:auto 1fr 5fr 40px;
+  grid-template-rows: auto auto 1fr 30px 30px;
   gap: 5px;
   box-sizing: border-box;
   padding: 5px;
   border-radius: 10px;
+  transition: background-color 150ms;
+}
+.studio:hover {
+  background: var(--sectionHover);
+  transition: background-color 150ms;
 }
 .studio > img {
   width: 100%;

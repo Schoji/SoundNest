@@ -10,14 +10,16 @@ html, body, #root, .all {
 }
 
 :root.dark {
-  --bg: #191414;
+  --bg: #151515;
   --window: #000000;
   --button: #1f1f1f;
-  --section: #2a2a2a;
+  --section: #252525;
+  --sectionHover: #2a2a2a;
   --searchBar: #202020;
   --searchBarFocused: #292929;
   --font-color: #ddd;
-  --accent-gradient: linear-gradient(140deg, rgb(33, 33, 255) 0%, rgb(26, 26, 252) 100%);
+  --accent-gradient: linear-gradient(140deg, #0093ad 0%, #005867 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #0094ae 0%, #007a90 100%);
 }
 
 :root {
@@ -25,10 +27,12 @@ html, body, #root, .all {
   --window: #c4c4c4;
   --button: #e0e0e0;
   --section: #d5d5d5;
+  --sectionHover: #c5c5c5;
   --searchBar: #dfdfdf;
   --searchBarFocused: #d6d6d6;
-  --font-color: #222; /* Nigdy nie dajesz white/black tylko ich odcienie */
+  --font-color: #222;
   --accent-gradient: linear-gradient(140deg, #00b8d9 0%, #008ba4 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #00a8c6 0%, #007c92 100%);
 }
 
 body {
@@ -56,9 +60,6 @@ a {
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 10px;
   overflow: auto;
 }
 
@@ -82,4 +83,10 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--section);
+}
+
+@media only screen and (max-width: 950px) {
+  .all {
+    grid-template-columns: 90px 1fr;
+  }
 }

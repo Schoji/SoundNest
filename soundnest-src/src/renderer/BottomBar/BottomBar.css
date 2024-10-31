@@ -10,20 +10,20 @@
 }
 .cart {
   flex: 0 1 200px;
-  background-color: green;
+  background: var(--accent-gradient);
+  color: var(--font-color);
   border-radius: 10px;
   text-decoration: none;
-  color: white;
   display: flex;
-  vertical-align: center;
   justify-content: center;
-}
-.linkLeft{
-  display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  height: 100%;
-  width: 100%;
-  color: white;
   gap: 10px;
+}
+@media only screen and (max-width: 950px) {
+  .cart {
+    flex: 0 1 90px;
+  }
+  .cart > h3 {
+    display: none;
+  }
 }

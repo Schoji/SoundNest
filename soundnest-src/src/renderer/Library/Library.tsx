@@ -7,15 +7,23 @@ import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import BottomBar from '../BottomBar/BottomBar';
 import default_album from '../../../assets/album.png';
+import Button from '@mui/material/Button';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 
 import './Library.css';
 
 const backend_address = 'http://localhost:5000';
 
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
+
 export default function Library() {
   const [data, setData] = useState([]);
   const Fetch = () => {
-    fetch(`${backend_address}/api/userproducts/${sessionStorage.getItem('id')}`)
+    fetch(backend_address + "/api/userproducts/" + sessionStorage.getItem('id'))
       .then((response) => response.json())
       .then((d) => setData(d))
       .catch((error) => {
@@ -32,32 +40,26 @@ export default function Library() {
       <SideBar />
       <div className="main">
         <div className="library">
-          <div className="header">
-            {sessionStorage.getItem('id') === null ? (
-              <h1>There is nothing to see here</h1>
-            ) : (
-              <h1>
-                Library of: {sessionStorage.getItem('name')}{' '}
-                {sessionStorage.getItem('surname')}
-              </h1>
-            )}
-          </div>
-
-          <div className="albums">
-            {data.map((value, key) => (
-              <div className="product">
-                {value.item_path === '/' ? (
-                  <img src={default_album} />
-                ) : (
-                  <img src={`data:image/jpeg;base64,${value.item_path}`} />
-                )}
-                <h1>{value.album}</h1>
-                <p>{value.artist}</p>
-                <p className="product desc">{value.desc}</p>
-                {
-                  // eslint-disable-next-line react/button-has-type
-                  <button>Learn more</button>
-                }
+          {sessionStorage.getItem('id') === null ? (
+            <h1>There is nothing to see here</h1>
+          ) : (
+            <h1>Your Library</h1>
+          )}
+          <div className="libraryAlbums">
+            {data.map((value) => (
+              <div className="libraryProduct">
+                <CacheProvider value={cache}>
+                  <div className="libraryProductImage">
+                    {value.item_path === '/' ? (
+                      <img src={default_album} />
+                    ) : (
+                      <img src={`data:image/jpeg;base64,${value.item_path}`} />
+                    )}
+                  </div>
+                  <h2>{value.album}</h2>
+                  <p>{value.artist}</p>
+                  <p>{value.desc}</p>
+                </CacheProvider>
               </div>
             ))}
           </div>

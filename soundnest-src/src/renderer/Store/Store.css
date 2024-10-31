@@ -1,34 +1,47 @@
-.product {
-  background-color: var(--dark-button);
-  border-radius: 20px;
+.store {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  overflow: auto;
+}
+.storeProduct {
+  background: var(--section);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr 40px;
+  gap: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
   padding: 5px;
+  transition: background-color 150ms;
+}
+.storeProduct:hover {
+  background: var(--sectionHover);
+  transition: background-color 150ms;
+}
+.storeProductImage {
+  width: 100%;
+  border-radius: 8px;
   display: flex;
-  vertical-align: center;
+  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  transition: opacity 150ms linear;
+  overflow: hidden;
 }
-.product:hover {
-  transition: opacity 150ms linear;
-  opacity:0.8;
-  cursor: pointer;
+.storeProductImage > img {
+  width: 100%;
+  border-radius: 8px;
+  transition: all 0.5s ease;
 }
-.product p{
-  flex: 1;
+.storeProduct:hover .storeProductImage img {
+  transform: scale(110%);
 }
-.product img {
-  border-radius: 20px 20px 0 0;
+.storeProduct > Button {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 8px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
 }
-.product .desc {
-  font-size: small;
-}
-.product button {
-  border-radius: 0 0 20px 20px;
-  font-size: large;
-  height: 50px;
-  color: white;
-  background-image: var(--accent-gradient);
-  border-style: none;
-  cursor: pointer;
+.storeProduct > Button:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
 }

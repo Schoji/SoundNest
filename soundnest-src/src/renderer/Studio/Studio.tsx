@@ -11,17 +11,22 @@ import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
-const backend_address = 'http://localhost:5000';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { CircularProgress } from '@mui/material';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+const backend_address = 'http://localhost:5000';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export function AlertDialog({ studio_id }) {
   const navigate = useNavigate();
@@ -95,25 +100,9 @@ export default function Studio() {
   };
   useEffect(() => {
     Fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function RenderData() {
-    //   return (
-    //   data.map((value) =>
-    //     {value.id_user == sessionStorage.getItem('id') ? (
-    //     <div className='studio'>
-    //       {value.studio_dir == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.studio_dir}`} />}
-    //       <h1>{sessionStorage.getItem('id')}</h1>
-    //       <h1>{value.name}</h1>
-    //       <p>{value.desc}</p>
-    //       <Button variant="contained" >Learn more</Button>
-    //     </div>
-    //     ) : <h1>nic</h1>}
-    //   )
-    // )
-    // eslint-disable-next-line array-callback-return
-    //
     // BUG
     //
     if (data.length == 0) {
@@ -122,21 +111,23 @@ export default function Studio() {
     const returnik = data.map((value) =>
       value.id_user === sessionStorage.getItem('id') ?
           <div className="myStudio">
-            {value.studio_dir === '/' ? (
-              <img src={default_album} />
-            ) : (
-              <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
-            )}
-            <h2>{value.name}</h2>
-            <p>{value.desc}</p>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                navigate(`/editstudio/${value.id}`, { replace: true });
-              }}
-            >
-              Edit
-            </Button>
+            <CacheProvider value={cache}>
+              {value.studio_dir === '/' ? (
+                <img src={default_album} />
+              ) : (
+                <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
+              )}
+              <h2>{value.name}</h2>
+              <p>{value.desc}</p>
+              <Button
+                className="editStudio"
+                onClick={() => {
+                  navigate(`/editstudio/${value.id}`, { replace: true });
+                }}
+              >
+                Edit
+              </Button>
+            </CacheProvider>
           </div> : null
     );
     console.log(returnik)
@@ -149,8 +140,8 @@ export default function Studio() {
       <SideBar />
       <div className="main">
         <div className="studios">
+        <CacheProvider value={cache}>
           <h1>My Studios</h1>
-          <RenderData />
           <Button
             variant="contained"
             className="addStudio"
@@ -159,6 +150,7 @@ export default function Studio() {
           >
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
+          <RenderData />
           <h1>Other Studios</h1>
           <div className="otherStudios">
             {data.map((value) => (
@@ -170,12 +162,13 @@ export default function Studio() {
                 )}
                 <h3>{value.name}</h3>
                 <p>{value.desc}</p>
-                <Button variant="contained">LEARN MORE</Button>
+                <Button className="learnMore">LEARN MORE</Button>
                 {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/> : null}
 
               </div>
             ))}
           </div>
+          </CacheProvider>
         </div>
       </div>
       <BottomBar />

@@ -11,11 +11,10 @@ function BottomBar() {
   return (
     <div className="bottombar">
       <Link to="/cart" className="cart">
-        <div className="linkLeft">
-          <Badge badgeContent={cartItems} color="primary">
-            <FontAwesomeIcon icon={faCartShopping} size="xl" />
-          </Badge>
-        </div>
+        <Badge badgeContent={cartItems} color="primary">
+          <FontAwesomeIcon icon={faCartShopping} size="xl" />
+        </Badge>
+        <h3>Cart</h3>
       </Link>
     </div>
   );

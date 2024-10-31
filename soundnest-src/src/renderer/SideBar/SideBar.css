@@ -15,8 +15,7 @@
   transition: background-color 150ms linear;
 }
 .sideobject:hover {
-  opacity: 0.8;
-  background-color: var(--button);
+  background-color: var(--sectionHover);
   transition: opacity 150ms linear;
   transition: background-color 150ms linear;
 }
@@ -53,4 +52,3 @@
     flex: 0 0 90px;
   }
 }
-

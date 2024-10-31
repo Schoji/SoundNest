@@ -54,8 +54,6 @@ class Products(Resource):
 
             if product.item_path != "/":
                 image_path = UPLOAD_FOLDER + "/products/" + product.item_path
-                print("XDDD")
-                print(image_path)
                 with open(image_path, "rb") as image_file:
                     data = base64.b64encode(image_file.read()).decode('ascii')
                 product.item_path = data

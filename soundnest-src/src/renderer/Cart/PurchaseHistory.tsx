@@ -1,23 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../App.css';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import BottomBar from '../BottomBar/BottomBar';
-import default_album from '../../../assets/album.png';
 
 import './Cart.css';
-import { Avatar, Box, Button, CircularProgress, TableContainer } from '@mui/material';
+import { CircularProgress, TableContainer } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { rowHeightWarning } from '@mui/x-data-grid/hooks/features/rows/gridRowsUtils';
 import { useNavigate } from 'react-router-dom';
 
 const backend_address = 'http://localhost:5000';
