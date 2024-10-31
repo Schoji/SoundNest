@@ -21,6 +21,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { CircularProgress } from '@mui/material';
 
 export function AlertDialog({ studio_id }) {
   const navigate = useNavigate();
@@ -115,7 +116,9 @@ export default function Studio() {
     //
     // BUG
     //
-
+    if (data.length == 0) {
+      return <CircularProgress />
+    }
     const returnik = data.map((value) =>
       value.id_user === sessionStorage.getItem('id') ?
           <div className="myStudio">

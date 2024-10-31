@@ -138,6 +138,8 @@ class User(Resource):
             user.email = args["email"]
         if args["surname"]:
             user.surname = args["surname"]
+        if args["credits"]:
+            user.credits = args["credits"]
         db.session.commit()
         return user
     

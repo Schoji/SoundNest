@@ -67,7 +67,6 @@ export default function CreateStudio() {
 
   function AddItem(event) {
     event.preventDefault();
-
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

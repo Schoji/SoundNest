@@ -46,6 +46,7 @@ export function OtherItems() {
 export default function Item() {
   const [data, setData] = useState({});
   const { item_id } = useParams()
+  const navigate = useNavigate();
 
   const Fetch = () => {
     fetch(backend_address + "/api/product/" + item_id)
@@ -60,6 +61,19 @@ export default function Item() {
     Fetch();
   }, []);
 
+  function addToCart() {
+    let cart_items = JSON.parse("[" + sessionStorage.getItem('cart') + "]")
+    console.log("Cart status", cart_items);
+    if (cart_items.indexOf(parseInt(item_id)) == -1) {
+      console.log("KURWA")
+      console.log()
+      sessionStorage.setItem('cart', sessionStorage.getItem('cart') + ',' + item_id)
+      navigate(`/item/${item_id}`, { replace: true });
+    }
+    else {
+      console.log("Item is present, ignoring...")
+    }
+  }
 
   return (
     <div className='all'>
@@ -76,8 +90,8 @@ export default function Item() {
                 <h1>{data.album}</h1>
                 <p>by {data.artist}</p>
                 <p>Description: {data.desc}</p>
-                <p>{data.price}</p>
-                <Button variant='outlined'>Buy now</Button>
+                <p>{data.price}$</p>
+                <Button variant='contained' onClick={addToCart}>Add to cart </Button>
               </div>
             </div>
             <div className="ItemBottom">

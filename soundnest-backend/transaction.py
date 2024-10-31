@@ -17,7 +17,6 @@ class TransactionModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user = db.Column(db.Integer, db.ForeignKey(UserModel.id))
     id_product = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
-    amount = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def __repr__(self):
@@ -27,14 +26,12 @@ transactionFields = {
     "id":fields.Integer,
     "id_user":fields.Integer,
     "id_product":fields.Integer,
-    "amount":fields.Float,
     "date":fields.DateTime,
 }
 
 transaction_args = reqparse.RequestParser()
 transaction_args.add_argument("id_user", required=True, help="User id cannot be blank")
 transaction_args.add_argument("id_product", required=True, help="Name cannot be blank")
-transaction_args.add_argument("amount", type=float, required=False, help="Studio description")
 
 class Transactions(Resource):
     @marshal_with(transactionFields)
@@ -45,11 +42,15 @@ class Transactions(Resource):
     @marshal_with(transactionFields)
     def post(self):
         args = transaction_args.parse_args()
-        transaction = TransactionModel(id_user=args["id_user"], id_product=args["id_product"], amount=args["amount"])
+
+        if TransactionModel.query.filter_by(id_user=args["id_user"], id_product=args["id_product"]).first():
+            print("Duplicated item found. Ignoring...")
+            return "Item already belongs to a user", 201
+        transaction = TransactionModel(id_user=args["id_user"], id_product=args["id_product"])
+        
         db.session.add(transaction)
         db.session.commit()
-        Transactions = TransactionModel.query.all()
-        return Transactions, 201
+        return "Transaction was successfully added.", 201
 
 class Transaction(Resource):
     @marshal_with(transactionFields)

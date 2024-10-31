@@ -4,13 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 import './BottomBar.css';
+import { Badge } from '@mui/material';
 
 function BottomBar() {
+  let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1
   return (
     <div className="bottombar">
-      <Link to="/library" className="cart">
+      <Link to="/cart" className="cart">
         <div className="linkLeft">
-          <FontAwesomeIcon icon={faCartShopping} size="xl" />
+          <Badge badgeContent={cartItems} color="primary">
+            <FontAwesomeIcon icon={faCartShopping} size="xl" />
+          </Badge>
         </div>
       </Link>
     </div>

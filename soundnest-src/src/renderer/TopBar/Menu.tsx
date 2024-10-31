@@ -11,13 +11,14 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import logo from '../../../assets/icons/logo-title.png';
+import logo from '../../../assets/icons/1024x1024.png';
 import { ThemeProvider, createTheme } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import { DefaultTheme } from '@mui/private-theming';
 import { useNavigate } from 'react-router-dom';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useEffect, useState } from 'react';
+import { Gavel, ShoppingBasket } from '@mui/icons-material';
 
 export const Theme = () => {
   var dark;
@@ -143,9 +144,9 @@ export default function AccountMenu() {
           navigate("/regulamin", {replace:true});
         }}>
           <ListItemIcon>
-            <DarkModeIcon fontSize="small" />
+            <Gavel fontSize="small" />
           </ListItemIcon>
-          Regulamin
+          Terms of use
         </MenuItem>
         <MenuItem onClick={() => {
           navigate("/settings", {replace:true});
@@ -154,6 +155,14 @@ export default function AccountMenu() {
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
+        </MenuItem>
+        <MenuItem onClick={() => {
+          navigate("/purchasehistory", {replace:true});
+        }}>
+          <ListItemIcon>
+            <ShoppingBasket fontSize="small" />
+          </ListItemIcon>
+          Purchase history
         </MenuItem>
         <MenuItem onClick={() => {
           sessionStorage.clear();

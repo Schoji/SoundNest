@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
-import logo from '../../../assets/icons/logo-title.png';
+import logo from '../../../assets/icons/48x48.png';
+import logodark from '../../../assets/icons/icons-dark/48x48.png';
 import BasicMenu from './Menu';
-import * as React from 'react';
 
 function TopBar() {
   return (
     <div className="topbar">
       <div className="topBarContent">
         <div className="iconDiv">
-          <img src={logo} height="60px" />
+          <img src={sessionStorage.getItem("theme") == "light" ? logo : logodark } />
           <p>SoundNest</p>
         </div>
         <div className="searchInputDiv">
@@ -19,7 +19,7 @@ function TopBar() {
             {sessionStorage.getItem('id') === null ? (
               <p>6,9$</p>
             ) : (
-              <p>{sessionStorage.getItem('credits')}$</p>
+              <p>{parseFloat(sessionStorage.getItem('credits')).toFixed(2)}$</p>
             )}
           </div>
           <div className="profileButtonDiv">

@@ -5,7 +5,7 @@ from transaction import *
 from flask import request, jsonify
 import werkzeug
 from PIL import Image
-
+from datetime import datetime
 #instruction
 #1. Make a new file
 #2. Make a model
@@ -38,6 +38,22 @@ class UserProducts(Resource):
          }
          products.append(product_dict)
       return products
+   
+class UserTransactions(Resource):
+   def get(self, id_user):
+      transactions = TransactionModel.query.filter_by(id_user = id_user)
+      response = []
+      for item in transactions:
+         product = ProductModel.query.filter_by(id = item.id_product).first()
+         dataset = { 
+             "id" : item.id,
+             "date" : (item.date).strftime("%d/%m/%Y, %H:%M:%S"),
+             "album" : product.album,
+             "artist" : product.artist,
+             "price" : product.price
+         }
+         response.append(dataset)
+      return response
 
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
@@ -49,6 +65,7 @@ api.add_resource(Product, "/api/product/<int:id>")
 api.add_resource(Transactions, "/api/transactions/")
 api.add_resource(Transaction, "/api/transaction/<int:id>")
 api.add_resource(UserProducts, "/api/userproducts/<int:id_user>/")
+api.add_resource(UserTransactions, "/api/usertransactions/<int:id_user>/")
 
 @app.route("/")
 def home():

@@ -68,7 +68,6 @@ products = {
 transactions = {
   "id_user": [1, 2, 3, 4, 5, 1],
   "id_product": [1, 2, 3, 4, 5, 4],
-  "amount": [2, 1, 3, 1, 4, 1],
 }
 
 with app.app_context():
@@ -112,9 +111,8 @@ with app.app_context():
     for i in range(len(transactions[str(list(transactions.keys())[0])])):
         id_user = transactions["id_user"][i]
         id_product = transactions["id_product"][i]
-        amount = transactions["amount"][i]
         date = datetime.datetime.now()
-        transaction = TransactionModel(id_user=id_user, id_product=id_product, amount=amount, date = date)
+        transaction = TransactionModel(id_user=id_user, id_product=id_product, date = date)
         db.session.add(transaction)
         db.session.commit()
 print("Done.")

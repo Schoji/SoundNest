@@ -13,6 +13,8 @@ import EditStudio from './Studio/EditStudio';
 import AdminPanel from './Admin/AdminPanel';
 import Regulamin from './Regulamin/reg';
 import CreateItem from './Store/CreateItem';
+import Cart from './Cart/Cart';
+import PurchaseHistory from './Cart/PurchaseHistory';
 
 export default function App() {
   return (
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="editstudio/:studio_id" element={<EditStudio />} />
         <Route path="adminpanel" element={<AdminPanel />} />
         <Route path="Regulamin" element={<Regulamin />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="purchasehistory" element={<PurchaseHistory />} />
       </Routes>
     </Router>
   );
