@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,6 +21,7 @@ import { CircularProgress } from '@mui/material';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const backend_address = 'http://localhost:5000';
 
@@ -50,9 +52,9 @@ export function AlertDialog({ studio_id }) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="error" onClick={handleClickOpen}>
-        Delete
-      </Button>
+      <IconButton className="deleteButton" onClick={handleClickOpen}>
+        <DeleteIcon fontSize="small"></DeleteIcon>
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -111,23 +113,23 @@ export default function Studio() {
     const returnik = data.map((value) =>
       value.id_user === sessionStorage.getItem('id') ?
           <div className="myStudio">
-            <CacheProvider value={cache}>
+            <div className="myStudioImage">
               {value.studio_dir === '/' ? (
                 <img src={default_album} />
               ) : (
                 <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
               )}
-              <h2>{value.name}</h2>
-              <p>{value.desc}</p>
-              <Button
-                className="editStudio"
-                onClick={() => {
-                  navigate(`/editstudio/${value.id}`, { replace: true });
-                }}
-              >
-                Edit
-              </Button>
-            </CacheProvider>
+            </div>           
+            <h2>{value.name}</h2>
+            <p>{value.desc}</p>
+            <Button
+              className="editStudio"
+              onClick={() => {
+                navigate(`/editstudio/${value.id}`, { replace: true });
+              }}
+            >
+              Edit
+            </Button>
           </div> : null
     );
     console.log(returnik)
@@ -142,27 +144,26 @@ export default function Studio() {
         <div className="studios">
         <CacheProvider value={cache}>
           <h1>My Studios</h1>
-          <Button
-            variant="contained"
-            className="addStudio"
-            // eslint-disable-next-line react/jsx-no-bind
-            onClick={toCreateStudio}
-          >
+          <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          <RenderData />
+          <div className="myStudios">
+            <RenderData />
+          </div> 
           <h1>Other Studios</h1>
           <div className="otherStudios">
             {data.map((value) => (
               <div className="studio">
-                {value.studio_dir === '/' ? (
-                  <img src={default_album} />
-                ) : (
-                  <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
-                )}
+                <div className='studioImage'>
+                  {value.studio_dir === '/' ? (
+                    <img src={default_album} />
+                  ) : (
+                    <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
+                  )}
+                </div>              
                 <h3>{value.name}</h3>
                 <p>{value.desc}</p>
-                <Button className="learnMore">LEARN MORE</Button>
+                <Button>LEARN MORE</Button>
                 {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/> : null}
 
               </div>

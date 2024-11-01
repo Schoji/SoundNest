@@ -1,4 +1,5 @@
 .library {
+  user-select: none;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: auto 1fr;
@@ -34,7 +35,7 @@
 }
 .libraryProductImage img {
   width: 100%;
-  max-width: 300px;
+  /* max-width: 300px; */
   border-radius: 8px;
   transition: all 0.5s ease;
 }

@@ -20,6 +20,8 @@ html, body, #root, .all {
   --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #0093ad 0%, #005867 100%);
   --accent-gradient-hover: linear-gradient(140deg, #0094ae 0%, #007a90 100%);
+  --reddish-button: #d22323;
+  --reddish-button-hover: #ff5050;
 }
 
 :root {
@@ -33,6 +35,8 @@ html, body, #root, .all {
   --font-color: #222;
   --accent-gradient: linear-gradient(140deg, #00b8d9 0%, #008ba4 100%);
   --accent-gradient-hover: linear-gradient(140deg, #00a8c6 0%, #007c92 100%);
+  --reddish-button: #ff5050;
+  --reddish-button-hover: #d22323;
 }
 
 body {

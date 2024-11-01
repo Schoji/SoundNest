@@ -46,39 +46,39 @@ export default function Katalog() {
       <SideBar />
       <div className="main">
         <div className="store">
-          {data.map((value) => (
-            <div className="storeProduct">
-              <CacheProvider value={cache}>
-                <div className="storeProductImage">
-                  {value.item_path === '/' ? (
-                    <img src={default_album} />
-                  ) : (
-                    <img src={`data:image/jpeg;base64,${value.item_path}`} />
-                  )}
-                </div>
-                <h2>{value.album}</h2>
-                <p>{value.artist}</p>
-                <p>{value.desc}</p>
-                <Button
-                  onClick={() => {
-                    navigate(`/item/${value.id}`, { replace: true });
-                  }}
-                >
-                  Learn more
-                </Button>
-              </CacheProvider>
-            </div>
-          ))}
+          <h1>Store</h1>
           <Button
-            variant="contained"
-            className="addStudio"
-            // eslint-disable-next-line react/jsx-no-bind
             onClick={() => {
               navigate("/createitem", { replace: true });
             }}
           >
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
-          </Button>
+          </Button> 
+          <div className="storeProducts">
+            {data.map((value) => (
+              <div className="storeProduct">
+                <CacheProvider value={cache}>
+                  <div className="storeProductImage">
+                    {value.item_path === '/' ? (
+                      <img src={default_album} />
+                    ) : (
+                      <img src={`data:image/jpeg;base64,${value.item_path}`} />
+                    )}
+                  </div>
+                  <h2>{value.album}</h2>
+                  <p>{value.artist}</p>
+                  <p>{value.desc}</p>
+                  <Button
+                    onClick={() => {
+                      navigate(`/item/${value.id}`, { replace: true });
+                    }}
+                  >
+                    Learn more
+                  </Button>
+                </CacheProvider>
+              </div>
+            ))}
+          </div>            
         </div>
       </div>
       <BottomBar />
