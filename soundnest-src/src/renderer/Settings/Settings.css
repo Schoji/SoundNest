@@ -38,3 +38,15 @@
   /* background-color: var(--section); */
   border-radius: 10px;
 }
+
+
+.setLogo {
+  grid-column: 1/4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.setLogo img {
+  width: 100%;
+}

@@ -8,7 +8,11 @@ import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Settings.css';
 import BottomBar from '../BottomBar/BottomBar';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import logo1 from '../../../assets/icons/images.png';
+import logo from '../../../assets/icons/256x256.png';
+import tux from '../../../assets/icons/tux.png'
+import { ContextExclusionPlugin } from 'webpack';
 
 const backend_address = 'http://localhost:5000';
 
@@ -130,6 +134,17 @@ function ChangePicture(event) {
                 </form>
 
               </div>
+              <div className='setLogo'>
+                <Link onClick={() => changeLogo(1)} to="/settings" className="link1">
+                    <img src={logo} alt="dupa" />
+                </Link>
+                <Link onClick={() => changeLogo(2)} to="/settings" className="link1">
+                    <img src={logo1} alt="dupa" />
+                </Link>
+                <Link onClick={() => changeLogo(3)} to="/settings" className="link1">
+                    <img src={tux} alt="dupa" />
+                </Link>
+              </div>
             </div>
           </div>
         )}
@@ -137,4 +152,16 @@ function ChangePicture(event) {
       <BottomBar />
     </div>
   );
+}
+
+function changeLogo(logoValue) {
+  if (logoValue === 1) {
+    sessionStorage.setItem("logo", "1");
+  }
+  else if(logoValue === 2) {
+    sessionStorage.setItem("logo", "2");
+  }
+  else if(logoValue === 3) {
+    sessionStorage.setItem("logo", "3");
+  }
 }
