@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
-import logo from '../../../assets/icons/48x48.png';
-import logodark from '../../../assets/icons/icons-dark/48x48.png';
 import BasicMenu from './Menu';
+import LogoChange from '../Settings/SetLogo';
+
 
 function TopBar() {
   return (
     <div className="topbar">
       <div className="topBarContent">
         <div className="iconDiv">
-          <img src={sessionStorage.getItem("theme") == "light" ? logo : logodark } />
+          <LogoChange/>
           <p>SoundNest</p>
         </div>
         <div className="searchInputDiv">
