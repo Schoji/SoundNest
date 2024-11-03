@@ -2,6 +2,7 @@ from users import *
 from studios import *
 from product import *
 from transaction import *
+from track import *
 from flask import request, jsonify
 import werkzeug
 from PIL import Image
@@ -64,6 +65,9 @@ api.add_resource(Products, "/api/products/")
 api.add_resource(Product, "/api/product/<int:id>")
 api.add_resource(Transactions, "/api/transactions/")
 api.add_resource(Transaction, "/api/transaction/<int:id>")
+api.add_resource(Tracks, "/api/tracks/")
+api.add_resource(Track, "/api/tracks/<int:id>")
+api.add_resource(ProductTracks, "/api/producttracks/<int:id_product>")
 api.add_resource(UserProducts, "/api/userproducts/<int:id_user>/")
 api.add_resource(UserTransactions, "/api/usertransactions/<int:id_user>/")
 

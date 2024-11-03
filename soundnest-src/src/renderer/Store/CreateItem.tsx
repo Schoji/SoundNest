@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, MenuItem } from '@mui/material';
+import { TextField, FormControl, IconButton, MenuItem, Input } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from 'react-router-dom';
@@ -14,8 +14,14 @@ import BottomBar from '../BottomBar/BottomBar';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
+import { PlusOne } from '@mui/icons-material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const backend_address = 'http://localhost:5000';
+
+
+
 
 export default function CreateStudio() {
   const navigate = useNavigate();
@@ -67,6 +73,7 @@ export default function CreateStudio() {
 
   function AddItem(event) {
     event.preventDefault();
+    console.log(inputFields)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -91,6 +98,48 @@ export default function CreateStudio() {
     fetchStudio();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [inputFields, setInputFields] = useState([{
+    name: '', artist:'', duration: ''
+  }])
+  function CreateSongs() {
+
+    const handleFormChange = (index, event) => {
+      let data = [...inputFields]
+      data[index][event.target.name] = event.target.value;
+      setInputFields(data);
+    }
+
+    const addFields = () => {
+      let newField = { name:'', artist:'', duration:''}
+      setInputFields([...inputFields, newField])
+    }
+
+    const removeFields = (index) => {
+      let data = [...inputFields];
+      data.splice(index, 1)
+      setInputFields(data)
+    }
+
+    return (<div>
+      {inputFields.map((input, index) => {
+      return (
+        <div key={index}>
+          <TextField variant="outlined" name='name' value={input.name} placeholder='Name of the track' onChange={event => handleFormChange(index, event)}/>
+          <TextField variant="outlined" name='artist' value={input.artist} placeholder='Artist' onChange={event => handleFormChange(index, event)}/>
+          <TextField variant="outlined" name='duration' value={input.duration} placeholder='Song duration (seconds)' onChange={event => handleFormChange(index, event)}/>
+          <IconButton color='primary' onClick={() => removeFields(index)}>
+          <FontAwesomeIcon icon={faMinus}/>
+          </IconButton>
+      </div>
+      )
+    })}
+    <IconButton color='primary' onClick={addFields}>
+          <FontAwesomeIcon icon={faPlus}/>
+          </IconButton>
+    </div>
+  )
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
     setStudioValue(event.target.value as string);
@@ -142,6 +191,7 @@ export default function CreateStudio() {
                   <TextField id="price" label="Price" variant="outlined" />
                   <InputLabel id="demo-simple-select-label">Studio</InputLabel>
                   <GenerateOptions/>
+                  <CreateSongs/>
                   <Button
                     className="createButton"
                     variant="contained"
@@ -150,6 +200,7 @@ export default function CreateStudio() {
                     Create Item
                   </Button>
                 </div>
+
               </FormControl>
             </form>
           </div>

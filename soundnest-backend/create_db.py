@@ -3,6 +3,7 @@ from users import *
 from studios import *
 from product import *
 from transaction import *
+from track import *
 import os
 import shutil
 import hashlib
@@ -70,6 +71,65 @@ transactions = {
   "id_product": [1, 2, 3, 4, 5, 4],
 }
 
+tracks = {
+  "id_product": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+              2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+              3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 
+              4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+              5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+              
+  "name": [
+    "Timekeeper", "Echoes in the Dark", "Passing Moments", "Clockwork Dreams", "Timeless Journey", 
+    "Whispers of the Past", "Seconds Apart", "The Final Tick", "Sands of Time", "Endless Loop",
+    
+    "Digital Dawn", "Code Pulse", "Circuit Runner", "Electric Heartbeat", "Neon Reflections",
+    "Tech Wave", "Future Streams", "Binary Sunset", "Dream Matrix", "Final Byte",
+    
+    "Tidal Thoughts", "Deep Blue", "Underwater Echo", "Calm Currents", "Seaside Serenity", 
+    "Waves of Wonder", "Abyssal Glow", "Mystic Tides", "Coral Dreams", "Sapphire Horizon",
+    
+    "Golden Sunrise", "Sunset on the Horizon", "Eternal Gleam", "Golden Sands", "Brilliance of Light", 
+    "Dawn of a New Day", "Radiant Waves", "Amber Glow", "Golden Trails", "The Final Sunset",
+    
+    "Crimson Dawn", "Blood Moon", "Velvet Skies", "Mystic Shadows", "Echoes of the Night",
+    "Midnight Pulse", "Dark Reflections", "Ruby Dreams", "Falling Ember", "Scarlet Horizon"
+  ],
+  
+  "producer": [
+    "A. Baker", "L. Sterling", "J. Carter", "A. Baker", "M. Novak",
+    "D. Williams", "R. Lee", "C. Daniels", "A. Baker", "J. Carter",
+    
+    "N. Fields", "C. Carter", "M. Rivers", "N. Fields", "T. Burns",
+    "J. Collins", "A. Silver", "L. Carter", "C. Carter", "N. Fields",
+    
+    "S. Waters", "O. Cruz", "N. Brooks", "S. Waters", "B. James",
+    "D. Marin", "A. Garcia", "J. Lane", "S. Waters", "O. Cruz",
+    
+    "M. Shaw", "L. Riley", "G. Turner", "M. Shaw", "P. Knight",
+    "D. Wells", "C. Fox", "A. Cole", "L. Riley", "G. Turner",
+    
+    "R. Hayes", "K. Martin", "A. Gray", "R. Hayes", "L. Bell",
+    "M. Diaz", "K. Davis", "P. Russell", "R. Hayes", "A. Gray"
+  ],
+  
+  "length": [
+    245, 210, 198, 227, 305,
+    188, 234, 199, 245, 220,
+    
+    260, 195, 185, 240, 230,
+    210, 223, 190, 215, 205,
+    
+    225, 195, 235, 210, 240,
+    230, 220, 215, 245, 200,
+    
+    250, 200, 220, 245, 210,
+    233, 215, 204, 250, 240,
+    
+    220, 240, 195, 225, 210,
+    230, 200, 190, 250, 205
+  ]
+}
+
 with app.app_context():
     print("Deleting all records...")
     db.drop_all()
@@ -114,5 +174,14 @@ with app.app_context():
         date = datetime.datetime.now()
         transaction = TransactionModel(id_user=id_user, id_product=id_product, date = date)
         db.session.add(transaction)
+        db.session.commit()
+
+    for i in range(len(tracks[str(list(tracks.keys())[0])])):
+        id_product = tracks["id_product"][i]
+        name = tracks["name"][i]
+        producer = tracks["producer"][i]
+        length = tracks["length"][i]
+        track = TrackModel(id_product = id_product, name = name, producer = producer, length = length)
+        db.session.add(track)
         db.session.commit()
 print("Done.")
