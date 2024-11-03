@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import BasicMenu from './Menu';
-import Logo from '../Settings/SetLogo';
+import LogoChange from '../Settings/SetLogo';
 
 
 function TopBar() {
@@ -8,7 +8,7 @@ function TopBar() {
     <div className="topbar">
       <div className="topBarContent">
         <div className="iconDiv">
-          <Logo/>
+          <LogoChange/>
           <p>SoundNest</p>
         </div>
         <div className="searchInputDiv">
