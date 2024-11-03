@@ -54,8 +54,7 @@ class Tracks(Resource):
         track = TrackModel(id_product=args["id_product"], name=args["name"], producer=args["producer"], length=args["length"])
         db.session.add(track)
         db.session.commit()
-        Tracks = TrackModel.query.all()
-        return Tracks, 201
+        return track, 201
 
 class Track(Resource):
     @marshal_with(trackFields)

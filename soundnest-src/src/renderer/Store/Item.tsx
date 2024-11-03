@@ -143,7 +143,7 @@ export default function Item() {
           <div className="ItemSite">
             <div className="Item">
               <div className="ItemLeft">
-                <img src={`data:image/jpeg;base64,${data.item_path}`} alt="Loading..."/>
+                {data.item_path != "/" ? (<img src={`data:image/jpeg;base64,${data.item_path}`} alt="Loading..."/> ) : <img src={default_album}/>}
               </div>
 
               <div className="ItemRight">

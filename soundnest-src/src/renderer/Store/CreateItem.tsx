@@ -20,15 +20,54 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const backend_address = 'http://localhost:5000';
 
+export function CreateSongs() {
+  const [inputFields, setInputFields] = useState([{
+    name: '', producer:'', duration: ''
+  }])
+  const handleFormChange = (index, event) => {
+    let data = [...inputFields]
+    data[index][event.target.name] = event.target.value;
+    setInputFields(data);
+    sessionStorage.setItem("songs", JSON.stringify(inputFields));
+  }
 
+  const addFields = () => {
+    let newField = { name:'', producer:'', duration:''}
+    setInputFields([...inputFields, newField])
+  }
 
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1)
+    setInputFields(data)
+  }
+
+  return (<div>
+    {inputFields.map((input, index) => {
+    return (
+      <div key={index}>
+        <TextField key={"name" + String(index)} variant="outlined" name='name' value={input.name} placeholder='Name of the track' onChange={event => handleFormChange(index, event)}/>
+        <TextField key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} placeholder='Producer' onChange={event => handleFormChange(index, event)}/>
+        <TextField key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} placeholder='Song duration (seconds)' onChange={event => handleFormChange(index, event)}/>
+        <IconButton color='primary' onClick={() => removeFields(index)}>
+        <FontAwesomeIcon icon={faMinus}/>
+        </IconButton>
+    </div>
+    )
+  })}
+  <IconButton color='primary' onClick={addFields}>
+        <FontAwesomeIcon icon={faPlus}/>
+        </IconButton>
+  </div>
+)
+}
 
 export default function CreateStudio() {
   const navigate = useNavigate();
   const [pic, setPic] = useState(default_album);
 
   const [selectedFile, setSelectedFile] = useState();
-  const [fileBase64String, setFileBase64String] = useState("");
+  const [fileBase64String, setFileBase64String] = useState("Null");
   const [studioValue, setStudioValue] = useState("")
 
   const [data, setData] = useState([])
@@ -73,7 +112,6 @@ export default function CreateStudio() {
 
   function AddItem(event) {
     event.preventDefault();
-    console.log(inputFields)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -89,8 +127,34 @@ export default function CreateStudio() {
     // eslint-disable-next-line promise/catch-or-return
     fetch(`${backend_address}/api/products/`, requestOptions)
       .then((response) => response.json())
-      .then((response) => console.log(response));
-    navigate('/katalog', { replace: true });
+      .then((response) => {
+        var songs = JSON.parse(sessionStorage.getItem("songs"))
+        songs.map((value, index: any) => {
+          const requestOptions1 = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id_product: response.id,
+              name: value.name,
+              producer: value.producer,
+              length: parseInt(value.duration)
+            }),
+          };
+          // eslint-disable-next-line promise/catch-or-return
+          fetch(`${backend_address}/api/tracks/`, requestOptions1)
+            .then((response) => response.json())
+            .then((response) => console.log(response))
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+      }).catch((error) => {
+        console.log(error);
+      });
+
+
+
+    // navigate('/katalog', { replace: true });
 
   }
 
@@ -98,48 +162,6 @@ export default function CreateStudio() {
     fetchStudio();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const [inputFields, setInputFields] = useState([{
-    name: '', artist:'', duration: ''
-  }])
-  function CreateSongs() {
-
-    const handleFormChange = (index, event) => {
-      let data = [...inputFields]
-      data[index][event.target.name] = event.target.value;
-      setInputFields(data);
-    }
-
-    const addFields = () => {
-      let newField = { name:'', artist:'', duration:''}
-      setInputFields([...inputFields, newField])
-    }
-
-    const removeFields = (index) => {
-      let data = [...inputFields];
-      data.splice(index, 1)
-      setInputFields(data)
-    }
-
-    return (<div>
-      {inputFields.map((input, index) => {
-      return (
-        <div key={index}>
-          <TextField variant="outlined" name='name' value={input.name} placeholder='Name of the track' onChange={event => handleFormChange(index, event)}/>
-          <TextField variant="outlined" name='artist' value={input.artist} placeholder='Artist' onChange={event => handleFormChange(index, event)}/>
-          <TextField variant="outlined" name='duration' value={input.duration} placeholder='Song duration (seconds)' onChange={event => handleFormChange(index, event)}/>
-          <IconButton color='primary' onClick={() => removeFields(index)}>
-          <FontAwesomeIcon icon={faMinus}/>
-          </IconButton>
-      </div>
-      )
-    })}
-    <IconButton color='primary' onClick={addFields}>
-          <FontAwesomeIcon icon={faPlus}/>
-          </IconButton>
-    </div>
-  )
-  }
 
   const handleChange = (event: SelectChangeEvent) => {
     setStudioValue(event.target.value as string);

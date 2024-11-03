@@ -63,7 +63,7 @@ class Products(Resource):
     def post(self):
         args = product_args.parse_args()
         product = ProductModel(id_studio=args["id_studio"], album=args["album"], artist=args["artist"],desc=args["desc"], price=args["price"])
-        if [args["item_path"]]:
+        if args["item_path"] and args["item_path"] != "Null":
             file = args["item_path"]
             file = file.split(",")[1]
             img = Image.open(BytesIO(base64.b64decode(file)))
@@ -74,8 +74,7 @@ class Products(Resource):
             product.item_path = str(last_product.id + 1) + ".jpg"
         db.session.add(product)
         db.session.commit()
-        Products = ProductModel.query.all()
-        return Products, 201
+        return product, 201
 
 class Product(Resource):
     @marshal_with(productFields)
