@@ -99,6 +99,23 @@
 .profileButton:active {
   opacity: 0.6;
 }
+.output {
+  -webkit-app-region: no-drag;
+  display: none;
+  position: absolute;
+  background-color:aquamarine;
+  width: 400px;
+  z-index: 999;
+  border-radius: 0 0 10px 10px;
+  color: var(--font-color);
+}
+.output img {
+  width: 44px;
+}
+.outputItem:hover {
+  -webkit-app-region: no-drag;
+  background-color: blue;
+}
 
 @media only screen and (max-width: 950px) {
   .topBarContent {
