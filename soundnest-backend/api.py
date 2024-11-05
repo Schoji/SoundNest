@@ -56,6 +56,23 @@ class UserTransactions(Resource):
          response.append(dataset)
       return response
 
+class Search(Resource):
+   def get(self, search_str):
+      products = ProductModel.query.filter(ProductModel.album.like("%" + search_str + "%")).all()
+      response = []
+      for product in products:
+         image_path = UPLOAD_FOLDER + "/products/" + product.item_path
+         with open(image_path, "rb") as image_file:
+            data = base64.b64encode(image_file.read()).decode('ascii')
+         product.item_path = data
+         dataset = { 
+            "id" : product.id,
+            "album" : product.album,
+            "item_path" : data
+         }
+         response.append(dataset)
+      return response
+
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
 api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
@@ -70,6 +87,7 @@ api.add_resource(Track, "/api/tracks/<int:id>")
 api.add_resource(ProductTracks, "/api/producttracks/<int:id_product>")
 api.add_resource(UserProducts, "/api/userproducts/<int:id_user>/")
 api.add_resource(UserTransactions, "/api/usertransactions/<int:id_user>/")
+api.add_resource(Search, "/api/search/<string:search_str>/")
 
 @app.route("/")
 def home():

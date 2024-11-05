@@ -38,5 +38,8 @@ export default function logoChange() {
     else if (setTheme === "dark"){
       return(<img src={logodark}/>);
     }
+    else {
+      return(<img src={logo}/>);
+    }
   }
 }

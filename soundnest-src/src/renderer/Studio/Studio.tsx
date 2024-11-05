@@ -35,11 +35,12 @@ export function AlertDialog({ studio_id }) {
   const [open, setOpen] = React.useState(false);
   const DeleteStudio = (studio_id) => {
     fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
+    .then(() => navigate('/studio', { replace: true }))
       // .then((response) => console.log(response.json()))
       .catch((error) => {
         console.log(error);
       });
-      navigate('/studio', { replace: true });
+
   };
 
   const handleClickOpen = () => {
@@ -74,6 +75,7 @@ export function AlertDialog({ studio_id }) {
           <Button variant="contained" color='error' onClick={handleClose}>Cancel</Button>
           <Button variant="contained" color='success' onClick={() => {
             handleClose
+            navigate('/studio', { replace: true });
             DeleteStudio(studio_id)
             }} autoFocus>
             Confirm
@@ -119,7 +121,7 @@ export default function Studio() {
               ) : (
                 <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
               )}
-            </div>           
+            </div>
             <h2>{value.name}</h2>
             <p>{value.desc}</p>
             <Button
@@ -149,7 +151,7 @@ export default function Studio() {
           </Button>
           <div className="myStudios">
             <RenderData />
-          </div> 
+          </div>
           <h1>Other Studios</h1>
           <div className="otherStudios">
             {data.map((value) => (
@@ -160,7 +162,7 @@ export default function Studio() {
                   ) : (
                     <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
                   )}
-                </div>              
+                </div>
                 <h3>{value.name}</h3>
                 <p>{value.desc}</p>
                 <Button>LEARN MORE</Button>

@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 import BasicMenu from './Menu';
 import LogoChange from '../Settings/SetLogo';
+import SearchBar from './SearchBar';
+import { Input } from '@mui/material';
 
 
 function TopBar() {
@@ -12,7 +14,7 @@ function TopBar() {
           <p>SoundNest</p>
         </div>
         <div className="searchInputDiv">
-          <input type="text" className="searchInput" placeholder="Search" />
+          <SearchBar/>
         </div>
         <div className="profileDiv">
           <div className="walletValueDiv">

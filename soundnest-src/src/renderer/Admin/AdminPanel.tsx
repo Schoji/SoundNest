@@ -48,8 +48,10 @@ export default function AdminPanel() {
     {field: 'is_admin', headerName: "Admin"},
     {field: 'Delete', headerName: "Delete",renderCell: (params) => (
       params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='error' onClick={() => {
-        DeleteUser(params.row.id)}}>
-          Delete</Button> : null
+        DeleteUser(params.row.id)
+        navigate(0);
+        }}>
+          Delete</Button>: null
     ),},
     {field: 'Admin', headerName: "Add Admin",renderCell: (params) => (
       params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='info'>

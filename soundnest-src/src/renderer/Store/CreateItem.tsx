@@ -148,6 +148,7 @@ export default function CreateStudio() {
               console.log(error);
             });
         })
+        navigate(`/katalog`, { replace: true });
       }).catch((error) => {
         console.log(error);
       });
