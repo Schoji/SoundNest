@@ -53,7 +53,7 @@ export default function Katalog() {
             }}
           >
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
-          </Button> 
+          </Button>
           <div className="storeProducts">
             {data.map((value) => (
               <div className="storeProduct">
@@ -78,7 +78,7 @@ export default function Katalog() {
                 </CacheProvider>
               </div>
             ))}
-          </div>            
+          </div>
         </div>
       </div>
       <BottomBar />

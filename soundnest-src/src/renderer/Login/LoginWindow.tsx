@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import '../App.css';
@@ -10,8 +12,7 @@ import './Login.css';
 
 const backend_address = 'http://localhost:5000';
 
-export default function Login() {
-
+export default function LoginWindow() {
   const navigate = useNavigate();
   function Logout() {
     sessionStorage.clear();
@@ -44,7 +45,7 @@ export default function Login() {
             sessionStorage.setItem('avatar_dir', data.avatar_dir);
             sessionStorage.setItem('is_admin', data.is_admin);
             sessionStorage.setItem('cart', '0');
-            navigate('library', { replace: true }); // can replace with login-successful or something
+            window.electron.ipcRenderer.sendMessage('openMain', JSON.stringify(data));
           }
         })
         .catch((error) => {
@@ -54,11 +55,7 @@ export default function Login() {
     Fetch();
   }
   return (
-    <div className="all">
-      <TopBar />
-      <SideBar />
-      <div className="main">
-        <div className="login">
+      <div>
           <h1>Login</h1>
           <form onSubmit={SessionStorage}>
             <input
@@ -74,18 +71,6 @@ export default function Login() {
             />
             <input type="submit" />
           </form>
-        </div>
-        <div>
-          <h1>Logout</h1>
-          {
-            // eslint-disable-next-line react/jsx-no-bind
-            <Button variant="contained" onClick={Logout}>
-              Logout
-            </Button>
-          }
-        </div>
       </div>
-      <BottomBar />
-    </div>
   );
 }

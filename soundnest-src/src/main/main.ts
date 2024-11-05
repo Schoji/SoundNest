@@ -24,6 +24,7 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let loginWindow: BrowserWindow | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -120,6 +121,69 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
+const createLoginWindow = async () => {
+  if (isDebug) {
+    await installExtensions();
+  }
+
+  const RESOURCES_PATH = app.isPackaged
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../../assets');
+
+  const getAssetPath = (...paths: string[]): string => {
+    return path.join(RESOURCES_PATH, ...paths);
+  };
+
+  loginWindow = new BrowserWindow({
+    autoHideMenuBar: true,
+    titleBarOverlay: {
+      color: '#00000000',
+      symbolColor: '#FFFFFF',
+      height: 60,
+    },
+    width: 800,
+    minWidth: 600,
+    height: 600,
+    minHeight: 500,
+    icon: getAssetPath('icon.png'),
+    webPreferences: {
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  loginWindow.loadURL(resolveHtmlPath('index.html', 2));
+
+  loginWindow.on('ready-to-show', () => {
+    if (!loginWindow) {
+      throw new Error('"mainWindow" is not defined');
+    }
+    if (process.env.START_MINIMIZED) {
+      loginWindow.minimize();
+    } else {
+      loginWindow.show();
+    }
+  });
+
+  loginWindow.on('closed', () => {
+    loginWindow = null;
+  });
+
+  const menuBuilder = new MenuBuilder(loginWindow);
+  menuBuilder.buildMenu();
+
+  // Open urls in the user's browser
+  loginWindow.webContents.setWindowOpenHandler((edata) => {
+    shell.openExternal(edata.url);
+    return { action: 'deny' };
+  });
+
+  // Remove this if your app does not use auto updates
+  // eslint-disable-next-line
+  new AppUpdater();
+};
+
 /**
  * Add event listeners...
  */
@@ -135,11 +199,18 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    createWindow();
-    app.on('activate', () => {
-      // On macOS it's common to re-create a window in the app when the
-      // dock icon is clicked and there are no other windows open.
-      if (mainWindow === null) createWindow();
-    });
+    createLoginWindow();
+    ipcMain.on('openMain', async (event, arg) => {
+      const msgTemplate = (openMain: string) => `WindowHandler ${openMain}`;
+      console.log(msgTemplate(arg));
+      event.reply('ipc-example', msgTemplate(arg));
+      createWindow();
+      // mainWindow?.webContents.send("sendDataToUI", msgTemplate(arg)) todo
+      })
+    // app.on('activate', () => {
+    //   // On macOS it's common to re-create a window in the app when the
+    //   // dock icon is clicked and there are no other windows open.
+    //   if (mainWindow === null) createWindow();
+    // });
   })
   .catch(console.log);

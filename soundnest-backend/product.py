@@ -1,8 +1,7 @@
-from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
+from flask_restful import Resource, reqparse, fields, marshal_with, abort
 from app_def import *
 from studios import *
 import base64
-import os
 
 #instruction
 #1. Make a new file
@@ -66,7 +65,7 @@ class Products(Resource):
         if args["item_path"] and args["item_path"] != "Null":
             file = args["item_path"]
             file = file.split(",")[1]
-            img = Image.open(BytesIO(base64.b64decode(file)))
+            img = Image.open(BytesIO(base64.b64decode   (file)))
             img = img_resize.resizeImage(img)
             last_product = ProductModel.query.order_by(desc("id")).first()
             product_path = UPLOAD_FOLDER + "/products/" + str(int(last_product.id) + 1) + ".jpg"

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import './TopBar/TopBar.css';
 import Studio from './Studio/Studio';
@@ -15,25 +15,41 @@ import Regulamin from './Regulamin/reg';
 import CreateItem from './Store/CreateItem';
 import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
+import LoginWindow from './Login/LoginWindow';
 
 export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login/>} />
-        <Route path="library" element={<Library />} />
-        <Route path="studio" element={<Studio />} />
-        <Route path="katalog" element={<Katalog />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="createstudio" element={<CreateStudio />} />
-        <Route path="createitem" element={<CreateItem />} />
-        <Route path="item/:item_id" element={<Item />} />
-        <Route path="editstudio/:studio_id" element={<EditStudio />} />
-        <Route path="adminpanel" element={<AdminPanel />} />
-        <Route path="Regulamin" element={<Regulamin />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="purchasehistory" element={<PurchaseHistory />} />
-      </Routes>
-    </Router>
-  );
+  const view = String(global.location.search).slice(-1)
+  console.log(view)
+
+
+  if (parseInt(view) == 1) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login/>} />
+          <Route path="library" element={<Library />} />
+          <Route path="studio" element={<Studio />} />
+          <Route path="katalog" element={<Katalog />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="createstudio" element={<CreateStudio />} />
+          <Route path="createitem" element={<CreateItem />} />
+          <Route path="item/:item_id" element={<Item />} />
+          <Route path="editstudio/:studio_id" element={<EditStudio />} />
+          <Route path="adminpanel" element={<AdminPanel />} />
+          <Route path="Regulamin" element={<Regulamin />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="purchasehistory" element={<PurchaseHistory />} />
+        </Routes>
+      </Router>
+    );
+  }
+  else {
+    return (
+      <Router>
+        <Routes>
+          <Route path='/' element={<LoginWindow/>} />
+        </Routes>
+      </Router>
+    )
+  }
 }
