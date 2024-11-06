@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -49,7 +47,23 @@ export default function Login() {
         .catch((error) => {
           console.log(error);
         });
-    };
+        fetch(backend_address + "/api/studio")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.length === 0) {
+              console.log('user not found');
+            } else {
+              data.map((value) => {
+                value.id_user == sessionStorage.getItem("id")
+              })
+              console.log('User found');
+              console.log(JSON.stringify(data));
+              sessionStorage.clear();
+              sessionStorage.setItem('id', data.id);
+              navigate('library', { replace: true }); // can replace with login-successful or something
+            }
+          })
+      };
     Fetch();
   }
   return (
@@ -77,7 +91,6 @@ export default function Login() {
         <div>
           <h1>Logout</h1>
           {
-            // eslint-disable-next-line react/jsx-no-bind
             <Button variant="contained" onClick={Logout}>
               Logout
             </Button>

@@ -138,6 +138,23 @@ export default function Studio() {
     return returnik;
   }
 
+  const otherStudios = data.map((value) =>
+    value.id_user != sessionStorage.getItem("id") ?  (
+     <div className="studio">
+                <div className='studioImage'>
+                  {value.studio_dir === '/' ? (
+                    <img src={default_album} />
+                  ) : (
+                    <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
+                  )}
+                </div>
+                <h3>{value.name}</h3>
+                <p>{value.desc}</p>
+                <Button>LEARN MORE</Button>
+                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/> : null}
+
+    </div>
+    ) : null)
   return (
     <div className="all">
       <TopBar />
@@ -154,22 +171,7 @@ export default function Studio() {
           </div>
           <h1>Other Studios</h1>
           <div className="otherStudios">
-            {data.map((value) => (
-              <div className="studio">
-                <div className='studioImage'>
-                  {value.studio_dir === '/' ? (
-                    <img src={default_album} />
-                  ) : (
-                    <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
-                  )}
-                </div>
-                <h3>{value.name}</h3>
-                <p>{value.desc}</p>
-                <Button>LEARN MORE</Button>
-                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/> : null}
-
-              </div>
-            ))}
+            {otherStudios}
           </div>
           </CacheProvider>
         </div>
