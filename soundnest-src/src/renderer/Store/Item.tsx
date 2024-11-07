@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import '.././App.css';
 import default_album from "../../../assets/album.png"
 import BottomBar from '../BottomBar/BottomBar';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Button, Paper, Table, TableCell, TableContainer, TableRow } from '@mui/material';
 import './Item.css';
 const backend_address = "http://localhost:5000";
@@ -13,6 +13,9 @@ import { useNavigate } from 'react-router-dom';
 export function OtherItems() {
   const navigate = useNavigate();
   const [data, setData] = useState<any[]>([]);
+  const location = useLocation();
+  const { hash, pathname, search } = location;
+  const currentItemID = pathname.replace("/item/", "")
 
   const Fetch = () => {
     fetch(backend_address + "/api/products/")
@@ -26,9 +29,16 @@ export function OtherItems() {
   useEffect(() => {
     Fetch();
   }, []);
+
+  function changeSite(id) {
+    navigate("/item/" + id + "/", { replace: true});
+    //weird behaviour
+  }
+
   return (
     <div className='OtherItems'>
     {data.map((value, key) =>
+            value.id != currentItemID ?
             <div className='product'>
               {value.item_path == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.item_path}`} />}
               <h1>{value.album}</h1>
@@ -37,9 +47,9 @@ export function OtherItems() {
               <Button key={key} onClick={() => {
                 //BUG
                 console.log(value.id)
-                      navigate(`/item/${value.id}`, { replace: true });
+                      changeSite(value.id);
                     }}>Learn more</Button>
-            </div>
+            </div> : null
           )}
     </div>
   )
@@ -73,7 +83,7 @@ export default function Item() {
   useEffect(() => {
     Fetch();
     getTracks();
-  }, []);
+  }, [item_id]);
 
   function trackInfo() {
     var timestamps: any[] = []

@@ -7,17 +7,16 @@ import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import BottomBar from '../BottomBar/BottomBar';
 import './AdminPanel.css'
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 import { Avatar } from '@mui/material';
 
 const backend_address = 'http://localhost:5000';
 
 export default function AdminPanel() {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const Fetch = () => {
-    fetch(`${backend_address}/api/users/`)
+    fetch(backend_address + "/api/users/")
       .then((response) => response.json())
       .then((d) => setData(d))
       .catch((error) => {
@@ -27,11 +26,15 @@ export default function AdminPanel() {
   };
   useEffect(() => {
     Fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const DeleteUser = (user_id) => {
-    fetch(`${backend_address}/api/users/${user_id}`, {method: "DELETE"})
+    fetch(backend_address + "/api/users/" + user_id, {method: "DELETE"})
+    .catch((error) => {
+      console.log(error);
+    })
+    Fetch();
+    Fetch();
   };
   const columns: GridColDef[] = [
     {field: 'id', headerName: 'ID'},
@@ -49,7 +52,6 @@ export default function AdminPanel() {
     {field: 'Delete', headerName: "Delete",renderCell: (params) => (
       params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='error' onClick={() => {
         DeleteUser(params.row.id)
-        navigate(0);
         }}>
           Delete</Button>: null
     ),},
@@ -59,6 +61,7 @@ export default function AdminPanel() {
     ),},
   ]
   const paginationModel = { page: 0, pageSize: 5 };
+
   return (
     <div className="all">
       <TopBar />
@@ -69,9 +72,9 @@ export default function AdminPanel() {
           <DataGrid
             rows={data}
             columns={columns}
+            disableRowSelectionOnClick={true}
             initialState={{ pagination: { paginationModel } }}
             pageSizeOptions={[5, 10]}
-            checkboxSelection
             sx={{ border: 0 }}
             />
         </div>

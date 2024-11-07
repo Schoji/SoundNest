@@ -11,7 +11,7 @@ import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from 'react-router-dom';
+import { replace, useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -74,9 +74,8 @@ export function AlertDialog({ studio_id }) {
         <DialogActions>
           <Button variant="contained" color='error' onClick={handleClose}>Cancel</Button>
           <Button variant="contained" color='success' onClick={() => {
-            handleClose
-            navigate('/studio', { replace: true });
-            DeleteStudio(studio_id)
+            handleClose();
+            DeleteStudio(studio_id);
             }} autoFocus>
             Confirm
           </Button>
@@ -150,8 +149,8 @@ export default function Studio() {
                 </div>
                 <h3>{value.name}</h3>
                 <p>{value.desc}</p>
-                <Button>LEARN MORE</Button>
-                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/> : null}
+                <Button onClick={() => navigate("/studio/" + value.id,  { replace: true })}>LEARN MORE</Button>
+                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/>: null}
 
     </div>
     ) : null)

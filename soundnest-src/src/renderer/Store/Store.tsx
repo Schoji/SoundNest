@@ -10,11 +10,12 @@ import './Store.css';
 import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, } from '@fortawesome/free-solid-svg-icons';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { ShoppingCart } from '@mui/icons-material';
 
 const backend_address = 'http://localhost:5000';
 
@@ -40,6 +41,19 @@ export default function Katalog() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  function addToCart(item_id) {
+    let cart_items = JSON.parse("[" + sessionStorage.getItem('cart') + "]")
+    console.log("Cart status", cart_items);
+    if (cart_items.indexOf(parseInt(item_id)) == -1) {
+      sessionStorage.setItem('cart', sessionStorage.getItem('cart') + ',' + item_id)
+      navigate(0);
+    }
+    else {
+      console.log("Item is present, ignoring...")
+    }
+  }
+
   return (
     <div className="all">
       <TopBar />
@@ -53,7 +67,7 @@ export default function Katalog() {
             }}
           >
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
-          </Button> 
+          </Button>
           <div className="storeProducts">
             {data.map((value) => (
               <div className="storeProduct">
@@ -75,10 +89,15 @@ export default function Katalog() {
                   >
                     Learn more
                   </Button>
+                  <IconButton onClick={() => {
+                    addToCart(value.id);
+                  }}>
+                    <ShoppingCart/>
+                  </IconButton>
                 </CacheProvider>
               </div>
             ))}
-          </div>            
+          </div>
         </div>
       </div>
       <BottomBar />

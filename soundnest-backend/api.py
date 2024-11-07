@@ -73,6 +73,14 @@ class Search(Resource):
          response.append(dataset)
       return response
 
+class UserStudios(Resource):
+   @marshal_with(studioFields)
+   def get(self, id_user):
+      studios = StudioModel.query.filter_by(id_user = id_user).all()
+      if not studios:
+         return 404, "User has no studios."
+      return studios
+
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
 api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
@@ -87,6 +95,7 @@ api.add_resource(Track, "/api/tracks/<int:id>")
 api.add_resource(ProductTracks, "/api/producttracks/<int:id_product>")
 api.add_resource(UserProducts, "/api/userproducts/<int:id_user>/")
 api.add_resource(UserTransactions, "/api/usertransactions/<int:id_user>/")
+api.add_resource(UserStudios, "/api/userstudios/<int:id_user>/")
 api.add_resource(Search, "/api/search/<string:search_str>/")
 
 @app.route("/")
