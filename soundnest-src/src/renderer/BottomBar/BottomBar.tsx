@@ -1,19 +1,18 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import './BottomBar.css';
-import { Badge } from '@mui/material';
 
 function BottomBar() {
-  let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1
+  let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1;
   return (
     <div className="bottombar">
       <Link to="/cart" className="cart">
-        <Badge badgeContent={cartItems} color="primary">
-          <FontAwesomeIcon icon={faCartShopping} size="xl" />
-        </Badge>
+        <div className="cartIcon">
+          <ShoppingCartRoundedIcon />
+          {cartItems !== 0 ? (
+            <div className="cartBadge"> {cartItems} </div>
+          ) : null}
+        </div>
         <h3>Cart</h3>
       </Link>
     </div>

@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import logo from '../../../assets/icons/48x48.png';
 import logodark from '../../../assets/icons/icons-dark/48x48.png';
 import logo1 from '../../../assets/icons/images.png';

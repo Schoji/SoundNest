@@ -4,8 +4,6 @@
   grid-template-columns: 8fr 1fr;
   grid-template-rows: auto auto 25px auto 1fr;
   gap: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
   overflow: visible;
 }
 .studios Button:not(.deleteButton) {
@@ -37,6 +35,9 @@
 .myStudio:hover {
   background: var(--sectionHover);
 }
+.myStudio:hover img {
+  transform: scale(110%);
+}
 .myStudioImage {
   grid-row: 1/4;
   max-width: 250px;
@@ -51,9 +52,6 @@
   border-radius: 8px;
   transition: all 0.5s ease;
 }
-.myStudio:hover img {
-  transform: scale(110%);
-}
 h1:last-child, .myStudios, .otherStudios {
   grid-column: 1/3;
 }
@@ -62,7 +60,7 @@ h1:last-child, .myStudios, .otherStudios {
   flex-direction: row;
   gap: 10px;
   box-sizing: border-box;
-  padding-top: 25px;
+  padding: 25px 0 10px 0;
   overflow-x: auto;
   overflow-y: hidden;
 }

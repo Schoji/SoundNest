@@ -1,32 +1,35 @@
 .library {
   user-select: none;
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
   gap: 10px;
 }
 .libraryAlbums {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 .libraryProduct {
   background: var(--section);
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto 1fr;
-  gap: 10px;
-  border-radius: 10px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  row-gap: 5px;
+  column-gap: 10px;
   box-sizing: border-box;
   padding: 5px;
-  transition: background-color 150ms;
+  border-radius: 10px;
 }
 .libraryProduct:hover {
   background: var(--sectionHover);
-  transition: background-color 150ms;
+}
+.libraryProduct:hover img {
+  transform: scale(110%);
 }
 .libraryProductImage {
-  width: 100%;
+  grid-row: 1/4;
+  max-width: 250px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -35,20 +38,11 @@
 }
 .libraryProductImage img {
   width: 100%;
-  /* max-width: 300px; */
   border-radius: 8px;
   transition: all 0.5s ease;
 }
-.libraryProduct:hover .libraryProductImage img {
-  transform: scale(110%);
-}
-.libraryProduct > Button {
-  background: var(--accent-gradient);
-  color: var(--font-color);
-  border-radius: 8px;
-  box-shadow: 0px 0px 16px -8px var(--font-color);
-}
-.libraryProduct > Button:hover {
-  box-shadow: 0px 0px 19px -6px var(--font-color);
-  background: var(--accent-gradient-hover);
+@media only screen and (max-width: 1200px) {
+  .libraryAlbums {
+    grid-template-columns: 1fr;
+  }
 }

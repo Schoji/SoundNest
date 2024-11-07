@@ -10,12 +10,13 @@ import './Store.css';
 import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate } from 'react-router-dom';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, } from '@fortawesome/free-solid-svg-icons';
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import { ShoppingCart } from '@mui/icons-material';
 
 const backend_address = 'http://localhost:5000';
 
@@ -41,16 +42,17 @@ export default function Katalog() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   function addToCart(item_id) {
-    let cart_items = JSON.parse("[" + sessionStorage.getItem('cart') + "]")
-    console.log("Cart status", cart_items);
-    if (cart_items.indexOf(parseInt(item_id)) == -1) {
-      sessionStorage.setItem('cart', sessionStorage.getItem('cart') + ',' + item_id)
+    const cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
+    console.log('Cart status', cart_items);
+    if (cart_items.indexOf(parseInt(item_id)) === -1) {
+      sessionStorage.setItem(
+        'cart',
+        `${sessionStorage.getItem('cart')},${item_id}`,
+      );
       navigate(0);
-    }
-    else {
-      console.log("Item is present, ignoring...")
+    } else {
+      console.log('Item is present, ignoring...');
     }
   }
 
@@ -82,17 +84,20 @@ export default function Katalog() {
                   <h2>{value.album}</h2>
                   <p>{value.artist}</p>
                   <p>{value.desc}</p>
+                  <h3>{value.price.toFixed(2)}$</h3>
                   <Button
                     onClick={() => {
                       navigate(`/item/${value.id}`, { replace: true });
                     }}
                   >
-                    Learn more
+                    View details
                   </Button>
-                  <IconButton onClick={() => {
-                    addToCart(value.id);
-                  }}>
-                    <ShoppingCart/>
+                  <IconButton
+                    onClick={() => {
+                      addToCart(value.id);
+                    }}
+                  >
+                    <ShoppingCartRoundedIcon />
                   </IconButton>
                 </CacheProvider>
               </div>

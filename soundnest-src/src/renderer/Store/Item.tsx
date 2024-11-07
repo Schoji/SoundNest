@@ -1,14 +1,25 @@
 import TopBar from '.././TopBar/TopBar';
 import SideBar from ".././SideBar/SideBar";
 import React, { useState, useEffect } from "react";
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
 import '.././App.css';
 import default_album from "../../../assets/album.png"
 import BottomBar from '../BottomBar/BottomBar';
 import { useLocation, useParams } from 'react-router-dom';
 import { Button, Paper, Table, TableCell, TableContainer, TableRow } from '@mui/material';
 import './Item.css';
-const backend_address = "http://localhost:5000";
 import { useNavigate } from 'react-router-dom';
+
+const backend_address = 'http://localhost:5000';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export function OtherItems() {
   const navigate = useNavigate();
@@ -21,10 +32,7 @@ export function OtherItems() {
     fetch(backend_address + "/api/products/")
     .then(response => response.json())
     .then((d) => setData(d))
-    .catch((error) => {
-      console.log("ERRORR")
-      console.log(error)
-    })
+    .catch((error) => console.log(error))
   }
   useEffect(() => {
     Fetch();
@@ -36,14 +44,20 @@ export function OtherItems() {
   }
 
   return (
-    <div className='OtherItems'>
+    <div className='otherItems'>
     {data.map((value, key) =>
             value.id != currentItemID ?
-            <div className='product'>
-              {value.item_path == "/" ? <img src={default_album}></img> : <img src={`data:image/jpeg;base64,${value.item_path}`} />}
-              <h1>{value.album}</h1>
+            <div className="product">
+              <div className="productImage">
+                {value.item_path === '/' ? (
+                  <img src={default_album} />
+                ) : (
+                  <img src={`data:image/jpeg;base64,${value.item_path}`} />
+                )}
+              </div>
+              <h2>{value.album}</h2>
               <p>{value.artist}</p>
-              <p className="product desc">{value.desc}</p>
+              <p>{value.desc}</p>
               <Button key={key} onClick={() => {
                 //BUG
                 console.log(value.id)
@@ -65,19 +79,13 @@ export default function Item() {
     fetch(backend_address + "/api/product/" + item_id)
     .then(response => response.json())
     .then((d) => setData(d))
-    .catch((error) => {
-      console.log("ERRORR")
-      console.log(error)
-    })
+    .catch((error) => console.log(error))
   }
   const getTracks = () => {
     fetch(backend_address + "/api/producttracks/" + item_id)
     .then(response => response.json())
     .then((d) => setTrackData(d))
-    .catch((error) => {
-      console.log("ERRORR")
-      console.log(error)
-    })
+    .catch((error) => console.log(error))
   }
 
   useEffect(() => {
@@ -86,8 +94,8 @@ export default function Item() {
   }, [item_id]);
 
   function trackInfo() {
-    var timestamps: any[] = []
-    var timestampsStr = ["0:00"]
+    const timestamps: any[] = [];
+    const timestampsStr = ['0:00'];
     trackData.map((track, index) => {
       var nextTime;
       if (index == 0) {
@@ -98,8 +106,8 @@ export default function Item() {
         nextTime = timestamps[index - 1] + track.length;
         timestamps.push(nextTime)
       }
-        let minutes = Math.floor(nextTime / 60)
-        let seconds = timestamps[index] % 60
+        const minutes = Math.floor(nextTime / 60)
+        const seconds = timestamps[index] % 60
 
         let timestamp = String(minutes) + ":"
         if (seconds < 10) {
@@ -112,67 +120,81 @@ export default function Item() {
     }
     )
     const value = trackData.map((track, index) => (
-      <TableRow>
-        <TableCell>
-          <p> {timestampsStr[index] + " - " + timestampsStr[index + 1]} </p>
-        </TableCell>
-        <TableCell>
-          <p> {track.name}</p>
-        </TableCell>
-        <TableCell>
-          <p> {track.producer} </p>
-        </TableCell>
-      </TableRow>
+      <div className="track">
+        <div> </div>
+        <p> {index+1} </p>
+        <p> {track.name}</p>
+        <p> {track.producer} </p>
+        <p> {`${timestampsStr[index]} - ${timestampsStr[index + 1]}`} </p>
+      </div>
     ))
-    return (
-      <TableContainer component={Paper}>
-        <Table>
-          {value}
-        </Table>
-      </TableContainer>
-    )
+    return <div className="itemTracks">{value}</div>;
   }
 
   function addToCart() {
-    let cart_items = JSON.parse("[" + sessionStorage.getItem('cart') + "]")
-    console.log("Cart status", cart_items);
-    if (cart_items.indexOf(parseInt(item_id)) == -1) {
-      sessionStorage.setItem('cart', sessionStorage.getItem('cart') + ',' + item_id)
+    const cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
+    console.log('Cart status', cart_items);
+    if (cart_items.indexOf(parseInt(item_id)) === -1) {
+      sessionStorage.setItem(
+        'cart',
+        `${sessionStorage.getItem('cart')},${item_id}`,
+      );
       navigate(`/item/${item_id}`, { replace: true });
-    }
-    else {
-      console.log("Item is present, ignoring...")
+    } else {
+      console.log('Item is present, ignoring...');
     }
   }
 
   return (
-    <div className='all'>
+    <div className="all">
       <TopBar />
-        <SideBar/>
-        <div className='main'>
-          <div className="ItemSite">
-            <div className="Item">
-              <div className="ItemLeft">
-                {data.item_path != "/" ? (<img src={`data:image/jpeg;base64,${data.item_path}`} alt="Loading..."/> ) : <img src={default_album}/>}
-              </div>
-
-              <div className="ItemRight">
-                <h1>{data.album}</h1>
-                <p>by {data.artist}</p>
-                <p>Description: {data.desc}</p>
-                <p>{data.price}$</p>
-                {trackInfo()}
-                <Button variant='contained' onClick={addToCart}>Add to cart </Button>
-              </div>
+      <SideBar />
+      <div className="main">
+        <div className="item">
+          <CacheProvider value={cache}>
+            <div className="itemTitle">
+              <IconButton
+                onClick={() => {
+                  navigate('/Katalog', { replace: true });
+                }}
+              >
+                <ArrowBackIosRoundedIcon />
+              </IconButton>
+              <h1>Album details</h1>
             </div>
-            <div className="ItemBottom">
+            <div className="itemDesc">
+              {data.item_path !== '/' ? (
+                <img
+                  src={`data:image/jpeg;base64,${data.item_path}`}
+                  alt="Loading..."
+                />
+              ) : (
+                <img src={default_album} />
+              )}
+              <h2>{data.album}</h2>
+              <h3>{data.artist}</h3>
+              <p>{data.desc}</p>
+              <h3>
+                {data.price === undefined ? data.price : data.price.toFixed(2)}$
+              </h3>
+              <Button onClick={addToCart}>Add to cart </Button>
+            </div>
+            {trackInfo()}
+            <div className="itemTitle">
+              <IconButton
+                onClick={() => {
+                  navigate('/Katalog', { replace: true });
+                }}
+              >
+                <AlbumRoundedIcon />
+              </IconButton>
               <h1>Other products</h1>
-
-                <OtherItems/>
             </div>
-          </div>
+            <OtherItems />
+          </CacheProvider>
         </div>
-      <BottomBar/>
+      </div>
+      <BottomBar />
     </div>
   );
 }
