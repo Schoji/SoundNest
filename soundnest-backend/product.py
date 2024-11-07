@@ -20,6 +20,7 @@ class ProductModel(db.Model):
     artist = db.Column(db.String(80), nullable=False)
     desc = db.Column(db.String(80), nullable=False)
     price = db.Column(db.Float, nullable=False) #todo
+    # tags = db.Column(db.String(80), default="[]")
     item_path = db.Column(db.String(80), default="/")
 
     def __repr__(self):
@@ -32,6 +33,7 @@ productFields = {
     "artist":fields.String,
     "desc": fields.String,
     "price":fields.Float,
+    # "tags": fields.String,
     "item_path":fields.String,
 }
 
@@ -41,6 +43,7 @@ product_args.add_argument("album", type=str, required=True, help="Name cannot be
 product_args.add_argument("artist", type=str, required=True, help="Studio description")
 product_args.add_argument("desc", type=str, required=True, help="Studio description")
 product_args.add_argument("price", type=str, required=True, help="Studio description")
+# product_args.add_argument("tags", type=str, help="Studio description")
 product_args.add_argument("item_path", type=str, required=False, help="Studio description")
 
 
@@ -57,6 +60,7 @@ class Products(Resource):
                 with open(image_path, "rb") as image_file:
                     data = base64.b64encode(image_file.read()).decode('ascii')
                 product.item_path = data
+                
         return products
     
     @marshal_with(productFields)

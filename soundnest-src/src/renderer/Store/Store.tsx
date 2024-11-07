@@ -10,7 +10,7 @@ import './Store.css';
 import default_album from '../../../assets/album.png';
 import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
@@ -27,7 +27,7 @@ const cache = createCache({
 
 export default function Katalog() {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const Fetch = () => {
     fetch(`${backend_address}/api/products/`)
       .then((response) => response.json())
@@ -61,6 +61,7 @@ export default function Katalog() {
       <TopBar />
       <SideBar />
       <div className="main">
+        {data ?
         <div className="store">
           <h1>Store</h1>
           <Button
@@ -71,7 +72,7 @@ export default function Katalog() {
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
           <div className="storeProducts">
-            {data.map((value) => (
+            {data?.map((value) => (
               <div className="storeProduct">
                 <CacheProvider value={cache}>
                   <div className="storeProductImage">
@@ -104,6 +105,10 @@ export default function Katalog() {
             ))}
           </div>
         </div>
+        :
+        <div>
+          <Skeleton animation="wave" variant="rounded" width={800} height={600} />
+        </div>}
       </div>
       <BottomBar />
     </div>

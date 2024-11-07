@@ -2,7 +2,9 @@ from api import app, db
 from users import *
 from studios import *
 from product import *
+from tags import *
 from transaction import *
+from productTags import *
 from track import *
 import os
 import shutil
@@ -323,7 +325,30 @@ tracks = {
     240, 205, 250, 215, 220,
 ]
 }
+tags =  [
+    "Electronic", "Synthwave", "Ambient", "Pop", "Indie",
+    "Rock", "Hip-hop", "Trap", "Classical", "Jazz",
+    "Experimental", "Chillwave", "House", "Techno", "Dubstep",
+    "Funk", "Disco", "Reggae", "Blues", "Soul",
+    "R&B", "Acoustic", "Alternative", "Folk", "Industrial",
+    "Trance", "Progressive", "Drum and Bass", "Lo-fi", "Hardcore",
+    "Metal", "Punk"
+  ]
+product_tags = {
+  "id_product": [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 
+                 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 
+                 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 
+                 11, 11, 11, 12, 12, 12, 13, 13, 13, 14, 
+                 14, 14, 15, 15, 15, 1, 2, 3, 4, 5, 
+                 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
 
+  "id_tag": [4, 5, 1, 2, 3, 4, 2, 1, 3, 5, 
+             3, 2, 1, 5, 4, 1, 2, 3, 4, 5, 
+             2, 3, 4, 1, 5, 2, 3, 1, 4, 2, 
+             5, 3, 4, 1, 2, 5, 1, 3, 4, 2, 
+             3, 5, 4, 1, 2, 3, 5, 4, 1, 3, 
+             2, 5, 4, 1, 3, 2, 4, 5, 1, 3]
+}
 with app.app_context():
     print("Deleting all records...")
     db.drop_all()
@@ -377,5 +402,17 @@ with app.app_context():
         length = tracks["length"][i]
         track = TrackModel(id_product = id_product, name = name, producer = producer, length = length)
         db.session.add(track)
+        db.session.commit()
+
+    for tag in tags:
+       tag = TagsModel(tag_name = str(tag))
+       db.session.add(tag)
+       db.session.commit()
+    
+    for i in range(len(product_tags[str(list(product_tags.keys())[0])])):
+        id_product = product_tags["id_product"][i]
+        id_tag = product_tags["id_tag"][i]
+        product_tag = ProductTagsModel(id_product = id_product, id_tag = id_tag)
+        db.session.add(product_tag)
         db.session.commit()
 print("Done.")
