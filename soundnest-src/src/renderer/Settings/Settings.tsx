@@ -106,7 +106,7 @@ function ChangePicture(event) {
         console.log(error);
       });
 
-    navigate("/studio", {replace:true});
+    navigate("/studios", {replace:true});
   }
 
 

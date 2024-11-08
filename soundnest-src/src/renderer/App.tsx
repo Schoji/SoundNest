@@ -2,7 +2,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import './TopBar/TopBar.css';
-import Studio from './Studio/Studio';
+import Studios from './Studio/Studios';
 import Katalog from './Store/Store';
 import Library from './Library/Library';
 import Login from './Login/Login'
@@ -15,6 +15,7 @@ import Regulamin from './Regulamin/reg';
 import CreateItem from './Store/CreateItem';
 import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
+import Studio from './Studio/Studio';
 
 export default function App() {
   return (
@@ -22,7 +23,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login/>} />
         <Route path="library" element={<Library />} />
-        <Route path="studio" element={<Studio />} />
+        <Route path="studios" element={<Studios />} />
+        <Route path="studios/:studio_id" element={<Studio />} />
         <Route path="katalog" element={<Katalog />} />
         <Route path="settings" element={<Settings />} />
         <Route path="createstudio" element={<CreateStudio />} />

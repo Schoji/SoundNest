@@ -25,7 +25,7 @@ export default function SideBar() {
           </Link>
         </div>
         <div className="sideobject">
-          <Link to="/studio" className="link1">
+          <Link to="/studios" className="link1">
             <div className="linkAreaLeft">
               <FontAwesomeIcon icon={faMicrophoneLines} size="xl" />
             </div>
