@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useEffect, useState } from 'react';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
+import logoChange from '../Settings/SetLogo';
 
 export const Theme = () => {
   var dark;

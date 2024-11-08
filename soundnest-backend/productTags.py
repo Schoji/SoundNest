@@ -17,7 +17,7 @@ class ProductTagsModel(db.Model):
     id_tag = db.Column(db.Integer, db.ForeignKey(TagsModel.id))
 
     def __repr__(self):
-        return f"Hello I'm a tag. My id is {self.id} and my name is {self.tag_name}."
+        return f"<ProductTagsModel {self.id_product},{self.id_tag}."
 
 ProductTagsFields = {
     "id_product":fields.String,

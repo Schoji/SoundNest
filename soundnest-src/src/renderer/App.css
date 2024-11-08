@@ -24,6 +24,66 @@ html, body, #root, .all {
   --reddish-button-hover: #ff5050;
 }
 
+:root.pink {
+  --bg: #3a1f2d;
+  --window: #260e19;
+  --button: #4a2636;
+  --section: #5c2e41;
+  --sectionHover: #6a374e;
+  --searchBar: #4f2135;
+  --searchBarFocused: #63354b;
+  --font-color: #f2d5d9;
+  --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
+  --reddish-button: #e91e63;
+  --reddish-button-hover: #ff5a8a;
+}
+
+:root.red {
+  --bg: #2e1b1b;
+  --window: #1a0e0e;
+  --button: #472525;
+  --section: #5a2e2e;
+  --sectionHover: #703636;
+  --searchBar: #4a2121;
+  --searchBarFocused: #5e2c2c;
+  --font-color: #f2d2d2;
+  --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
+  --reddish-button: #c62828;
+  --reddish-button-hover: #ff4c4c;
+}
+
+:root.green {
+  --bg: #1b2e1b;
+  --window: #0e1a0e;
+  --button: #254725;
+  --section: #2e5a2e;
+  --sectionHover: #367036;
+  --searchBar: #214a21;
+  --searchBarFocused: #2c5e2c;
+  --font-color: #d2f2d2;
+  --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
+  --reddish-button: #43a047;
+  --reddish-button-hover: #5cd85c;
+}
+
+:root.yellow {
+  --bg: #2e2e1b;
+  --window: #1a1a0e;
+  --button: #474725;
+  --section: #5a5a2e;
+  --sectionHover: #706f36;
+  --searchBar: #4a4a21;
+  --searchBarFocused: #5e5e2c;
+  --font-color: #f2f2d2;
+  --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
+  --reddish-button: #ffb300;
+  --reddish-button-hover: #ffcc33;
+}
+
 :root {
   --bg: #ffffff;
   --window: #c4c4c4;

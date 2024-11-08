@@ -37,10 +37,17 @@ export default function Login() {
             sessionStorage.setItem('surname', data.surname);
             sessionStorage.setItem('email', data.email);
             sessionStorage.setItem('prefered_theme', data.prefered_theme);
+            if (data.prefered_theme == 0) {
+              sessionStorage.setItem("theme", "light");
+            }
+            else {
+              sessionStorage.setItem("theme", "dark");
+            }
             sessionStorage.setItem('credits', data.credits);
             sessionStorage.setItem('avatar_dir', data.avatar_dir);
             sessionStorage.setItem('is_admin', data.is_admin);
             sessionStorage.setItem('cart', '0');
+            sessionStorage.setItem('logo', '0');
             navigate('library', { replace: true }); // can replace with login-successful or something
           }
         })

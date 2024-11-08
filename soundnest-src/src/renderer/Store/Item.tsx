@@ -29,14 +29,14 @@ export function OtherItems() {
   const currentItemID = pathname.replace("/item/", "")
 
   const Fetch = () => {
-    fetch(backend_address + "/api/products/")
+    fetch(backend_address + "/api/other_products/" + currentItemID + "/5")
     .then(response => response.json())
     .then((d) => setData(d))
     .catch((error) => console.log(error))
   }
   useEffect(() => {
     Fetch();
-  }, []);
+  }, [currentItemID]);
 
   function changeSite(id) {
     navigate("/item/" + id + "/", { replace: true});
@@ -58,10 +58,9 @@ export function OtherItems() {
               <p>{value.artist}</p>
               <p>{value.desc}</p>
               <Button key={key} onClick={() => {
-                //BUG
-                console.log(value.id)
+                document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });
                       changeSite(value.id);
-                    }}>Learn more</Button>
+                    }}>View details</Button>
             </div> : null
           )}
     </div>
@@ -149,7 +148,7 @@ export default function Item() {
       <SideBar />
       <div className="main">
         {data ?
-        <div className="item">
+        <div className="item" id="item">
           <CacheProvider value={cache}>
             <div className="itemTitle">
               <IconButton

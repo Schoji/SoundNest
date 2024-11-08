@@ -9,10 +9,20 @@ import '../App.css';
 import './Settings.css';
 import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import logo1 from '../../../assets/icons/images.png';
-import logo from '../../../assets/icons/256x256.png';
-import tux from '../../../assets/icons/tux.png'
-import { ContextExclusionPlugin } from 'webpack';
+
+import logo from '../../../assets/icons/logo.png';
+import logodark from '../../../assets/icons/logo-dark.png';
+
+import logo_red from '../../../assets/icons/logo-red.png';
+import logo_yellow from '../../../assets/icons/logo-yellow.png';
+import logo_green from '../../../assets/icons/logo-green.png';
+import logo_pink from '../../../assets/icons/logo-pink.png';
+
+import logo_red_darker from '../../../assets/icons/logo-red-darker.png';
+import logo_yellow_darker from '../../../assets/icons/logo-yellow-darker.png';
+import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
+import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
+
 
 const backend_address = 'http://localhost:5000';
 
@@ -135,14 +145,20 @@ function ChangePicture(event) {
 
               </div>
               <div className='setLogo'>
+                <Link onClick={() => changeLogo(0)} to="/settings" className="link1">
+                    <img src={sessionStorage.getItem("theme") === "light" ? logo : logodark} />
+                </Link>
                 <Link onClick={() => changeLogo(1)} to="/settings" className="link1">
-                    <img src={logo} alt="dupa" />
+                    <img src={sessionStorage.getItem("theme") === "light" ? logo_red : logo_red_darker}/>
                 </Link>
                 <Link onClick={() => changeLogo(2)} to="/settings" className="link1">
-                    <img src={logo1} alt="dupa" />
+                    <img src={sessionStorage.getItem("theme") === "light" ? logo_yellow : logo_yellow_darker}/>
                 </Link>
                 <Link onClick={() => changeLogo(3)} to="/settings" className="link1">
-                    <img src={tux} alt="dupa" />
+                    <img src={sessionStorage.getItem("theme") === "light" ? logo_green : logo_green_darker}/>
+                </Link>
+                <Link onClick={() => changeLogo(4)} to="/settings" className="link1">
+                    <img src={sessionStorage.getItem("theme") === "light" ? logo_pink : logo_pink_darker} />
                 </Link>
               </div>
             </div>
@@ -154,14 +170,17 @@ function ChangePicture(event) {
   );
 }
 
+// function changeLogo(logoValue) {
+//   if (logoValue === 1) {
+//     sessionStorage.setItem("logo", "1");
+//   }
+//   else if(logoValue === 2) {
+//     sessionStorage.setItem("logo", "2");
+//   }
+//   else if(logoValue === 3) {
+//     sessionStorage.setItem("logo", "3");
+//   }
+// }
 function changeLogo(logoValue) {
-  if (logoValue === 1) {
-    sessionStorage.setItem("logo", "1");
-  }
-  else if(logoValue === 2) {
-    sessionStorage.setItem("logo", "2");
-  }
-  else if(logoValue === 3) {
-    sessionStorage.setItem("logo", "3");
-  }
+  sessionStorage.setItem("logo", logoValue);
 }
