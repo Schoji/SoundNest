@@ -35,7 +35,6 @@ export default function Katalog() {
       .catch((error) => {
         console.log(error);
       });
-    console.log(data);
   };
   useEffect(() => {
     Fetch();

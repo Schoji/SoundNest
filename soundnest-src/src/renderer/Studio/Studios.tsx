@@ -32,14 +32,14 @@ const cache = createCache({
 
 export function AlertDialog({ studio_id }) {
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const DeleteStudio = (studio_id) => {
     fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
     .then(() => navigate('/studio', { replace: true }))
       // .then((response) => console.log(response.json()))
-      .catch((error) => {
-        console.log(error);
-      });
+    .catch((error) => {
+      console.log(error);
+    });
 
   };
 
@@ -88,56 +88,36 @@ export function AlertDialog({ studio_id }) {
 
 export default function Studio() {
   const navigate = useNavigate();
+  const [myStudiosData, setMyStudiosData] = useState(null);
+  const [otherStudiosData, setOtherStudiosData] = useState(null);
   function toCreateStudio() {
     navigate('/createstudio', { replace: true });
   }
-  const [data, setData] = useState<any[]>([]);
-  const Fetch = () => {
+
+  const getMyStudios = () => {
+    fetch(`${backend_address}/api/userstudios/${sessionStorage.getItem("id")}`)
+      .then((response) => response.json())
+      .then((data) => setMyStudiosData(data))
+      .catch((error) => {
+        console.log(error);
+      });
+    // console.log(data);
+  };
+  const getOtherStudios = () => {
     fetch(`${backend_address}/api/studios/`)
       .then((response) => response.json())
-      .then((d) => setData(d))
+      .then((data) => setOtherStudiosData(data))
       .catch((error) => {
         console.log(error);
       });
     // console.log(data);
   };
   useEffect(() => {
-    Fetch();
+    getMyStudios();
+    getOtherStudios();
   }, []);
 
-  function RenderData() {
-    // BUG
-    //
-    if (data.length == 0) {
-      return <CircularProgress />
-    }
-    const returnik = data.map((value) =>
-      value.id_user === sessionStorage.getItem('id') ?
-          <div className="myStudio">
-            <div className="myStudioImage">
-              {value.studio_dir === '/' ? (
-                <img src={default_album} />
-              ) : (
-                <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
-              )}
-            </div>
-            <h2>{value.name}</h2>
-            <p>{value.desc}</p>
-            <Button
-              className="editStudio"
-              onClick={() => {
-                navigate(`/editstudio/${value.id}`, { replace: true });
-              }}
-            >
-              Edit
-            </Button>
-          </div> : null
-    );
-    console.log(returnik)
-    return returnik;
-  }
-
-  const otherStudios = data.map((value) =>
+  const otherStudios = otherStudiosData?.map((value, index) =>
     value.id_user != sessionStorage.getItem("id") ?  (
      <div className="studio">
                 <div className='studioImage'>
@@ -165,9 +145,31 @@ export default function Studio() {
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
+          {myStudiosData ?
           <div className="myStudios">
-            <RenderData />
+          {myStudiosData?.map((myStudio, index) => (
+          <div className="myStudio">
+            <div className="myStudioImage">
+              {myStudio.studio_dir === '/' ? (
+                <img src={default_album} />
+              ) : (
+                <img src={`data:image/jpeg;base64,${myStudio.studio_dir}`} />
+              )}
+            </div>
+            <h2>{myStudio.name}</h2>
+            <p>{myStudio.desc}</p>
+            <Button
+              className="editStudio"
+              onClick={() => {
+                navigate(`/editstudio/${myStudio.id}`, { replace: true });
+              }}
+            >
+              Edit
+            </Button>
           </div>
+           ))}
+           </div>
+          : <CircularProgress /> }
           <h1>Other Studios</h1>
           <div className="otherStudios">
             {otherStudios}

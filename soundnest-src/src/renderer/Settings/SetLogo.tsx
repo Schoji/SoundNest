@@ -17,7 +17,7 @@ export default function logoChange() {
   let setLogo =  sessionStorage.getItem("logo");
   let logoArray = [logo, logo_red, logo_yellow, logo_green, logo_pink]
   let darkLogoArray = [logodark, logo_red_darker, logo_yellow_darker, logo_green_darker, logo_pink_darker]
-  // document.documentElement.classList.add("pink") wink wink
+  // document.documentElement.classList.add("pink")
   if (setLogo === null || setTheme === null) {
     return <img src={logo}/>
   }

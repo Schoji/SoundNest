@@ -50,6 +50,23 @@ users = {
     "Stone", "King", "Fox", "Blue", "Moon",
     "White", "Green", "Silver", "Black", "Gold"
   ],
+  "bio": [
+    "Hi! I'm a huge fan of electronic and ambient music and joined SoundNest to discover unique soundscapes. I love creating and sharing playlists with friends.",
+    "DJ based in NYC here. I use SoundNest to dig up underground techno and synthwave tracks for my sets. Always looking to discover fresh sounds!",
+    "Classical pianist exploring SoundNest to find some ambient and jazz pieces that inspire my arrangements. Music really fuels my creativity.",
+    "Independent filmmaker looking for unique, experimental, and indie tracks to use in my projects. SoundNest has been a great resource for finding hidden gems!",
+    "Just a student with a passion for music, especially alternative and punk. SoundNest is my go-to place to find new bands and create playlists.",
+    "Music producer here, mostly working with pop tracks. I’m always on SoundNest to find fresh beats and remix ideas, especially in electronic and hip-hop.",
+    "Professional guitarist, exploring indie rock and blues on SoundNest. Love using this app to find inspiring tracks and potential collabs.",
+    "Big fan of lo-fi and chillwave here! I love curating relaxing playlists on SoundNest and sharing them with friends. It’s the perfect vibe.",
+    "Vocalist in the R&B and soul scene. SoundNest helps me find collaborators and discover fresh, soulful tracks to expand my playlist.",
+    "Producer with a love for reggae and dubstep! SoundNest has been great for staying updated on trending sounds and building reggae-inspired mixes.",
+    "Indie artist always looking for new sounds! I use SoundNest to find up-and-coming artists and craft unique playlists for my community.",
+    "Aspiring EDM producer, and SoundNest is my main tool for finding new house and techno tracks to remix and share with my listeners.",
+    "Acoustic guitarist and songwriter. I use SoundNest to find mellow, acoustic tunes that inspire my songwriting. Love how easy it is to find gems.",
+    "DJ in the making and huge music fan, mostly into hip-hop and experimental sounds. SoundNest is where I go to keep my mixes fresh and current.",
+    "Composer exploring SoundNest for unique lo-fi and ambient tracks to influence my own music. This app is great for finding fresh inspiration."
+],
   "password": [
     encrypt_string("P@ssw0rd123"), encrypt_string("S3cur3P@ss"), encrypt_string("Br0wnM1k3!"), encrypt_string("EmilyJ0nes#"), encrypt_string("D@v1dC!ark"),
     encrypt_string("St0nePass987!"), encrypt_string("KingL1ght123"), encrypt_string("F0xCh@rlie456"), encrypt_string("BlueSky789@"), encrypt_string("MoonSt@r321"),

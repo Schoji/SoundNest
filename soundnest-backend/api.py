@@ -6,7 +6,6 @@ from track import *
 from productTags import *
 from tags import *
 from flask import request, jsonify
-import werkzeug
 from PIL import Image
 from datetime import datetime
 
@@ -62,36 +61,77 @@ class UserTransactions(Resource):
 class Search(Resource):
    def get(self, search_str):
       products = ProductModel.query.filter(ProductModel.album.like("%" + search_str + "%")).all()
+      studios = StudioModel.query.filter(StudioModel.name.like("%" + search_str + "%")).all()
+      tracks = TrackModel.query.filter(TrackModel.name.like("%" + search_str + "%")).all()
+      
       response = []
+      search_id = 0
       for product in products:
          image_path = UPLOAD_FOLDER + "/products/" + product.item_path
          with open(image_path, "rb") as image_file:
             data = base64.b64encode(image_file.read()).decode('ascii')
-         product.item_path = data
          dataset = { 
-            "id" : product.id,
-            "album" : product.album,
-            "item_path" : data
+            "id" : search_id,
+            "result_id" : product.id,
+            "result_name" : product.album,
+            "result_pic" : data,
+            "type": "product"
          }
+         search_id += 1
          response.append(dataset)
+      
+      for studio in studios:
+         data = "/"
+         image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
+         with open(image_path, "rb") as image_file:
+            data = base64.b64encode(image_file.read()).decode('ascii')
+         dataset = { 
+            "id" : search_id,
+            "result_id" : studio.id,
+            "result_name" : studio.name,
+            "result_pic" : data,
+            "type": "studio"
+         }
+         search_id += 1
+         response.append(dataset)
+
+      for track in tracks:
+         data = "/"
+         product = ProductModel.query.filter_by(id = track.id_product).first()
+         if (image_path != "/"):
+            image_path = UPLOAD_FOLDER + "/products/" + product.item_path
+            with open(image_path, "rb") as image_file:
+               data = base64.b64encode(image_file.read()).decode('ascii')
+         dataset = { 
+            "id" : search_id,
+            "result_id" : track.id,
+            "result_name" : track.name,
+            "result_pic" : data,
+            "type": "track"
+         }
+         search_id += 1
+         response.append(dataset)
+
+
       return response
 
 class UserStudios(Resource):
    @marshal_with(studioFields)
    def get(self, id_user):
       studios = StudioModel.query.filter_by(id_user = id_user).all()
+
+      for studio in studios:
+         if studio.studio_dir != "/":
+            image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
+            with open(image_path, "rb") as image_file:
+                  data = base64.b64encode(image_file.read()).decode('ascii')
+            studio.studio_dir = data
+
       if not studios:
          return 404, "User has no studios."
+         
       return studios
-
-   #  "id":fields.Integer,
-   #  "id_studio":fields.Integer,
-   #  "album":fields.String,
-   #  "artist":fields.String,
-   #  "desc": fields.String,
-   #  "price":fields.Float,
-   #  # "tags": fields.String,
-   #  "item_path":fields.String,
+   
 class ProductsWithTags(Resource):
    def get(self):
       products = ProductModel.query.all()
@@ -210,6 +250,34 @@ class getOtherStudios(Resource):
       
       return studios
 
+class getStudioWithUser(Resource):
+   def get(self, id_studio):
+      studio = StudioModel.query.filter_by(id = id_studio).first()
+      user = UserModel.query.filter_by(id = studio.id_user).first()
+
+      if studio.studio_dir != "/":
+         image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
+         with open(image_path, "rb") as image_file:
+               data = base64.b64encode(image_file.read()).decode('ascii')
+         studio.studio_dir = data
+      
+      if user.avatar_dir != "/":
+         image_path = UPLOAD_FOLDER + "/avatars/" + user.avatar_dir
+         with open(image_path, "rb") as image_file:
+            data = base64.b64encode(image_file.read()).decode('ascii')
+         user.avatar_dir = data   
+
+      dataset = {
+         "id" : studio.id,
+         "id_user" : studio.id_user,
+         "name": studio.name,
+         "desc": studio.desc,
+         "studio_dir": studio.studio_dir,
+         "user_name" : user.name,
+         "user_surname" : user.surname,
+         "user_picture" : user.avatar_dir
+      }
+      return dataset
 
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
@@ -218,6 +286,7 @@ api.add_resource(Studios, "/api/studios/")
 api.add_resource(Studio, "/api/studios/<int:id>")
 api.add_resource(getStudiosProducts, "/api/studios_products/<int:id_studio>")
 api.add_resource(getOtherStudios, "/api/other_studios/<int:id_studio>")
+api.add_resource(getStudioWithUser, "/api/studio_with_user/<int:id_studio>")
 api.add_resource(Products, "/api/products/")
 api.add_resource(Product, "/api/product/<int:id>")
 api.add_resource(ProductsWithTags, "/api/products_with_tags/")

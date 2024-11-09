@@ -33,7 +33,7 @@ export default function Studio() {
   const [otherStudiosData, setOtherStudiosData] = useState(null)
 
   const getStudio = () => {
-    fetch(backend_address + "/api/studios/" + studio_id)
+    fetch(backend_address + "/api/studio_with_user/" + studio_id)
     .then(response => response.json())
     .then((data) => setData(data))
     .catch((error) => console.log(error))
@@ -109,7 +109,18 @@ export default function Studio() {
               )}
               <h2>{data.name}</h2>
               <p>{data.desc}</p>
-
+              <h2>Studio is owned by:</h2>
+              {data.user_picture !== '/' ? (
+                <img
+                  src={`data:image/jpeg;base64,${data.user_picture}`}
+                  alt="Loading..."
+                />
+              ) : (
+                <img src={default_album} />
+              )}
+              <p>{data.user_name}</p>
+              <p>{data.user_surname}</p>
+              <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>Check out</Button>
             </div>
             {sp_data ?
             <div>

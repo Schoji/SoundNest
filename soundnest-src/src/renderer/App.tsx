@@ -16,6 +16,7 @@ import CreateItem from './Store/CreateItem';
 import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
 import Studio from './Studio/Studio';
+import User from './User/User';
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="studios/:studio_id" element={<Studio />} />
         <Route path="katalog" element={<Katalog />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="user/:user_id" element={<User />} />
         <Route path="createstudio" element={<CreateStudio />} />
         <Route path="createitem" element={<CreateItem />} />
         <Route path="item/:item_id" element={<Item />} />

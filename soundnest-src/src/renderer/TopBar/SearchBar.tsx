@@ -4,6 +4,7 @@ import createCache from '@emotion/cache';
 import "./TopBar.css"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import default_album from '../../../assets/album.png';
 
 const cache = createCache({
   key: 'css',
@@ -39,9 +40,7 @@ export default function SearchBar() {
       document.getElementById("outputBox").style.display = "block";
     }
   }
-  function toItem(id) {
-    navigate(`/item/${id}`, { replace: true });
-  }
+
   return (
     <CacheProvider value={cache}>
       <input type="text" id="input" className="searchInput" placeholder="Search"
@@ -53,10 +52,27 @@ export default function SearchBar() {
       }}
       />
       <div id="outputBox" className="output" onClick={() => console.log("todo")}>
-        {searchResults !== undefined ? searchResults.map((value, key) => (
-        <div className="outputItem" onClick={() => toItem(value.id)}>
-          <img src={`data:image/jpeg;base64,${value.item_path}`}/>
-          {value.album}
+        {searchResults !== undefined ? searchResults.map((value, index) => (
+        <div className="outputItem" onClick={() =>
+        {
+          if (value.type === "product" || value.type === "track") {
+            navigate(`/item/${value.id}`, { replace: true });
+          }
+          else if (value.type === "studio") {
+            navigate(`/studio/${value.id}`, { replace: true });
+          }
+          else {
+            console.log("co jest kurwa");
+          }
+        }
+        }>
+          {value.result_pic != "/" ?
+          <img src={`data:image/jpeg;base64,${value.result_pic}`} key={index}/>
+          :
+          <img src={default_album} key={index}/>
+          }
+          {value.result_name}
+          <span style={{fontWeight: 800}}> {value.type}</span>
         </div>
          )): <h1>To kurwa nie powinno być otwarte</h1>}
       </div>

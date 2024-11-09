@@ -32,6 +32,7 @@ class UserModel(db.Model):
     surname = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    bio = db.Column(db.String(80))
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
     credits = db.Column(db.Float, default=0)
     avatar_dir = db.Column(db.String(80), default="/") 
@@ -44,6 +45,7 @@ userFields = {
     "id":fields.Integer,
     "username":fields.String,
     "name":fields.String,
+    "bio": fields.String,
     "surname":fields.String,
     "email":fields.String,
     "password":fields.String,
@@ -57,6 +59,7 @@ user_args = reqparse.RequestParser()
 user_args.add_argument("name", type=str, required=True, help="Name cannot be blank")
 user_args.add_argument("surname", type=str, required=True, help="Surname cannot be blank")
 user_args.add_argument("username", type=str, required=True, help="Username cannot be blank")
+user_args.add_argument("bio", type=str, help="Username cannot be blank")
 user_args.add_argument("email", type=str, required=True, help="Email cannot be blank")
 user_args.add_argument("password", type=str, required=False, help="Password cannot be blank")
 user_args.add_argument("credits", type=float, help="Password cannot be blank")
@@ -78,7 +81,7 @@ class Users(Resource):
     @marshal_with(userFields)
     def post(self):
         args = user_args.parse_args()
-        user = UserModel(username=args["username"], email=args["email"], name=args["name"], surname=args["surname"], password=args["password"], is_admin=args["is_admin"])
+        user = UserModel(username=args["username"], email=args["email"], name=args["name"], bio=args["bio"], surname=args["surname"], password=args["password"], is_admin=args["is_admin"])
         if args["avatar_dir"]:
             file = args["avatar_dir"]
             file = file.split(",")[1]
@@ -96,8 +99,6 @@ class Users(Resource):
 
 class User(Resource):
     @marshal_with(userFields)
-
-
     def get(self, id):  
         user = UserModel.query.filter_by(id=id).first()
         if not user:
@@ -140,6 +141,8 @@ class User(Resource):
             user.surname = args["surname"]
         if args["credits"]:
             user.credits = args["credits"]
+        if args["bio"]:
+            user.bio = args["bio"]
         db.session.commit()
         return user
     
