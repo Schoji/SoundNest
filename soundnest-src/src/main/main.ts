@@ -26,12 +26,6 @@ class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 let loginWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
-
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -170,8 +164,6 @@ const createLoginWindow = async () => {
     loginWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(loginWindow);
-  menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   loginWindow.webContents.setWindowOpenHandler((edata) => {
@@ -200,13 +192,24 @@ app
   .whenReady()
   .then(() => {
     createLoginWindow();
-    ipcMain.on('openMain', async (event, arg) => {
-      const msgTemplate = (openMain: string) => `WindowHandler ${openMain}`;
-      console.log(msgTemplate(arg));
-      event.reply('ipc-example', msgTemplate(arg));
-      createWindow();
-      // mainWindow?.webContents.send("sendDataToUI", msgTemplate(arg)) todo
+    ipcMain.on('open-main-window', async (event, arg) => {
+      var creds = arg;
+      loginWindow?.hide();
+      loginWindow?.webContents.closeDevTools();
+
+      createWindow()
+      ipcMain.on("did-finish-load", async (event, arg) => {
+        console.log("finished loading..")
+        mainWindow?.webContents.send("soundnest-ipc", creds)
       })
+      })
+
+      ipcMain.on('open-login-window', async (event, arg) => {
+        mainWindow?.hide();
+        mainWindow?.webContents.closeDevTools();
+
+        createLoginWindow();
+        })
     // app.on('activate', () => {
     //   // On macOS it's common to re-create a window in the app when the
     //   // dock icon is clicked and there are no other windows open.

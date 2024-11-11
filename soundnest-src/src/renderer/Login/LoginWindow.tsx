@@ -1,13 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TopBar from '../TopBar/TopBar';
-import SideBar from '../SideBar/SideBar';
-import BottomBar from '../BottomBar/BottomBar';
 import './Login.css';
 
 const backend_address = 'http://localhost:5000';
@@ -45,7 +37,7 @@ export default function LoginWindow() {
             sessionStorage.setItem('avatar_dir', data.avatar_dir);
             sessionStorage.setItem('is_admin', data.is_admin);
             sessionStorage.setItem('cart', '0');
-            window.electron.ipcRenderer.sendMessage('openMain', JSON.stringify(data));
+            window.electron.ipcRenderer.sendMessage('open-main-window', JSON.stringify(data));
           }
         })
         .catch((error) => {

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { MemoryRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
 import './App.css';
 import './TopBar/TopBar.css';
 import Studio from './Studio/Studio';
 import Katalog from './Store/Store';
 import Library from './Library/Library';
-import Login from './Login/Login'
 import Settings from './Settings/Settings';
 import CreateStudio from './Studio/CreateStudio';
 import Item from './Store/Item';
@@ -16,17 +15,51 @@ import CreateItem from './Store/CreateItem';
 import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
 import LoginWindow from './Login/LoginWindow';
+import { useEffect, useState } from 'react';
+
+export function GetCreds() {
+  useEffect(() => {
+    window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
+      const userInfo = JSON.parse(arg)
+      sessionStorage.setItem('id', userInfo.id);
+      sessionStorage.setItem('username', userInfo.username);
+      sessionStorage.setItem('name', userInfo.name);
+      sessionStorage.setItem('surname', userInfo.surname);
+      sessionStorage.setItem('email', userInfo.email);
+      sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+      sessionStorage.setItem('credits', userInfo.credits);
+      sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
+      sessionStorage.setItem('is_admin', userInfo.is_admin);
+      sessionStorage.setItem('cart', '0');
+      console.log("creds updated")
+    })
+  }, [])
+  return <Katalog/>
+}
 
 export default function App() {
   const view = String(global.location.search).slice(-1)
-  console.log(view)
-
-
+  useEffect(() => {
+    window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
+      const userInfo = JSON.parse(arg)
+      sessionStorage.setItem('id', userInfo.id);
+      sessionStorage.setItem('username', userInfo.username);
+      sessionStorage.setItem('name', userInfo.name);
+      sessionStorage.setItem('surname', userInfo.surname);
+      sessionStorage.setItem('email', userInfo.email);
+      sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+      sessionStorage.setItem('credits', userInfo.credits);
+      sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
+      sessionStorage.setItem('is_admin', userInfo.is_admin);
+      sessionStorage.setItem('cart', '0');
+      console.log("creds updated")
+    })
+  }, [])
   if (parseInt(view) == 1) {
     return (
       <Router>
         <Routes>
-          <Route path="/" element={<Login/>} />
+          <Route path="/" element={<GetCreds/>} />
           <Route path="library" element={<Library />} />
           <Route path="studio" element={<Studio />} />
           <Route path="katalog" element={<Katalog />} />
