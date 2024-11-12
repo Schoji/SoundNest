@@ -24,7 +24,8 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-let loginWindow: BrowserWindow | null = null;
+let loginWindow: BrowserWindow | null = null
+let splashWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -109,11 +110,10 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
   new AppUpdater();
 };
+
+
 
 const createLoginWindow = async () => {
   if (isDebug) {
@@ -129,6 +129,7 @@ const createLoginWindow = async () => {
   };
 
   loginWindow = new BrowserWindow({
+    show: false,
     autoHideMenuBar: true,
     titleBarOverlay: {
       color: '#00000000',
@@ -149,21 +150,15 @@ const createLoginWindow = async () => {
 
   loginWindow.loadURL(resolveHtmlPath('index.html', 2));
 
-  loginWindow.on('ready-to-show', () => {
-    if (!loginWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      loginWindow.minimize();
-    } else {
-      loginWindow.show();
-    }
+  loginWindow.once('ready-to-show', () => {
+      splashWindow?.hide();
+      splashWindow?.webContents.closeDevTools();
+      loginWindow?.show();
   });
 
   loginWindow.on('closed', () => {
     loginWindow = null;
   });
-
 
   // Open urls in the user's browser
   loginWindow.webContents.setWindowOpenHandler((edata) => {
@@ -175,6 +170,31 @@ const createLoginWindow = async () => {
   // eslint-disable-next-line
   new AppUpdater();
 };
+const createSplashWindow = async() => {
+  const RESOURCES_PATH = app.isPackaged
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../../assets');
+
+  const getAssetPath = (...paths: string[]): string => {
+    return path.join(RESOURCES_PATH, ...paths);
+  };
+
+  splashWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    autoHideMenuBar: true,
+    width: 240,
+    height: 320,
+    maxWidth: 240,
+    maxHeight: 320,
+    resizable: false,
+    maximizable: false,
+    icon: getAssetPath('icon.png'),
+    webPreferences: {
+      devTools: false
+      }
+  });
+    splashWindow.loadFile(path.resolve(__dirname, '../../src/renderer/splash.html'))
+}
 
 /**
  * Add event listeners...
@@ -191,7 +211,10 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    createLoginWindow();
+    createSplashWindow();
+    loginWindow?.hide();
+    createLoginWindow()
+
     ipcMain.on('open-main-window', async (event, arg) => {
       var creds = arg;
       loginWindow?.hide();
