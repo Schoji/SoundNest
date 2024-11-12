@@ -167,6 +167,7 @@ export default function AccountMenu() {
         </MenuItem>
         <MenuItem onClick={() => {
           sessionStorage.clear();
+          window.electron.ipcRenderer.sendMessage('open-login-window', "LOL");
         }}>
           <ListItemIcon>
             <Logout fontSize="small" />

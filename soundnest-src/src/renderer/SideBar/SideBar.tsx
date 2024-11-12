@@ -45,16 +45,6 @@ export default function SideBar() {
           </Link>
         </div>
         <div className="sideobject">
-          <Link to="/" className="link1">
-            <div className="linkAreaLeft">
-              <FontAwesomeIcon icon={faUser} size="xl" />
-            </div>
-            <div className="linkAreaRight">
-              <p>Login</p>
-            </div>
-          </Link>
-        </div>
-        <div className="sideobject">
           <Link to="/settings" className="link1">
             <div className="linkAreaLeft">
               <FontAwesomeIcon icon={faGear} size="xl" />

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You are not supposed to see this</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins');
+    html, body {
+      font-family: Poppins;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      -webkit-app-region: drag;
+      background: linear-gradient(140deg, #00b8d9 0%, #008ba4 100%);
+      /* color: white; */
+      font-weight: bold;
+      overflow: hidden;
+    }
+    img {
+      width: 80%;
+      animation-name: logo-rotate;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      -webkit-app-region: no-drag;
+    }
+    @keyframes logo-rotate {
+      from {transform:  rotate(0turn);}
+      to {transform:  rotate(1turn);}
+    }
+    @keyframes moron {
+      from {transform:  rotate(0turn);}
+      to {transform:  rotate(40turn);}
+    }
+  </style>
+</head>
+<body>
+  <img id="image" onclick="clickero()" src="../../assets/logo.png">
+  <p id="loading">LOADING</p>
+  <script>
+    var clicks = 0;
+    function clickero () {
+      clicks++;
+      if (clicks > 5) {
+        console.log(document.getElementById("image").style.animation)
+        document.getElementById("image").style.animation = "moron 1s";
+        document.getElementById("image").style.animationIterationCount = "infinite";
+      }
+    }
+    var dots = 0
+    setInterval(() => {
+      if (dots < 3) {
+        document.getElementById("loading").innerHTML = document.getElementById("loading").textContent + "."
+        dots++
+      }
+      else {
+        dots = 0
+        loading.innerHTML = "LOADING"
+      }
+    },[500])
+  </script>
+</body>
+</html>

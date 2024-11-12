@@ -24,12 +24,8 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
+let loginWindow: BrowserWindow | null = null
+let splashWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -114,11 +110,91 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
+  new AppUpdater();
+};
+
+
+
+const createLoginWindow = async () => {
+  if (isDebug) {
+    await installExtensions();
+  }
+
+  const RESOURCES_PATH = app.isPackaged
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../../assets');
+
+  const getAssetPath = (...paths: string[]): string => {
+    return path.join(RESOURCES_PATH, ...paths);
+  };
+
+  loginWindow = new BrowserWindow({
+    show: false,
+    autoHideMenuBar: true,
+    titleBarOverlay: {
+      color: '#00000000',
+      symbolColor: '#FFFFFF',
+      height: 60,
+    },
+    width: 800,
+    minWidth: 600,
+    height: 600,
+    minHeight: 500,
+    icon: getAssetPath('icon.png'),
+    webPreferences: {
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  loginWindow.loadURL(resolveHtmlPath('index.html', 2));
+
+  loginWindow.once('ready-to-show', () => {
+      splashWindow?.hide();
+      splashWindow?.webContents.closeDevTools();
+      loginWindow?.show();
+  });
+
+  loginWindow.on('closed', () => {
+    loginWindow = null;
+  });
+
+  // Open urls in the user's browser
+  loginWindow.webContents.setWindowOpenHandler((edata) => {
+    shell.openExternal(edata.url);
+    return { action: 'deny' };
+  });
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
 };
+const createSplashWindow = async() => {
+  const RESOURCES_PATH = app.isPackaged
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../../assets');
+
+  const getAssetPath = (...paths: string[]): string => {
+    return path.join(RESOURCES_PATH, ...paths);
+  };
+
+  splashWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    autoHideMenuBar: true,
+    width: 240,
+    height: 320,
+    maxWidth: 240,
+    maxHeight: 320,
+    resizable: false,
+    maximizable: false,
+    icon: getAssetPath('icon.png'),
+    webPreferences: {
+      devTools: false
+      }
+  });
+    splashWindow.loadFile(path.resolve(__dirname, '../../src/renderer/splash.html'))
+}
 
 /**
  * Add event listeners...
@@ -135,11 +211,32 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    createWindow();
-    app.on('activate', () => {
-      // On macOS it's common to re-create a window in the app when the
-      // dock icon is clicked and there are no other windows open.
-      if (mainWindow === null) createWindow();
-    });
+    createSplashWindow();
+    loginWindow?.hide();
+    createLoginWindow()
+
+    ipcMain.on('open-main-window', async (event, arg) => {
+      var creds = arg;
+      loginWindow?.hide();
+      loginWindow?.webContents.closeDevTools();
+
+      createWindow()
+      ipcMain.on("did-finish-load", async (event, arg) => {
+        console.log("finished loading..")
+        mainWindow?.webContents.send("soundnest-ipc", creds)
+      })
+      })
+
+      ipcMain.on('open-login-window', async (event, arg) => {
+        mainWindow?.hide();
+        mainWindow?.webContents.closeDevTools();
+
+        createLoginWindow();
+        })
+    // app.on('activate', () => {
+    //   // On macOS it's common to re-create a window in the app when the
+    //   // dock icon is clicked and there are no other windows open.
+    //   if (mainWindow === null) createWindow();
+    // });
   })
   .catch(console.log);
