@@ -1,6 +1,7 @@
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import logo from '../../../assets/icons/128x128.png';
 
 const backend_address = 'http://localhost:5000';
 
@@ -47,22 +48,27 @@ export default function LoginWindow() {
     Fetch();
   }
   return (
-      <div>
-          <h1>Login</h1>
-          <form onSubmit={SessionStorage}>
-            <input
-              name="username"
-              placeholder="username"
-              defaultValue="johndoe123"
-            />
-            <input
-              name="password"
-              type="password"
-              placeholder="password"
-              defaultValue="P@ssw0rd123"
-            />
-            <input type="submit" />
-          </form>
+      <div className='loginScreen'>
+        <div className='loginLogo'>
+          <img src={logo} alt="appLogo" />
+        </div>
+        <div className='loginForm'>
+            <form onSubmit={SessionStorage}>
+              <input
+                name="username"
+                type='text'
+                placeholder="username"
+                defaultValue="johndoe123"
+              />
+              <input
+                name="password"
+                type="password"
+                placeholder="password"
+                defaultValue="P@ssw0rd123"
+              />
+              <input type="submit" />
+            </form>
+          </div>
       </div>
   );
 }
