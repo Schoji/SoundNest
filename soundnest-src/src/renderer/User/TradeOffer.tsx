@@ -33,8 +33,10 @@ export default function Tradeoffer() {
   const [userInfo1, setUserInfo1] = useState(null);
   const [userInfo2, setUserInfo2] = useState(null);
 
-  const [myItems, setMyItems] = useState(null);
-  const [theirItems, setTheirItems] = useState(null);
+  const [myItems, setMyItems] = useState([]);
+  const [theirItems, setTheirItems] = useState([]);
+
+  const [tradeToken, setTradeToken] = useState(null)
 
   const getUserInfo1 = () => {
     fetch(backend_address + "/api/users/" + sessionStorage.getItem("id"))
@@ -65,6 +67,62 @@ export default function Tradeoffer() {
     .catch((error) => console.log(error))
   }
 
+  function sendTradeOffer() {
+    console.log("Trade offer function.")
+    if (myItems?.length < 1 && theirItems?.length < 1) {
+      console.log("idiot")
+      return null
+    }
+      console.log("Getting unique token")
+      fetch(backend_address + "/api/trade_token/")
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data.uuid)
+        if (myItems.length > 0) {
+          myItems.map((item, index) => {
+            console.log("Query number:", index)
+            const requestOptions = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                trade_id: data.uuid,
+                id_sender: userInfo1.id,
+                id_receiver: userInfo2.id,
+                id_item_sent: item.id,
+                id_item_received: null
+              })
+            }
+            fetch(backend_address + "/api/trade_offers/", requestOptions)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch((error) => console.log(error))
+          })
+        }
+        if (theirItems.length > 0) {
+          theirItems.map((item, index) => {
+            console.log("Query number:", index)
+            const requestOptions = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                trade_id: data.uuid,
+                id_sender: userInfo1.id,
+                id_receiver: userInfo2.id,
+                id_item_sent: null,
+                id_item_received: item.id
+              })
+            }
+            fetch(backend_address + "/api/trade_offers/", requestOptions)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch((error) => console.log(error))
+          })
+        }
+      })
+      .catch((error) => console.log(error))
+      navigate("/katalog", {replace: true})
+  }
+
   useEffect(() => {
     getUserProducts1();
     getUserProducts2();
@@ -72,24 +130,9 @@ export default function Tradeoffer() {
     getUserInfo2();
   }, [user_id]);
 
-  var merged = {id : [], item_path : [], album : [], artist : []}
   useEffect(() => {
     console.log("my items: ", myItems)
-    merged = {id : [], item_path : [], album : [], artist : []}
-    userProducts1?.map((product, index) => {
-      merged.id.push(product.id)
-      merged.album.push(product.album)
-      merged.artist.push(product.artist)
-      merged.item_path.push(product.item_path)
-    })
-    console.log(merged.item_path[merged.id.findIndex((element) => element == 4)])
-    // console.log(merged.item_path[merged.id.findINd])
-    // myItems?.slice(0, -1).split(";").map((element) => {
-    //   console.log(element)
-    // })
-    // if (userProducts1 !== undefined && userProducts1 !== null) {
-    //   console.log(userProducts1[1]?.item_path)
-    // }
+    console.log("their items: ", theirItems)
   },[myItems])
 
   return (
@@ -113,6 +156,12 @@ export default function Tradeoffer() {
               <div className='itemList'>
             {userProducts1?.map((product, index) => (
               <div onClick={() => {
+                var dataset = {
+                  id: product.id,
+                  album: product.album,
+                  artist: product.artist,
+                  item_path: product.item_path
+                }
                 if (sessionStorage.getItem("tradeoffer_mine") === undefined) {
                   sessionStorage.setItem("tradeoffer_mine", "")
                 }
@@ -120,12 +169,19 @@ export default function Tradeoffer() {
                   document.getElementById(`image-${product.id}`)?.classList.remove("selected")
                   sessionStorage.setItem("tradeoffer_mine", sessionStorage.getItem("tradeoffer_mine")?.replaceAll(`${product.id};`, ''))
 
+                  setMyItems(myItems.filter((item) => {return item.id != product.id}))
+
                 }
                 else {
                   document.getElementById(`image-${product.id}`)?.classList.add("selected")
                   sessionStorage.setItem("tradeoffer_mine", sessionStorage.getItem("tradeoffer_mine") + product.id + ";")
+                  if (myItems === undefined || myItems === null) {
+                    setMyItems([dataset])
+                  }
+                  else {
+                    setMyItems(myItems => [...myItems, dataset])
+                  }
                 }
-                setMyItems(sessionStorage.getItem("tradeoffer_mine"))
               }}>
                 {product.item_path !== '/' ? (
                 <img
@@ -136,6 +192,7 @@ export default function Tradeoffer() {
               ) : (
                 <img src={default_album} />
               )}
+              <p>{product.album}</p>
               </div>
             ))}
             </div>
@@ -154,19 +211,31 @@ export default function Tradeoffer() {
               <div className='itemList'>
               {userProducts2?.map((product, index) => (
               <div onClick={() => {
+                var dataset = {
+                  id: product.id,
+                  album: product.album,
+                  artist: product.artist,
+                  item_path: product.item_path
+                }
                 if (sessionStorage.getItem("tradeoffer_theirs") === undefined) {
                   sessionStorage.setItem("tradeoffer_theirs", "")
                 }
                 if (document.getElementById(`image_theirs-${product.id}`)?.classList.contains("selected")) {
                   document.getElementById(`image_theirs-${product.id}`)?.classList.remove("selected")
                   sessionStorage.setItem("tradeoffer_theirs", sessionStorage.getItem("tradeoffer_theirs")?.replaceAll(`${product.id};`, ''))
-
+                  setTheirItems(theirItems.filter((item) => {return item.id != product.id}))
                 }
                 else {
                   document.getElementById(`image_theirs-${product.id}`)?.classList.add("selected")
                   sessionStorage.setItem("tradeoffer_theirs", sessionStorage.getItem("tradeoffer_theirs") + product.id + ";")
+                  if (theirItems === undefined || theirItems === null) {
+                    setTheirItems([dataset])
+                  }
+                  else {
+                    setTheirItems(theirItems => [...theirItems, dataset])
+                  }
                 }
-                setTheirItems(sessionStorage.getItem("tradeoffer_theirs"))
+
               }}>
                 {product.item_path !== '/' ? (
                 <img
@@ -177,27 +246,45 @@ export default function Tradeoffer() {
               ) : (
                 <img src={default_album} />
               )}
+              <p>{product.album}</p>
               </div>
             ))}
             </div>
           </div>
           <div>
-            <h1>You get</h1>
-            {myItems?.length > 0 ? myItems?.slice(0, -1)?.split(";")?.map((item, index) => (
-              <img
-                // src={`data:image/jpeg;base64,${merged.item_path[merged.id.findIndex((element) => element == parseInt(item))]}`}
-                src={`data:image/jpeg;base64,${merged.item_path[0]}`}
-                alt="Loading..."
-              />
-            )): null}
+            <h1>You give</h1>
+              <div className='itemList'>
+              {myItems?.length > 0 ? myItems?.map((item, index) => (
+                <div>
+                  <img
+                    // src={`data:image/jpeg;base64,${merged.item_path[merged.id.findIndex((element) => element == parseInt(item))]}`}
+                    src={`data:image/jpeg;base64,${item.item_path}`}
+                    alt="Loading..."
+                  />
+                  <p>{item.album}</p>
+                </div>
+              )): null}
+            </div>
           </div>
           <div>
-            <h1>You lose</h1>
+            <h1>You gain</h1>
+            <div className='itemList'>
+              {theirItems?.length > 0 ? theirItems?.map((item, index) => (
+                <div>
+                  <img
+                    // src={`data:image/jpeg;base64,${merged.item_path[merged.id.findIndex((element) => element == parseInt(item))]}`}
+                    src={`data:image/jpeg;base64,${item.item_path}`}
+                    alt="Loading..."
+                  />
+                  <p>{item.album}</p>
+                </div>
+              )): null}
+            </div>
           </div>
         </div>
         <CacheProvider value={cache}>
           <div className='felix'>
-          <Button>
+          <Button variant='contained' onClick={sendTradeOffer}>
             Send Tradeoffer
           </Button>
         </div>

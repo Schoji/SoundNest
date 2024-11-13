@@ -6,6 +6,7 @@ import {
   faUser,
   faGear,
   faUserCog,
+  faChartPie,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import './SideBar.css';
@@ -51,6 +52,16 @@ export default function SideBar() {
             </div>
             <div className="linkAreaRight">
               <p>Settings</p>
+            </div>
+          </Link>
+        </div>
+        <div className="sideobject">
+          <Link to="/tradeoffer/2" className="link1">
+            <div className="linkAreaLeft">
+              <FontAwesomeIcon icon={faChartPie} size="xl" />
+            </div>
+            <div className="linkAreaRight">
+              <p>Trade</p>
             </div>
           </Link>
         </div>

@@ -5,6 +5,7 @@ from transaction import *
 from track import *
 from productTags import *
 from tags import *
+from trade_offer import *
 from flask import request, jsonify
 from PIL import Image
 from datetime import datetime
@@ -305,6 +306,9 @@ api.add_resource(UserProducts, "/api/userproducts/<int:id_user>/")
 api.add_resource(UserTransactions, "/api/usertransactions/<int:id_user>/")
 api.add_resource(UserStudios, "/api/userstudios/<int:id_user>/")
 api.add_resource(Search, "/api/search/<string:search_str>/")
+api.add_resource(TradeOffers, "/api/trade_offers/")
+api.add_resource(TradeOffer, "/api/trade_offers/<int:id>/")
+api.add_resource(getTradeToken, "/api/trade_token/")
 
 @app.route("/")
 def home():

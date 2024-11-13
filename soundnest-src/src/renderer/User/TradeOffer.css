@@ -13,6 +13,7 @@
 }
 .itemList img {
   width: 100%;
+  cursor: pointer;
 }
 
 .itemList img.selected {
