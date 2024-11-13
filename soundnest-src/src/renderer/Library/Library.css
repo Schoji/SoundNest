@@ -22,7 +22,7 @@
   border-radius: 10px;
 }
 .libraryProduct:hover {
-  background: var(--sectionHover);
+  background: var(--section-hover);
 }
 .libraryProduct:hover img {
   transform: scale(110%);

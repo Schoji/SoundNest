@@ -33,7 +33,7 @@
   border-radius: 10px;
 }
 .myStudio:hover {
-  background: var(--sectionHover);
+  background: var(--section-hover);
 }
 .myStudio:hover img {
   transform: scale(110%);
@@ -78,7 +78,7 @@ h1:last-child, .myStudios, .otherStudios {
   transition: background-color 150ms;
 }
 .studio:hover {
-  background: var(--sectionHover);
+  background: var(--section-hover);
   transition: background-color 150ms;
 }
 .studioImage {

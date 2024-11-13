@@ -106,7 +106,7 @@
   padding: 5px;
 }
 .product:hover {
-  background: var(--sectionHover);
+  background: var(--section-hover);
 }
 .product:hover img {
   transform: scale(110%);

@@ -14,9 +14,10 @@ html, body, #root, .all {
   --window: #000000;
   --button: #1f1f1f;
   --section: #252525;
-  --sectionHover: #2a2a2a;
-  --searchBar: #202020;
-  --searchBarFocused: #292929;
+  --section-hover: #2a2a2a;
+  --searchbar: #151515;
+  --searchbar-focused: #202020;
+  --searchbar-focused-hover: #282828;
   --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #0093ad 0%, #005867 100%);
   --accent-gradient-hover: linear-gradient(140deg, #0094ae 0%, #007a90 100%);
@@ -29,9 +30,9 @@ html, body, #root, .all {
   --window: #260e19;
   --button: #4a2636;
   --section: #5c2e41;
-  --sectionHover: #6a374e;
-  --searchBar: #4f2135;
-  --searchBarFocused: #63354b;
+  --section-hover: #6a374e;
+  --searchbar: #4f2135;
+  --searchbar-focused: #63354b;
   --font-color: #f2d5d9;
   --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
@@ -44,9 +45,9 @@ html, body, #root, .all {
   --window: #1a0e0e;
   --button: #472525;
   --section: #5a2e2e;
-  --sectionHover: #703636;
-  --searchBar: #4a2121;
-  --searchBarFocused: #5e2c2c;
+  --section-hover: #703636;
+  --searchbar: #4a2121;
+  --searchbar-focused: #5e2c2c;
   --font-color: #f2d2d2;
   --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
@@ -59,9 +60,9 @@ html, body, #root, .all {
   --window: #0e1a0e;
   --button: #254725;
   --section: #2e5a2e;
-  --sectionHover: #367036;
-  --searchBar: #214a21;
-  --searchBarFocused: #2c5e2c;
+  --section-hover: #367036;
+  --searchbar: #214a21;
+  --searchbar-focused: #2c5e2c;
   --font-color: #d2f2d2;
   --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
   --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
@@ -74,9 +75,9 @@ html, body, #root, .all {
   --window: #1a1a0e;
   --button: #474725;
   --section: #5a5a2e;
-  --sectionHover: #706f36;
-  --searchBar: #4a4a21;
-  --searchBarFocused: #5e5e2c;
+  --section-hover: #706f36;
+  --searchbar: #4a4a21;
+  --searchbar-focused: #5e5e2c;
   --font-color: #f2f2d2;
   --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
@@ -89,9 +90,10 @@ html, body, #root, .all {
   --window: #c4c4c4;
   --button: #e0e0e0;
   --section: #d5d5d5;
-  --sectionHover: #c5c5c5;
-  --searchBar: #dfdfdf;
-  --searchBarFocused: #d6d6d6;
+  --section-hover: #c5c5c5;
+  --searchbar: #dfdfdf;
+  --searchbar-focused: #d6d6d6;
+  --searchbar-focused-hover: #c9c9c9;
   --font-color: #222;
   --accent-gradient: linear-gradient(140deg, #00b8d9 0%, #008ba4 100%);
   --accent-gradient-hover: linear-gradient(140deg, #00a8c6 0%, #007c92 100%);
@@ -128,24 +130,24 @@ a {
 }
 
 /* width */
-::-webkit-scrollbar {
+.main::-webkit-scrollbar {
   width: 10px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.main::-webkit-scrollbar-track {
   background: var(--bg);
   border-radius: 0 10px 10px 0;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.main::-webkit-scrollbar-thumb {
   background-color: var(--button);
   border-radius: 10px;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.main::-webkit-scrollbar-thumb:hover {
   background: var(--section);
 }
 
