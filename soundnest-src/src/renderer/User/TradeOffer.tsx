@@ -24,7 +24,7 @@ const cache = createCache({
   prepend: true,
 });
 
-export default function User() {
+export default function TradeOffer() {
   const { user_id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
@@ -54,60 +54,7 @@ export default function User() {
       <TopBar />
       <SideBar />
       <div className="main">
-      {data ?
-        <div className="item" id="item">
-          <CacheProvider value={cache}>
-            <div className="itemTitle">
-              <IconButton
-                onClick={() => {
-                  navigate('/studios', { replace: true });
-                }}
-              >
-                <ArrowBackIosRoundedIcon />
-              </IconButton>
-              <h1>User details</h1>
-            </div>
-            <div className="itemDesc">
-              {data.avatar_dir !== '/' ? (
-                <img
-                  src={`data:image/jpeg;base64,${data.avatar_dir}`}
-                  alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <h2>{data.name}</h2>
-              <h2>{data.surname}</h2>
-              <p>{data.bio}</p>
-              <Button onClick={() => {
-                navigate(`/tradeoffer/${data.id}`, {replace: true})
-              }}>
-                TradeOffer
-              </Button>
-            </div>
-          </CacheProvider>
-        </div>
-        : null
-        }
-        { studio_data ?
-        <div>
-          {studio_data.map((studio, index) => (
-            <div className="itemDesc">
-              {studio.studio_dir !== '/' ? (
-                <img
-                  src={`data:image/jpeg;base64,${studio.studio_dir}`}
-                  alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <h2>{studio.name}</h2>
-              <p>{studio.desc}</p>
-              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>Check out</Button>
-            </div>
-          ))}
-        </div>
-        : null }
+      <h1>Hello world</h1>
       </div>
       <BottomBar />
     </div>

@@ -60,6 +60,7 @@ class UserTransactions(Resource):
 
 class Search(Resource):
    def get(self, search_str):
+      search_str = search_str.rstrip()
       products = ProductModel.query.filter(ProductModel.album.like("%" + search_str + "%")).all()
       studios = StudioModel.query.filter(StudioModel.name.like("%" + search_str + "%")).all()
       tracks = TrackModel.query.filter(TrackModel.name.like("%" + search_str + "%")).all()
@@ -98,10 +99,9 @@ class Search(Resource):
       for track in tracks:
          data = "/"
          product = ProductModel.query.filter_by(id = track.id_product).first()
-         if (image_path != "/"):
-            image_path = UPLOAD_FOLDER + "/products/" + product.item_path
-            with open(image_path, "rb") as image_file:
-               data = base64.b64encode(image_file.read()).decode('ascii')
+         image_path = UPLOAD_FOLDER + "/products/" + product.item_path
+         with open(image_path, "rb") as image_file:
+            data = base64.b64encode(image_file.read()).decode('ascii')
          dataset = { 
             "id" : search_id,
             "result_id" : track.id,

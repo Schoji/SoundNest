@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 const backend_address = 'http://localhost:5000/';
+// USELESS
+
+
+
+
+
+
+
+
+//This file does nothing
 
 export default function updateUser() {
   const Fetch = () => {

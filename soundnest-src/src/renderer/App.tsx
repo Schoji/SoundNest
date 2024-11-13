@@ -38,6 +38,7 @@ export function GetCreds() {
 }
 import Studio from './Studio/Studio';
 import User from './User/User';
+import TradeOffer from './User/TradeOffer';
 
 export default function App() {
   const view = String(global.location.search).slice(-1)
@@ -64,11 +65,12 @@ export default function App() {
           <Route path="/" element={<GetCreds/>} />
           <Route path="library" element={<Library />} />
           <Route path="studios" element={<Studios />} />
-        <Route path="studios/:studio_id" element={<Studio />} />
+          <Route path="studios/:studio_id" element={<Studio />} />
           <Route path="katalog" element={<Katalog />} />
           <Route path="settings" element={<Settings />} />
           <Route path="user/:user_id" element={<User />} />
-        <Route path="createstudio" element={<CreateStudio />} />
+          <Route path="tradeoffer/:user_id" element={<TradeOffer/>} />
+          <Route path="createstudio" element={<CreateStudio />} />
           <Route path="createitem" element={<CreateItem />} />
           <Route path="item/:item_id" element={<Item />} />
           <Route path="editstudio/:studio_id" element={<EditStudio />} />
