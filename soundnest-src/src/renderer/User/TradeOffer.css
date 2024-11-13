@@ -1,0 +1,26 @@
+.layout {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 1fr 1fr;
+}
+.layout img {
+  width: 20%;
+}
+.itemList {
+  gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.itemList img {
+  width: 100%;
+}
+
+.itemList img.selected {
+  border: 5px solid blue;
+  width: calc(100% - 10px);
+}
+.felix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
