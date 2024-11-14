@@ -14,6 +14,20 @@ import datetime
 #6. Make plural class
 #7. Add resource
 
+def getProductPic(path):
+    if path == "/":
+        return None
+    image_path = UPLOAD_FOLDER + "/products/" + path
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('ascii')
+
+def getUserPic(path):
+    if path == "/":
+        return None
+    image_path = UPLOAD_FOLDER + "/avatars/" + path
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('ascii')
+
 class TradeOfferModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     trade_id = db.Column(db.String(80))
@@ -96,3 +110,60 @@ class TradeOffer(Resource):
         db.session.commit()
         tradeOffers = TradeOfferModel.query.all()
         return tradeOffers, 204
+    
+class getUserTradeoffers(Resource):
+    def get(self, id_user):
+        user = UserModel.query.filter_by(id=id_user).first()
+
+        tradeoffers = TradeOfferModel.query.filter_by(id_receiver=id_user).all()
+
+        result = []
+        trade_ids = []
+        for tradeoffer in tradeoffers:
+            if (tradeoffer.trade_id not in trade_ids):
+                trade_ids.append(tradeoffer.trade_id)
+        
+        trade_dict = {}
+        for trade in trade_ids:
+            offers = TradeOfferModel.query.filter_by(trade_id = trade)
+            sent_items = []
+            received_items = []
+            userid = 0
+            for offer in offers:
+                userid = offer.id_sender
+                if (offer.id_item_sent != None):
+                    item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
+                    data = getProductPic(item.item_path)
+                    sent_items.append({
+                        "id": item.id,
+                        "album": item.album,
+                        "artist": item.artist,
+                        "picture": data
+                    })
+                
+                if (offer.id_item_received != None):
+                    item = ProductModel.query.filter_by(id = offer.id_item_received).first()
+                    data = getProductPic(item.item_path)
+                    received_items.append({
+                        "id": item.id,
+                        "album": item.album,
+                        "artist": item.artist,
+                        "picture": data
+                    })
+            user = UserModel.query.filter_by(id = userid).first()
+            trade_dict = {
+                "trade_id": trade,
+                "date": str(offers[0].date),
+                "user" : {
+                    "id": user.id,
+                    "name": user.name,
+                    "surname": user.surname,
+                    "pic": getUserPic(user.avatar_dir)
+                },
+                "received_items": received_items,
+                "sent_items": sent_items,
+            }
+        result.append(trade_dict)
+        trade_dict = {}
+            
+        return result

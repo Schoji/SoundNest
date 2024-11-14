@@ -309,6 +309,7 @@ api.add_resource(Search, "/api/search/<string:search_str>/")
 api.add_resource(TradeOffers, "/api/trade_offers/")
 api.add_resource(TradeOffer, "/api/trade_offers/<int:id>/")
 api.add_resource(getTradeToken, "/api/trade_token/")
+api.add_resource(getUserTradeoffers, "/api/user_tradeoffers/<int:id_user>/")
 
 @app.route("/")
 def home():
