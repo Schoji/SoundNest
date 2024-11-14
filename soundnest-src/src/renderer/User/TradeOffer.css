@@ -6,6 +6,7 @@
 .layout img {
   width: 20%;
 }
+
 .itemList {
   gap: 5px;
   display: grid;
@@ -24,4 +25,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.tradeList {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+.tradeObj {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.tradeObj:hover {
+  background-color: red;
+  cursor: pointer;
+}
+.tradeList img {
+  width: 10%;
 }

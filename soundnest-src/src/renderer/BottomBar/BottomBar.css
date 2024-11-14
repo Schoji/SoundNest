@@ -4,6 +4,8 @@
   grid-row: 3/3;
   background-color: var(--window);
   display: flex;
+  justify-content: space-between;
+  gap: 5px;
 }
 .bottombar h1 {
   color: white;
@@ -44,9 +46,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.badge {
-  background-color: red !important;
 }
 @media only screen and (max-width: 950px) {
   .cart {

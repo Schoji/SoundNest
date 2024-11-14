@@ -15,6 +15,7 @@ import CreateItem from './Store/CreateItem';
 import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
 import LoginWindow from './Login/LoginWindow';
+import Tradeoffers from './User/TradeOffers';
 import { useEffect, useState } from 'react';
 
 export function GetCreds() {
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="Regulamin" element={<Regulamin />} />
           <Route path="cart" element={<Cart />} />
           <Route path="purchasehistory" element={<PurchaseHistory />} />
+          <Route path="tradeoffers" element={<Tradeoffers/>} />
         </Routes>
       </Router>
     );

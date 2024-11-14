@@ -56,7 +56,7 @@ export default function SideBar() {
           </Link>
         </div>
         <div className="sideobject">
-          <Link to="/tradeoffer/2" className="link1">
+          <Link to="/tradeoffers" className="link1">
             <div className="linkAreaLeft">
               <FontAwesomeIcon icon={faChartPie} size="xl" />
             </div>
