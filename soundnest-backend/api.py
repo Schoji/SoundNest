@@ -310,6 +310,19 @@ api.add_resource(TradeOffers, "/api/trade_offers/")
 api.add_resource(TradeOffer, "/api/trade_offers/<int:id>/")
 api.add_resource(getTradeToken, "/api/trade_token/")
 api.add_resource(getUserTradeoffers, "/api/user_tradeoffers/<int:id_user>/")
+api.add_resource(ExchangeProducts, "/api/exchange_products/<string:trade_id>/")
+
+@app.route("/last_update")
+def last_update():
+   contents = ""
+   try:
+      file = open("last_update.txt", "r")
+      contents = file.read()
+      file.close()
+   except:
+      print("No file")
+   
+   return contents
 
 @app.route("/")
 def home():

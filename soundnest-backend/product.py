@@ -23,7 +23,7 @@ class ProductModel(db.Model):
     item_path = db.Column(db.String(80), default="/")
 
     def __repr__(self):
-        return f"yes"
+        return f"<Product> id:{self.id}, id_studio:{self.id_studio}, album: {self.album}, artist: {self.artist}, desc: {self.desc}, price: {self.price}, item_path: {self.item_path}"
 
 productFields = {
     "id":fields.Integer,

@@ -40,6 +40,7 @@ export function GetCreds() {
 import Studio from './Studio/Studio';
 import User from './User/User';
 import TradeOffer from './User/TradeOffer';
+import DecideTradeOffers from './User/DecideTradeOffers';
 
 export default function App() {
   const view = String(global.location.search).slice(-1)
@@ -80,6 +81,7 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="purchasehistory" element={<PurchaseHistory />} />
           <Route path="tradeoffers" element={<Tradeoffers/>} />
+          <Route path="decidetradeoffers/:trade_id" element={<DecideTradeOffers/>} />
         </Routes>
       </Router>
     );

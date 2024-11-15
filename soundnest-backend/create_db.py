@@ -6,6 +6,7 @@ from tags import *
 from transaction import *
 from productTags import *
 from track import *
+from trade_offer import *
 import os
 import shutil
 import hashlib
@@ -366,6 +367,20 @@ product_tags = {
     13, 5, 2, 14, 10, 4, 15, 7, 6
   ]
 }
+tradeoffers = {
+    "trade_id": [
+        "af54865c-a372-11ef-b724-b42e998b3572",
+        "b829365c-a372-11ef-a9e0-b42e998b3572",
+        "b829365c-a372-11ef-a9e0-b42e998b3572",
+        "b829365c-a372-11ef-a9e0-b42e998b3572",
+        "bd7f76e4-a372-11ef-a5e0-b42e998b3572",
+        "bd7f76e4-a372-11ef-a5e0-b42e998b3572"
+    ],
+    "id_sender": [2, 2, 2, 2, 2, 2],
+    "id_receiver": [1, 1, 1, 1, 1, 1],
+    "id_item_sent": [2, 2, 0, 0, 0, 0],
+    "id_item_received": [0, 0, 1, 4, 1, 4]
+}
 with app.app_context():
     print("Deleting all records...")
     db.drop_all()
@@ -431,5 +446,16 @@ with app.app_context():
         id_tag = product_tags["id_tag"][i]
         product_tag = ProductTagsModel(id_product = id_product, id_tag = id_tag)
         db.session.add(product_tag)
+        db.session.commit()
+
+    for i in range(len(tradeoffers[str(list(tradeoffers.keys())[0])])):
+        trade_id = tradeoffers["trade_id"][i]
+        id_sender = tradeoffers["id_sender"][i]
+        id_receiver = tradeoffers["id_receiver"][i]
+        id_item_sent = tradeoffers["id_item_sent"][i]
+        id_item_received = tradeoffers["id_item_received"][i]
+        date = datetime.datetime.now()
+        trade_offer = TradeOfferModel(trade_id = trade_id, id_sender = id_sender, id_receiver = id_receiver, id_item_sent = id_item_sent, id_item_received = id_item_received)
+        db.session.add(trade_offer)
         db.session.commit()
 print("Done.")
