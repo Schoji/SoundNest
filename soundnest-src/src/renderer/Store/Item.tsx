@@ -55,7 +55,7 @@ export function OtherItems() {
                 )}
               </div>
               <h2>{value.album}</h2>
-              <p>{value.artist}</p>
+              <h4>{value.artist}</h4>
               <p>{value.desc}</p>
               <Button key={key} onClick={() => {
                 document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });

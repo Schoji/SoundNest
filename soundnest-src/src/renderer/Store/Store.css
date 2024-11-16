@@ -19,14 +19,13 @@
   border-radius: 10px;
   box-sizing: border-box;
   padding: 5px;
-  transition: background-color 150ms;
+  transition: background-color 0.5s;
 }
 .storeProduct >*:not(Button) {
   grid-column: 1/3;
 }
 .storeProduct:hover {
   background: var(--section-hover);
-  transition: background-color 150ms;
 }
 .storeProductImage {
   width: 100%;

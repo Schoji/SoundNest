@@ -20,6 +20,7 @@
   box-sizing: border-box;
   padding: 5px;
   border-radius: 10px;
+  transition: background-color 0.3s;
 }
 .libraryProduct:hover {
   background: var(--section-hover);

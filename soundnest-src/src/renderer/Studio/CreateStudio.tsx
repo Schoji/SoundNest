@@ -2,17 +2,23 @@
 /* eslint-disable camelcase */
 import Button from '@mui/material/Button';
 import { TextField, FormControl, IconButton } from '@mui/material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import { useNavigate } from 'react-router-dom';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './CreateStudio.css';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import { useState, useEffect } from 'react';
 
 const backend_address = 'http://localhost:5000';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export default function CreateStudio() {
   const navigate = useNavigate();
@@ -70,43 +76,35 @@ export default function CreateStudio() {
   }
   return (
     <div className="all">
+      <CacheProvider value={cache}>
       <TopBar />
       <SideBar />
       <div className="main">
         <div className="createStudio">
           <div className="createStudioTitle">
-            <IconButton
-              color="primary"
-              className="back"
-              onClick={() => {
-                navigate('/Studio', { replace: true });
-              }}
-            >
-              <ArrowBackIosIcon />
+            <IconButton onClick={() => {navigate('/studios', { replace: true });}}>
+              <ArrowBackIosRoundedIcon />
             </IconButton>
-            <h1>Create your studio</h1>
+            <h1>Create Your Studio</h1>
           </div>
-          <div className="createStudioForm">
-            <form onSubmit={AddStudio}  encType="multipart/form-data">
-              <FormControl className="form">
-                <img src={pic} />
-                <div className="formTextFields">
-                  <TextField type="file" onChange={ChangePicture} />
-                  <TextField id="name" label="Name" variant="outlined" />
-                  <TextField id="desc" label="Description" variant="outlined" />
-                  <Button
-                    className="createButton"
-                    variant="outlined"
-                    type="submit"
-                  >
-                    Create studio
-                  </Button>
-                </div>
-              </FormControl>
-            </form>
-          </div>
+          <form onSubmit={AddStudio}  encType="multipart/form-data">
+            <FormControl className="form">
+              <img src={pic} />
+              <TextField type="file" onChange={ChangePicture} />
+              <TextField id="name" label="Name" variant="outlined" />
+              <TextField id="desc" label="Description" variant="outlined" />
+              <Button
+                className="createButton"
+                variant="outlined"
+                type="submit"
+              >
+                Create studio
+              </Button>
+            </FormControl>
+          </form>
         </div>
       </div>
+      </CacheProvider>
     </div>
   );
 }

@@ -8,7 +8,6 @@ import '../App.css';
 import './Studio.css';
 import React, { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { replace, useNavigate } from 'react-router-dom';

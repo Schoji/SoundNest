@@ -31,6 +31,7 @@
   box-sizing: border-box;
   padding: 5px;
   border-radius: 10px;
+  transition: background-color 0.3s;
 }
 .myStudio:hover {
   background: var(--section-hover);
@@ -75,11 +76,10 @@ h1:last-child, .myStudios, .otherStudios {
   box-sizing: border-box;
   padding: 5px;
   border-radius: 10px;
-  transition: background-color 150ms;
+  transition: background-color 0.3s;
 }
 .studio:hover {
   background: var(--section-hover);
-  transition: background-color 150ms;
 }
 .studioImage {
   border-radius: 8px;
