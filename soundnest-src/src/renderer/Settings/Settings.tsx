@@ -165,7 +165,6 @@ function ChangePicture(event) {
           </div>
         )}
       </div>
-      <BottomBar />
     </div>
   );
 }

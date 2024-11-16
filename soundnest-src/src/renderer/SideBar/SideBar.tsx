@@ -1,72 +1,43 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faStore,
-  faRecordVinyl,
-  faMicrophoneLines,
-  faUser,
-  faGear,
-  faUserCog,
-} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import LibraryMusicRoundedIcon from '@mui/icons-material/LibraryMusicRounded';
+import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
+import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
+import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import './SideBar.css';
 
 export default function SideBar() {
+  let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1;
   return (
     <div className="sidebar">
-      <div className="sidebuttons">
-        <div className="sideobject">
-          <Link to="/library" className="link1">
-            <div className="linkAreaLeft">
-              <FontAwesomeIcon icon={faRecordVinyl} size="xl" />
-            </div>
-            <div className="linkAreaRight">
-              <p>Library</p>
-            </div>
-          </Link>
+      <Link to="/library" className="sideButton">
+        <div><LibraryMusicRoundedIcon /></div>
+        <p>Library</p>
+      </Link>
+      <Link to="/studios" className="sideButton">
+        <div><GraphicEqRoundedIcon /></div>
+        <p>Studios</p>
+      </Link>
+      <Link to="/store" className="sideButton">
+        <div><LocalMallRoundedIcon /></div>
+        <p>Store</p>
+      </Link>
+      {sessionStorage.getItem("is_admin") == "true" ? (
+      <Link to="/adminpanel" className="sideButton">
+        <div><ManageAccountsRoundedIcon /></div>
+        <p>Admin panel</p>
+      </Link>
+      ) : (null)}
+      <div> </div>
+      <Link to="/cart" className="cartButton">
+        <div className="cartButtonIcon">
+          <ShoppingCartRoundedIcon />
+          {cartItems !== 0 ? (
+            <div className="cartButtonBadge"> {cartItems} </div>
+          ) : null}
         </div>
-        <div className="sideobject">
-          <Link to="/studios" className="link1">
-            <div className="linkAreaLeft">
-              <FontAwesomeIcon icon={faMicrophoneLines} size="xl" />
-            </div>
-            <div className="linkAreaRight">
-              <p>Studio</p>
-            </div>
-          </Link>
-        </div>
-        <div className="sideobject">
-          <Link to="/katalog" className="link1">
-            <div className="linkAreaLeft">
-              <FontAwesomeIcon icon={faStore} size="xl" />
-            </div>
-            <div className="linkAreaRight">
-              <p>Store</p>
-            </div>
-          </Link>
-        </div>
-        <div className="sideobject">
-          <Link to="/settings" className="link1">
-            <div className="linkAreaLeft">
-              <FontAwesomeIcon icon={faGear} size="xl" />
-            </div>
-            <div className="linkAreaRight">
-              <p>Settings</p>
-            </div>
-          </Link>
-        </div>
-        {sessionStorage.getItem("is_admin") == "true" ? (
-          <div className="sideobject">
-            <Link to="/adminpanel" className="link1">
-              <div className="linkAreaLeft">
-                <FontAwesomeIcon icon={faUserCog} size="xl" />
-              </div>
-              <div className="linkAreaRight">
-                <p>Admin</p>
-              </div>
-            </Link>
-          </div>
-        ) : (null)}
-      </div>
+        <p>Cart</p>
+      </Link>
     </div>
   );
 }

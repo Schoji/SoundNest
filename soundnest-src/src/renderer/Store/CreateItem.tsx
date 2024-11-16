@@ -229,7 +229,6 @@ export default function CreateStudio() {
           </div>
         </div>
       </div>
-      <BottomBar />
     </div>
   );
 }

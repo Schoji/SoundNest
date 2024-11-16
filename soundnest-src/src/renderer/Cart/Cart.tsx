@@ -220,7 +220,6 @@ export default function Cart() {
             </Box>
         </div>
       </div>
-      <BottomBar />
     </div>
   );
 }

@@ -22,7 +22,7 @@ html, body, #root, .all {
   --accent-gradient: linear-gradient(140deg, #0093ad 0%, #005867 100%);
   --accent-gradient-hover: linear-gradient(140deg, #0094ae 0%, #007a90 100%);
   --reddish-button: #d22323;
-  --reddish-button-hover: #ff5050;
+  --reddish-button-hover: #ff2727;
 }
 
 :root.pink {
@@ -114,18 +114,19 @@ a {
 .all {
   color: var(--font-color);
   box-sizing: border-box;
-  padding: 0 8px 8px 8px;
+  padding: 0 8px 15px 8px;
   display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: 60px 1fr 60px;
+  grid-template-columns: 219px 1fr;
+  grid-template-rows: 60px 1fr;
   column-gap: 5px;
+  transition: 0.2s;
 }
 
 .main {
   background-color: var(--bg);
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 10px 10px 0 10px;
   overflow: auto;
 }
 
@@ -136,13 +137,12 @@ a {
 
 /* Track */
 .main::-webkit-scrollbar-track {
-  background: var(--bg);
-  border-radius: 0 10px 10px 0;
+  background-color: transparent;
 }
 
 /* Handle */
 .main::-webkit-scrollbar-thumb {
-  background-color: var(--button);
+  background: var(--button);
   border-radius: 10px;
 }
 
@@ -153,6 +153,6 @@ a {
 
 @media only screen and (max-width: 950px) {
   .all {
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 80px 1fr;
   }
 }

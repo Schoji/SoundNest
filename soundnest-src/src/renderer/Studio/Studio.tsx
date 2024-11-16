@@ -191,7 +191,6 @@ export default function Studio() {
         : null
         }
       </div>
-      <BottomBar />
     </div>
   );
 }

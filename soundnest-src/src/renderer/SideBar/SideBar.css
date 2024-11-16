@@ -1,54 +1,137 @@
 .sidebar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 60px 60px 60px 1fr 50px;
+  gap: 5px;
+  background: var(--bg);
   border-radius: 10px;
-  background-color: var(--bg);
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: hidden;
 }
-.sidebuttons {
-  margin: 10px;
+.sideButton {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  background: var(--section);
+  color: var(--font-color);
+  box-sizing: border-box;
+  padding: 5px;
+  overflow: visible;
+  transition: background-color 0.5s;
 }
-.sideobject {
-  background-color: var(--section);
-  height: 75px;
-  font-size: 24px;
-  border-radius: 10px;
-  margin-top: 5px;
-  transition: opacity 150ms linear;
-  transition: background-color 150ms linear;
+.sideButton:first-of-type {
+  border-radius: 8px 8px 0 0;
 }
-.sideobject:hover {
-  background-color: var(--section-hover);
-  transition: opacity 150ms linear;
-  transition: background-color 150ms linear;
+.sideButton:nth-of-type(4) {
+  border-radius: 0 0 8px 8px;
 }
-
-.link1{
+.sideButton div {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  height: 100%;
-  width: 100%;
-  color: var(--font-color);
-  gap: 10px;
-}
-.linkAreaRight {
-  display: inline-flex;
-  flex: 0 0 100px;
-}
-.linkAreaLeft {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  flex: 0 0 60px;
-  height: 60px;
+  background: var(--accent-gradient);
+  border-radius: 8px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+  z-index: 1;
+}
+.sideButton div::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+  border-radius: 8px;
+  z-index: -1;
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+.sideButton:hover div::before {
+  opacity: 1;
+}
+.sideButton div svg {
+  font-size: 34px;
+}
+.sideButton p {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-left: 5px;
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.sideButton:hover {
+  background: var(--section-hover);
+  transition: background-color 0.5s;
+}
+.cartButton {
+  position: relative;
+  background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 8px;
-  background-color: rgba(0, 1, 255, 1);
-  background-image: var(--accent-gradient);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+  z-index: 1;
 }
+.cartButton::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--accent-gradient-hover);
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  border-radius: 8px;
+  z-index: -1;
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+.cartButton p {
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.cartButton:hover::before {
+  opacity: 1;
+}
+.cartButton:hover .cartButtonBadge {
+  background: var(--reddish-button-hover);
+}
+.cartButtonIcon {
+  position: relative;
+  height: 35px;
+}
+.cartButtonIcon svg {
+  font-size: 34px;
+}
+.cartButtonBadge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: var(--reddish-button);
+  height: 18px;
+  width: 18px;
+  border-radius: 5px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 950px) {
-  .linkAreaRight {
-    display: none;
+  .sideButton {
+    grid-template-columns: 50px 0fr;
+    transition: 0.2s ease-in;
   }
-  .sidebar {
-    flex: 0 0 90px;
+  .sideButton p, .cartButton p {
+    display: none;
   }
 }

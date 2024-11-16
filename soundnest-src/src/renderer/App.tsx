@@ -3,7 +3,7 @@ import { MemoryRouter as Router, Routes, Route, useNavigate} from 'react-router-
 import './App.css';
 import './TopBar/TopBar.css';
 import Studios from './Studio/Studios';
-import Katalog from './Store/Store';
+import Store from './Store/Store';
 import Library from './Library/Library';
 import Settings from './Settings/Settings';
 import CreateStudio from './Studio/CreateStudio';
@@ -34,7 +34,7 @@ export function GetCreds() {
       console.log("creds updated")
     })
   }, [])
-  return <Katalog/>
+  return <Store/>
 }
 import Studio from './Studio/Studio';
 import User from './User/User';
@@ -66,7 +66,7 @@ export default function App() {
           <Route path="library" element={<Library />} />
           <Route path="studios" element={<Studios />} />
           <Route path="studios/:studio_id" element={<Studio />} />
-          <Route path="katalog" element={<Katalog />} />
+          <Route path="store" element={<Store />} />
           <Route path="settings" element={<Settings />} />
           <Route path="user/:user_id" element={<User />} />
           <Route path="tradeoffer/:user_id" element={<TradeOffer/>} />

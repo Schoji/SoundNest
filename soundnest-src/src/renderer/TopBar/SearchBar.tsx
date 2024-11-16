@@ -95,9 +95,7 @@ export default function SearchBar() {
               </div>
             </div>
           ))
-        ) : (
-          <h1>To kurwa nie powinno być otwarte</h1>
-        )}
+        ) : ( null )}
       </div>
     </CacheProvider>
   );

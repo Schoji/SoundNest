@@ -177,7 +177,6 @@ export default function Studio() {
           </CacheProvider>
         </div>
       </div>
-      <BottomBar />
     </div>
   );
 }

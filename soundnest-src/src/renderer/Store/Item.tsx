@@ -153,7 +153,7 @@ export default function Item() {
             <div className="itemTitle">
               <IconButton
                 onClick={() => {
-                  navigate('/Katalog', { replace: true });
+                  navigate('/store', { replace: true });
                 }}
               >
                 <ArrowBackIosRoundedIcon />
@@ -186,7 +186,7 @@ export default function Item() {
             <div className="itemTitle">
               <IconButton
                 onClick={() => {
-                  navigate('/Katalog', { replace: true });
+                  navigate('/store', { replace: true });
                 }}
               >
                 <AlbumRoundedIcon />
@@ -204,7 +204,6 @@ export default function Item() {
 
         }
       </div>
-      <BottomBar />
     </div>
   );
 }

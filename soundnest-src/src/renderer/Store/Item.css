@@ -123,6 +123,22 @@
   border-radius: 8px;
   transition: all 0.5s ease;
 }
+
+.otherItems::-webkit-scrollbar {
+  height: 10px;
+}
+.otherItems::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+.otherItems::-webkit-scrollbar-thumb {
+  background: var(--button);
+  border-radius: 10px;
+}
+.otherItems::-webkit-scrollbar-thumb:hover {
+  background: var(--section);
+}
+
 @media only screen and (max-width: 1100px) {
   .track {
     grid-template-columns: 20px 20px 2fr 1fr;

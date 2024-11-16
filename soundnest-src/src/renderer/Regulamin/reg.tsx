@@ -74,7 +74,6 @@ export default function Regulamin() {
           </ol>
         </p>
       </div>
-      <BottomBar />
     </div>
   );
 }

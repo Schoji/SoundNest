@@ -10,7 +10,7 @@
 }
 .cart {
   position: relative;
-  flex: 0 1 200px;
+  flex: 0 1 230px;
   background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 10px;
@@ -50,7 +50,7 @@
 }
 @media only screen and (max-width: 950px) {
   .cart {
-    flex: 0 1 90px;
+    flex: 0 1 80px;
   }
   .cart > h3 {
     display: none;

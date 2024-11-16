@@ -25,7 +25,7 @@ const cache = createCache({
   prepend: true,
 });
 
-export default function Katalog() {
+export default function Store() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const Fetch = () => {
@@ -109,7 +109,6 @@ export default function Katalog() {
           <Skeleton animation="wave" variant="rounded" width={800} height={600} />
         </div>}
       </div>
-      <BottomBar />
     </div>
   );
 }

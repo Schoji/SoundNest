@@ -66,7 +66,6 @@ export default function Library() {
           </div>
         </div>
       </div>
-      <BottomBar />
     </div>
   );
 }

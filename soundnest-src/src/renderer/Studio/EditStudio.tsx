@@ -103,7 +103,6 @@ export default function EditStudio() {
           </form>
         </div>
       </div>
-      <BottomBar />
     </div>
   );
 }
