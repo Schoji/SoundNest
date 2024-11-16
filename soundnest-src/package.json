@@ -1,9 +1,7 @@
 {
-  "name": "electron-react-boilerplate",
-  "description": "A foundation for scalable desktop apps",
+  "name": "soundnest",
+  "description": "Revolutionary music store",
   "keywords": [
-    "electron",
-    "boilerplate",
     "react",
     "typescript",
     "ts",

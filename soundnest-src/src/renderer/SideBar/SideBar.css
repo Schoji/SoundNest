@@ -1,7 +1,7 @@
 .sidebar {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 60px 60px 60px 1fr 50px;
+  grid-template-rows: 60px 60px 60px 60px 60px 1fr 50px;
   gap: 5px;
   background: var(--bg);
   border-radius: 10px;
@@ -17,12 +17,12 @@
   box-sizing: border-box;
   padding: 5px;
   overflow: visible;
-  transition: background-color 0.5s;
+  transition: background-color 0.3s;
 }
-.sideButton:first-of-type {
+:nth-child(1 of .sideButton) {
   border-radius: 8px 8px 0 0;
 }
-.sideButton:nth-of-type(4) {
+:nth-last-child(1 of .sideButton) {
   border-radius: 0 0 8px 8px;
 }
 .sideButton div {
@@ -46,7 +46,7 @@
   background: var(--accent-gradient-hover);
   border-radius: 8px;
   z-index: -1;
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
   opacity: 0;
 }
 .sideButton:hover div::before {
@@ -66,7 +66,7 @@
 }
 .sideButton:hover {
   background: var(--section-hover);
-  transition: background-color 0.5s;
+  transition: background-color 0.3s;
 }
 .cartButton {
   position: relative;
@@ -91,7 +91,7 @@
   box-shadow: 0px 0px 19px -6px var(--font-color);
   border-radius: 8px;
   z-index: -1;
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
   opacity: 0;
 }
 .cartButton p {

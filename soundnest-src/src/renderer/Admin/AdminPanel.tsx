@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import BottomBar from '../BottomBar/BottomBar';
 import './AdminPanel.css'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';

@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import BottomBar from '../BottomBar/BottomBar';
 import default_album from '../../../assets/album.png';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';

@@ -10,11 +10,12 @@ import CreateStudio from './Studio/CreateStudio';
 import Item from './Store/Item';
 import EditStudio from './Studio/EditStudio';
 import AdminPanel from './Admin/AdminPanel';
-import Regulamin from './Regulamin/reg';
+import Statute from './Statute/Statute';
 import CreateItem from './Store/CreateItem';
 import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
 import LoginWindow from './Login/LoginWindow';
+import Tradeoffers from './User/TradeOffers';
 import { useEffect, useState } from 'react';
 
 export function GetCreds() {
@@ -39,6 +40,7 @@ export function GetCreds() {
 import Studio from './Studio/Studio';
 import User from './User/User';
 import TradeOffer from './User/TradeOffer';
+import DecideTradeOffers from './User/DecideTradeOffers';
 
 export default function App() {
   const view = String(global.location.search).slice(-1)
@@ -75,9 +77,11 @@ export default function App() {
           <Route path="item/:item_id" element={<Item />} />
           <Route path="editstudio/:studio_id" element={<EditStudio />} />
           <Route path="adminpanel" element={<AdminPanel />} />
-          <Route path="Regulamin" element={<Regulamin />} />
+          <Route path="statute" element={<Statute />} />
           <Route path="cart" element={<Cart />} />
           <Route path="purchasehistory" element={<PurchaseHistory />} />
+          <Route path="tradeoffers" element={<Tradeoffers/>} />
+          <Route path="decidetradeoffers/:trade_id" element={<DecideTradeOffers/>} />
         </Routes>
       </Router>
     );

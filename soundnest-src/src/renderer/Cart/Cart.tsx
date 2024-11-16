@@ -5,9 +5,7 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import BottomBar from '../BottomBar/BottomBar';
 import default_album from '../../../assets/album.png';
-
 import './Cart.css';
 import { Avatar, Box, CircularProgress, Snackbar, TableContainer } from '@mui/material';
 import Alert from '@mui/material/Alert';

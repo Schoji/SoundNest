@@ -109,7 +109,6 @@ export default function User() {
         </div>
         : null }
       </div>
-      <BottomBar />
     </div>
   );
 }

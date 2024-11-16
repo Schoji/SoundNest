@@ -1,0 +1,46 @@
+.layout {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 1fr 1fr;
+}
+.layout img {
+  width: 20%;
+}
+
+.itemList {
+  gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.itemList img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.itemList img.selected {
+  border: 5px solid blue;
+  width: calc(100% - 10px);
+}
+.felix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tradeList {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+.tradeObj {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  background-color: var(--window);
+  border-radius: 10px;
+}
+.tradeObj:hover {
+  background-color: red;
+  cursor: pointer;
+}
+/* .tradeList img {
+  width: 10%;
+} */

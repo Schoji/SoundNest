@@ -1,7 +1,6 @@
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import BottomBar from '../BottomBar/BottomBar';
-import './reg.css';
+import './Statute.css';
 
 export default function Regulamin() {
   return (

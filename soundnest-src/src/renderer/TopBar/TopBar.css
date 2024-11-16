@@ -118,6 +118,7 @@
   box-sizing: border-box;
   padding: 4px;
   animation: appear 200ms;
+  cursor: pointer;
 }
 .outputItem img {
   width: 100%;

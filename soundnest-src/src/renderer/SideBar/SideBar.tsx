@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import LibraryMusicRoundedIcon from '@mui/icons-material/LibraryMusicRounded';
 import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
+import SwapHorizRoundedIcon from '@mui/icons-material/SwapHorizRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import './SideBar.css';
@@ -22,12 +23,16 @@ export default function SideBar() {
         <div><LocalMallRoundedIcon /></div>
         <p>Store</p>
       </Link>
+      <Link to="/tradeoffers" className="sideButton">
+        <div><SwapHorizRoundedIcon /></div>
+        <p>Trade offers</p>
+      </Link>
       {sessionStorage.getItem("is_admin") == "true" ? (
       <Link to="/adminpanel" className="sideButton">
         <div><ManageAccountsRoundedIcon /></div>
         <p>Admin panel</p>
       </Link>
-      ) : (null)}
+      ) : <div> </div>}
       <div> </div>
       <Link to="/cart" className="cartButton">
         <div className="cartButtonIcon">

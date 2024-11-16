@@ -142,7 +142,7 @@ export default function AccountMenu() {
           <Theme />
         </MenuItem>
         <MenuItem onClick={() => {
-          navigate("/regulamin", {replace:true});
+          navigate("/statute", {replace:true});
         }}>
           <ListItemIcon>
             <Gavel fontSize="small" />

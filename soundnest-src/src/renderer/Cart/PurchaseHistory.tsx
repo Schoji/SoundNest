@@ -105,7 +105,6 @@ export default function PurchaseHistory() {
           </div>
         </div>
       </div>
-      <BottomBar />
     </div>
   );
 }

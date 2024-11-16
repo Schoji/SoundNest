@@ -35,7 +35,7 @@ export function AlertDialog({ studio_id }) {
   const [open, setOpen] = useState(false);
   const DeleteStudio = (studio_id) => {
     fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
-    .then(() => navigate('/studio', { replace: true }))
+    .then(() => navigate('/studios', { replace: true }))
       // .then((response) => console.log(response.json()))
     .catch((error) => {
       console.log(error);
