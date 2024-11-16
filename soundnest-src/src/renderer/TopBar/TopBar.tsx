@@ -3,6 +3,7 @@ import BasicMenu from './Menu';
 import LogoChange from '../Settings/SetLogo';
 import SearchBar from './SearchBar';
 import { Input } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 
 function TopBar() {

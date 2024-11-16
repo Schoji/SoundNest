@@ -20,6 +20,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useEffect, useState } from 'react';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
 import logoChange from '../Settings/SetLogo';
+import { backend_address } from '../Components/global';
 
 export const Theme = () => {
   var dark;
@@ -45,7 +46,12 @@ export const Theme = () => {
   <Switch
         edge="end"
         checked={isDark}
-        onChange={event => setIsDark(event.target.checked)}
+        onChange={event => {
+          setIsDark(event.target.checked)
+          fetch(backend_address + "/api/switch_theme/" + sessionStorage.getItem("id"))
+          .then(response => response.json())
+          .catch(error => console.log(error))
+        }}
         aria-label="Dark mode"
       />
   )

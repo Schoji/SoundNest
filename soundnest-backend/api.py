@@ -283,6 +283,7 @@ class getStudioWithUser(Resource):
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
 api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
+api.add_resource(ThemeSwitcher, "/api/switch_theme/<int:id_user>")
 api.add_resource(Studios, "/api/studios/")
 api.add_resource(Studio, "/api/studios/<int:id>")
 api.add_resource(getStudiosProducts, "/api/studios_products/<int:id_studio>")

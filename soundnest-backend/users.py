@@ -171,3 +171,15 @@ class UserAuthentication(Resource):
                 data = base64.b64encode(image_file.read()).decode('ascii')
             user.avatar_dir = data
         return user
+
+class ThemeSwitcher(Resource):
+    def get(self, id_user):
+        user = UserModel.query.filter_by(id=id_user).first()
+
+        if (user.prefered_theme == 0):
+            user.prefered_theme = 1
+        else:
+            user.prefered_theme = 0
+        
+        db.session.commit()
+        return "Theme was changed successfully.", 201

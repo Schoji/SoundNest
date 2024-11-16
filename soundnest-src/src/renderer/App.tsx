@@ -18,6 +18,8 @@ import LoginWindow from './Login/LoginWindow';
 import Tradeoffers from './User/TradeOffers';
 import { useEffect, useState } from 'react';
 
+export const backend_address = 'http://localhost:5000';
+
 export function GetCreds() {
   useEffect(() => {
     window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
@@ -28,10 +30,19 @@ export function GetCreds() {
       sessionStorage.setItem('surname', userInfo.surname);
       sessionStorage.setItem('email', userInfo.email);
       sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+      if (userInfo.prefered_theme == 0) {
+        document.documentElement.classList.add("dark")
+        sessionStorage.setItem("theme", "dark")
+      }
+      else {
+        document.documentElement.classList.remove("dark")
+        sessionStorage.setItem("theme", "light")
+      }
       sessionStorage.setItem('credits', userInfo.credits);
       sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
       sessionStorage.setItem('is_admin', userInfo.is_admin);
       sessionStorage.setItem('cart', '0');
+      sessionStorage.setItem("logo", "0")
       console.log("creds updated")
     })
   }, [])

@@ -10,7 +10,6 @@ import logo_red_darker from '../../../assets/icons/logo-red-darker.png';
 import logo_yellow_darker from '../../../assets/icons/logo-yellow-darker.png';
 import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
 import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
-import { useEffect } from 'react';
 
 export default function logoChange() {
   let setTheme = sessionStorage.getItem("theme");
