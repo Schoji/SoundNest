@@ -236,20 +236,26 @@ class getStudiosProducts(Resource):
       return products
 
 class getOtherStudios(Resource):
-   @marshal_with(studioFields)
    def get(self, id_studio):
       studios = StudioModel.query.all()
-
+      new_studios = []
       for studio in studios:
-            if studio.id == id_studio:
-               studios.remove(studio)
-            if studio.studio_dir != "/":
-                image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
-                with open(image_path, "rb") as image_file:
-                    data = base64.b64encode(image_file.read()).decode('ascii')
-                studio.studio_dir = data   
-      
-      return studios
+         if studio.id == id_studio:
+            continue
+         data = 0
+         if studio.studio_dir != "/":
+               image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
+               with open(image_path, "rb") as image_file:
+                  data = base64.b64encode(image_file.read()).decode('ascii')
+         dataset = {
+            "id" : studio.id,
+            "id_user" : studio.id_user,
+            "name" : studio.name,
+            "desc" : studio.desc,
+            "studio_dir" : data
+         }
+         new_studios.append(dataset)
+      return new_studios
 
 class getStudioWithUser(Resource):
    def get(self, id_studio):
@@ -279,6 +285,14 @@ class getStudioWithUser(Resource):
          "user_picture" : user.avatar_dir
       }
       return dataset
+
+class changeProductOwnership(Resource):
+   def get(self, studio, product):
+      product = ProductModel.query.filter_by(id = product).first()
+      product.id_studio = studio
+
+      db.session.commit()
+      return "Ownership transfered successfully."
 
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
@@ -314,6 +328,7 @@ api.add_resource(getUserTradeoffers, "/api/user_tradeoffers/<int:id_user>/")
 api.add_resource(ExchangeProducts, "/api/exchange_products/<string:trade_id>/")
 api.add_resource(getUserTradeoffersHistory, "/api/user_tradeoffers_history/<int:id_user>/")
 api.add_resource(MakeAdmin, "/api/make_admin/<int:id_user>/")
+api.add_resource(changeProductOwnership, "/api/change_product_ownership/<int:studio>/<int:product>/")
 
 @app.route("/last_update")
 def last_update():

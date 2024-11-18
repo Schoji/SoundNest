@@ -4,6 +4,8 @@ import os
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from flask_cors import CORS
 
+DATABASES = ["sqllite", "mysql", "postgresql"]
+
 ALLOWED_EXTENSIONS = set(["jpg", "png", "jpeg"])
 UPLOAD_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "Uploads/"))
 

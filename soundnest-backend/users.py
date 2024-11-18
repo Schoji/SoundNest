@@ -201,8 +201,8 @@ class MakeAdmin(Resource):
             if (every_user.is_admin == True):
                 admin_count += 1
         
-        if (admin_count < 1):
-            return "Error deleting admin. There will be no admins left."
+        if (admin_count < 2):
+            return "Error deleting admin. There will be no admins left.", 404
         
         user.is_admin = False
         db.session.commit()
