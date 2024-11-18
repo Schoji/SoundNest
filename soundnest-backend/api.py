@@ -312,6 +312,8 @@ api.add_resource(TradeOffer, "/api/trade_offers/<int:id>/")
 api.add_resource(getTradeToken, "/api/trade_token/")
 api.add_resource(getUserTradeoffers, "/api/user_tradeoffers/<int:id_user>/")
 api.add_resource(ExchangeProducts, "/api/exchange_products/<string:trade_id>/")
+api.add_resource(getUserTradeoffersHistory, "/api/user_tradeoffers_history/<int:id_user>/")
+api.add_resource(MakeAdmin, "/api/make_admin/<int:id_user>/")
 
 @app.route("/last_update")
 def last_update():

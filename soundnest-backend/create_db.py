@@ -455,7 +455,7 @@ with app.app_context():
         id_item_sent = tradeoffers["id_item_sent"][i]
         id_item_received = tradeoffers["id_item_received"][i]
         date = datetime.datetime.now()
-        trade_offer = TradeOfferModel(trade_id = trade_id, id_sender = id_sender, id_receiver = id_receiver, id_item_sent = id_item_sent, id_item_received = id_item_received)
+        trade_offer = TradeOfferModel(trade_id = trade_id, id_sender = id_sender, id_receiver = id_receiver, id_item_sent = id_item_sent, id_item_received = id_item_received, date = date)
         db.session.add(trade_offer)
         db.session.commit()
 print("Done.")

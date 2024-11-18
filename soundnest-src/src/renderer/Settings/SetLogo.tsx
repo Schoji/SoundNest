@@ -25,7 +25,6 @@ export default function logoChange() {
     return <img src={logoArray[parseInt(setLogo)]}/>
   }
   else {
-    console.log("LOL")
     return <img src={darkLogoArray[parseInt(setLogo)]}/>
   }
 }

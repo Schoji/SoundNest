@@ -183,3 +183,27 @@ class ThemeSwitcher(Resource):
         
         db.session.commit()
         return "Theme was changed successfully.", 201
+
+class MakeAdmin(Resource):
+    def get(self, id_user):
+        user = UserModel.query.filter_by(id=id_user).first()
+        user.is_admin = True
+        
+        db.session.commit()
+        return "Admin was added successfully.", 201
+
+    def delete(self, id_user):
+        user = UserModel.query.filter_by(id=id_user).first()
+        users = UserModel.query.all()
+        
+        admin_count = 0
+        for every_user in users:
+            if (every_user.is_admin == True):
+                admin_count += 1
+        
+        if (admin_count < 1):
+            return "Error deleting admin. There will be no admins left."
+        
+        user.is_admin = False
+        db.session.commit()
+        return "Admin was removed successfully.", 201

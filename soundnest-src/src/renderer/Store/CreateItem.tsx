@@ -10,7 +10,6 @@ import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './CreateItem.css';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';

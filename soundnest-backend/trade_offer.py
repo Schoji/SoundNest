@@ -59,13 +59,27 @@ tradeOffer_args.add_argument("id_receiver", type=str, help="Studio description")
 tradeOffer_args.add_argument("id_item_sent", type=str, help="Studio description")
 tradeOffer_args.add_argument("id_item_received", type=str, help="Studio description")
 
+class TradeHistoryModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    trade_id = db.Column(db.String(80))
+    date = db.Column(db.DateTime)
+    id_sender = db.Column(db.Integer, db.ForeignKey(UserModel.id))
+    id_receiver = db.Column(db.Integer, db.ForeignKey(UserModel.id))
+    id_item_sent = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
+    id_item_received = db.Column(db.ForeignKey(ProductModel.id))
+
 
 class getTradeToken(Resource):
     def get(self):
         while True:
             gen_uuid = uuid.uuid1()
             tradeOffers = TradeOfferModel.query.all()
+            tradeOffersFromHistory = TradeHistoryModel.query.all()
             for tradeOffer in tradeOffers:
+                if tradeOffer.trade_id == gen_uuid:
+                    print("Duplicate UUID detected.")
+                    continue
+            for tradeOffer in tradeOffersFromHistory:
                 if tradeOffer.trade_id == gen_uuid:
                     print("Duplicate UUID detected.")
                     continue
@@ -187,6 +201,14 @@ class ExchangeProducts(Resource):
                 transaction.id_user = user1
         
         for offer in tradeOffer:
+            db.session.add(TradeHistoryModel(
+                trade_id=offer.trade_id,
+                date=offer.date,
+                id_sender=offer.id_sender,
+                id_receiver=offer.id_receiver,
+                id_item_sent=offer.id_item_sent,
+                id_item_received=offer.id_item_received
+                ))
             db.session.delete(offer)
         db.session.commit()
         
@@ -224,3 +246,61 @@ class ExchangeProducts(Resource):
         
         db.session.commit()
         return "Trade offer was deleted successfully.", 201
+
+class getUserTradeoffersHistory(Resource):
+    def get(self, id_user):
+        user = UserModel.query.filter_by(id=id_user).first()
+        tradeoffers = TradeOfferModel.query.filter_by(id_receiver=id_user).all()
+
+        result = []
+        trade_ids = []
+
+        if not tradeoffers:
+            return "Trade offers not found", 404
+        
+        for tradeoffer in tradeoffers:
+            if (tradeoffer.trade_id not in trade_ids):
+                trade_ids.append(tradeoffer.trade_id)
+        trade_dict = {}
+        for trade in trade_ids:
+            offers = TradeOfferModel.query.filter_by(trade_id = trade)
+            sent_items = []
+            received_items = []
+            userid = 0
+            for offer in offers:
+                userid = offer.id_sender
+                if (offer.id_item_sent != 0):
+                    item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
+                    data = getProductPic(item.item_path)
+                    sent_items.append({
+                        "id": item.id,
+                        "album": item.album,
+                        "artist": item.artist,
+                        "picture": data
+                    })
+                
+                if (offer.id_item_received != 0):
+                    item = ProductModel.query.filter_by(id = offer.id_item_received).first()
+                    data = getProductPic(item.item_path)
+                    received_items.append({
+                        "id": item.id,
+                        "album": item.album,
+                        "artist": item.artist,
+                        "picture": data
+                    })
+            user = UserModel.query.filter_by(id = userid).first()
+            trade_dict = {
+                "trade_id": trade,
+                "date": str(offers[0].date),
+                "user" : {
+                    "id": user.id,
+                    "name": user.name,
+                    "surname": user.surname,
+                    "pic": getUserPic(user.avatar_dir)
+                },
+                "received_items": received_items,
+                "sent_items": sent_items,
+            }
+            result.append(trade_dict)
+            trade_dict = {}
+        return result
