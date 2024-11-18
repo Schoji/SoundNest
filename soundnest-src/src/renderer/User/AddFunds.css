@@ -1,0 +1,16 @@
+.fundOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: .3fr .3fr .3fr .3fr;
+  gap: 10px;
+}
+.fundOptions img {
+  width: 100%;
+  border-radius: 5px;
+}
+.fundOptions button {
+  padding: 0;
+  width: 100%;
+  /* background-color: */
+}
+

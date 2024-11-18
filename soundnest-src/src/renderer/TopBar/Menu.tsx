@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
 import logoChange from '../Settings/SetLogo';
 import { backend_address } from '../Components/global';
+import AddCardIcon from '@mui/icons-material/AddCard';
 
 export const Theme = () => {
   var dark;
@@ -171,6 +172,16 @@ export default function AccountMenu() {
           </ListItemIcon>
           Purchase history
         </MenuItem>
+
+        <MenuItem onClick={() => {
+          navigate("/add_funds", {replace: true})
+        }}>
+          <ListItemIcon>
+            <AddCardIcon/>
+          </ListItemIcon>
+          Add funds
+        </MenuItem>
+
         <MenuItem onClick={() => {
           sessionStorage.clear();
           window.electron.ipcRenderer.sendMessage('open-login-window', "LOL");

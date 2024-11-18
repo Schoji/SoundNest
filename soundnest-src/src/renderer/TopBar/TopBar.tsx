@@ -2,7 +2,7 @@
 import BasicMenu from './Menu';
 import LogoChange from '../Settings/SetLogo';
 import SearchBar from './SearchBar';
-import { Input } from '@mui/material';
+import { Button, Input } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 
@@ -19,11 +19,7 @@ function TopBar() {
         </div>
         <div className="profileDiv">
           <div className="walletValueDiv">
-            {sessionStorage.getItem('id') === null ? (
-              <p>6,9$</p>
-            ) : (
-              <p>{parseFloat(sessionStorage.getItem('credits')).toFixed(2)}$</p>
-            )}
+            <p>{parseFloat(sessionStorage.getItem('credits')).toFixed(2)}$</p>
           </div>
           <div className="profileButtonDiv">
             <BasicMenu/>

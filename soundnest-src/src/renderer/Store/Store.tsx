@@ -8,7 +8,6 @@ import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Store.css';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Skeleton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +16,7 @@ import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import UpdateUserInfo from '../Components/UpdateUserInfo';
 
 const backend_address = 'http://localhost:5000';
 
@@ -26,6 +26,7 @@ const cache = createCache({
 });
 
 export default function Store() {
+  UpdateUserInfo();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const Fetch = () => {

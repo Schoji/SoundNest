@@ -11,10 +11,12 @@ import { useState, useEffect } from 'react';
 import { Avatar, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import default_album from '../../../assets/album.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import UpdateUserInfo from '../Components/UpdateUserInfo';
 
 const backend_address = 'http://localhost:5000';
 
 export default function AdminPanel() {
+  UpdateUserInfo()
   const [data, setData] = useState([]);
   const [products, setProducts] = useState([]);
   const [studios, setStudios] = useState([]);
@@ -117,7 +119,10 @@ export default function AdminPanel() {
 
   const changeOwnership = (event) => {
     event.preventDefault()
-    console.log(event)
+    fetch(backend_address + "/api/change_product_ownership/" + event.target.studio.value + "/" + event.target.product.value + "/")
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error))
   }
 
   return (
@@ -139,42 +144,47 @@ export default function AdminPanel() {
         <div>
           <h1>Album</h1>
           {products.length > 0 && studios.length > 0 ?
-          <form>
-            <select
-                id="product"
-                // value={selectedProduct}
-                onChange={handleChange}
-              >
-              {products.length > 0 && products?.map((product, index) => (
-                <option value={product.id}>{product.album}</option>
-              ))}
-              </select>
-
+          <form onSubmit={changeOwnership}>
+            <p>Studio</p>
               <select
                 id="studio"
                 // value={selectedStudio}
                 onChange={handleStudioChange}
               >
               {studios.length > 0 && studios?.map((studio, index) => (
-                <option value={studio.id}>{studio.name}</option>
+                <option value={studio.id}>{studio.id}-{studio.name}</option>
               ))}
               </select>
 
+            <p>Product</p>
+            <select
+                id="product"
+                // value={selectedProduct}
+                onChange={handleChange}
+              >
+              {products.length > 0 && products?.map((product, index) => (
+                <option value={product.id}>{product.id}-{product.album}</option>
+              ))}
+              </select>
+
+
+
                 <div>
-                  {products[selectedProduct] === '/' || products[selectedProduct] === undefined ? (
+
+                  {studios[selectedStudio] === '/' || studios[selectedStudio - 1] === undefined ? (
                     <img src={default_album} />
                   ) : (
-                    <img src={`data:image/jpeg;base64,${products[selectedProduct].item_path}`} />
+                    <img src={`data:image/jpeg;base64,${studios[selectedStudio - 1].studio_dir}`} />
                   )}
                   <ArrowForwardIcon/>
-                  {studios[selectedStudio] === '/' || studios[selectedStudio] === undefined ? (
+                  {products[selectedProduct] === '/' || products[selectedProduct - 1] === undefined ? (
                     <img src={default_album} />
                   ) : (
-                    <img src={`data:image/jpeg;base64,${studios[selectedStudio].studio_dir}`} />
+                    <img src={`data:image/jpeg;base64,${products[selectedProduct - 1].item_path}`} />
                   )}
 
                 </div>
-                <Button variant='contained' color='success' onClick={changeOwnership}>Save</Button>
+                <Button variant='contained' color='success' type='submit'>Save</Button>
 
           </form>
           : <h1>Loading</h1> }

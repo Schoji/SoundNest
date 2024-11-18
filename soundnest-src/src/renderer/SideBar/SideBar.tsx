@@ -9,6 +9,7 @@ import './SideBar.css';
 
 export default function SideBar() {
   let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1;
+  //https://typeofnan.dev/using-session-storage-in-react-with-hooks/
   return (
     <div className="sidebar">
       <Link to="/library" className="sideButton">

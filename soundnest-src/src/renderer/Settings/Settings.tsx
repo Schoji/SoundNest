@@ -7,8 +7,8 @@ import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Settings.css';
-import BottomBar from '../BottomBar/BottomBar';
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import JSZip from 'jszip';
 
 import logo from '../../../assets/icons/logo.png';
 import logodark from '../../../assets/icons/logo-dark.png';
@@ -109,6 +109,26 @@ function ChangePicture(event) {
     navigate("/studios", {replace:true});
   }
 
+  const exportUserInfo = async() => {
+    const zip = new JSZip
+    var content = "{"
+    Object.keys(sessionStorage).forEach(element => {
+      content += "\"" + element + "\":\"" + sessionStorage.getItem(element) + "\","
+    });
+    content += "}"
+    const file = new Blob([content], { type: "text/plain" })
+    const file_zipped = zip.file("user-info.json", file)
+    const zipData = await zip.generateAsync({
+      type: "blob",
+      streamFiles: true
+    })
+    const url = URL.createObjectURL(zipData)
+    console.log(file_zipped)
+    const link = document.createElement("a")
+    link.download = "user-info.zip"
+    link.href = url
+    link.click()
+  }
 
   return (
     <div className="all">
@@ -136,13 +156,9 @@ function ChangePicture(event) {
                     <Button color="error" variant="contained">
                       Cancel
                     </Button>
-                    {sessionStorage.getItem('is_admin') ? (<div>
-                      <p>You are an Admin</p>
-                      <Button color="error" variant="contained">Resign from Administrator</Button>
-                    </div>) : null}
                   </FormControl>
                 </form>
-
+              <Button variant='contained' onClick={exportUserInfo}>Export user information</Button>
               </div>
               <div className='setLogo'>
                 <Link onClick={() => changeLogo(0)} to="/settings" className="link1">

@@ -207,3 +207,11 @@ class MakeAdmin(Resource):
         user.is_admin = False
         db.session.commit()
         return "Admin was removed successfully.", 201
+
+class addFunds(Resource):
+    def get(self, id_user, fund_amount):
+        user = UserModel.query.filter_by(id=id_user).first()
+        user.credits += fund_amount
+        
+        db.session.commit()
+        return "Funds were added successfully.", 200

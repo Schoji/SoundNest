@@ -52,6 +52,7 @@ import Studio from './Studio/Studio';
 import User from './User/User';
 import TradeOffer from './User/TradeOffer';
 import DecideTradeOffers from './User/DecideTradeOffers';
+import AddFunds from './User/AddFunds';
 
 export default function App() {
   const view = String(global.location.search).slice(-1)
@@ -93,6 +94,7 @@ export default function App() {
           <Route path="purchasehistory" element={<PurchaseHistory />} />
           <Route path="tradeoffers" element={<Tradeoffers/>} />
           <Route path="decidetradeoffers/:trade_id" element={<DecideTradeOffers/>} />
+          <Route path="add_funds" element={<AddFunds/>} />
         </Routes>
       </Router>
     );
