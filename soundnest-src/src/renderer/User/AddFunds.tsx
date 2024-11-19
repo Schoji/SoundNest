@@ -8,13 +8,16 @@ import george from '../../../assets/fund_george.png'
 import delma from '../../../assets/fund_delma.png'
 import monopoly from '../../../assets/fund_monopoly.png'
 import pig from '../../../assets/fund_pig.png'
+import { useNavigate } from "react-router-dom";
 export default function AddFunds() {
+  const navigate = useNavigate();
   const addFunds = (fund_amount: string | number) => {
     fetch(backend_address + "/api/add_funds/" + sessionStorage.getItem("id") + "/" + fund_amount)
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => error)
     UpdateUserInfo()
+    navigate("/add_funds", {replace: true})
   }
   return (
     <div className="all">

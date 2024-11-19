@@ -378,8 +378,8 @@ tradeoffers = {
     ],
     "id_sender": [2, 2, 2, 2, 2, 2],
     "id_receiver": [1, 1, 1, 1, 1, 1],
-    "id_item_sent": [2, 2, 0, 0, 0, 0],
-    "id_item_received": [0, 0, 1, 4, 1, 4]
+    "id_item_sent": [2, 2, None, None, None, None],
+    "id_item_received": [None, None, 1, 4, 1, 4]
 }
 with app.app_context():
     print("Deleting all records...")
@@ -398,6 +398,7 @@ with app.app_context():
         user = UserModel(username=username, email=email, name=name, surname=surname, password=password, credits=credits, avatar_dir=avatar_dir, is_admin=is_admin)
         db.session.add(user)
         db.session.commit()
+    print("Users added.")
 
     for i in range(len(studios[str(list(studios.keys())[0])])):
         id_user = studios["id_user"][i]
@@ -407,6 +408,7 @@ with app.app_context():
         studio = StudioModel(id_user=id_user, name=name, desc=desc, studio_dir=studio_dir)
         db.session.add(studio)
         db.session.commit()
+    print("Studios added.")
     
     for i in range(len(products[str(list(products.keys())[0])])):
         id_studio = products["id_studio"][i]
@@ -418,6 +420,7 @@ with app.app_context():
         product = ProductModel(id_studio=id_studio, desc=desc, artist=artist, album=album, price=price, item_path=item_path)
         db.session.add(product)
         db.session.commit()
+    print("Products added.")
     
     for i in range(len(transactions[str(list(transactions.keys())[0])])):
         id_user = transactions["id_user"][i]
@@ -426,6 +429,7 @@ with app.app_context():
         transaction = TransactionModel(id_user=id_user, id_product=id_product, date = date)
         db.session.add(transaction)
         db.session.commit()
+    print("Transactions added.")
 
     for i in range(len(tracks[str(list(tracks.keys())[0])])):
         id_product = tracks["id_product"][i]
@@ -435,11 +439,13 @@ with app.app_context():
         track = TrackModel(id_product = id_product, name = name, producer = producer, length = length)
         db.session.add(track)
         db.session.commit()
+    print("Tracks added.")
 
     for tag in tags:
        tag = TagsModel(tag_name = str(tag))
        db.session.add(tag)
        db.session.commit()
+    print("Tags added.")
     
     for i in range(len(product_tags[str(list(product_tags.keys())[0])])):
         id_product = product_tags["id_product"][i]
@@ -447,15 +453,20 @@ with app.app_context():
         product_tag = ProductTagsModel(id_product = id_product, id_tag = id_tag)
         db.session.add(product_tag)
         db.session.commit()
+    print("Product/Tags added.")
 
     for i in range(len(tradeoffers[str(list(tradeoffers.keys())[0])])):
+
         trade_id = tradeoffers["trade_id"][i]
         id_sender = tradeoffers["id_sender"][i]
         id_receiver = tradeoffers["id_receiver"][i]
         id_item_sent = tradeoffers["id_item_sent"][i]
         id_item_received = tradeoffers["id_item_received"][i]
         date = datetime.datetime.now()
+        
         trade_offer = TradeOfferModel(trade_id = trade_id, id_sender = id_sender, id_receiver = id_receiver, id_item_sent = id_item_sent, id_item_received = id_item_received, date = date)
+        
         db.session.add(trade_offer)
         db.session.commit()
+    print("Trade offers added.")
 print("Done.")

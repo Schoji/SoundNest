@@ -33,10 +33,10 @@ class TradeOfferModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     trade_id = db.Column(db.String(80))
     date = db.Column(db.DateTime)
-    id_sender = db.Column(db.Integer, db.ForeignKey(UserModel.id))
-    id_receiver = db.Column(db.Integer, db.ForeignKey(UserModel.id))
-    id_item_sent = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
-    id_item_received = db.Column(db.ForeignKey(ProductModel.id))
+    id_sender = db.Column(db.Integer, db.ForeignKey(UserModel.id), nullable=True)
+    id_receiver = db.Column(db.Integer, db.ForeignKey(UserModel.id), nullable=True)
+    id_item_sent = db.Column(db.Integer, db.ForeignKey(ProductModel.id), nullable=True)
+    id_item_received = db.Column(db.Integer, db.ForeignKey(ProductModel.id), nullable=True)
 
     def __repr__(self):
         return f"<TradeOfferModel> id: {self.id}, trade_id: {self.trade_id}, date: {self.date}, id_sender: {self.id_sender}, id_receiver: {self.id_receiver}, id_item_sent: {self.id_item_sent}, id_item_received: {self.id_item_received}."
@@ -66,7 +66,7 @@ class TradeHistoryModel(db.Model):
     id_sender = db.Column(db.Integer, db.ForeignKey(UserModel.id))
     id_receiver = db.Column(db.Integer, db.ForeignKey(UserModel.id))
     id_item_sent = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
-    id_item_received = db.Column(db.ForeignKey(ProductModel.id))
+    id_item_received = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
 
 
 class getTradeToken(Resource):
@@ -148,7 +148,7 @@ class getUserTradeoffers(Resource):
             userid = 0
             for offer in offers:
                 userid = offer.id_sender
-                if (offer.id_item_sent != 0):
+                if (offer.id_item_sent != None):
                     item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
                     data = getProductPic(item.item_path)
                     sent_items.append({
@@ -158,15 +158,17 @@ class getUserTradeoffers(Resource):
                         "picture": data
                     })
                 
-                if (offer.id_item_received != 0):
+                if (offer.id_item_received != None):
                     item = ProductModel.query.filter_by(id = offer.id_item_received).first()
-                    data = getProductPic(item.item_path)
-                    received_items.append({
-                        "id": item.id,
-                        "album": item.album,
-                        "artist": item.artist,
-                        "picture": data
-                    })
+                    if item != None:
+                        data = getProductPic(item.item_path)
+                        received_items.append({
+                            "id": item.id,
+                            "album": item.album,
+                            "artist": item.artist,
+                            "picture": data
+                        })
+
             user = UserModel.query.filter_by(id = userid).first()
             trade_dict = {
                 "trade_id": trade,
@@ -269,7 +271,7 @@ class getUserTradeoffersHistory(Resource):
             userid = 0
             for offer in offers:
                 userid = offer.id_sender
-                if (offer.id_item_sent != 0):
+                if (offer.id_item_sent != None):
                     item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
                     data = getProductPic(item.item_path)
                     sent_items.append({
@@ -279,7 +281,7 @@ class getUserTradeoffersHistory(Resource):
                         "picture": data
                     })
                 
-                if (offer.id_item_received != 0):
+                if (offer.id_item_received != None):
                     item = ProductModel.query.filter_by(id = offer.id_item_received).first()
                     data = getProductPic(item.item_path)
                     received_items.append({

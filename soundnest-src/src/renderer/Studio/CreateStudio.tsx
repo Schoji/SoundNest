@@ -71,7 +71,7 @@ export default function CreateStudio() {
     fetch(`${backend_address}/api/studios/`, requestOptions)
       .then((response) => response.json())
       .then((response) => console.log(response));
-    navigate('/Studio', { replace: true });
+    navigate('/studios', { replace: true });
 
   }
   return (

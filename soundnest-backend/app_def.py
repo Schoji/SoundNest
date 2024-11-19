@@ -5,7 +5,7 @@ from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from flask_cors import CORS
 
 DATABASES = ["sqllite", "mysql", "postgresql"]
-
+DATABASE = "sqllite"
 ALLOWED_EXTENSIONS = set(["jpg", "png", "jpeg"])
 UPLOAD_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "Uploads/"))
 
@@ -17,7 +17,13 @@ def allowedFile(filename):
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins" : "*"}})
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+if (DATABASE == "sqllite"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+else:
+    DB_USER = "root"
+    DB_PASSWORD = ""
+    DB_NAME = "soundnest"
+    app.config["SQLALCHEMY_DATABASE_URI"] = f'mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@localhost:3306/{DB_NAME}'
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 500 * 1000 * 100 #50MB
 app.config['CORS_HEADERS'] = 'application/json'
