@@ -22,6 +22,9 @@ import { Gavel, ShoppingBasket } from '@mui/icons-material';
 import logoChange from '../Settings/SetLogo';
 import { backend_address } from '../Components/global';
 import AddCardIcon from '@mui/icons-material/AddCard';
+import "../Components/MultiLang.ts"
+import { useTranslation } from 'react-i18next';
+import Flag from "react-flagkit"
 
 export const Theme = () => {
   var dark;
@@ -59,7 +62,7 @@ export const Theme = () => {
 }
 
 export default function AccountMenu() {
-
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -180,6 +183,24 @@ export default function AccountMenu() {
             <AddCardIcon/>
           </ListItemIcon>
           Add funds
+        </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon onClick={() => {
+          i18n.changeLanguage("pl")
+        }}>
+            <Flag country="PL"/>
+          </ListItemIcon>
+          <ListItemIcon onClick={() => {
+          i18n.changeLanguage("en")
+        }}>
+            <Flag role="button" country="GB"/>
+          </ListItemIcon>
+          <ListItemIcon onClick={() => {
+          i18n.changeLanguage("de")
+        }}>
+            <Flag role="button" country="DE"/>
+          </ListItemIcon>
         </MenuItem>
 
         <MenuItem onClick={() => {

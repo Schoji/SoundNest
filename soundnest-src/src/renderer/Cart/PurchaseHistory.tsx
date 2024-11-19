@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import '../App.css';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import BottomBar from '../BottomBar/BottomBar';
-
+import '../Components/MultiLang'
 import './Cart.css';
 import { CircularProgress, TableContainer } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -16,6 +15,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const backend_address = 'http://localhost:5000';
 
@@ -83,6 +83,7 @@ export function CustomizedTables() {
 }
 
 export default function PurchaseHistory() {
+  const { t } = useTranslation()
   return (
     <div className="all">
       <TopBar />
@@ -90,16 +91,11 @@ export default function PurchaseHistory() {
       <div className="main">
         <div className="library">
           <div className="header">
-            {sessionStorage.getItem('id') === null ? (
-              <h1>There is nothing to see here</h1>
-            ) : (
               <h1>
-                Purchase history of: {sessionStorage.getItem('name')}{' '}
+                {t("purchaseHistory")}: {sessionStorage.getItem('name')}{' '}
                 {sessionStorage.getItem('surname')}
               </h1>
-            )}
           </div>
-
           <div className="albums">
             <CustomizedTables/>
           </div>

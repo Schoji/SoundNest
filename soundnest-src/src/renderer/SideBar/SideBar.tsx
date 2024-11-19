@@ -6,32 +6,35 @@ import SwapHorizRoundedIcon from '@mui/icons-material/SwapHorizRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import './SideBar.css';
+import { useTranslation } from 'react-i18next';
+import '../Components/MultiLang'
 
 export default function SideBar() {
+  const { t } = useTranslation()
   let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1;
   //https://typeofnan.dev/using-session-storage-in-react-with-hooks/
   return (
     <div className="sidebar">
       <Link to="/library" className="sideButton">
         <div><LibraryMusicRoundedIcon /></div>
-        <p>Library</p>
+        <p>{t("library")}</p>
       </Link>
       <Link to="/studios" className="sideButton">
         <div><GraphicEqRoundedIcon /></div>
-        <p>Studios</p>
+        <p>{t("studios")}</p>
       </Link>
       <Link to="/store" className="sideButton">
         <div><LocalMallRoundedIcon /></div>
-        <p>Store</p>
+        <p>{t("store")}</p>
       </Link>
       <Link to="/tradeoffers" className="sideButton">
         <div><SwapHorizRoundedIcon /></div>
-        <p>Trade offers</p>
+        <p>{t("tradeOffers")}</p>
       </Link>
       {sessionStorage.getItem("is_admin") == "true" ? (
       <Link to="/adminpanel" className="sideButton">
         <div><ManageAccountsRoundedIcon /></div>
-        <p>Admin panel</p>
+        <p>{t("adminPanel")}</p>
       </Link>
       ) : <div> </div>}
       <div> </div>
@@ -42,7 +45,7 @@ export default function SideBar() {
             <div className="cartButtonBadge"> {cartItems} </div>
           ) : null}
         </div>
-        <p>Cart</p>
+        <p>{t("cart")}</p>
       </Link>
     </div>
   );

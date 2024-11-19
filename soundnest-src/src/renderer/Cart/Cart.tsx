@@ -25,6 +25,8 @@ const backend_address = 'http://localhost:5000';
 import { SnackbarCloseReason } from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from 'react-i18next';
+import "../Components/MultiLang"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -48,7 +50,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export function CustomizedTables() {
-
+  const { t } = useTranslation()
   const [open, setOpen] = React.useState(false);
 
   const handleClose = (
@@ -168,7 +170,7 @@ export function CustomizedTables() {
         <StyledTableCell>
           <Button variant='contained' color='error' onClick={() => {
             cartRemove(row.id)}
-            }>Remove</Button>
+            }>{t("remove")}</Button>
         </StyledTableCell>
       </StyledTableRow>
     ) : null))
@@ -179,7 +181,7 @@ export function CustomizedTables() {
           <TableBody>
             {table}
             <StyledTableRow>
-              <StyledTableCell colSpan={3} align='right'>Total cost</StyledTableCell>
+              <StyledTableCell colSpan={3} align='right'>{t("totalCost")}</StyledTableCell>
               <StyledTableCell>{total_cost.toFixed(2)} $</StyledTableCell>
               <StyledTableCell>
                 {PurchaseButton}
@@ -188,7 +190,7 @@ export function CustomizedTables() {
           </TableBody>
         </Table>
       </TableContainer>
-    ) : <p>Your cart is empty. Add some products to proceed.</p>
+    ) : <p>{t("noCartItems")}</p>
     )
   }
   return (
@@ -197,6 +199,7 @@ export function CustomizedTables() {
 }
 
 export default function Cart() {
+  const { t } = useTranslation()
   return (
     <div className="all">
       <TopBar />
@@ -204,14 +207,10 @@ export default function Cart() {
       <div className="main">
         <div className="library">
           <div className="header">
-            {sessionStorage.getItem('id') === null ? (
-              <h1>There is nothing to see here</h1>
-            ) : (
               <h1>
-                Cart of: {sessionStorage.getItem('name')}{' '}
+                {t("cartOf")} {sessionStorage.getItem('name')}{' '}
                 {sessionStorage.getItem('surname')}
               </h1>
-            )}
           </div>
             <Box>
               <CustomizedTables/>

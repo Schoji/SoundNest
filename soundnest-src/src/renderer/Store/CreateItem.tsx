@@ -11,15 +11,15 @@ import '../App.css';
 import './CreateItem.css';
 import default_album from '../../../assets/album.png';
 import { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
-import { PlusOne } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import '../Components/MultiLang'
+import { useTranslation } from 'react-i18next';
 const backend_address = 'http://localhost:5000';
 
 export function CreateSongs() {
+  const { t } = useTranslation();
   const [inputFields, setInputFields] = useState([{
     name: '', producer:'', duration: ''
   }])
@@ -45,9 +45,9 @@ export function CreateSongs() {
     {inputFields.map((input, index) => {
     return (
       <div key={index}>
-        <TextField key={"name" + String(index)} variant="outlined" name='name' value={input.name} placeholder='Name of the track' onChange={event => handleFormChange(index, event)}/>
-        <TextField key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} placeholder='Producer' onChange={event => handleFormChange(index, event)}/>
-        <TextField key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} placeholder='Song duration (seconds)' onChange={event => handleFormChange(index, event)}/>
+        <TextField key={"name" + String(index)} variant="outlined" name='name' value={input.name} placeholder={t("nameOfTrack")} onChange={event => handleFormChange(index, event)}/>
+        <TextField key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} placeholder={t("producer")} onChange={event => handleFormChange(index, event)}/>
+        <TextField key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} placeholder={t("songDuration")} onChange={event => handleFormChange(index, event)}/>
         <IconButton color='primary' onClick={() => removeFields(index)}>
         <FontAwesomeIcon icon={faMinus}/>
         </IconButton>
@@ -151,16 +151,10 @@ export default function CreateStudio() {
       }).catch((error) => {
         console.log(error);
       });
-
-
-
-    // navigate('/katalog', { replace: true });
-
   }
 
   useEffect(() => {
     fetchStudio();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -183,6 +177,7 @@ export default function CreateStudio() {
               </Select>
     );
   }
+  const { t } = useTranslation()
   return (
     <div className="all">
       <TopBar />
@@ -199,7 +194,7 @@ export default function CreateStudio() {
             >
               <ArrowBackIosIcon />
             </IconButton>
-            <h1>Create your item</h1>
+            <h1>{t("createYourItem")}</h1>
           </div>
           <div className="createStudioForm">
             <form onSubmit={AddItem}  encType="multipart/form-data">
@@ -211,7 +206,7 @@ export default function CreateStudio() {
                   <TextField id="artist" label="Artist" variant="outlined" />
                   <TextField id="desc" label="Description" multiline variant="outlined" />
                   <TextField id="price" label="Price" variant="outlined" />
-                  <InputLabel id="demo-simple-select-label">Studio</InputLabel>
+                  <InputLabel id="demo-simple-select-label">{t("studio")}</InputLabel>
                   <GenerateOptions/>
                   <CreateSongs/>
                   <Button
@@ -219,7 +214,7 @@ export default function CreateStudio() {
                     variant="contained"
                     type="submit"
                   >
-                    Create Item
+                    {t("createItem")}
                   </Button>
                 </div>
 

@@ -12,11 +12,13 @@ import { Avatar, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/mat
 import default_album from '../../../assets/album.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
-
+import { useTranslation } from 'react-i18next';
+import "../Components/MultiLang";
 const backend_address = 'http://localhost:5000';
 
 export default function AdminPanel() {
-  UpdateUserInfo()
+  const { t } = useTranslation();
+  UpdateUserInfo();
   const [data, setData] = useState([]);
   const [products, setProducts] = useState([]);
   const [studios, setStudios] = useState([]);
@@ -96,15 +98,15 @@ export default function AdminPanel() {
       params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='error' onClick={() => {
         DeleteUser(params.row.id)
         }}>
-          Delete</Button>: null
+          {t("delete")}</Button>: null
     ),},
     {field: 'Admin', headerName: "Add Admin",renderCell: (params) => (
       params.row.is_admin != true ? <Button variant='contained' color='info' onClick={() => {
         makeAdmin(params.row.id)
       }}>
-          Make admin</Button> : <Button variant='contained' color='error' onClick={() => {
+          {t("addAdmin")}</Button> : <Button variant='contained' color='error' onClick={() => {
             deleteAdmin(params.row.id)
-          }}>Delete admin</Button>
+          }}>{t("deleteAdmin")}</Button>
     ),},
   ]
   const paginationModel = { page: 0, pageSize: 5 };
@@ -131,7 +133,7 @@ export default function AdminPanel() {
       <SideBar />
       <div className="main">
         <div className="users">
-          <h1>Users</h1>
+          <h1>{t("users")}</h1>
           <DataGrid
             rows={data}
             columns={columns}
@@ -142,10 +144,10 @@ export default function AdminPanel() {
             />
         </div>
         <div>
-          <h1>Album</h1>
+          <h1>{t("album")}</h1>
           {products.length > 0 && studios.length > 0 ?
           <form onSubmit={changeOwnership}>
-            <p>Studio</p>
+            <p>{t("studio")}</p>
               <select
                 id="studio"
                 // value={selectedStudio}
@@ -156,7 +158,7 @@ export default function AdminPanel() {
               ))}
               </select>
 
-            <p>Product</p>
+            <p>{t("product")}</p>
             <select
                 id="product"
                 // value={selectedProduct}

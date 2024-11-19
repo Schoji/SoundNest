@@ -11,7 +11,8 @@ import createCache from '@emotion/cache';
 
 import './Library.css';
 import { useNavigate } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
+import '../Components/MultiLang'
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -22,6 +23,7 @@ const cache = createCache({
 export default function Library() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const { t } = useTranslation()
   const Fetch = () => {
     fetch(backend_address + "/api/userproducts/" + sessionStorage.getItem('id'))
       .then((response) => response.json())
@@ -40,11 +42,7 @@ export default function Library() {
       <SideBar />
       <div className="main">
         <div className="library">
-          {sessionStorage.getItem('id') === null ? (
-            <h1>There is nothing to see here</h1>
-          ) : (
-            <h1>Your Library</h1>
-          )}
+          <h1>{t("yourLibrary")}</h1>
           <div className="libraryAlbums">
             {data.map((value) => (
               <div className="libraryProduct">

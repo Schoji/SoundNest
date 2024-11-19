@@ -1,9 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import { useEffect } from 'react';
-import { createTheme } from '@mui/material';
-import { ThemeProvider } from 'styled-components';
-import { lime, purple } from '@mui/material/colors';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);

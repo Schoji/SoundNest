@@ -22,6 +22,8 @@ import logo_red_darker from '../../../assets/icons/logo-red-darker.png';
 import logo_yellow_darker from '../../../assets/icons/logo-yellow-darker.png';
 import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
 import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
+import { useTranslation } from 'react-i18next';
+import '../Components/MultiLang'
 
 
 const backend_address = 'http://localhost:5000';
@@ -129,73 +131,58 @@ function ChangePicture(event) {
     link.href = url
     link.click()
   }
-
+  const { t } = useTranslation()
   return (
     <div className="all">
       <TopBar />
       <SideBar />
       <div className="main">
-        {sessionStorage.getItem('id') === null ? (
-          <h1>Login to use settings</h1>
-        ) : (
-          <div className="settings">
-            <div className="settingsContent">
-              <div className="avatar">
-                <form encType="multipart/form-data" onSubmit={AlterUser}>
-                  <FormControl>
-                  <img src={pic}></img>
-                    <TextField id="file" type="file" onChange={ChangePicture}/>
-                    <TextField id="name" label="Name" variant="outlined" defaultValue={sessionStorage.getItem('name')}/>
-                    <TextField id="surname" label="Surname" variant="outlined" defaultValue={sessionStorage.getItem('surname')}/>
-                    <TextField id="username" label="Username" variant="outlined" defaultValue={sessionStorage.getItem('username')}/>
-                    <TextField id="email" label="Email" variant="outlined" defaultValue={sessionStorage.getItem('email')}/>
-                    <TextField id="bio" label="Your bio" multiline variant="outlined" defaultValue="TODO"/>
-                    <Button color="success" variant="contained" type="submit">
-                      Save
-                    </Button>
-                    <Button color="error" variant="contained">
-                      Cancel
-                    </Button>
-                  </FormControl>
-                </form>
-              <Button variant='contained' onClick={exportUserInfo}>Export user information</Button>
-              </div>
-              <div className='setLogo'>
-                <Link onClick={() => changeLogo(0)} to="/settings" className="link1">
-                    <img src={sessionStorage.getItem("theme") === "light" ? logo : logodark} />
-                </Link>
-                <Link onClick={() => changeLogo(1)} to="/settings" className="link1">
-                    <img src={sessionStorage.getItem("theme") === "light" ? logo_red : logo_red_darker}/>
-                </Link>
-                <Link onClick={() => changeLogo(2)} to="/settings" className="link1">
-                    <img src={sessionStorage.getItem("theme") === "light" ? logo_yellow : logo_yellow_darker}/>
-                </Link>
-                <Link onClick={() => changeLogo(3)} to="/settings" className="link1">
-                    <img src={sessionStorage.getItem("theme") === "light" ? logo_green : logo_green_darker}/>
-                </Link>
-                <Link onClick={() => changeLogo(4)} to="/settings" className="link1">
-                    <img src={sessionStorage.getItem("theme") === "light" ? logo_pink : logo_pink_darker} />
-                </Link>
-              </div>
+        <div className="settings">
+          <div className="settingsContent">
+            <div className="avatar">
+              <form encType="multipart/form-data" onSubmit={AlterUser}>
+                <FormControl>
+                <img src={pic}></img>
+                  <TextField id="file" type="file" onChange={ChangePicture}/>
+                  <TextField id="name" label="Name" variant="outlined" defaultValue={sessionStorage.getItem('name')}/>
+                  <TextField id="surname" label="Surname" variant="outlined" defaultValue={sessionStorage.getItem('surname')}/>
+                  <TextField id="username" label="Username" variant="outlined" defaultValue={sessionStorage.getItem('username')}/>
+                  <TextField id="email" label="Email" variant="outlined" defaultValue={sessionStorage.getItem('email')}/>
+                  <TextField id="bio" label="Your bio" multiline variant="outlined" defaultValue="TODO"/>
+                  <Button color="success" variant="contained" type="submit">
+                    {t("Save")}
+                  </Button>
+                  <Button color="error" variant="contained">
+                    {t("Cancel")}
+                  </Button>
+                </FormControl>
+              </form>
+            <Button variant='contained' onClick={exportUserInfo}>{t("exportUserInfo")}</Button>
+            </div>
+            <div className='setLogo'>
+              <Link onClick={() => changeLogo(0)} to="/settings" className="link1">
+                  <img src={sessionStorage.getItem("theme") === "light" ? logo : logodark} />
+              </Link>
+              <Link onClick={() => changeLogo(1)} to="/settings" className="link1">
+                  <img src={sessionStorage.getItem("theme") === "light" ? logo_red : logo_red_darker}/>
+              </Link>
+              <Link onClick={() => changeLogo(2)} to="/settings" className="link1">
+                  <img src={sessionStorage.getItem("theme") === "light" ? logo_yellow : logo_yellow_darker}/>
+              </Link>
+              <Link onClick={() => changeLogo(3)} to="/settings" className="link1">
+                  <img src={sessionStorage.getItem("theme") === "light" ? logo_green : logo_green_darker}/>
+              </Link>
+              <Link onClick={() => changeLogo(4)} to="/settings" className="link1">
+                  <img src={sessionStorage.getItem("theme") === "light" ? logo_pink : logo_pink_darker} />
+              </Link>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
 }
 
-// function changeLogo(logoValue) {
-//   if (logoValue === 1) {
-//     sessionStorage.setItem("logo", "1");
-//   }
-//   else if(logoValue === 2) {
-//     sessionStorage.setItem("logo", "2");
-//   }
-//   else if(logoValue === 3) {
-//     sessionStorage.setItem("logo", "3");
-//   }
-// }
 function changeLogo(logoValue) {
   sessionStorage.setItem("logo", logoValue);
 }

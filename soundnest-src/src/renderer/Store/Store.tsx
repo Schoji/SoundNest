@@ -17,7 +17,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
-
+import "../Components/MultiLang.ts"
+import { useTranslation } from 'react-i18next';
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -26,9 +27,9 @@ const cache = createCache({
 });
 
 export default function Store() {
-  UpdateUserInfo();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const { t } = useTranslation()
   const Fetch = () => {
     fetch(`${backend_address}/api/products/`)
       .then((response) => response.json())
@@ -63,7 +64,7 @@ export default function Store() {
       <div className="main">
         {data ?
         <div className="store">
-          <h1>Store</h1>
+          <h1>{t('store')}</h1>
           <Button
             onClick={() => {
               navigate("/createitem", { replace: true });

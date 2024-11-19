@@ -17,7 +17,11 @@ import PurchaseHistory from './Cart/PurchaseHistory';
 import LoginWindow from './Login/LoginWindow';
 import Tradeoffers from './User/TradeOffers';
 import { useEffect, useState } from 'react';
-
+import Studio from './Studio/Studio';
+import User from './User/User';
+import TradeOffer from './User/TradeOffer';
+import DecideTradeOffers from './User/DecideTradeOffers';
+import AddFunds from './User/AddFunds';
 export const backend_address = 'http://localhost:5000';
 
 export function GetCreds() {
@@ -48,11 +52,7 @@ export function GetCreds() {
   }, [])
   return <Store/>
 }
-import Studio from './Studio/Studio';
-import User from './User/User';
-import TradeOffer from './User/TradeOffer';
-import DecideTradeOffers from './User/DecideTradeOffers';
-import AddFunds from './User/AddFunds';
+
 
 export default function App() {
   const view = String(global.location.search).slice(-1)

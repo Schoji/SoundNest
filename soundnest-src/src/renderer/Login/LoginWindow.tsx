@@ -47,7 +47,7 @@ export default function LoginWindow() {
                 placeholder="password"
                 defaultValue="P@ssw0rd123"
               />
-              <input type="submit" />
+              <input type="submit" value="Login"/>
             </form>
           </div>
       </div>
