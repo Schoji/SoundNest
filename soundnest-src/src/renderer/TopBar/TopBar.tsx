@@ -2,12 +2,21 @@
 import BasicMenu from './Menu';
 import LogoChange from '../Settings/SetLogo';
 import SearchBar from './SearchBar';
-import { Button, Input } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { IconButton } from '@mui/material';
+import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
+import { useNavigate } from 'react-router-dom';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 function TopBar() {
+  const navigate = useNavigate()
   return (
+    <CacheProvider value={cache}>
     <div className="topbar">
       <div className="topBarContent">
         <div className="iconDiv">
@@ -18,6 +27,9 @@ function TopBar() {
           <SearchBar/>
         </div>
         <div className="profileDiv">
+          <IconButton className='profileFundsButton' onClick={() => {navigate("/add_funds", {replace: true})}}>
+            <AddCardRoundedIcon fontSize='small' />
+          </IconButton>
           <div className="walletValueDiv">
             <p>{parseFloat(sessionStorage.getItem('credits')).toFixed(2)}$</p>
           </div>
@@ -27,6 +39,7 @@ function TopBar() {
         </div>
       </div>
     </div>
+    </CacheProvider>
   );
 }
 

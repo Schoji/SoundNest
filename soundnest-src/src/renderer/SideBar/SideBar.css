@@ -12,11 +12,12 @@
 .sideButton {
   display: grid;
   grid-template-columns: 50px 1fr;
+  max-width: 199px;
   background: var(--section);
   color: var(--font-color);
   box-sizing: border-box;
   padding: 5px;
-  overflow: visible;
+  overflow: hidden;
   transition: background-color 0.3s;
 }
 :nth-child(1 of .sideButton) {
@@ -70,6 +71,7 @@
 }
 .cartButton {
   position: relative;
+  max-width: 199px;
   background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 8px;
