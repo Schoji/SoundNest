@@ -22,6 +22,8 @@ import User from './User/User';
 import TradeOffer from './User/TradeOffer';
 import DecideTradeOffers from './User/DecideTradeOffers';
 import AddFunds from './User/AddFunds';
+import RegisterWindow from './Register/Register';
+import WelcomeWindow from './Welcome/Welcome';
 export const backend_address = 'http://localhost:5000';
 
 export function GetCreds() {
@@ -103,7 +105,9 @@ export default function App() {
     return (
       <Router>
         <Routes>
-          <Route path='/' element={<LoginWindow/>} />
+          <Route path='/' element={<WelcomeWindow/>} />
+          <Route path='/register' element={<RegisterWindow/>} />
+          <Route path='/login' element={<LoginWindow/>} />
         </Routes>
       </Router>
     )

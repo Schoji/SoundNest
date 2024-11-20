@@ -1,10 +1,13 @@
 import '../App.css';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import { Button } from "@mui/material";
 import logo from '../../../assets/icons/128x128.png';
 
 const backend_address = 'http://localhost:5000';
 
 export default function LoginWindow() {
+  const navigate = useNavigate();
   function Login(event) {
     event.preventDefault();
     const checkCreds = () => {
@@ -48,6 +51,7 @@ export default function LoginWindow() {
                 defaultValue="P@ssw0rd123"
               />
               <input type="submit" value="Login"/>
+              <Button onClick={() => navigate("/register", {replace: true})}>Register</Button>
             </form>
           </div>
       </div>

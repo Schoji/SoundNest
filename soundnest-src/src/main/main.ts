@@ -136,12 +136,12 @@ const createLoginWindow = async () => {
       symbolColor: '#FFFFFF',
       height: 60,
     },
-    width: 400,
-    minWidth: 400,
-    maxWidth: 400,
-    height: 600,
-    minHeight: 600,
-    maxHeight: 600,
+    width: 450,
+    minWidth: 450,
+    maxWidth: 450,
+    height: 700,
+    minHeight: 700,
+    maxHeight: 700,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
