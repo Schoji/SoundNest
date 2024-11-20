@@ -1,0 +1,44 @@
+<h1>🎉 <b>Benutzt du unsere großartige App?</b> 🎉</h1>
+<p>Herzlichen Glückwunsch, du bist ein Glückspilz! Aber bevor du loslegst, haben wir eine kurze, lustige Nutzungsbedingungen für dich. Schließlich ist es nur eine Formalität… <b>oder?</b></p>
+
+<h2>§1. <b>Die „Recording Studio“-App</b> 🎵</h2>
+<p>Es ist dein virtuelles Zentrum für das Management deines Musikimperiums. <b>Du erstellst</b>, <b>bearbeitest</b>, weist Künstler zu Tracks zu, Tracks zu Alben, und vielleicht auch dich selbst zu großem Ruhm! Bevor du loslegst, musst du dich anmelden. Und wenn du noch kein Konto hast, wartet die <b>Registrierung</b>. Es gibt keine Admins ohne Konto! <b>Einfach.</b></p>
+
+<h2>§2. <b>Benutzeroberfläche:</b></h2>
+<p>Unsere Benutzeroberfläche ist so intuitiv, dass sogar Katzen sie nutzen könnten (aber warum sollten sie ein Tonstudio brauchen?). Fenster sind überall – <b>Multi-Window</b> ist unser Standard.</p>
+<p>Du kannst zwischen zwei grafischen Versionen wählen: <b>hell</b> (für Frühaufsteher) und <b>dunkel</b> (für Nachteulen). Passe das Aussehen je nach Laune oder Mondphase an oder lass es das System für dich tun.</p>
+<p>Du kannst dein eigenes Studio-Logo hinzufügen. Ja, dein schönes Logo kann überall erscheinen. Ändere es nach Belieben, denn wer sagt, dass Stabilität wichtig ist?</p>
+<p>Shortcuts sind da, denn wer möchte schon mit der Maus kämpfen?</p>
+
+<h2>§3. <b>Admins und ihre Superkräfte:</b></h2>
+<p>Die erste Person, die sich registriert, erhält den Titel des Admins. Es ist wie ein König des Universums zu sein… na gut, vielleicht nicht des Universums, aber dieses Studios!</p>
+<p><b>Admins</b> können andere Admins ernennen. Aber wenn du befördert werden möchtest, denk daran: Du musst höflich und freundlich sein (es sei denn, du bist bereits Admin, dann kannst du alles tun).</p>
+<p><b>Ein Admin löschen?</b> Nur, wenn er nicht der erste, gewählte ist. Der erste ist wie Gandalf: Wir tun nichts ohne seine Zustimmung.</p>
+<p>Ein <b>Admin</b>, der abdanken möchte, muss einen Nachfolger bestimmen. Niemand bleibt ohne Aufsicht!</p>
+
+<h2>§4. <b>Normale Benutzer – keine Sorge, auch ihr habt Rechte!</b></h2>
+<p>Ein normaler Benutzer kann <b>Daten einsehen</b>. Sonst nichts. Aber immer mit Stil!</p>
+<p>Jeder kann sein Profil verwalten – Bilder, Passwörter, Adressdaten, damit jeder weiß, wohin er deine goldenen Platten schicken soll.</p>
+<p><b>Was, wenn du dein Passwort vergisst?</b> Kein Problem, wir speichern nur sichere SHA1(SHA1(Passwörter))-Kurzbefehle. Wir kennen deine Passwörter nicht, also frag nicht!</p>
+
+<h2>§5. <b>Datenbank und andere technische Details:</b></h2>
+<p>Die Daten werden in einer Datenbank gespeichert. Wenn sie nicht existiert? Keine Sorge, die App wird eine neue erstellen, wer würde sich schon darum kümmern?</p>
+<p>Es spielt keine Rolle, welche Datenbank du hast – MySQL, PostgreSQL, SQLite, MongoDB. Unsere App versteht sich mit jeder von ihnen, du kannst also ruhig schlafen.</p>
+<p><b>Backup?</b> Immer eine gute Idee. Du kannst ein Backup im ZIP-Format erstellen – Alben, Tracks, Daten… Alles, was das Herz begehrt.</p>
+
+<h2>§6. <b>Der Shop, Verkauf und virtuelle Währung:</b></h2>
+<p>Ja, es gibt einen Shop! Du kannst deine Meisterwerke verkaufen: Alben, Tracks oder vielleicht sogar dich selbst. Jeder neue Benutzer erhält etwas virtuelle Währung zum Start. <b>Für Einkäufe!</b></p>
+<p>Nach dem Login? Deine Daten sind schon im System. Klick, klick und fertig. Du musst nichts eingeben. Aber wenn du nicht eingeloggt bist, musst du ein wenig tippen.</p>
+<p>Hast du gekaufte Tracks? <b>Super!</b> Du kannst sie ausdrucken – Quittung oder Einkaufsliste – kein Problem.</p>
+
+<h2>§7. <b>Virtueller Verkauf zwischen Benutzern:</b></h2>
+<p>Hast du ein Album, das du einem Freund auf einem anderen Computer übergeben möchtest? Die App ermöglicht es – übertrage Alben, Tracks oder sogar Bilder. Das Geld wird automatisch umgerechnet!</p>
+
+<h2>§8. <b>Demo für Unentschlossene:</b></h2>
+<p>Für die, die noch nicht wissen, dass dies die beste App der Welt ist, haben wir eine Demo-Version. Es sind nicht alle Funktionen verfügbar, aber hey, versuch es und spüre die Magie. Willst du mehr? Gib den Freischaltcode ein!</p>
+
+<h2>§9. <b>Die Nutzungsbedingungen – immer verfügbar, sogar aus dem Weltall:</b></h2>
+<p>In der App findest du die magische Schaltfläche <b>„Nutzungsbedingungen”</b>. Wenn sie aus irgendeinem Grund verschwindet (Außerirdische?), wird die App sie automatisch mit einer kurzen Mitteilung wiederherstellen, die du ebenfalls mögen wirst.</p>
+
+<h2>§10. <b>Zum Schluss...</b></h2>
+<p>Nutze die App weise und denke daran: <b>Dein Erfolg ist unser Erfolg!</b></p>

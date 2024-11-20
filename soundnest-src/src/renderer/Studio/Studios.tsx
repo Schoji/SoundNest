@@ -21,7 +21,8 @@ import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import "../Components/MultiLang"
+import { useTranslation } from 'react-i18next';
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -30,6 +31,7 @@ const cache = createCache({
 });
 
 export function AlertDialog({ studio_id }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const DeleteStudio = (studio_id) => {
@@ -66,8 +68,7 @@ export function AlertDialog({ studio_id }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This action cannot be undone. Once you do this you will remove it from database.
-            {studio_id}
+            {t("studioDeletionMessage")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -76,7 +77,7 @@ export function AlertDialog({ studio_id }) {
             handleClose();
             DeleteStudio(studio_id);
             }} autoFocus>
-            Confirm
+            {t("confirm")}
           </Button>
         </DialogActions>
       </Dialog>
@@ -86,6 +87,7 @@ export function AlertDialog({ studio_id }) {
 
 
 export default function Studio() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [myStudiosData, setMyStudiosData] = useState(null);
   const [otherStudiosData, setOtherStudiosData] = useState(null);
@@ -128,7 +130,7 @@ export default function Studio() {
                 </div>
                 <h3>{value.name}</h3>
                 <p>{value.desc}</p>
-                <Button onClick={() => navigate("/studios/" + value.id,  { replace: true })}>LEARN MORE</Button>
+                <Button onClick={() => navigate("/studios/" + value.id,  { replace: true })}>{t("learnMore")}</Button>
                 {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/>: null}
 
     </div>
@@ -140,7 +142,7 @@ export default function Studio() {
       <div className="main">
         <div className="studios">
         <CacheProvider value={cache}>
-          <h1>My Studios</h1>
+          <h1>{t("myStudios")}</h1>
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
@@ -163,13 +165,13 @@ export default function Studio() {
                 navigate(`/editstudio/${myStudio.id}`, { replace: true });
               }}
             >
-              Edit
+              {t("edit")}
             </Button>
           </div>
            ))}
            </div>
           : <CircularProgress /> }
-          <h1>Other Studios</h1>
+          <h1>{t("otherStudios")}</h1>
           <div className="otherStudios">
             {otherStudios}
           </div>

@@ -1,0 +1,45 @@
+
+<h1>🎉 <b>Korzystasz z naszej super aplikacji?</b> 🎉</h1>
+<p>Gratulacje, jesteś szczęściarzem! Ale zanim zaczniesz, mamy dla Ciebie krótki, zabawny regulamin. W końcu to tylko formalność… <b>prawda?</b></p>
+
+<h2>§1. <b>Aplikacja „Studio Nagrań”</b> 🎵</h2>
+<p>To Twoje wirtualne centrum zarządzania muzycznym imperium. <b>Tworzysz</b>, <b>edytujesz</b>, przypisujesz twórców do utworów, utwory do płyt, a może i siebie do wielkiej sławy! Zanim zaczniesz, musisz się zalogować. A jeśli nie masz konta, <b>rejestracja czeka</b>. Adminów nie ma bez kont! <b>Proste.</b></p>
+
+<h2>§2. <b>Interfejs:</b></h2>
+<p>Nasz interfejs jest tak intuicyjny, że nawet koty mogłyby z niego korzystać (ale po co im studio nagrań?). Okienka są wszędzie – <b>wielookienkowość</b> to nasz standard.</p>
+<p>Masz do wyboru dwie wersje graficzne: <b>jasną</b> (dla rannych ptaszków) i <b>ciemną</b> (dla sowonocy). Dostosuj wygląd do swojego nastroju lub fazy księżyca, albo pozwól systemowi zrobić to za Ciebie.</p>
+<p>Możesz dodać własne logo studia. Tak, Twoje piękne logo może się pojawić na każdym kroku. Zmieniaj je dowolnie, bo kto powiedział, że stabilność to priorytet?</p>
+<p>Skróty klawiszowe są, bo kto by się chciał męczyć z myszką?</p>
+
+<h2>§3. <b>Admini i ich Supermoce:</b></h2>
+<p>Pierwsza osoba, która się zarejestruje, zyskuje tytuł admina. To jak bycie królem wszechświata… no dobra, może nie wszechświata, ale tego studia!</p>
+<p><b>Admin</b> może powoływać innych adminów. Jeśli jednak chcesz awansować, pamiętaj: musisz być grzeczny i uprzejmy (no chyba, że już jesteś adminem, to możesz wszystko).</p>
+<p><b>Usunięcie admina?</b> Tylko jeśli nie jest tym pierwszym, wybranym. Ten pierwszy to jak Gandalf: nie ruszamy bez jego zgody.</p>
+<p><b>Admin</b>, który chce abdykować, musi wyznaczyć następcę. Nikt nie zostaje bez opiekuna!</p>
+
+<h2>§4. <b>Zwykli użytkownicy – nie bójcie się, macie też swoje prawa!</b></h2>
+<p>Zwykły użytkownik może <b>przeglądać dane</b>. Nic więcej. Ale za to z klasą!</p>
+<p>Każdy może zarządzać swoim profilem – zdjęcia, hasła, dane adresowe, żeby każdy wiedział, gdzie wysłać Twoje złote płyty.</p>
+<p><b>Jak zapomnisz hasło?</b> Spoko, trzymamy tylko bezpieczne skróty SHA1(SHA1(hasła)). My Twoich haseł nie znamy, więc nie pytaj!</p>
+
+<h2>§5. <b>Baza danych i inne techniczne bajery:</b></h2>
+<p>Dane trzymamy w bazie danych. Jak jej nie ma? Spokojnie, aplikacja stworzy nową, bo kto by się tym martwił.</p>
+<p>Nie ważne, jaką masz bazę danych – MySQL, PostgreSQL, SQLite, MongoDB. Nasza aplikacja dogada się z każdą z nich, więc możesz spać spokojnie.</p>
+<p><b>Backup?</b> Zawsze dobry pomysł. Możesz zrobić zapasową kopię w ZIPie – płyty, utwory, dane… Wszystko, czego dusza zapragnie.</p>
+
+<h2>§6. <b>Sklepik, sprzedaż i wirtualna gotówka:</b></h2>
+<p>Tak, jest sklep! Możesz sprzedawać swoje arcydzieła: płyty, utwory, a może nawet siebie. Każdy nowy użytkownik dostaje trochę wirtualnej kasy na start. <b>Na zakupy!</b></p>
+<p>Po zalogowaniu? Twoje dane są już w systemie. Klik, klik i gotowe. Nie musisz nic wprowadzać. Ale jak jesteś niezalogowany, cóż, musisz sobie trochę popisać.</p>
+<p>Masz kupione utwory? <b>Super!</b> Możesz je wydrukować – paragonik czy lista zakupów – nie ma sprawy.</p>
+
+<h2>§7. <b>Wirtualna sprzedaż między użytkownikami:</b></h2>
+<p>Masz płytę, którą chcesz przekazać kumplowi z innego komputera? Aplikacja Ci na to pozwoli – transferuj płyty, utwory, a nawet obrazki. Pieniążki same się przeliczą!</p>
+
+<h2>§8. <b>Demo dla niezdecydowanych:</b></h2>
+<p>Dla tych, którzy jeszcze nie wiedzą, że to najlepsza aplikacja świata, mamy wersję demo. Nie ma tam wszystkich opcji, ale hej, spróbuj i poczuj magię. Chcesz więcej? Wpisz klucz odblokowujący!</p>
+
+<h2>§9. <b>Regulamin – zawsze dostępny, choćby z kosmosu:</b></h2>
+<p>W aplikacji znajdziesz magiczny przycisk <b>„Regulamin”</b>. Jeśli z jakiegoś powodu zniknie (kosmici?), aplikacja przywróci go automatycznie z krótką formułką, którą też polubisz.</p>
+
+<h2>§10. <b>Na koniec...</b></h2>
+<p>Korzystaj mądrze i pamiętaj: <b>Twój sukces to nasz sukces!</b></p>

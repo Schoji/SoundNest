@@ -13,7 +13,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Box, Button, Paper, Skeleton, Table, TableCell, TableContainer, TableRow } from '@mui/material';
 import './Item.css';
 import { useNavigate } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
+import "../Components/MultiLang"
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -23,6 +24,7 @@ const cache = createCache({
 
 export function OtherItems() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [data, setData] = useState(null);
   const location = useLocation();
   const { hash, pathname, search } = location;
@@ -60,7 +62,7 @@ export function OtherItems() {
               <Button key={key} onClick={() => {
                 document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });
                       changeSite(value.id);
-                    }}>View details</Button>
+                    }}>{t("viewDetails")}</Button>
             </div> : null
           )}
     </div>
@@ -72,6 +74,7 @@ export default function Item() {
   const [trackData, setTrackData] = useState(null);
   const { item_id } = useParams()
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const Fetch = () => {
     fetch(backend_address + "/api/products_with_tags/" + item_id)
@@ -158,7 +161,7 @@ export default function Item() {
               >
                 <ArrowBackIosRoundedIcon />
               </IconButton>
-              <h1>Album details</h1>
+              <h1>{t("albumDetails")}</h1>
             </div>
             <div className="itemDesc">
               {data.item_path !== '/' ? (
@@ -180,7 +183,7 @@ export default function Item() {
               <h3>
                 {data.price === undefined ? data.price : data.price.toFixed(2)}$
               </h3>
-              <Button onClick={addToCart}>Add to cart </Button>
+              <Button onClick={addToCart}>{t("addToCart")}</Button>
             </div>
             {trackInfo()}
             <div className="itemTitle">
@@ -191,7 +194,7 @@ export default function Item() {
               >
                 <AlbumRoundedIcon />
               </IconButton>
-              <h1>Other products</h1>
+              <h1>{t("otherProducts")}</h1>
             </div>
             <OtherItems />
           </CacheProvider>

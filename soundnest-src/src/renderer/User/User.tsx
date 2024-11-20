@@ -1,21 +1,16 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable import/order */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { replace, useNavigate, useParams } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
+import { useTranslation } from 'react-i18next';
+import "../Components/MultiLang"
 
 const backend_address = 'http://localhost:5000';
 
@@ -26,6 +21,7 @@ const cache = createCache({
 
 export default function User() {
   const { user_id } = useParams();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [studio_data, setStudioData] = useState(null);
@@ -65,7 +61,7 @@ export default function User() {
               >
                 <ArrowBackIosRoundedIcon />
               </IconButton>
-              <h1>User details</h1>
+              <h1>{t("userDetails")}</h1>
             </div>
             <div className="itemDesc">
               {data.avatar_dir !== '/' ? (
@@ -82,7 +78,7 @@ export default function User() {
               <Button onClick={() => {
                 navigate(`/tradeoffer/${data.id}`, {replace: true})
               }}>
-                TradeOffer
+                {t("tradeOffer")}
               </Button>
             </div>
           </CacheProvider>
@@ -103,7 +99,7 @@ export default function User() {
               )}
               <h2>{studio.name}</h2>
               <p>{studio.desc}</p>
-              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>Check out</Button>
+              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>{t("checkout")}</Button>
             </div>
           ))}
         </div>

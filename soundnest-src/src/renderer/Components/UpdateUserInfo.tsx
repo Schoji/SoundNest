@@ -15,6 +15,7 @@ export default function UpdateUserInfo() {
     sessionStorage.setItem("email", user.email)
     sessionStorage.setItem("surname", user.surname)
     sessionStorage.setItem("name", user.name)
+    sessionStorage.setItem("lang", user.lang)
   })
   .catch(error => console.log(error))
 }

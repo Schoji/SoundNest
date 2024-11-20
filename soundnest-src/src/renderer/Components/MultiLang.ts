@@ -1,43 +1,8 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import { backend_address } from './global'
+import { useEffect, useState } from 'react'
 
-// const statute = '\
-//             Korzystasz z naszej super aplikacji? Gratulacje, jesteś szczęściarzem! Ale zanim zaczniesz, mamy dla Ciebie krótki, zabawny regulamin. W końcu to tylko formalność… prawda? \
-//             Aplikacja „Studio Nagrań” to Twoje wirtualne centrum zarządzania muzycznym imperium. Tworzysz, edytujesz, przypisujesz twórców do utworów, utwory do płyt, a może i siebie do wielkiej sławy! \
-//             Zanim zaczniesz, musisz się zalogować. A jeśli nie masz konta, rejestracja czeka. Adminów nie ma bez kont! Proste. \
-//         §2. Interfejs:\
-//             Nasz interfejs jest tak intuicyjny, że nawet koty mogłyby z niego korzystać (ale po co im studio nagrań?). Okienka są wszędzie – wielookienkowość to nasz standard.\
-//             Masz do wyboru dwie wersje graficzne: jasną (dla rannych ptaszków) i ciemną (dla sowonocy). Dostosuj wygląd do swojego nastroju lub fazy księżyca, albo pozwól systemowi zrobić to za Ciebie.\
-//             Możesz dodać własne logo studia. Tak, Twoje piękne logo może się pojawić na każdym kroku. Zmieniaj je dowolnie, bo kto powiedział, że stabilność to priorytet?\
-//             Skróty klawiszowe są, bo kto by się chciał męczyć z myszką?\
-//         §3. Admini i ich Supermoce:\
-//             Pierwsza osoba, która się zarejestruje, zyskuje tytuł admina. To jak bycie królem wszechświata… no dobra, może nie wszechświata, ale tego studia!\
-//             Admin może powoływać innych adminów. Jeśli jednak chcesz awansować, pamiętaj: musisz być grzeczny i uprzejmy (no chyba, że już jesteś adminem, to możesz wszystko).\
-//             Usunięcie admina? Tylko jeśli nie jest tym pierwszym, wybranym. Ten pierwszy to jak Gandalf: nie ruszamy bez jego zgody.\
-//             Admin, który chce abdykować, musi wyznaczyć następcę. Nikt nie zostaje bez opiekuna!\
-//         §4. Zwykli użytkownicy – nie bójcie się, macie też swoje prawa!\
-//             Zwykły użytkownik może przeglądać dane. Nic więcej. Ale za to z klasą!\
-//             Każdy może zarządzać swoim profilem – zdjęcia, hasła, dane adresowe, żeby każdy wiedział, gdzie wysłać Twoje złote płyty.\
-//             Jak zapomnisz hasło? Spoko, trzymamy tylko bezpieczne skróty SHA1(SHA1(hasła)). My Twoich haseł nie znamy, więc nie pytaj!\
-//         §5. Baza danych i inne techniczne bajery:\
-//             Dane trzymamy w bazie danych. Jak jej nie ma? Spokojnie, aplikacja stworzy nową, bo kto by się tym martwił.\
-//             Nie ważne, jaką masz bazę danych – MySQL, PostgreSQL, SQLite, MongoDB. Nasza aplikacja dogada się z każdą z nich, więc możesz spać spokojnie.\
-//             Backup? Zawsze dobry pomysł. Możesz zrobić zapasową kopię w ZIPie – płyty, utwory, dane… Wszystko, czego dusza zapragnie.\
-//         §6. Sklepik, sprzedaż i wirtualna gotówka:\
-//             Tak, jest sklep! Możesz sprzedawać swoje arcydzieła: płyty, utwory, a może nawet siebie. Każdy nowy użytkownik dostaje trochę wirtualnej kasy na start. Na zakupy!\
-//             Po zalogowaniu? Twoje dane są już w systemie. Klik, klik i gotowe. Nie musisz nic wprowadzać. Ale jak jesteś niezalogowany, cóż, musisz sobie trochę popisać.\
-//             Masz kupione utwory? Super! Możesz je wydrukować – paragonik czy lista zakupów – nie ma sprawy.\
-//         §7. Wirtualna sprzedaż między użytkownikami:\
-//             Masz płytę, którą chcesz przekazać kumplowi z innego komputera? Aplikacja Ci na to pozwoli – transferuj płyty, utwory, a nawet obrazki. Pieniążki same się przeliczą!\
-//         §8. Demo dla niezdecydowanych:\
-//             Dla tych, którzy jeszcze nie wiedzą, że to najlepsza aplikacja świata, mamy wersję demo. Nie ma tam wszystkich opcji, ale hej, spróbuj i poczuj magię. Chcesz więcej? Wpisz klucz odblokowujący!\
-//         §9. Regulamin – zawsze dostępny, choćby z kosmosu:\
-//             W aplikacji znajdziesz magiczny przycisk „Regulamin”. Jeśli z jakiegoś powodu zniknie (kosmici?), aplikacja przywróci go automatycznie z krótką formułką, którą też polubisz.\
-//         §10. Na koniec...:\
-//             Korzystaj mądrze i pamiętaj: Twój sukces to nasz sukces!'
-
-
-//todo: store information about user prefered lang in database
 i18n.use(initReactI18next).init({
   lng: "en",
   resources: {
@@ -69,6 +34,7 @@ i18n.use(initReactI18next).init({
         totalCost: "Total cost",
         noCartItems: "Your cart is empty. Add some products to proceed.",
         cartOf: "Cart of",
+        addToCart: "Add to Cart",
         //PurchaseHistory
         purchaseHistory: "Purchase history of",
         //Settings
@@ -81,6 +47,52 @@ i18n.use(initReactI18next).init({
         songDuration: "Song duration in seconds",
         createYourItem: "Create your item",
         createItem: "Create item",
+        //Item
+        viewDetails: "View Details",
+        albumDetails: "Album Details",
+        otherProducts: "Other Products",
+        //CreateStudio
+        createYourStudio: "Create Your Studio",
+        createStudio: "Create Studio",
+        //Studio
+        studioDetails: "Studio Details",
+        studioOwned: "Studio is owned by",
+        otherStudios: "Other studios",
+        //Studios
+        studioDeletionMessage: "This action cannot be undone. Are you 100% sure?",
+        confirm: "Confirm",
+        learnMore: "Learn More",
+        myStudios: "My Studios",
+        edit: "Edit",
+        //Menu
+        darkMode: "Dark Mode",
+        termsOfUse: "Terms of Use",
+        settings: "Settings",
+        addFunds: "Add Funds",
+        logout: "Logout",
+        //DecideTradeOffers
+        tradeFrom: "Trade from",
+        youGet: "You get",
+        youGive: "You give",
+        accept: "Accept",
+        decline: "Decline",
+        user1Products: "User 1 Products",
+        user2Products: "User 2 Products",
+        sendTradeoffer: "Send Tradeoffer",
+        //Tradeoffers
+        itemsYouGive: "Items you will give",
+        itemsYouReceive: "Items you will receive",
+        noPendingTradeoffers: "You have no pending trade offers.",
+        historyTradeoffer: "History of your trade offers",
+        trader: "Trader",
+        yourItems: "Your items",
+        traderItems: "Trader's items",
+        date: "Date",
+        noPreviousTrades: "You have no previous trades.",
+        //User
+        userDetails: "User Details",
+        tradeOffer: "Trade Offer",
+        checkout: "Checkout",
       }
     },
     pl: {
@@ -111,6 +123,7 @@ i18n.use(initReactI18next).init({
         totalCost: "Całkowity koszt",
         noCartItems: "Twój koszyk jest pusty. Dodaj produkty, aby kontynuować.",
         cartOf: "Koszyk użytkownika",
+        addToCart: "Dodaj do koszyka",
         //PurchaseHistory
         purchaseHistory: "Historia zakupów użytkownika",
         //Settings
@@ -122,8 +135,54 @@ i18n.use(initReactI18next).init({
         producer: "Producent",
         songDuration: "Czas trwania utworu w sekundach",
         createYourItem: "Utwórz swój przedmiot",
-        createItem: "Utwórz przedmiot"
-      },
+        createItem: "Utwórz przedmiot",
+        //Item
+        viewDetails: "Zobacz szczegóły",
+        albumDetails: "Szczegóły albumu",
+        otherProducts: "Inne produkty",
+        //CreateStudio
+        createYourStudio: "Utwórz swoje studio",
+        createStudio: "Utwórz studio",
+        //Studio
+        studioDetails: "Szczegóły studia",
+        studioOwned: "Studio należy do",
+        otherStudios: "Inne studia",
+        //Studios
+        studioDeletionMessage: "Tej operacji nie można cofnąć. Czy jesteś pewien na 100%?",
+        confirm: "Potwierdź",
+        learnMore: "Dowiedz się więcej",
+        myStudios: "Moje studia",
+        edit: "Edytuj",
+        //Menu
+        darkMode: "Tryb ciemny",
+        termsOfUse: "Regulamin",
+        settings: "Ustawienia",
+        addFunds: "Dodaj środki",
+        logout: "Wyloguj",
+        //DecideTradeOffers
+        tradeFrom: "Oferta wymiany od",
+        youGet: "Otrzymujesz",
+        youGive: "Dajesz",
+        accept: "Akceptuj",
+        decline: "Odrzuć",
+        user1Products: "Produkty użytkownika 1",
+        user2Products: "Produkty użytkownika 2",
+        sendTradeoffer: "Wyślij ofertę wymiany",
+        //Tradeoffers
+        itemsYouGive: "Przedmioty, które oddasz",
+        itemsYouReceive: "Przedmioty, które otrzymasz",
+        noPendingTradeoffers: "Nie masz żadnych oczekujących ofert wymiany.",
+        historyTradeoffer: "Historia twoich ofert wymiany",
+        trader: "Handlarz",
+        yourItems: "Twoje przedmioty",
+        traderItems: "Przedmioty handlarza",
+        date: "Data",
+        noPreviousTrades: "Nie masz wcześniejszych transakcji.",
+        //User
+        userDetails: "Szczegóły użytkownika",
+        tradeOffer: "Oferta wymiany",
+        checkout: "Do kasy"
+      }
     },
     de: {
       translation: {
@@ -153,6 +212,7 @@ i18n.use(initReactI18next).init({
         totalCost: "Gesamtkosten",
         noCartItems: "Dein Warenkorb ist leer. Füge Produkte hinzu, um fortzufahren.",
         cartOf: "Warenkorb von",
+        addToCart: "In den Warenkorb legen",
         //PurchaseHistory
         purchaseHistory: "Kaufhistorie von",
         //Settings
@@ -164,9 +224,55 @@ i18n.use(initReactI18next).init({
         producer: "Produzent",
         songDuration: "Songdauer in Sekunden",
         createYourItem: "Erstelle deinen Artikel",
-        createItem: "Artikel erstellen"
-      }
-    },
+        createItem: "Artikel erstellen",
+        //Item
+        viewDetails: "Details anzeigen",
+        albumDetails: "Albumdetails",
+        otherProducts: "Andere Produkte",
+        //CreateStudio
+        createYourStudio: "Erstelle dein Studio",
+        createStudio: "Studio erstellen",
+        //Studio
+        studioDetails: "Studio-Details",
+        studioOwned: "Studio gehört zu",
+        otherStudios: "Andere Studios",
+        //Studios
+        studioDeletionMessage: "Diese Aktion kann nicht rückgängig gemacht werden. Bist du dir zu 100% sicher?",
+        confirm: "Bestätigen",
+        learnMore: "Mehr erfahren",
+        myStudios: "Meine Studios",
+        edit: "Bearbeiten",
+        //Menu
+        darkMode: "Dunkler Modus",
+        termsOfUse: "Nutzungsbedingungen",
+        settings: "Einstellungen",
+        addFunds: "Guthaben hinzufügen",
+        logout: "Abmelden",
+        //DecideTradeOffers
+        tradeFrom: "Tauschangebot von",
+        youGet: "Du bekommst",
+        youGive: "Du gibst",
+        accept: "Annehmen",
+        decline: "Ablehnen",
+        user1Products: "Produkte von Benutzer 1",
+        user2Products: "Produkte von Benutzer 2",
+        sendTradeoffer: "Tauschangebot senden",
+        //Tradeoffers
+        itemsYouGive: "Gegenstände, die du gibst",
+        itemsYouReceive: "Gegenstände, die du bekommst",
+        noPendingTradeoffers: "Du hast keine ausstehenden Tauschangebote.",
+        historyTradeoffer: "Historie deiner Tauschangebote",
+        trader: "Händler",
+        yourItems: "Deine Gegenstände",
+        traderItems: "Gegenstände des Händlers",
+        date: "Datum",
+        noPreviousTrades: "Du hast keine vorherigen Transaktionen.",
+        //User
+        userDetails: "Benutzerdetails",
+        tradeOffer: "Tauschangebot",
+        checkout: "Zur Kasse"
+      },
+    }
   }
 })
 

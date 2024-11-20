@@ -1,0 +1,44 @@
+<h1>🎉 <b>Are you using our awesome app?</b> 🎉</h1>
+<p>Congratulations, you're lucky! But before you begin, we have a short, fun terms of service for you. After all, it's just a formality… <b>right?</b></p>
+
+<h2>§1. <b>The "Recording Studio" App</b> 🎵</h2>
+<p>It’s your virtual hub for managing your music empire. <b>You create</b>, <b>edit</b>, assign creators to tracks, tracks to albums, and maybe even yourself to fame! Before you begin, you need to log in. And if you don’t have an account, <b>registration awaits</b>. No admins without accounts! <b>Simple.</b></p>
+
+<h2>§2. <b>Interface:</b></h2>
+<p>Our interface is so intuitive that even cats could use it (but why would they need a recording studio?). Windows are everywhere – <b>multi-window</b> is our standard.</p>
+<p>You can choose between two graphic versions: <b>light</b> (for early birds) and <b>dark</b> (for night owls). Adjust the appearance according to your mood or the moon phase, or let the system do it for you.</p>
+<p>You can add your own studio logo. Yes, your beautiful logo can appear everywhere. Change it as you like, because who says stability is a priority?</p>
+<p>Shortcuts are available because who wants to struggle with the mouse?</p>
+
+<h2>§3. <b>Admins and their Superpowers:</b></h2>
+<p>The first person to register gains the title of admin. It’s like being the king of the universe… well, maybe not the universe, but this studio!</p>
+<p><b>Admins</b> can appoint other admins. But if you want to be promoted, remember: you must be polite and kind (unless you’re already an admin, then you can do anything).</p>
+<p><b>Delete an admin?</b> Only if they’re not the first chosen. The first one is like Gandalf: we don’t move without his consent.</p>
+<p><b>An admin</b> who wants to abdicate must appoint a successor. No one is left without supervision!</p>
+
+<h2>§4. <b>Regular users – don't worry, you have rights too!</b></h2>
+<p>A regular user can <b>view data</b>. Nothing more. But always with style!</p>
+<p>Anyone can manage their profile – photos, passwords, address information, so everyone knows where to send your gold records.</p>
+<p><b>If you forget your password?</b> No worries, we only store secure SHA1(SHA1(password)) shortcuts. We don’t know your passwords, so don’t ask!</p>
+
+<h2>§5. <b>Database and other technical details:</b></h2>
+<p>Data is stored in a database. If it doesn’t exist? Don’t worry, the app will create a new one because who would care about that?</p>
+<p>It doesn’t matter what database you have – MySQL, PostgreSQL, SQLite, MongoDB. Our app will work with any of them, so you can sleep easy.</p>
+<p><b>Backup?</b> Always a good idea. You can make a backup in ZIP format – albums, tracks, data… everything you could want.</p>
+
+<h2>§6. <b>The Shop, Sales, and Virtual Currency:</b></h2>
+<p>Yes, there’s a shop! You can sell your masterpieces: albums, tracks, or maybe even yourself. Every new user gets some virtual currency to start with. <b>For shopping!</b></p>
+<p>After logging in? Your data is already in the system. Click, click, and you’re done. You don’t have to enter anything. But if you’re not logged in, you’ll need to type a bit.</p>
+<p>Got purchased tracks? <b>Awesome!</b> You can print them – receipt or shopping list – no problem.</p>
+
+<h2>§7. <b>Virtual sales between users:</b></h2>
+<p>Got an album you want to give to a friend on another computer? The app allows it – transfer albums, tracks, or even images. The money will be automatically converted!</p>
+
+<h2>§8. <b>Demo for the undecided:</b></h2>
+<p>For those who don’t yet know this is the best app in the world, we have a demo version. Not all features are available, but hey, try it and feel the magic. Want more? Enter the unlock code!</p>
+
+<h2>§9. <b>Terms of Service – always available, even from space:</b></h2>
+<p>In the app, you’ll find the magical <b>“Terms of Service”</b> button. If for some reason it disappears (aliens?), the app will automatically restore it with a short message that you’ll like too.</p>
+
+<h2>§10. <b>Lastly...</b></h2>
+<p>Use the app wisely and remember: <b>Your success is our success!</b></p>

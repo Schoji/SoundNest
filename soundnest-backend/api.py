@@ -294,9 +294,22 @@ class changeProductOwnership(Resource):
       db.session.commit()
       return "Ownership transfered successfully."
 
+class getStatute(Resource):
+   def get(self, lang):
+      filename = "statute-" + lang + ".txt"
+      # try:
+      file = open(filename, "r", encoding="utf8")
+      # except FileNotFoundError:
+      #    return "Statute with that language was not found.", 404
+      
+      statute = file.read()
+      file.close()
+      return statute
+
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
 api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
+api.add_resource(changeLang, "/api/change_lang/<int:id_user>/<string:lang>")
 api.add_resource(ThemeSwitcher, "/api/switch_theme/<int:id_user>")
 api.add_resource(addFunds, "/api/add_funds/<int:id_user>/<int:fund_amount>")
 api.add_resource(Studios, "/api/studios/")
@@ -330,6 +343,7 @@ api.add_resource(ExchangeProducts, "/api/exchange_products/<string:trade_id>/")
 api.add_resource(getUserTradeoffersHistory, "/api/user_tradeoffers_history/<int:id_user>/")
 api.add_resource(MakeAdmin, "/api/make_admin/<int:id_user>/")
 api.add_resource(changeProductOwnership, "/api/change_product_ownership/<int:studio>/<int:product>/")
+api.add_resource(getStatute, "/api/statute/<string:lang>")
 
 @app.route("/last_update")
 def last_update():

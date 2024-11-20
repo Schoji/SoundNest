@@ -7,12 +7,14 @@ import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import './Studio.css'
 const backend_address = 'http://localhost:5000';
+import "../Components/MultiLang"
+import { useTranslation } from 'react-i18next';
 
 export default function EditStudio() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [data, setData] = useState({});
   const { studio_id } = useParams();
   const [pic, setPic] = useState(default_album);
@@ -94,10 +96,10 @@ export default function EditStudio() {
               <TextField id="studio_name" label="Studio name" variant="outlined" defaultValue={data.name}/>
               <TextField id="desc" label="Description" multiline variant="outlined" defaultValue={data.desc}/>
               <Button color="success" variant="contained" type="submit">
-                Save
+                {t("save")}
               </Button>
               <Button color="error" variant="contained">
-                Cancel
+              {t("cancel")}
               </Button>
             </FormControl>
           </form>

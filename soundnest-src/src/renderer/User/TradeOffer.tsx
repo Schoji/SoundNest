@@ -1,22 +1,15 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable import/order */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import { replace, useNavigate, useParams } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
 import "./TradeOffer.css"
+import "../Components/MultiLang"
+import { useTranslation } from 'react-i18next';
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -26,6 +19,7 @@ const cache = createCache({
 
 export default function Tradeoffer() {
   const { user_id } = useParams();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [userProducts1, setuserProducts1] = useState(null);
   const [userProducts2, setuserProducts2] = useState(null);
@@ -142,7 +136,7 @@ export default function Tradeoffer() {
       <div className="main">
         <div className='layout'>
           <div>
-            <h1>User 1 products:</h1>
+            <h1>{t("user1Products")}:</h1>
 
             {userInfo1?.avatar_dir !== '/' ? (
                 <img
@@ -198,7 +192,7 @@ export default function Tradeoffer() {
             </div>
           </div>
           <div>
-          <h1>User 2 products:</h1>
+          <h1>{t("user2Products")}:</h1>
           {userInfo2?.avatar_dir !== '/' ? (
                 <img
                   src={`data:image/jpeg;base64,${userInfo2?.avatar_dir}`}
@@ -252,7 +246,7 @@ export default function Tradeoffer() {
             </div>
           </div>
           <div>
-            <h1>You give</h1>
+            <h1>{t("youGive")}</h1>
               <div className='itemList'>
               {myItems?.length > 0 ? myItems?.map((item, index) => (
                 <div>
@@ -267,7 +261,7 @@ export default function Tradeoffer() {
             </div>
           </div>
           <div>
-            <h1>You gain</h1>
+            <h1>{t("youGet")}</h1>
             <div className='itemList'>
               {theirItems?.length > 0 ? theirItems?.map((item, index) => (
                 <div>
@@ -285,7 +279,7 @@ export default function Tradeoffer() {
         <CacheProvider value={cache}>
           <div className='felix'>
           <Button variant='contained' onClick={sendTradeOffer}>
-            Send Tradeoffer
+            {t("sendTradeoffer")}
           </Button>
         </div>
         </CacheProvider>

@@ -22,9 +22,12 @@ import User from './User/User';
 import TradeOffer from './User/TradeOffer';
 import DecideTradeOffers from './User/DecideTradeOffers';
 import AddFunds from './User/AddFunds';
+import { useTranslation } from 'react-i18next';
+import "./Components/MultiLang";
 export const backend_address = 'http://localhost:5000';
 
 export function GetCreds() {
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
       const userInfo = JSON.parse(arg)
@@ -47,7 +50,8 @@ export function GetCreds() {
       sessionStorage.setItem('is_admin', userInfo.is_admin);
       sessionStorage.setItem('cart', '0');
       sessionStorage.setItem("logo", "0")
-      console.log("creds updated")
+      sessionStorage.setItem("lang", userInfo.lang)
+      i18n.changeLanguage(userInfo.lang)
     })
   }, [])
   return <Store/>

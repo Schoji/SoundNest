@@ -15,6 +15,8 @@ import "./TradeOffer.css"
 import { Button, IconButton } from '@mui/material';
 import { ArrowBackIosRounded } from '@mui/icons-material';
 const backend_address = 'http://localhost:5000';
+import "../Components/MultiLang"
+import { useTranslation } from 'react-i18next';
 
 const cache = createCache({
   key: 'css',
@@ -23,6 +25,7 @@ const cache = createCache({
 
 export default function DecideTradeOffers() {
   const { trade_id } = useParams();
+  const { t } = useTranslation();
   console.log(trade_id)
   const navigate = useNavigate();
   const [userTrade, setUserTrade] = useState(null);
@@ -74,12 +77,12 @@ export default function DecideTradeOffers() {
             >
               <ArrowBackIosRounded />
             </IconButton>
-                <h1>Studio details</h1>
+                <h1>{t("studioDetails")}</h1>
               </div>
         {userTrade ?
           <div>
             <p>Trade id: {userTrade.trade_id}</p>
-            <p>Trade from:</p>
+            <p>{t("tradeFrom")}</p>
             <div>
               <img
                 src={`data:image/jpeg;base64,${userTrade.user.pic}`}
@@ -89,7 +92,7 @@ export default function DecideTradeOffers() {
             </div>
             <div className='layout'>
               <div>
-                <p>You get</p>
+                <p>{t("youGet")}</p>
                 {userTrade?.sent_items.map((trade, index) => (
                   <div>
                     <img
@@ -101,7 +104,7 @@ export default function DecideTradeOffers() {
                 ))}
               </div>
               <div>
-                <p>You give</p>
+                <p>{t("youGive")}</p>
                 {userTrade?.received_items.map((trade, index) => (
                   <div>
                     <img
@@ -114,8 +117,8 @@ export default function DecideTradeOffers() {
               </div>
             </div>
             <div className='layout'>
-              <Button variant='contained' color='success' onClick={AcceptTrade}>Accept</Button>
-              <Button variant='contained' color='error' onClick={DeclineTrade}>Decline</Button>
+              <Button variant='contained' color='success' onClick={AcceptTrade}>{t("accept")}</Button>
+              <Button variant='contained' color='error' onClick={DeclineTrade}>{t("decline")}</Button>
             </div>
           </div>
         : null}

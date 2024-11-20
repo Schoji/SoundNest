@@ -7,6 +7,8 @@ import { replace, useNavigate, useParams } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import "./TradeOffer.css"
+import { useTranslation } from 'react-i18next';
+import '../Components/MultiLang'
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -18,6 +20,7 @@ export default function Tradeoffers() {
   const navigate = useNavigate();
   const [userTrades, setUserTrades] = useState([]);
   const [userTradeHistory, setUserTradeHistory] = useState([]);
+  const { t } = useTranslation();
 
   const getUserTrades = () => {
     fetch(backend_address + "/api/user_tradeoffers/" + sessionStorage.getItem("id"))
@@ -54,14 +57,14 @@ export default function Tradeoffers() {
       <TopBar />
       <SideBar />
       <div className="main">
-        <h1>Trade Offers</h1>
+        <h1>{t("tradeOffers")}</h1>
         {userTrades.length > 0 ?(
         <div className="tradeList">
           {userTrades?.map((trade, index) => (
             <div className='tradeObj'>
               {"user" in trade ?
               <div onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>
-                <p>Trade from: </p>
+                <p>{t("tradeFrom")} </p>
                   <img
                       src={`data:image/jpeg;base64,${trade.user.pic}`}
                       alt="Loading..."
@@ -71,7 +74,7 @@ export default function Tradeoffers() {
               </div>
               : null}
               <div>
-                <p>Items that you will receive:</p>
+                <p>{t("itemsYouReceive")}</p>
                 {trade.sent_items?.map((sent_item, index) => (
                   <div>
                     <img
@@ -83,7 +86,7 @@ export default function Tradeoffers() {
                 ))}
               </div>
               <div>
-                <p>Items that you will give:</p>
+                <p>{t("itemsYouGive")}:</p>
                 {trade.received_items?.map((received_item, index) => (
                   <div>
                     <img
@@ -97,21 +100,20 @@ export default function Tradeoffers() {
             </div>
           ))}
         </div>
-        ): <p>You have no pending trade offers.</p>}
-        <h1>History of your trade offers</h1>
+        ): <p>{t("noPendingTradeOffers")}</p>}
+        <h1>{t("historyTradeoffer")}</h1>
         <div>
           {userTradeHistory.length > 0 ?
             <table>
               <tr>
                 {/* <th>Trade</th> */}
-                <th>Trader</th>
-                <th>Your items</th>
-                <th>Trader's items</th>
-                <th>Date</th>
+                <th>{t("trader")}</th>
+                <th>{t("yourItems")}</th>
+                <th>{t("traderItems")}</th>
+                <th>{t("date")}</th>
               </tr>
               {userTradeHistory.map((trade, index) => (
                 <tr>
-                  {/* <td>{trade.trade_id}</td> */}
                   <td>{trade.user.name} {trade.user.surname}</td>
                   <td>{trade.received_items.map((item, index) => (
                     <p>
@@ -127,7 +129,7 @@ export default function Tradeoffers() {
                 </tr>
               ))}
             </table>
-          : <p>You have no previous trades.</p> }
+          : <p>{t("noPreviousTrade")}</p> }
         </div>
       </div>
     </div>

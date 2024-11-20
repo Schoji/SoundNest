@@ -34,6 +34,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(80), nullable=False)
     bio = db.Column(db.String(80))
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
+    lang = db.Column(db.String(80), default="en")
     credits = db.Column(db.Float, default=0)
     avatar_dir = db.Column(db.String(80), default="/") 
     is_admin = db.Column(db.Boolean, default=False)
@@ -50,6 +51,7 @@ userFields = {
     "email":fields.String,
     "password":fields.String,
     "prefered_theme":fields.Integer,
+    "lang": fields.String,
     "credits":fields.Float,
     "avatar_dir":fields.String,
     "is_admin":fields.Boolean,
@@ -64,6 +66,7 @@ user_args.add_argument("email", type=str, required=True, help="Email cannot be b
 user_args.add_argument("password", type=str, required=False, help="Password cannot be blank")
 user_args.add_argument("credits", type=float, help="Password cannot be blank")
 user_args.add_argument("avatar_dir", type=str, required=False, help="Dir")
+user_args.add_argument("lang", type=str, required=False, help="Language")
 user_args.add_argument("is_admin", type=str, required=False, help="isAdmin? True/False")
 
 class Users(Resource):
@@ -215,3 +218,11 @@ class addFunds(Resource):
         
         db.session.commit()
         return "Funds were added successfully.", 200
+
+class changeLang(Resource):
+    def get(self, id_user, lang):
+        user = UserModel.query.filter_by(id=id_user).first()
+        user.lang = lang
+
+        db.session.commit()
+        return "Language was changed successfully.", 200

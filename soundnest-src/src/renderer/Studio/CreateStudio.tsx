@@ -12,7 +12,8 @@ import '../App.css';
 import './CreateStudio.css';
 import default_album from '../../../assets/album.png';
 import { useState, useEffect } from 'react';
-
+import "../Components/MultiLang"
+import { useTranslation } from 'react-i18next';
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -22,6 +23,7 @@ const cache = createCache({
 
 export default function CreateStudio() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [pic, setPic] = useState(default_album);
 
   const [selectedFile, setSelectedFile] = useState();
@@ -85,7 +87,7 @@ export default function CreateStudio() {
             <IconButton onClick={() => {navigate('/studios', { replace: true });}}>
               <ArrowBackIosRoundedIcon />
             </IconButton>
-            <h1>Create Your Studio</h1>
+            <h1>{t("createYourStudio")}</h1>
           </div>
           <form onSubmit={AddStudio}  encType="multipart/form-data">
             <FormControl className="form">
@@ -98,7 +100,7 @@ export default function CreateStudio() {
                 variant="outlined"
                 type="submit"
               >
-                Create studio
+                {t("createStudio")}
               </Button>
             </FormControl>
           </form>

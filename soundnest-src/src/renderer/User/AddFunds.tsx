@@ -9,22 +9,28 @@ import delma from '../../../assets/fund_delma.png'
 import monopoly from '../../../assets/fund_monopoly.png'
 import pig from '../../../assets/fund_pig.png'
 import { useNavigate } from "react-router-dom";
+import "../Components/MultiLang"
+import { useTranslation } from "react-i18next";
 export default function AddFunds() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const addFunds = (fund_amount: string | number) => {
     fetch(backend_address + "/api/add_funds/" + sessionStorage.getItem("id") + "/" + fund_amount)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+      console.log(data)
+      UpdateUserInfo()
+      navigate("/add_funds", {replace: true})
+    })
     .catch(error => error)
-    UpdateUserInfo()
-    navigate("/add_funds", {replace: true})
+
   }
   return (
     <div className="all">
       <TopBar />
       <SideBar />
       <div className="main">
-        <h1>Add funds</h1>
+        <h1>{t("addFunds")}</h1>
         <div className="fundOptions">
           <img src={george} style={{backgroundColor: "green"}}/>
           <img src={delma} style={{backgroundColor: "#b3b300"}}/>

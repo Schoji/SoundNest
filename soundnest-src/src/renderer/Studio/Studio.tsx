@@ -17,6 +17,8 @@ import { CacheProvider } from '@emotion/react';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
+import "../Components/MultiLang"
+import { useTranslation } from 'react-i18next';
 
 const backend_address = 'http://localhost:5000';
 
@@ -27,6 +29,7 @@ const cache = createCache({
 
 export default function Studio() {
   const { studio_id } = useParams();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [sp_data, sp_setData] = useState(null)
@@ -96,7 +99,7 @@ export default function Studio() {
               >
                 <ArrowBackIosRoundedIcon />
               </IconButton>
-              <h1>Studio details</h1>
+              <h1>{t("studioDetails")}</h1>
             </div>
             <div className="itemDesc">
               {data.studio_dir !== '/' ? (
@@ -109,7 +112,7 @@ export default function Studio() {
               )}
               <h2>{data.name}</h2>
               <p>{data.desc}</p>
-              <h2>Studio is owned by:</h2>
+              <h2>{t("studioOwned")}</h2>
               {data.user_picture !== '/' ? (
                 <img
                   src={`data:image/jpeg;base64,${data.user_picture}`}
@@ -143,7 +146,7 @@ export default function Studio() {
                       navigate(`/item/${product.id}`, { replace: true });
                     }}
                   >
-                    View details
+                    {t("viewDetails")}
                   </Button>
                   <IconButton
                     onClick={() => {
@@ -165,7 +168,7 @@ export default function Studio() {
               >
                 <AlbumRoundedIcon />
               </IconButton>
-              <h1>Other studios</h1>
+              <h1>{t("otherStudios")}</h1>
               <div className='otherStudios'>
                 {otherStudiosData?.map((studio, key) => (
                   <div className="product">
@@ -181,7 +184,7 @@ export default function Studio() {
                     <Button key={key} onClick={() => {
                       document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });
                             changeSite(studio.id);
-                          }}>View details</Button>
+                          }}>{t("viewDetails")}</Button>
                   </div>
                       ))}
                 </div>

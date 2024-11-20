@@ -78,7 +78,12 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const changeUserLang = (lang) => {
+    fetch(backend_address + "/api/change_lang/" + sessionStorage.getItem("id") + "/" + lang)
+    .then(response => response.json())
+    .catch(error => console.log(error))
+    sessionStorage.setItem("lang", lang)
+  }
   return (
     <React.Fragment>
       <ThemeProvider theme={materialtheme}>
@@ -148,7 +153,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <DarkModeIcon fontSize="small" />
           </ListItemIcon>
-          Dark Mode
+          {t("darkMode")}
           <Theme />
         </MenuItem>
         <MenuItem onClick={() => {
@@ -157,7 +162,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <Gavel fontSize="small" />
           </ListItemIcon>
-          Terms of use
+          {t("termsOfUse")}
         </MenuItem>
         <MenuItem onClick={() => {
           navigate("/settings", {replace:true});
@@ -165,7 +170,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          {t("settings")}
         </MenuItem>
         <MenuItem onClick={() => {
           navigate("/purchasehistory", {replace:true});
@@ -173,7 +178,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <ShoppingBasket fontSize="small" />
           </ListItemIcon>
-          Purchase history
+          {t("purchaseHistory")}
         </MenuItem>
 
         <MenuItem onClick={() => {
@@ -182,22 +187,25 @@ export default function AccountMenu() {
           <ListItemIcon>
             <AddCardIcon/>
           </ListItemIcon>
-          Add funds
+          {t("addFunds")}
         </MenuItem>
 
         <MenuItem>
           <ListItemIcon onClick={() => {
           i18n.changeLanguage("pl")
+          changeUserLang("pl")
         }}>
             <Flag country="PL"/>
           </ListItemIcon>
           <ListItemIcon onClick={() => {
           i18n.changeLanguage("en")
+          changeUserLang("en")
         }}>
             <Flag role="button" country="GB"/>
           </ListItemIcon>
           <ListItemIcon onClick={() => {
           i18n.changeLanguage("de")
+          changeUserLang("de")
         }}>
             <Flag role="button" country="DE"/>
           </ListItemIcon>
@@ -210,7 +218,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {t("logout")}
         </MenuItem>
       </Menu>
       </ThemeProvider>

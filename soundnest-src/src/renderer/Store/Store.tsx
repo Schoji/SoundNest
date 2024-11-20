@@ -92,7 +92,7 @@ export default function Store() {
                       navigate(`/item/${value.id}`, { replace: true });
                     }}
                   >
-                    View details
+                    {t("viewDetails")}
                   </Button>
                   <IconButton
                     onClick={() => {
