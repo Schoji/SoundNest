@@ -36,7 +36,7 @@ class UserModel(db.Model):
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
     lang = db.Column(db.String(80), default="en")
     credits = db.Column(db.Float, default=0)
-    avatar_dir = db.Column(db.String(80), default="/") 
+    avatar_dir = db.Column(db.Text, default="/") 
     is_admin = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
