@@ -1,65 +1,23 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import logo from '../../../assets/icons/1024x1024.png';
 import { ThemeProvider, createTheme } from '@mui/material';
-import Switch from '@mui/material/Switch';
-import { DefaultTheme } from '@mui/private-theming';
 import { useNavigate } from 'react-router-dom';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useEffect, useState } from 'react';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
-import logoChange from '../Settings/SetLogo';
 import { backend_address } from '../Components/global';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
 import Flag from "react-flagkit"
 
-export const Theme = () => {
-  var dark;
-  if (sessionStorage.getItem("theme") == "dark") {
-    sessionStorage.setItem("theme", "dark");
-    dark = true
-  }
-  else {
-    sessionStorage.setItem("theme", "light");
-    dark = false
-  }
-  const [isDark, setIsDark] = useState(dark);
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark")
-      sessionStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark")
-      sessionStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
-  return (
-  <Switch
-        edge="end"
-        checked={isDark}
-        onChange={event => {
-          setIsDark(event.target.checked)
-          fetch(backend_address + "/api/switch_theme/" + sessionStorage.getItem("id"))
-          .then(response => response.json())
-          .catch(error => console.log(error))
-        }}
-        aria-label="Dark mode"
-      />
-  )
-}
 
 export default function AccountMenu() {
   const { t, i18n } = useTranslation()
@@ -83,6 +41,33 @@ export default function AccountMenu() {
     .then(response => response.json())
     .catch(error => console.log(error))
     sessionStorage.setItem("lang", lang)
+  }
+  function changeUserUiPL() {
+    if (document.getElementsByClassName("all")[0].classList.contains("english")){
+      document.getElementsByClassName("all")[0].classList.remove("english")
+    }
+    else if (document.getElementsByClassName("all")[0].classList.contains("german")){
+      document.getElementsByClassName("all")[0].classList.remove("german")
+    }
+    document.getElementsByClassName("all")[0].classList.add("polish")
+  }
+  function changeUserUiEN() {
+    if (document.getElementsByClassName("all")[0].classList.contains("polish")){
+      document.getElementsByClassName("all")[0].classList.remove("polish")
+    }
+    else if (document.getElementsByClassName("all")[0].classList.contains("german")){
+      document.getElementsByClassName("all")[0].classList.remove("german")
+    }
+    document.getElementsByClassName("all")[0].classList.add("english")
+  }
+  function changeUserUiDE() {
+    if (document.getElementsByClassName("all")[0].classList.contains("polish")){
+      document.getElementsByClassName("all")[0].classList.remove("polish")
+    }
+    if (document.getElementsByClassName("all")[0].classList.contains("english")){
+      document.getElementsByClassName("all")[0].classList.remove("english")
+    }
+    document.getElementsByClassName("all")[0].classList.add("german")
   }
   return (
     <React.Fragment>
@@ -149,28 +134,13 @@ export default function AccountMenu() {
           <Avatar /> My account
         </MenuItem> */}
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <DarkModeIcon fontSize="small" />
-          </ListItemIcon>
-          {t("darkMode")}
-          <Theme />
-        </MenuItem>
         <MenuItem onClick={() => {
-          navigate("/statute", {replace:true});
+          navigate("/add_funds", {replace: true})
         }}>
           <ListItemIcon>
-            <Gavel fontSize="small" />
+            <AddCardIcon fontSize='small' />
           </ListItemIcon>
-          {t("termsOfUse")}
-        </MenuItem>
-        <MenuItem onClick={() => {
-          navigate("/settings", {replace:true});
-        }}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          {t("settings")}
+          {t("addFunds")}
         </MenuItem>
         <MenuItem onClick={() => {
           navigate("/purchasehistory", {replace:true});
@@ -180,37 +150,46 @@ export default function AccountMenu() {
           </ListItemIcon>
           {t("purchaseHistory")}
         </MenuItem>
-
         <MenuItem onClick={() => {
-          navigate("/add_funds", {replace: true})
+          navigate("/statute", {replace:true});
         }}>
           <ListItemIcon>
-            <AddCardIcon/>
+            <Gavel fontSize="small" />
           </ListItemIcon>
-          {t("addFunds")}
+          {t("termsOfUse")}
         </MenuItem>
-
-        <MenuItem>
-          <ListItemIcon onClick={() => {
+        <Divider />
+        <MenuItem sx={{justifyContent: 'space-evenly', cursor: 'default'}}>
+          <ListItemIcon sx={{justifyContent: 'center', cursor: 'pointer'}} onClick={() => {
           i18n.changeLanguage("pl")
           changeUserLang("pl")
+          changeUserUiPL();
         }}>
             <Flag country="PL"/>
           </ListItemIcon>
-          <ListItemIcon onClick={() => {
+          <ListItemIcon sx={{justifyContent: 'center', cursor: 'pointer'}} onClick={() => {
           i18n.changeLanguage("en")
           changeUserLang("en")
+          changeUserUiEN();
         }}>
             <Flag role="button" country="GB"/>
           </ListItemIcon>
-          <ListItemIcon onClick={() => {
+          <ListItemIcon sx={{justifyContent: 'center', cursor: 'pointer'}} onClick={() => {
           i18n.changeLanguage("de")
           changeUserLang("de")
+          changeUserUiDE();
         }}>
             <Flag role="button" country="DE"/>
           </ListItemIcon>
         </MenuItem>
-
+        <MenuItem onClick={() => {
+          navigate("/settings", {replace:true});
+        }}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          {t("settings")}
+        </MenuItem>
         <MenuItem onClick={() => {
           sessionStorage.clear();
           window.electron.ipcRenderer.sendMessage('open-login-window', "LOL");
