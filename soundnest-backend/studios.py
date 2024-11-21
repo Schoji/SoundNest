@@ -20,7 +20,7 @@ class StudioModel(db.Model):
     id_user = db.Column(db.Integer, db.ForeignKey(UserModel.id))
     name = db.Column(db.String(80), nullable=False)
     desc = db.Column(db.String(80)) #todo
-    studio_dir = db.Column(db.String(80), default="/")
+    studio_dir = db.Column(db.Text, default="/")
 
     def __repr__(self):
         return f"User(Studio name = {self.name}, user_id={self.id_user})"

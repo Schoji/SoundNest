@@ -20,7 +20,7 @@ class ProductModel(db.Model):
     desc = db.Column(db.String(80), nullable=False)
     price = db.Column(db.Float, nullable=False) #todo
     # tags = db.Column(db.String(80), default="[]")
-    item_path = db.Column(db.String(80), default="/")
+    item_path = db.Column(db.Text, default="/")
 
     def __repr__(self):
         return f"<Product> id:{self.id}, id_studio:{self.id_studio}, album: {self.album}, artist: {self.artist}, desc: {self.desc}, price: {self.price}, item_path: {self.item_path}"
