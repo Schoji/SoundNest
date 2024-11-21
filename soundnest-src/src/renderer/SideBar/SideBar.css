@@ -12,7 +12,7 @@
 .sideButton {
   display: grid;
   grid-template-columns: 50px 1fr;
-  max-width: 199px;
+  max-width: 100%;
   background: var(--section);
   color: var(--font-color);
   box-sizing: border-box;
@@ -69,9 +69,38 @@
   background: var(--section-hover);
   transition: background-color 0.3s;
 }
+.themeButtonDiv {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+.themeButton {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 40px 1fr 40px;
+  background: var(--section);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.active {
+  color: var(--accent-color);
+}
+.css-17jyosd-MuiSwitch-thumb {
+  background: var(--accent-gradient);
+  border-radius: 5px !important;
+}
+.css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+  background: var(--accent-gradient);
+  border-radius: 4px !important;
+}
+.css-tj8d99-MuiSwitch-track {
+  background: var(--accent-gradient);
+  border-radius: 4px !important;
+}
 .cartButton {
   position: relative;
-  max-width: 199px;
+  max-width: 100%;
   background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 8px;
@@ -134,6 +163,16 @@
     transition: 0.2s ease-in;
   }
   .sideButton p, .cartButton p {
+    display: none;
+  }
+  .themeButton {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .themeButton svg:last-of-type {
+    grid-row: 1/2;
+  }
+  .themeButton svg:not(.active) {
     display: none;
   }
 }

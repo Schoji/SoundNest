@@ -36,7 +36,7 @@ i18n.use(initReactI18next).init({
         cartOf: "Cart of",
         addToCart: "Add to Cart",
         //PurchaseHistory
-        purchaseHistory: "Purchase history of",
+        purchaseHistory: "Purchase history",
         //Settings
         save: "Save",
         cancel: "Cancel",
@@ -102,8 +102,8 @@ i18n.use(initReactI18next).init({
         library: "Biblioteka",
         studios: "Studia",
         studio: "Studio",
-        tradeOffers: "Oferty wymiany",
-        adminPanel: "Panel administracyjny",
+        tradeOffers: "Oferty Wymiany",
+        adminPanel: "Panel Admina",
         cart: "Koszyk",
         //Library
         yourLibrary: "Twoja biblioteka",
