@@ -55,9 +55,9 @@
       box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.2);
     }
   }
-  &[type="button"] {
+
+  &[type="submit"] {
     width: 150px;
-    font-size: 1rem;
 
     &:hover {
       cursor: pointer;
@@ -71,7 +71,7 @@
 
 .registerForm form {
   background: rgba(66, 52, 52, 0.3);
-  height: 350px;
+  height: auto;
   padding-left: 3em;
   padding-right: 3em;
   padding-top: 2em;

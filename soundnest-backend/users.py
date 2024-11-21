@@ -84,7 +84,10 @@ class Users(Resource):
     @marshal_with(userFields)
     def post(self):
         args = user_args.parse_args()
-        user = UserModel(username=args["username"], email=args["email"], name=args["name"], bio=args["bio"], surname=args["surname"], password=args["password"], is_admin=args["is_admin"])
+
+        encrypted_password = encrypt_string(args["password"])
+        user = UserModel(username=args["username"], email=args["email"], name=args["name"], bio=args["bio"], surname=args["surname"], password=encrypted_password, is_admin=args["is_admin"])
+
         if args["avatar_dir"]:
             file = args["avatar_dir"]
             file = file.split(",")[1]
@@ -97,8 +100,7 @@ class Users(Resource):
             user.avatar_dir = str(last_id + 1) + ".jpg"
         db.session.add(user)
         db.session.commit()
-        users = UserModel.query.all()
-        return users
+        return "User was added successfully.", 201
 
 class User(Resource):
     @marshal_with(userFields)

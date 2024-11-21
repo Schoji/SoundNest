@@ -1,33 +1,42 @@
 import '../App.css';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
-import { Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import logo from '../../../assets/icons/128x128.png';
-
-const backend_address = 'http://localhost:5000';
+import { validateData } from '../Components/InputValidation';
+import { useState } from 'react';
+import { backend_address } from '../Components/global';
 
 export default function LoginWindow() {
+  const [error, setError] = useState("")
   const navigate = useNavigate();
   function Login(event) {
     event.preventDefault();
+    let username = event.target.username.value
+    let password = event.target.password.value
+    if (validateData(username, "username") == false  && validateData(password, "password") == false){
+      console.log("Creds did not pass validation.")
+      setError("Please provide proper data.")
+      return
+    }
+
     const checkCreds = () => {
-      fetch(
-        `${backend_address}/api/users/${event.target.username.value}/${
-          event.target.password.value
-        }`,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.length === 0) {
-            console.log('user not found');
-          } else {
-            console.log('User found');
-            window.electron.ipcRenderer.sendMessage('open-main-window', JSON.stringify(data));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      fetch(`${backend_address}/api/users/${username}/${password}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        else {
+          console.log("Invalid username and password.")
+          setError("Invalid username or password.")
+        }
+      })
+      .then(data => {
+        if (data) {
+          window.electron.ipcRenderer.sendMessage('open-main-window', JSON.stringify(data));
+        }
+      })
+      .catch(error => console.log(error))
     };
     checkCreds();
   }
@@ -40,18 +49,24 @@ export default function LoginWindow() {
             <form onSubmit={Login}>
               <input
                 name="username"
-                type='text'
-                placeholder="username"
+                type="text"
+                placeholder="Username"
+                required
                 defaultValue="johndoe123"
               />
               <input
                 name="password"
                 type="password"
-                placeholder="password"
+                placeholder="Password"
+                required
                 defaultValue="P@ssw0rd123"
               />
+              {error.length > 0 ?
+              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
+              : null
+              }
               <input type="submit" value="Login"/>
-              <Button onClick={() => navigate("/register", {replace: true})}>Register</Button>
+              <Button onClick={() => navigate("/register", {replace: true})}>Don't have an account?</Button>
             </form>
           </div>
       </div>

@@ -54,7 +54,7 @@
       box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.2);
     }
   }
-  &[type="button"] {
+  &[type="submit"] {
     margin-top: 10px;
     width: 150px;
     font-size: 1rem;
@@ -71,7 +71,6 @@
 
 .loginForm form {
   background: rgba(66, 52, 52, 0.3);
-  height: 250px;
   padding: 3em;
   border-radius: 20px;
   border-left: 1px solid rgba(255,255,255,0.3);
@@ -80,4 +79,7 @@
   box-shadow: 20px 20px 40px -6px rgba(0,0,0,0.2);
   text-align: center;
   transition: all 0.2s ease-in-out;
+}
+.error {
+  margin: 10px;
 }
