@@ -43,6 +43,7 @@ export default function Library() {
       <div className="main">
         <div className="library">
           <h1>{t("yourLibrary")}</h1>
+          {data.length > 0?
           <div className="libraryAlbums">
             {data.map((value) => (
               <div className="libraryProduct">
@@ -61,6 +62,7 @@ export default function Library() {
               </div>
             ))}
           </div>
+          : <p>You have no owned products.</p>}
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ from transaction import *
 from productTags import *
 from track import *
 from trade_offer import *
+from keys import *
 import os
 import shutil
 import hashlib
@@ -381,6 +382,7 @@ tradeoffers = {
     "id_item_sent": [2, 2, None, None, None, None],
     "id_item_received": [None, None, 1, 4, 1, 4]
 }
+key = AppKey()
 with app.app_context():
     print("Deleting all records...")
     db.drop_all()
@@ -400,6 +402,12 @@ with app.app_context():
         db.session.add(user)
         db.session.commit()
     print("Users added.")
+
+    for user in UserModel.query.all():
+      sn_key = KeyModel(id_user = user.id, key = key.generate(user.id))
+      db.session.add(sn_key)
+    db.session.commit()
+    print("Keys added.")
 
     for i in range(len(studios[str(list(studios.keys())[0])])):
         id_user = studios["id_user"][i]
@@ -426,7 +434,7 @@ with app.app_context():
     for i in range(len(transactions[str(list(transactions.keys())[0])])):
         id_user = transactions["id_user"][i]
         id_product = transactions["id_product"][i]
-        date = datetime.datetime.now()
+        date = datetime.now()
         transaction = TransactionModel(id_user=id_user, id_product=id_product, date = date)
         db.session.add(transaction)
         db.session.commit()
@@ -463,7 +471,7 @@ with app.app_context():
         id_receiver = tradeoffers["id_receiver"][i]
         id_item_sent = tradeoffers["id_item_sent"][i]
         id_item_received = tradeoffers["id_item_received"][i]
-        date = datetime.datetime.now()
+        date = datetime.now()
         
         trade_offer = TradeOfferModel(trade_id = trade_id, id_sender = id_sender, id_receiver = id_receiver, id_item_sent = id_item_sent, id_item_received = id_item_received, date = date)
         

@@ -26,6 +26,7 @@ import RegisterWindow from './Register/Register';
 import WelcomeWindow from './Welcome/Welcome';
 import { useTranslation } from 'react-i18next';
 import "./Components/MultiLang";
+import BuyKey from './User/BuyKey';
 
 export function GetCreds() {
   const { t, i18n } = useTranslation();
@@ -53,6 +54,7 @@ export function GetCreds() {
       sessionStorage.setItem('cart', '0');
       sessionStorage.setItem("logo", "0")
       sessionStorage.setItem("lang", userInfo.lang)
+      sessionStorage.setItem("hasKey", userInfo.hasKey)
       i18n.changeLanguage(userInfo.lang)
     })
   }, [])
@@ -101,6 +103,7 @@ export default function App() {
           <Route path="tradeoffers" element={<Tradeoffers/>} />
           <Route path="decidetradeoffers/:trade_id" element={<DecideTradeOffers/>} />
           <Route path="add_funds" element={<AddFunds/>} />
+          <Route path="buykey" element={<BuyKey/>} />
         </Routes>
       </Router>
     );

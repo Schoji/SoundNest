@@ -27,7 +27,9 @@ function TopBar() {
           <SearchBar/>
         </div>
         <div className="profileDiv">
-          <IconButton className='profileFundsButton' onClick={() => {navigate("/add_funds", {replace: true})}}>
+          <IconButton className='profileFundsButton'
+          disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+          onClick={() => {navigate("/add_funds", {replace: true})}}>
             <AddCardRoundedIcon fontSize='small' />
           </IconButton>
           <div className="walletValueDiv">

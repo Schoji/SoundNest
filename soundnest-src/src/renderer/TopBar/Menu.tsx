@@ -13,6 +13,7 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
 import { backend_address } from '../Components/global';
+import user from '../../../assets/user.png'
 import AddCardIcon from '@mui/icons-material/AddCard';
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
@@ -80,7 +81,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            {sessionStorage.getItem('id') === null ? <img src={logo} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
+            {sessionStorage.getItem('avatar_dir') === "/" ? <img src={user} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
           </IconButton>
         </Tooltip>
       <Menu
@@ -120,7 +121,7 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => {
+        <MenuItem disabled onClick={() => {
           if (sessionStorage.getItem("id") === null) {
             navigate("/", {replace:true});
           }
@@ -128,20 +129,13 @@ export default function AccountMenu() {
             navigate("/settings", {replace:true});
           }
         }}>
-          <Avatar /> {sessionStorage.getItem("id") === null ? "Guest" : String(sessionStorage.getItem("name")) + String(" ") + String(sessionStorage.getItem("surname")) }
+          {sessionStorage.getItem('avatar_dir') === "/" ? <Avatar src={user} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
+          {sessionStorage.getItem("id") === null ? "Guest" : String(sessionStorage.getItem("name")) + String(" ") + String(sessionStorage.getItem("surname")) }
         </MenuItem>
         {/* <MenuItem onClick={handleClose}>
           <Avatar /> My account
         </MenuItem> */}
         <Divider />
-        <MenuItem onClick={() => {
-          navigate("/add_funds", {replace: true})
-        }}>
-          <ListItemIcon>
-            <AddCardIcon fontSize='small' />
-          </ListItemIcon>
-          {t("addFunds")}
-        </MenuItem>
         <MenuItem onClick={() => {
           navigate("/purchasehistory", {replace:true});
         }}>

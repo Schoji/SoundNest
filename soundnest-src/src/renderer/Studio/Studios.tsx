@@ -23,7 +23,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import DeleteIcon from '@mui/icons-material/Delete';
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
 
 const cache = createCache({
   key: 'css',
@@ -97,7 +97,10 @@ export default function Studio() {
 
   const getMyStudios = () => {
     fetch(`${backend_address}/api/userstudios/${sessionStorage.getItem("id")}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json()
+        else setMyStudiosData({})
+      })
       .then((data) => setMyStudiosData(data))
       .catch((error) => {
         console.log(error);
@@ -111,7 +114,6 @@ export default function Studio() {
       .catch((error) => {
         console.log(error);
       });
-    // console.log(data);
   };
   useEffect(() => {
     getMyStudios();
@@ -146,7 +148,7 @@ export default function Studio() {
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          {myStudiosData ?
+          {myStudiosData?
           <div className="myStudios">
           {myStudiosData?.map((myStudio, index) => (
           <div className="myStudio">

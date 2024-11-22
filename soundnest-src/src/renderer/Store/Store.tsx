@@ -95,6 +95,7 @@ export default function Store() {
                     {t("viewDetails")}
                   </Button>
                   <IconButton
+                    disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
                     onClick={() => {
                       addToCart(value.id);
                     }}

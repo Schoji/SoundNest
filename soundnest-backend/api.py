@@ -6,6 +6,7 @@ from track import *
 from productTags import *
 from tags import *
 from trade_offer import *
+from keys import *
 
 class UserProducts(Resource):
    def get(self, id_user):
@@ -131,7 +132,7 @@ class UserStudios(Resource):
             studio.studio_dir = data
 
       if not studios:
-         return 404, "User has no studios."
+         return "User has no studios.", 404
          
       return studios
    
@@ -308,6 +309,38 @@ class getStatute(Resource):
       file.close()
       return statute
 
+#This function checks if user's credentials are matching. If they match, full user information is returned.
+class UserAuthentication(Resource):
+
+    def get(self, username, password):
+      user = UserModel.query.filter_by(username=username, password=encrypt_string(password)).first()
+
+      if not user:
+         return "User with this password was not found in database.", 404
+        
+      user.avatar_dir = getUserPic(user.avatar_dir)
+
+      key = KeyModel.query.filter_by(id_user = user.id).first()
+      if (key):
+         hasKey = True
+      else:
+         hasKey = False
+      dataset = {
+         "id" : user.id,
+         "username" : user.username,
+         "name": user.name,
+         "surname": user.surname,
+         "avatar_dir": user.avatar_dir,
+         "email" : user.email,
+         "bio" : user.bio,
+         "prefered_theme": user.prefered_theme,
+         "lang": user.lang,
+         "credits": user.credits,
+         "is_admin": user.is_admin,
+         "hasKey": hasKey,
+      }
+      return dataset
+
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
 api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
@@ -346,6 +379,10 @@ api.add_resource(getUserTradeoffersHistory, "/api/user_tradeoffers_history/<int:
 api.add_resource(MakeAdmin, "/api/make_admin/<int:id_user>/")
 api.add_resource(changeProductOwnership, "/api/change_product_ownership/<int:studio>/<int:product>/")
 api.add_resource(getStatute, "/api/statute/<string:lang>")
+api.add_resource(Keys, "/api/keys/")
+api.add_resource(Key, "/api/keys/<int:id>")
+api.add_resource(getLicenseKey, "/api/get_key/<int:id_user>")
+api.add_resource(assignLicenseKey, "/api/assign_key/<int:id_user>/<string:key1>")
 
 @app.route("/last_update")
 def last_update():

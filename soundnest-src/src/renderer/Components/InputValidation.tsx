@@ -17,9 +17,11 @@ export function validateData(input: string, type="other") {
     case "desciption":
       return /^[\s\S]{10,500}$/.test(input)
     case "price":
-      /^\d+(\.\d{1,2})?$/.test(input)
+      return /^\d+(\.\d{1,2})?$/.test(input)
     case "id":
-      /^\d+$/.test(input)
+      return /^\d+$/.test(input)
+    case "key":
+      return /^SN\d{5}-\d{3}[01]\d[0-3]\d-\d{6}\d$/.test(input)
     default:
       return /^[a-zA-Z0-9\s&\-'’]{2,100}$/.test(input)
   }

@@ -1,0 +1,19 @@
+.choiceList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  height: auto;
+}
+.choice {
+  grid-column: 2/3;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  background-color: var(--section);
+  border-radius: 10px;
+}
+#key:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

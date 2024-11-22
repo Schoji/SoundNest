@@ -75,7 +75,9 @@ export default function User() {
               <h2>{data.name}</h2>
               <h2>{data.surname}</h2>
               <p>{data.bio}</p>
-              <Button onClick={() => {
+              <Button
+              disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+              onClick={() => {
                 navigate(`/tradeoffer/${data.id}`, {replace: true})
               }}>
                 {t("tradeOffer")}

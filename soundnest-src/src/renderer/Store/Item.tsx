@@ -59,7 +59,8 @@ export function OtherItems() {
               <h2>{value.album}</h2>
               <h4>{value.artist}</h4>
               <p>{value.desc}</p>
-              <Button key={key} onClick={() => {
+              <Button key={key}
+              onClick={() => {
                 document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });
                       changeSite(value.id);
                     }}>{t("viewDetails")}</Button>
@@ -183,7 +184,9 @@ export default function Item() {
               <h3>
                 {data.price === undefined ? data.price : data.price.toFixed(2)}$
               </h3>
-              <Button onClick={addToCart}>{t("addToCart")}</Button>
+              <Button
+              disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+              onClick={addToCart}>{t("addToCart")}</Button>
             </div>
             {trackInfo()}
             <div className="itemTitle">

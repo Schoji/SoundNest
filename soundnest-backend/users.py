@@ -15,6 +15,24 @@ def encrypt_string(hash_string):
   hashlib.sha256(sha_signature.encode()).hexdigest()
   return sha_signature2
 
+def getUserPic(path):
+    if path == "/":
+        return "/"
+    image_path = UPLOAD_FOLDER + "/avatars/" + path
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('ascii')
+
+def createUserPic(image):
+    file = image
+    file = file.split(",")[1]
+
+    img = Image.open(BytesIO(base64.b64decode(file)))
+    img = img_resize.resizeImage(img)
+    last_id = UserModel.query.order_by(desc("id")).first()
+    avatar_dir = UPLOAD_FOLDER + "/avatars/" + str(int(last_id.id) + 1) + ".jpg"
+    img.save(avatar_dir)
+    return str(last_id + 1) + ".jpg"
+
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -26,8 +44,8 @@ class UserModel(db.Model):
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
     lang = db.Column(db.String(80), default="en")
     credits = db.Column(db.Float, default=0)
-    avatar_dir = db.Column(db.Text, default="/") 
     is_admin = db.Column(db.Boolean, default=False)
+    avatar_dir = db.Column(db.Text, default="/") 
 
     def __repr__(self):
         return f"User(username = {self.username}, email={self.email})"
@@ -43,8 +61,8 @@ userFields = {
     "prefered_theme":fields.Integer,
     "lang": fields.String,
     "credits":fields.Float,
-    "avatar_dir":fields.String,
     "is_admin":fields.Boolean,
+    "avatar_dir":fields.String,
 }
 
 user_args = reqparse.RequestParser()
@@ -64,12 +82,8 @@ class Users(Resource):
     def get(self):
         users = UserModel.query.all()
         for user in users:
-            if user.avatar_dir != "/":
-                image_path = UPLOAD_FOLDER + "/avatars/" + user.avatar_dir
-                with open(image_path, "rb") as image_file:
-                    data = base64.b64encode(image_file.read()).decode('ascii')
-                user.avatar_dir = data   
-        return users
+            user.avatar_dir = getUserPic(user.avatar_dir)
+        return users, 200
     
     @marshal_with(userFields)
     def post(self):
@@ -79,15 +93,8 @@ class Users(Resource):
         user = UserModel(username=args["username"], email=args["email"], name=args["name"], bio=args["bio"], surname=args["surname"], password=encrypted_password, is_admin=args["is_admin"])
 
         if args["avatar_dir"]:
-            file = args["avatar_dir"]
-            file = file.split(",")[1]
-
-            img = Image.open(BytesIO(base64.b64decode(file)))
-            img = img_resize.resizeImage(img)
-            last_id = UserModel.query.order_by(desc("id")).first()
-            avatar_dir = UPLOAD_FOLDER + "/avatars/" + str(int(last_id.id) + 1) + ".jpg"
-            img.save(avatar_dir)
-            user.avatar_dir = str(last_id + 1) + ".jpg"
+            user.avatar_dir = createUserPic(args["avatar_dir"])
+        
         db.session.add(user)
         db.session.commit()
         return "User was added successfully.", 201
@@ -97,20 +104,16 @@ class User(Resource):
     def get(self, id):  
         user = UserModel.query.filter_by(id=id).first()
         if not user:
-            return 404, "User not found" 
-        if user.avatar_dir != "/":
-            image_path = UPLOAD_FOLDER + "/avatars/" + user.avatar_dir
-            with open(image_path, "rb") as image_file:
-                data = base64.b64encode(image_file.read()).decode('ascii')
-            user.avatar_dir = data      
-        return user
+            return "User not found.", 404
+        user.avatar_dir = getUserPic(user.avatar_dir)     
+        return user, 200
     
     @marshal_with(userFields)
     def patch(self, id):
         args = user_args.parse_args()
         user = UserModel.query.filter_by(id=id).first()
         if not user:
-            abort(404, "User not found")
+            return "User not found.", 404
 
         if args["password"]:
             new_password = encrypt_string(args["password"])
@@ -118,14 +121,8 @@ class User(Resource):
                 user.password = new_password
         
         if args["avatar_dir"]:
-            file = args["avatar_dir"]
-            file = file.split(",")[1]
+            user.avatar_dir = createUserPic(args["avatar_dir"])
 
-            img = Image.open(BytesIO(base64.b64decode(file)))
-            img = img_resize.resizeImage(img)
-            avatar_dir = UPLOAD_FOLDER + "/avatars/" + str(id) + ".jpg"
-            img.save(avatar_dir)
-            user.avatar_dir = str(id) + ".jpg"
         if args["name"]: 
             user.name = args["name"]
         if args["username"]: 
@@ -139,33 +136,16 @@ class User(Resource):
         if args["bio"]:
             user.bio = args["bio"]
         db.session.commit()
-        return user
+        return user, 200
     
     @marshal_with(userFields)
     def delete(self, id):
         user = UserModel.query.filter_by(id=id).first()
         if not user:
-            return user, 404
+            return "User not found.", 404
         db.session.delete(user)
         db.session.commit()
         return user, 204
-
-#This function checks if user's credentials are matching. If they match, full user information is returned.
-class UserAuthentication(Resource):
-    @marshal_with(userFields)
-
-    def get(self, username, password):
-        user = UserModel.query.filter_by(username=username, password=encrypt_string(password)).first()
-
-        if not user:
-            return "User with this password was not found in database.", 404
-        
-        if user.avatar_dir != "/":
-            image_path = UPLOAD_FOLDER + "/avatars/" + user.avatar_dir
-            with open(image_path, "rb") as image_file:
-                data = base64.b64encode(image_file.read()).decode('ascii')
-            user.avatar_dir = data
-        return user
 
 class ThemeSwitcher(Resource):
     def get(self, id_user):

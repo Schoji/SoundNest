@@ -7,6 +7,7 @@ import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
 import './SideBar.css';
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
@@ -84,6 +85,12 @@ export default function SideBar() {
       <Link to="/adminpanel" className="sideButton">
         <div><ManageAccountsRoundedIcon /></div>
         <p>{t("adminPanel")}</p>
+      </Link>
+      ) : null}
+      {sessionStorage.getItem("hasKey") == "false" ? (
+      <Link to="/buykey" className="sideButton sideButtonInverted">
+        <div><LockPersonRoundedIcon /></div>
+        <p>Get full version</p>
       </Link>
       ) : <div> </div>}
       <div className='themeButtonDiv'>

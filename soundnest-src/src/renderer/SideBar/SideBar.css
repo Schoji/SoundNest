@@ -9,7 +9,7 @@
   padding: 10px;
   overflow: hidden;
 }
-.sideButton {
+.sideButton, .sideButtonInverted {
   display: grid;
   grid-template-columns: 50px 1fr;
   max-width: 100%;
@@ -20,13 +20,18 @@
   overflow: hidden;
   transition: background-color 0.3s;
 }
+.sideButtonInverted {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 0 0 8px 8px;
+}
 :nth-child(1 of .sideButton) {
   border-radius: 8px 8px 0 0;
 }
 :nth-last-child(1 of .sideButton) {
   border-radius: 0 0 8px 8px;
 }
-.sideButton div {
+.sideButton div, .sideButtonInverted div {
   position: relative;
   display: flex;
   align-items: center;
@@ -36,7 +41,7 @@
   box-shadow: 0px 0px 16px -8px var(--font-color);
   z-index: 1;
 }
-.sideButton div::before {
+.sideButton div::before, .sideButtonInverted div::before {
   position: absolute;
   content: '';
   top: 0;
@@ -50,13 +55,13 @@
   transition: opacity 0.3s;
   opacity: 0;
 }
-.sideButton:hover div::before {
+.sideButton:hover div::before, .sideButtonInverted:hover div::before{
   opacity: 1;
 }
-.sideButton div svg {
+.sideButton div svg, .sideButtonInverted div svg {
   font-size: 34px;
 }
-.sideButton p {
+.sideButton p, .sideButtonInverted p {
   display: flex;
   align-items: center;
   justify-content: left;
@@ -67,6 +72,10 @@
 }
 .sideButton:hover {
   background: var(--section-hover);
+  transition: background-color 0.3s;
+}
+.sideButtonInverted:hover {
+  background: var(--accent-gradient-hover);
   transition: background-color 0.3s;
 }
 .themeButtonDiv {

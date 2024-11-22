@@ -107,6 +107,7 @@ export default function CreateStudio() {
                 className="createButton"
                 variant="outlined"
                 type="submit"
+                disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
               >
                 {t("createStudio")}
               </Button>
