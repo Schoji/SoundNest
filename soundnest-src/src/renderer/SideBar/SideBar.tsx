@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import LibraryMusicRoundedIcon from '@mui/icons-material/LibraryMusicRounded';
 import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
 import LocalMallRoundedIcon from '@mui/icons-material/LocalMallRounded';
@@ -8,38 +9,32 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
-import './SideBar.css';
+
 import { useTranslation } from 'react-i18next';
-import '../Components/MultiLang'
 import { useEffect, useState } from 'react';
 import { Switch } from '@mui/material';
 import { backend_address } from '../Components/global';
 
+import './SideBar.css';
+import '../Components/MultiLang';
+
 export const Theme = () => {
   var dark;
-  if (sessionStorage.getItem("theme") == "dark") {
-    sessionStorage.setItem("theme", "dark");
-    dark = true
-  }
-  else {
-    sessionStorage.setItem("theme", "light");
-    dark = false
-  }
+  if (sessionStorage.getItem("theme") == "dark") dark = true;
+  else dark = false
+
   const [isDark, setIsDark] = useState(dark);
+  //TODO
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add("dark")
-      if (document.getElementsByClassName("lightIcon")[0].classList.contains("active")){
-        document.getElementsByClassName("lightIcon")[0].classList.remove("active")
-      }
+      document.getElementsByClassName("lightIcon")[0].classList.remove("active")
       document.getElementsByClassName("darkIcon")[0].classList.add("active")
       sessionStorage.setItem("theme", "dark");
       setIsDark(true)
     } else {
       document.documentElement.classList.remove("dark")
-      if (document.getElementsByClassName("darkIcon")[0].classList.contains("active")){
-        document.getElementsByClassName("darkIcon")[0].classList.remove("active")
-      }
+      document.getElementsByClassName("darkIcon")[0].classList.remove("active")
       document.getElementsByClassName("lightIcon")[0].classList.add("active")
       sessionStorage.setItem("theme", "light");
       setIsDark(false)

@@ -43,32 +43,12 @@ export default function AccountMenu() {
     .catch(error => console.log(error))
     sessionStorage.setItem("lang", lang)
   }
-  function changeUserUiPL() {
-    if (document.getElementsByClassName("all")[0].classList.contains("english")){
-      document.getElementsByClassName("all")[0].classList.remove("english")
-    }
-    else if (document.getElementsByClassName("all")[0].classList.contains("german")){
-      document.getElementsByClassName("all")[0].classList.remove("german")
-    }
-    document.getElementsByClassName("all")[0].classList.add("polish")
-  }
-  function changeUserUiEN() {
-    if (document.getElementsByClassName("all")[0].classList.contains("polish")){
-      document.getElementsByClassName("all")[0].classList.remove("polish")
-    }
-    else if (document.getElementsByClassName("all")[0].classList.contains("german")){
-      document.getElementsByClassName("all")[0].classList.remove("german")
-    }
-    document.getElementsByClassName("all")[0].classList.add("english")
-  }
-  function changeUserUiDE() {
-    if (document.getElementsByClassName("all")[0].classList.contains("polish")){
-      document.getElementsByClassName("all")[0].classList.remove("polish")
-    }
-    if (document.getElementsByClassName("all")[0].classList.contains("english")){
-      document.getElementsByClassName("all")[0].classList.remove("english")
-    }
-    document.getElementsByClassName("all")[0].classList.add("german")
+
+  function changeUserUI(language: string) {
+    document.getElementsByClassName("all")[0].classList.remove("english")
+    document.getElementsByClassName("all")[0].classList.remove("polish")
+    document.getElementsByClassName("all")[0].classList.remove("german")
+    document.getElementsByClassName("all")[0].classList.add(language)
   }
   return (
     <React.Fragment>
@@ -132,9 +112,6 @@ export default function AccountMenu() {
           {sessionStorage.getItem('avatar_dir') === "/" ? <Avatar src={user} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
           {sessionStorage.getItem("id") === null ? "Guest" : String(sessionStorage.getItem("name")) + String(" ") + String(sessionStorage.getItem("surname")) }
         </MenuItem>
-        {/* <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem> */}
         <Divider />
         <MenuItem onClick={() => {
           navigate("/purchasehistory", {replace:true});
@@ -157,21 +134,21 @@ export default function AccountMenu() {
           <ListItemIcon sx={{justifyContent: 'center', cursor: 'pointer'}} onClick={() => {
           i18n.changeLanguage("pl")
           changeUserLang("pl")
-          changeUserUiPL();
+          changeUserUI("polish");
         }}>
             <Flag country="PL"/>
           </ListItemIcon>
           <ListItemIcon sx={{justifyContent: 'center', cursor: 'pointer'}} onClick={() => {
           i18n.changeLanguage("en")
           changeUserLang("en")
-          changeUserUiEN();
+          changeUserUI("english");
         }}>
             <Flag role="button" country="GB"/>
           </ListItemIcon>
           <ListItemIcon sx={{justifyContent: 'center', cursor: 'pointer'}} onClick={() => {
           i18n.changeLanguage("de")
           changeUserLang("de")
-          changeUserUiDE();
+          changeUserUI("german");
         }}>
             <Flag role="button" country="DE"/>
           </ListItemIcon>

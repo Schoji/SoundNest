@@ -17,6 +17,7 @@ export default function RegisterWindow() {
     let username = event.target.username.value
     let email = event.target.email.value
     let password = event.target.password.value
+    let password1 = event.target.password1.value
 
     if (validateData(name, "name") == false) {
       setError("Provide a valid name.")
@@ -36,6 +37,10 @@ export default function RegisterWindow() {
     }
     else if (validateData(password, "password") == false) {
       setError("Provide a strong and secure password. At least 8 characters long with 1 special sign.")
+      return
+    }
+    if (password != password1) {
+      setError("Passwords do not match.")
       return
     }
 
@@ -92,7 +97,7 @@ export default function RegisterWindow() {
                 placeholder="Password"
               />
                <input
-                id="repeat-password"
+                id="password1"
                 type="password"
                 placeholder="Repeat Password"
               />

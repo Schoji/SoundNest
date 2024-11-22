@@ -27,9 +27,38 @@ import WelcomeWindow from './Welcome/Welcome';
 import { useTranslation } from 'react-i18next';
 import "./Components/MultiLang";
 import BuyKey from './User/BuyKey';
+import Mousetrap from 'mousetrap';
 
 export function GetCreds() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  Mousetrap.unbind("ctrl+1")
+  Mousetrap.unbind("ctrl+2")
+  Mousetrap.unbind("ctrl+3")
+  Mousetrap.unbind("ctrl+4")
+  Mousetrap.unbind("ctrl+5")
+  Mousetrap.bind("ctrl+1", () => {
+    navigate("/library", {replace: true})
+  })
+  Mousetrap.bind("ctrl+2", () => {
+    navigate("/studios", {replace: true})
+  })
+  Mousetrap.bind("ctrl+3", () => {
+    navigate("/store", {replace: true})
+  })
+  Mousetrap.bind("ctrl+4", () => {
+    navigate("/tradeoffers", {replace: true})
+  })
+  if (sessionStorage.getItem("is_admin") == "true") {
+    Mousetrap.bind("ctrl+5", () => {
+      navigate("/adminpanel", {replace: true})
+    })
+  }
+  if (sessionStorage.getItem("hasKey") == "false") {
+    Mousetrap.bind("ctrl+5", () => {
+      navigate("/buykey", {replace: true})
+    })
+  }
   useEffect(() => {
     window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
       const userInfo = JSON.parse(arg)
@@ -77,7 +106,14 @@ export default function App() {
       sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
       sessionStorage.setItem('is_admin', userInfo.is_admin);
       sessionStorage.setItem('cart', '0');
-      console.log("creds updated")
+      if (userInfo.prefered_theme == 0) {
+        document.documentElement.classList.add("dark")
+        sessionStorage.setItem("theme", "dark")
+      }
+      else {
+        document.documentElement.classList.remove("dark")
+        sessionStorage.setItem("theme", "light")
+      }
     })
   }, [])
   if (parseInt(view) == 1) {

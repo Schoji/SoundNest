@@ -7,7 +7,6 @@ import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
 import { useNavigate } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-
 const cache = createCache({
   key: 'css',
   prepend: true,

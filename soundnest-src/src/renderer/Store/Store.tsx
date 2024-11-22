@@ -40,7 +40,6 @@ export default function Store() {
   };
   useEffect(() => {
     Fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function addToCart(item_id) {

@@ -21,17 +21,22 @@ class AppKey():
         today = datetime.now()
         part2 = str(today.year)[1:] + f"{today.month:02d}" + f"{today.day:02d}"
 
-        part3 = ""
-        part3 += str(random.randint(1, 9))
-        for i in range(1, segment_size - 1):
-            a = random.randint(0, 9)
-            part3 += str(a)
+        checksum = 1
+        while (True):
+            part3 = str(random.randint(1, 9))
+            for i in range(1, segment_size - 1):
+                a = random.randint(0, 9)
+                part3 += str(a)
+            
+            checksum = (int(part3[0]) + int(part3[2]) + int(part3[4])) % int(part3[0])
+            if (checksum == 0): continue
+            break
         
-        checksum = (int(part3[0]) + int(part3[2]) + int(part3[4])) % int(part3[0])
         part3 += str(checksum)
 
         return part1 + "-" + part2 + "-" + part3
     def verify(self, part3):
+        print(part3)
         if (int(part3[0]) + int(part3[2]) + int(part3[4])) % int(part3[0]):
             return True
         return False
@@ -71,14 +76,13 @@ class getLicenseKey(Resource):
 
 class assignLicenseKey(Resource):
     def get(self, id_user, key1):
-        key = AppKey()
+        Key = AppKey()
         part3 = list(key1.split("-")[2])
-        if (key.verify(part3) == False):
+        if (Key.verify(part3) == False):
             print("Checksum not passed.")
             return "Invalid key.", 404
-        print("git")
-        # key = KeyModel.query(key=key).first()
-        # key.id_user = id_user
-
-        # db.session.commit()
+        
+        key = KeyModel(key=key1, id_user = id_user)
+        db.session.add(key)
+        db.session.commit()
         return 201
