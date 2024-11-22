@@ -18,8 +18,8 @@ from sqlalchemy import desc
 class StudioModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user = db.Column(db.Integer, db.ForeignKey(UserModel.id))
-    name = db.Column(db.String(80), nullable=False)
-    desc = db.Column(db.String(80)) #todo
+    name = db.Column(db.String(80), nullable=False, unique=True)
+    desc = db.Column(db.Text())
     studio_dir = db.Column(db.Text, default="/")
 
     def __repr__(self):
@@ -54,6 +54,8 @@ class Studios(Resource):
     @marshal_with(studioFields)
     def post(self):
         args = studio_args.parse_args()
+        if StudioModel.query.filter_by(name = args["name"]).first():
+            return "Studio name is already taken.", 409 
         studio = StudioModel(id_user=args["id_user"], name=args["name"], desc=args["desc"])
         if args["studio_dir"]:
             file = args["studio_dir"]

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, MenuItem, Input } from '@mui/material';
+import { TextField, FormControl, IconButton, MenuItem, Input, Alert } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../Components/MultiLang'
 import { useTranslation } from 'react-i18next';
+import { validateData } from '../Components/InputValidation';
 const backend_address = 'http://localhost:5000';
 
 export function CreateSongs() {
@@ -45,9 +46,9 @@ export function CreateSongs() {
     {inputFields.map((input, index) => {
     return (
       <div key={index}>
-        <TextField key={"name" + String(index)} variant="outlined" name='name' value={input.name} placeholder={t("nameOfTrack")} onChange={event => handleFormChange(index, event)}/>
-        <TextField key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} placeholder={t("producer")} onChange={event => handleFormChange(index, event)}/>
-        <TextField key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} placeholder={t("songDuration")} onChange={event => handleFormChange(index, event)}/>
+        <TextField required key={"name" + String(index)} variant="outlined" name='name' value={input.name} placeholder={t("nameOfTrack")} onChange={event => handleFormChange(index, event)}/>
+        <TextField required key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} placeholder={t("producer")} onChange={event => handleFormChange(index, event)}/>
+        <TextField required key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} placeholder={t("songDuration")} onChange={event => handleFormChange(index, event)}/>
         <IconButton color='primary' onClick={() => removeFields(index)}>
         <FontAwesomeIcon icon={faMinus}/>
         </IconButton>
@@ -65,10 +66,9 @@ export default function CreateStudio() {
   const navigate = useNavigate();
   const [pic, setPic] = useState(default_album);
 
-  const [selectedFile, setSelectedFile] = useState();
   const [fileBase64String, setFileBase64String] = useState("Null");
-  const [studioValue, setStudioValue] = useState("")
-
+  const [studioValue, setStudioValue] = useState()
+  const [error, setError] = useState("")
   const [data, setData] = useState([])
 
   function fetchStudio() {
@@ -81,10 +81,6 @@ export default function CreateStudio() {
       });
   }
 
-  const onFileChange = (e) => {
-    setSelectedFile(e.target.files);
-
-  }
   const encodeFileBase64 = (file) => {
     var reader = new FileReader()
     if (file) {
@@ -111,24 +107,52 @@ export default function CreateStudio() {
 
   function AddItem(event) {
     event.preventDefault();
+    if (validateData(event.target.album.value) == false) {
+      setError("Provide a valid product name.")
+      return
+    }
+    if (validateData(event.target.artist.value) == false) {
+      setError("Provide a valid artist name.")
+      return
+    }
+    if (validateData(event.target.desc.value, "description") == false) {
+      setError("Provide a valid description (at least 10 characters long).")
+      return
+    }
+    if (validateData(event.target.price.value, "price") == false) {
+      setError("Provide a valid price.")
+      return
+    }
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id_studio: studioValue,
-        album: event.target.name.value,
+        album: event.target.album.value,
         artist: event.target.artist.value,
         desc: event.target.desc.value,
         price: event.target.price.value,
         item_path: fileBase64String,
       }),
     };
-    // eslint-disable-next-line promise/catch-or-return
     fetch(`${backend_address}/api/products/`, requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json()
+        else if (response.status == 409) {setError("Product name is already taken."); return}
+        else console.log(response.json())
+      })
       .then((response) => {
         var songs = JSON.parse(sessionStorage.getItem("songs"))
         songs.map((value, index: any) => {
+          if (validateData(value.name) == false) {
+            setError("Some of the songs' titles were invalid.")
+            return
+          }
+          if (validateData(value.producer) == false) {
+            setError("Some of the songs' producers were invalid.")
+            return
+          }
           const requestOptions1 = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -139,7 +163,6 @@ export default function CreateStudio() {
               length: parseInt(value.duration)
             }),
           };
-          // eslint-disable-next-line promise/catch-or-return
           fetch(`${backend_address}/api/tracks/`, requestOptions1)
             .then((response) => response.json())
             .then((response) => console.log(response))
@@ -147,7 +170,7 @@ export default function CreateStudio() {
               console.log(error);
             });
         })
-        navigate(`/katalog`, { replace: true });
+        navigate(`/store`, { replace: true });
       }).catch((error) => {
         console.log(error);
       });
@@ -202,13 +225,17 @@ export default function CreateStudio() {
                 <img src={pic} />
                 <div className="formTextFields">
                   <TextField type="file" onChange={ChangePicture} />
-                  <TextField id="name" label="Name" variant="outlined" />
-                  <TextField id="artist" label="Artist" variant="outlined" />
-                  <TextField id="desc" label="Description" multiline variant="outlined" />
-                  <TextField id="price" label="Price" variant="outlined" />
-                  <InputLabel id="demo-simple-select-label">{t("studio")}</InputLabel>
+                  <TextField required id="album" label="Album name" variant="outlined" />
+                  <TextField required id="artist" label="Artist" variant="outlined" />
+                  <TextField required id="desc" label="Description" multiline variant="outlined" />
+                  <TextField required id="price" label="Price" variant="outlined" />
+                  <InputLabel required id="demo-simple-select-label">{t("studio")}</InputLabel>
                   <GenerateOptions/>
                   <CreateSongs/>
+                  {error.length > 0 ?
+                  <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
+                  : null
+                  }
                   <Button
                     className="createButton"
                     variant="contained"

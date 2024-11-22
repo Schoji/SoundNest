@@ -395,7 +395,8 @@ with app.app_context():
         credits = users["credits"][i]
         avatar_dir = users["avatar_dir"][i]
         is_admin = users["is_admin"][i]
-        user = UserModel(username=username, email=email, name=name, surname=surname, password=password, credits=credits, avatar_dir=avatar_dir, is_admin=is_admin)
+        bio = users["bio"][i]
+        user = UserModel(username=username, email=email, name=name, surname=surname, password=password, bio=bio, credits=credits, avatar_dir=avatar_dir, is_admin=is_admin)
         db.session.add(user)
         db.session.commit()
     print("Users added.")

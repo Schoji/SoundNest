@@ -26,7 +26,6 @@ import RegisterWindow from './Register/Register';
 import WelcomeWindow from './Welcome/Welcome';
 import { useTranslation } from 'react-i18next';
 import "./Components/MultiLang";
-export const backend_address = 'http://localhost:5000';
 
 export function GetCreds() {
   const { t, i18n } = useTranslation();
@@ -39,6 +38,7 @@ export function GetCreds() {
       sessionStorage.setItem('surname', userInfo.surname);
       sessionStorage.setItem('email', userInfo.email);
       sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+      sessionStorage.setItem('bio', userInfo.bio);
       if (userInfo.prefered_theme == 0) {
         document.documentElement.classList.add("dark")
         sessionStorage.setItem("theme", "dark")

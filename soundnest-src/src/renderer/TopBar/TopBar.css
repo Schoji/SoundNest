@@ -110,9 +110,6 @@
 }
 .output {
   position: absolute;
-  display: none;
-}
-.output.visible{
   display: grid;
   gap: 5px;
   width: 400px;
@@ -125,6 +122,7 @@
   overflow-y: auto;
   scrollbar-gutter: stable both-edges;
 }
+
 .outputItem {
   user-select: none;
   display: grid;

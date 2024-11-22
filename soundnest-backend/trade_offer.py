@@ -17,14 +17,14 @@ import datetime
 
 def getProductPic(path):
     if path == "/":
-        return None
+        return "/"
     image_path = UPLOAD_FOLDER + "/products/" + path
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('ascii')
 
 def getUserPic(path):
     if path == "/":
-        return None
+        return "/"
     image_path = UPLOAD_FOLDER + "/avatars/" + path
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('ascii')

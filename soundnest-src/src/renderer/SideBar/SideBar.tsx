@@ -33,6 +33,7 @@ export const Theme = () => {
       }
       document.getElementsByClassName("darkIcon")[0].classList.add("active")
       sessionStorage.setItem("theme", "dark");
+      setIsDark(true)
     } else {
       document.documentElement.classList.remove("dark")
       if (document.getElementsByClassName("darkIcon")[0].classList.contains("active")){
@@ -40,6 +41,7 @@ export const Theme = () => {
       }
       document.getElementsByClassName("lightIcon")[0].classList.add("active")
       sessionStorage.setItem("theme", "light");
+      setIsDark(false)
     }
   }, [isDark]);
   return (

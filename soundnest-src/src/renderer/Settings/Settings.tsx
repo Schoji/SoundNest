@@ -148,7 +148,7 @@ function ChangePicture(event) {
                   <TextField id="surname" label="Surname" variant="outlined" defaultValue={sessionStorage.getItem('surname')}/>
                   <TextField id="username" label="Username" variant="outlined" defaultValue={sessionStorage.getItem('username')}/>
                   <TextField id="email" label="Email" variant="outlined" defaultValue={sessionStorage.getItem('email')}/>
-                  <TextField id="bio" label="Your bio" multiline variant="outlined" defaultValue="TODO"/>
+                  <TextField id="bio" label="Your bio" variant="outlined" defaultValue={sessionStorage.getItem('bio')}/>
                   <Button color="success" variant="contained" type="submit">
                     {t("Save")}
                   </Button>

@@ -6,18 +6,7 @@ from track import *
 from productTags import *
 from tags import *
 from trade_offer import *
-from flask import request, jsonify
-from PIL import Image
-from datetime import datetime
 
-#instruction
-#1. Make a new file
-#2. Make a model
-#3. Make fields
-#4. Make args
-#5. Make singular class
-#6. Make plural class
-#7. Add resources
 class UserProducts(Resource):
    def get(self, id_user):
       transactions = TransactionModel.query.filter_by(id_user = id_user).all()
@@ -65,6 +54,7 @@ class Search(Resource):
       products = ProductModel.query.filter(ProductModel.album.like("%" + search_str + "%")).all()
       studios = StudioModel.query.filter(StudioModel.name.like("%" + search_str + "%")).all()
       tracks = TrackModel.query.filter(TrackModel.name.like("%" + search_str + "%")).all()
+      users = UserModel.query.filter(UserModel.name.like("%" + search_str + "%")).all()
       
       response = []
       search_id = 0
@@ -105,10 +95,22 @@ class Search(Resource):
             data = base64.b64encode(image_file.read()).decode('ascii')
          dataset = { 
             "id" : search_id,
-            "result_id" : track.id,
+            "result_id" : product.id,
             "result_name" : track.name,
             "result_pic" : data,
             "type": "track"
+         }
+         search_id += 1
+         response.append(dataset)
+
+      for user in users:
+         data = getUserPic(user.avatar_dir)
+         dataset = { 
+            "id" : search_id,
+            "result_id" : user.id,
+            "result_name" : user.username,
+            "result_pic" : data,
+            "type": "user"
          }
          search_id += 1
          response.append(dataset)

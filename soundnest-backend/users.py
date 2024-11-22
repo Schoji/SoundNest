@@ -1,22 +1,12 @@
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from app_def import *
 import base64
-import os
 import base64
 from io import BytesIO
 from PIL import Image
 import img_resize
 from sqlalchemy import desc
 import hashlib
-
-#instruction
-#1. Make a new file
-#2. Make a model
-#3. Make fields
-#4. Make args
-#5. Make singular class
-#6. Make plural class
-#7. Add resource
 
 def encrypt_string(hash_string):
   sha_signature = \
@@ -32,7 +22,7 @@ class UserModel(db.Model):
     surname = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
-    bio = db.Column(db.String(80))
+    bio = db.Column(db.Text())
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
     lang = db.Column(db.String(80), default="en")
     credits = db.Column(db.Float, default=0)

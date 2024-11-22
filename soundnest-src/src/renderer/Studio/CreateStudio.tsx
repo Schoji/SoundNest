@@ -1,7 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton } from '@mui/material';
+import { TextField, FormControl, IconButton, Alert } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import { useNavigate } from 'react-router-dom';
 import { CacheProvider } from '@emotion/react';
@@ -14,7 +12,8 @@ import default_album from '../../../assets/album.png';
 import { useState, useEffect } from 'react';
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
+import { validateData } from '../Components/InputValidation';
 
 const cache = createCache({
   key: 'css',
@@ -25,13 +24,9 @@ export default function CreateStudio() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [pic, setPic] = useState(default_album);
-
-  const [selectedFile, setSelectedFile] = useState();
+  const [error, setError] = useState("")
   const [fileBase64String, setFileBase64String] = useState("");
-  const onFileChange = (e) => {
-    setSelectedFile(e.target.files);
 
-  }
   const encodeFileBase64 = (file) => {
     var reader = new FileReader()
     if (file) {
@@ -58,7 +53,14 @@ export default function CreateStudio() {
 
   function AddStudio(event) {
     event.preventDefault();
-
+    if (validateData(event.target.name.value, "studioName") == false) {
+      setError("Provide a valid studio name (at least 3 characters long).")
+      return
+    }
+    if (validateData(event.target.desc.value, "desciption") == false) {
+      setError("Provide a valid studio description (at least 10 characters long).")
+      return
+    }
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -71,9 +73,12 @@ export default function CreateStudio() {
     };
     // eslint-disable-next-line promise/catch-or-return
     fetch(`${backend_address}/api/studios/`, requestOptions)
-      .then((response) => response.json())
-      .then((response) => console.log(response));
-    navigate('/studios', { replace: true });
+      .then((response) => {
+        if (response.ok) navigate('/studios', { replace: true })
+        else if (response.status == 409) setError("Studio name is already taken.")
+        else console.log(response.json())
+      })
+      .catch(error => console.log(error));
 
   }
   return (
@@ -95,6 +100,9 @@ export default function CreateStudio() {
               <TextField type="file" onChange={ChangePicture} />
               <TextField id="name" label="Name" variant="outlined" />
               <TextField id="desc" label="Description" variant="outlined" />
+              {error ?
+              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : null
+              }
               <Button
                 className="createButton"
                 variant="outlined"

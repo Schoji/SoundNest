@@ -14,6 +14,7 @@ export default function UpdateUserInfo() {
     sessionStorage.setItem("username", user.username)
     sessionStorage.setItem("email", user.email)
     sessionStorage.setItem("surname", user.surname)
+    sessionStorage.setItem("bio", user.bio)
     sessionStorage.setItem("name", user.name)
     sessionStorage.setItem("lang", user.lang)
   })
