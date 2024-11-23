@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Button, FormControl, TextField } from '@mui/material';
+import { Button, colors, FormControl } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
@@ -141,23 +141,23 @@ function ChangePicture(event) {
           <div className="settingsContent">
             <div className="avatar">
               <form encType="multipart/form-data" onSubmit={AlterUser}>
-                <FormControl>
-                <img src={pic}></img>
-                  <TextField id="file" type="file" onChange={ChangePicture}/>
-                  <TextField id="name" label="Name" variant="outlined" defaultValue={sessionStorage.getItem('name')}/>
-                  <TextField id="surname" label="Surname" variant="outlined" defaultValue={sessionStorage.getItem('surname')}/>
-                  <TextField id="username" label="Username" variant="outlined" defaultValue={sessionStorage.getItem('username')}/>
-                  <TextField id="email" label="Email" variant="outlined" defaultValue={sessionStorage.getItem('email')}/>
-                  <TextField id="bio" label="Your bio" variant="outlined" defaultValue={sessionStorage.getItem('bio')}/>
-                  <Button color="success" variant="contained" type="submit">
-                    {t("Save")}
-                  </Button>
-                  <Button color="error" variant="contained">
-                    {t("Cancel")}
-                  </Button>
-                </FormControl>
+                <div className='settingsAvatar'>
+                  <div className='avatarImage'>
+                    <img src={pic}/>
+                  </div>
+                  <div className='changeAvatar'>
+                    <input id="file" type="file" onChange={ChangePicture}/>
+                  </div>
+                </div>
+                <div className='settingForm'>
+                  <input id="name" value={sessionStorage.getItem('name')}/>
+                  <input id="surname" value={sessionStorage.getItem('surname')}/>
+                  <input id="username" value={sessionStorage.getItem('username')}/>
+                  <input id="email" value={sessionStorage.getItem('email')}/>
+                  <textarea id="bio" value={sessionStorage.getItem('bio')}/>
+                  <input type="submit" value={"Save"}/>
+                </div>
               </form>
-            <Button variant='contained' onClick={exportUserInfo}>{t("exportUserInfo")}</Button>
             </div>
             <div className='setLogo'>
               <Link onClick={() => changeLogo(0)} to="/settings" className="link1">
@@ -175,6 +175,9 @@ function ChangePicture(event) {
               <Link onClick={() => changeLogo(4)} to="/settings" className="link1">
                   <img src={sessionStorage.getItem("theme") === "light" ? logo_pink : logo_pink_darker} />
               </Link>
+            </div>
+            <div className='exportButton'>
+              <Button onClick={exportUserInfo}>{t("exportUserInfo")}</Button>
             </div>
           </div>
         </div>

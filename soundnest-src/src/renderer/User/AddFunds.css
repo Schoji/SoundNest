@@ -1,16 +1,50 @@
 .fundOptions {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: .3fr .3fr .3fr .3fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
 }
-.fundOptions img {
-  width: 100%;
-  border-radius: 5px;
+
+.fundOption {
+  background: var(--section);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 60px;
+  gap: 5px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+  transition: background-color 0.5s;
 }
-.fundOptions button {
-  padding: 0;
-  width: 100%;
-  /* background-color: */
+.fundOption:hover {
+  background: var(--section-hover);
 }
 
+.fundImage {
+  width: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.fundImage img {
+  width: 100%;
+  border-radius: 8px;
+  transition: all 0.5s ease;
+}
+
+.fundOption:hover .fundImage img {
+  transform: scale(110%);
+}
+
+.fundOption Button {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 8px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.fundOption Button:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
