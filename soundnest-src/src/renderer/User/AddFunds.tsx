@@ -11,6 +11,14 @@ import pig from '../../../assets/fund_pig.png'
 import { useNavigate } from "react-router-dom";
 import "../Components/MultiLang"
 import { useTranslation } from "react-i18next";
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
+
 export default function AddFunds() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -32,15 +40,32 @@ export default function AddFunds() {
       <div className="main">
         <h1>{t("addFunds")}</h1>
         <div className="fundOptions">
-          <img src={george} style={{backgroundColor: "green"}}/>
-          <img src={delma} style={{backgroundColor: "#b3b300"}}/>
-          <img src={monopoly} style={{backgroundColor: "purple"}} />
-          <img src={pig} style={{backgroundColor: "#00ace6"}}/>
-
-          <Button onClick={() => addFunds(100)} variant="contained" color="success" sx={{backgroundColor: "green"}}>100$</Button>
-          <Button onClick={() => addFunds(200)} variant="contained" color="success" sx={{backgroundColor: "#b3b300"}}>200$</Button>
-          <Button onClick={() => addFunds(300)} variant="contained" color="success" sx={{backgroundColor: "purple"}}>300$</Button>
-          <Button onClick={() => addFunds(400)} variant="contained" color="success" sx={{backgroundColor: "#00ace6"}}>400$</Button>
+          <CacheProvider value={cache}>
+          <div className="fundOption">
+            <div className="fundImage">
+              <img src={george}/>
+            </div>
+            <Button onClick={() => addFunds(100)} variant="contained">100$</Button>
+          </div>
+          <div className="fundOption">
+            <div className="fundImage">
+              <img src={delma}/>
+            </div>
+            <Button onClick={() => addFunds(200)} variant="contained">200$</Button>
+          </div>
+          <div className="fundOption">
+            <div className="fundImage">
+              <img src={monopoly}/>
+            </div>
+            <Button onClick={() => addFunds(300)} variant="contained">300$</Button>
+          </div>
+          <div className="fundOption">
+            <div className="fundImage">
+              <img src={pig}/>
+            </div>
+            <Button onClick={() => addFunds(400)} variant="contained">400$</Button>
+          </div>
+          </CacheProvider>
         </div>
       </div>
     </div>
