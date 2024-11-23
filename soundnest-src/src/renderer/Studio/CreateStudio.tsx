@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button';
 import { TextField, FormControl, IconButton, Alert } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { useNavigate } from 'react-router-dom';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
@@ -83,7 +84,6 @@ export default function CreateStudio() {
   }
   return (
     <div className="all">
-      <CacheProvider value={cache}>
       <TopBar />
       <SideBar />
       <div className="main">
@@ -94,28 +94,45 @@ export default function CreateStudio() {
             </IconButton>
             <h1>{t("createYourStudio")}</h1>
           </div>
+          <CacheProvider value={cache}>
           <form onSubmit={AddStudio}  encType="multipart/form-data">
-            <FormControl className="form">
+            <div className="createStudioImage">
+              <p>{t("studioImagePreview")}</p>
               <img src={pic} />
-              <TextField type="file" onChange={ChangePicture} />
-              <TextField id="name" label="Name" variant="outlined" />
-              <TextField id="desc" label="Description" variant="outlined" />
+              <div> </div>
+              <Button
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<FileUploadRoundedIcon />}
+              >
+                {t("uploadPhoto")}
+                <input type='file' onChange={ChangePicture} />
+              </Button>
+            </div>
+            <div className="createStudioInputs">
+              <p>{t("studioName")}</p>
+              <input id="name" type="text" placeholder={t("placeholderName")} />
+              <p>{t("studioDesc")}</p>
+              <textarea id="desc" placeholder={t("placeholderDesc")} />
               {error ?
-              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : null
+              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : <div> </div>
               }
+              <p>{t("createStudioNotif")}</p>
               <Button
                 className="createButton"
-                variant="outlined"
+                variant="contained"
                 type="submit"
                 disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
               >
                 {t("createStudio")}
               </Button>
-            </FormControl>
+            </div>
           </form>
+          </CacheProvider>
         </div>
       </div>
-      </CacheProvider>
     </div>
   );
 }

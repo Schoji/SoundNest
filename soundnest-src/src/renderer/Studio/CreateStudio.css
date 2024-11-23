@@ -3,6 +3,9 @@
   grid-template-rows: auto 1fr;
   gap: 10px;
 }
+.createStudio:not(input, textarea) {
+  user-select: none;
+}
 .createStudioTitle {
   display: inline-flex;
   align-items: center;
@@ -19,4 +22,113 @@
 .createStudioTitle Button:hover {
   box-shadow: 0px 0px 19px -6px var(--font-color);
   background: var(--accent-gradient-hover);
+}
+.createStudio form {
+  display: grid;
+  grid-template-columns: 71vh 1fr;
+  gap: 10px;
+}
+.createStudio p:not(.createStudioInputs p:last-of-type) {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+}
+.createStudio Button, .createStudio label {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.createStudio Button:hover, .createStudio label:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+.createStudioImage {
+  display: grid;
+  grid-template-rows: auto auto 1fr 45px;
+  gap: 5px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.createStudioImage h3 {
+  text-align: center;
+}
+.createStudioImage img {
+  -webkit-user-drag: none;
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.createStudioImage label input {
+  display: none;
+}
+.createStudioInputs {
+  display: grid;
+  grid-template-rows: auto 70px auto 1fr auto auto 45px;
+  gap: 5px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.createStudioInputs input {
+  font-size: 17px;
+  color: var(--font-color);
+  background:
+    linear-gradient(var(--searchbar-focused), var(--searchbar-focused)) padding-box,
+    var(--accent-gradient) border-box;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px;
+}
+.createStudioInputs input:focus {
+  outline: none;
+  border: 3px solid transparent;
+  padding-left: 8px;
+}
+.createStudioInputs input:hover:not(:focus) {
+  border: 1.8px solid transparent;
+  padding-left: 9.4px;
+}
+.createStudioInputs textarea {
+  resize: none;
+  min-height: 100px;
+  font-size: 17px;
+  font-family: inherit;
+  color: var(--font-color);
+  background:
+    linear-gradient(var(--searchbar-focused), var(--searchbar-focused)) padding-box,
+    var(--accent-gradient) border-box;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px;
+}
+.createStudioInputs textarea:focus {
+  outline: none;
+  border: 3px solid transparent;
+  padding-top: 8px;
+  padding-left: 8px;
+}
+.createStudioInputs textarea:hover:not(:focus) {
+  outline: none;
+  border: 1.8px solid transparent;
+  padding-top: 9.4px;
+  padding-left: 9.4px;
+}
+.createStudioInputs p:last-of-type {
+  font-size: 14px;
+  opacity: 0.7;
+}
+@media only screen and (max-width: 1400px) {
+  .createStudio form {
+    grid-template-columns: auto auto;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .createStudio form {
+    grid-template-columns: 1fr;
+  }
 }

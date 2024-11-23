@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { useTranslation } from 'react-i18next';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { useEffect, useState } from 'react';
@@ -18,6 +19,7 @@ const cache = createCache({
 
 export default function SearchBar() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [searchBarVisible, setSearchBarVisible] = useState(false)
   const [searchResults, setSearchResults] = useState();
   let text;
@@ -48,7 +50,7 @@ export default function SearchBar() {
           type="text"
           id="input"
           className="searchInput"
-          placeholder="Search"
+          placeholder={t("search")}
           onChange={(e) => changeSearch(e)}
           onFocus={(e) => SearchOnFocus(e)}
           onBlur={() => setSearchBarVisible(false)}

@@ -53,6 +53,13 @@ i18n.use(initReactI18next).init({
         otherProducts: "Other Products",
         //CreateStudio
         createYourStudio: "Create Your Studio",
+        studioImagePreview: "Here is a quick preview of your studio image!",
+        uploadPhoto: "Upload photo",
+        studioName: "How would you like your studio to be called?",
+        placeholderName: "Name",
+        studioDesc: "Tell us more about your studio!",
+        placeholderDesc: "Description",
+        createStudioNotif: "*You will be able to make changes later on",
         createStudio: "Create Studio",
         //Studio
         studioDetails: "Studio Details",
@@ -64,6 +71,8 @@ i18n.use(initReactI18next).init({
         learnMore: "Learn More",
         myStudios: "My Studios",
         edit: "Edit",
+        //TopBar
+        search: "Search",
         //Menu
         darkMode: "Dark Mode",
         termsOfUse: "Terms of Use",
@@ -142,7 +151,14 @@ i18n.use(initReactI18next).init({
         otherProducts: "Inne produkty",
         //CreateStudio
         createYourStudio: "Utwórz swoje studio",
-        createStudio: "Utwórz studio",
+        studioImagePreview: "Oto szybki podgląd obrazu Twojego studia!",
+        uploadPhoto: "Prześlij zdjęcie",
+        studioName: "Jak chciałbyś nazwać swoje studio?",
+        placeholderName: "Nazwa",
+        studioDesc: "Opowiedz nam więcej o swoim studiu!",
+        placeholderDesc: "Opis",
+        createStudioNotif: "*Będziesz mógł wprowadzić zmiany później",
+        createStudio: "Utwórz Studio",
         //Studio
         studioDetails: "Szczegóły studia",
         studioOwned: "Studio należy do",
@@ -153,6 +169,8 @@ i18n.use(initReactI18next).init({
         learnMore: "Dowiedz się więcej",
         myStudios: "Moje studia",
         edit: "Edytuj",
+        //TopBar
+        search: "Szukaj",
         //Menu
         darkMode: "Tryb ciemny",
         termsOfUse: "Regulamin",
@@ -231,6 +249,13 @@ i18n.use(initReactI18next).init({
         otherProducts: "Andere Produkte",
         //CreateStudio
         createYourStudio: "Erstelle dein Studio",
+        studioImagePreview: "Hier ist eine schnelle Vorschau deines Studio-Bildes!",
+        uploadPhoto: "Foto hochladen",
+        studioName: "Wie möchtest du dein Studio nennen?",
+        placeholderName: "Name",
+        studioDesc: "Erzähle uns mehr über dein Studio!",
+        placeholderDesc: "Beschreibung",
+        createStudioNotif: "*Du kannst später Änderungen vornehmen",
         createStudio: "Studio erstellen",
         //Studio
         studioDetails: "Studio-Details",
@@ -242,6 +267,8 @@ i18n.use(initReactI18next).init({
         learnMore: "Mehr erfahren",
         myStudios: "Meine Studios",
         edit: "Bearbeiten",
+        //TopBar
+        search: "Suchen",
         //Menu
         darkMode: "Dunkler Modus",
         termsOfUse: "Nutzungsbedingungen",
