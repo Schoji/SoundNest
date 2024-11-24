@@ -86,7 +86,7 @@ export default function SideBar() {
         <div><ManageAccountsRoundedIcon /></div>
         <p>{t("adminPanel")}</p>
       </Link>
-      ) : null}
+      ) : <div> </div>}
       {sessionStorage.getItem("hasKey") == "false" ? (
       <Link to="/buykey" className="sideButton sideButtonInverted">
         <div><LockPersonRoundedIcon /></div>

@@ -82,6 +82,7 @@ export default function CreateStudio() {
       .catch(error => console.log(error));
 
   }
+  const [descLength, setDescLength] = useState(0)
   return (
     <div className="all">
       <TopBar />
@@ -115,7 +116,10 @@ export default function CreateStudio() {
               <p>{t("studioName")}</p>
               <input id="name" type="text" placeholder={t("placeholderName")} />
               <p>{t("studioDesc")}</p>
-              <textarea id="desc" placeholder={t("placeholderDesc")} />
+              <textarea id="desc"
+              onChange={(e) => setDescLength(e.target.value.length)}
+              placeholder={t("placeholderDesc")} />
+              <p style={{color: descLength >= 10 && descLength <= 100 ? "green" : "red"}}>{descLength}/100</p>
               {error ?
               <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : <div> </div>
               }

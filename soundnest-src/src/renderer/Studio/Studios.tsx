@@ -100,7 +100,6 @@ export default function Studio() {
     fetch(`${backend_address}/api/userstudios/${sessionStorage.getItem("id")}`)
       .then((response) => {
         if (response.ok) return response.json()
-        else setMyStudiosData([])
       })
       .then((data) => setMyStudiosData(data))
       .catch((error) => {
@@ -134,7 +133,7 @@ export default function Studio() {
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          {myStudiosData.length > 0 ?
+          {myStudiosData?.length > 0 ?
             <div className="myStudios">
               {myStudiosData.map((myStudio, index) => (
                 <div className="myStudio">
@@ -146,8 +145,8 @@ export default function Studio() {
                     }
                     </div>
                   <h2>{myStudio.name}</h2>
-                  <p>{myStudio.desc}</p>
-                  {/* <AlertDialog studio_id={myStudio.id}/> */}
+                  <p>{String(myStudio.desc).split(/\s+/).filter(Boolean).length < 3 && String(myStudio.desc).length > 60 ? String(myStudio.desc).replace(/[\n\r]+/g, "")
+                     .replace(/(.{10})/g, "$1\n") : myStudio.desc}</p>
                   <Button
                     className="editStudio"
                     onClick={() => {

@@ -314,10 +314,8 @@ class UserAuthentication(Resource):
 
     def get(self, username, password):
       user = UserModel.query.filter_by(username=username, password=encrypt_string(password)).first()
-
       if not user:
          return "User with this password was not found in database.", 404
-        
       user.avatar_dir = getUserPic(user.avatar_dir)
 
       key = KeyModel.query.filter_by(id_user = user.id).first()

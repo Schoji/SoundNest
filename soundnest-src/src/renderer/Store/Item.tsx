@@ -73,6 +73,7 @@ export function OtherItems() {
 export default function Item() {
   const [data, setData] = useState(null);
   const [trackData, setTrackData] = useState(null);
+  const [userProductsIDs, setUserProductsIDs] = useState([])
   const { item_id } = useParams()
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -90,9 +91,26 @@ export default function Item() {
     .catch((error) => console.log(error))
   }
 
+  const getUserProducts = () => {
+    fetch(`${backend_address}/api/userproducts/${sessionStorage.getItem("id")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        var productIDs = []
+        data.map((product, index) => {
+          productIDs.push(product.id)
+        })
+        console.log(productIDs)
+        setUserProductsIDs(productIDs)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     Fetch();
     getTracks();
+    getUserProducts()
   }, [item_id]);
 
   function trackInfo() {
@@ -185,8 +203,14 @@ export default function Item() {
                 {data.price === undefined ? data.price : data.price.toFixed(2)}$
               </h3>
               <Button
-              disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
-              onClick={addToCart}>{t("addToCart")}</Button>
+              disabled={sessionStorage.getItem("hasKey") == "false" ||
+              (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(data.id)) != -1) ||
+              (userProductsIDs.indexOf(parseInt(data.id)) != -1) ? true : false}
+              onClick={addToCart}>
+                {sessionStorage.getItem("hasKey") == "false" ? "Demo" :
+                JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(data.id)) != -1 ? "In cart" :
+                userProductsIDs.indexOf(parseInt(data.id)) != -1 ? "Owned" : t("addToCart")}
+                </Button>
             </div>
             {trackInfo()}
             <div className="itemTitle">

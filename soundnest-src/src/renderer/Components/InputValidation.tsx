@@ -1,4 +1,5 @@
 export function validateData(input: string, type="other") {
+  if (/^[^\uD83C-\uDBFF\uDC00-\uDFFF]+$/.test(input) == false) return false //emoji detector
   switch(type) {
     case "username":
       return /^[a-zA-Z0-9_]{3,20}$/.test(input)
@@ -15,7 +16,7 @@ export function validateData(input: string, type="other") {
     case "studioName":
       return /^[a-zA-Z0-9\s&\-'’]{3,100}$/.test(input)
     case "desciption":
-      return /^[\s\S]{10,500}$/.test(input)
+      return /^[\s\S]{10,100}$/.test(input)
     case "price":
       return /^(\d{1,3})(\.\d{1,2})?$/.test(input)
     case "id":

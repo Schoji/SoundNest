@@ -20,7 +20,7 @@ import UpdateUserInfo from '../Components/UpdateUserInfo';
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
 import { emitCustomEvent } from 'react-custom-events';
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
 
 const cache = createCache({
   key: 'css',
@@ -30,6 +30,7 @@ const cache = createCache({
 export default function Store() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const [userProductsIDs, setUserProductsIDs] = useState([])
   const { t } = useTranslation()
   const Fetch = () => {
     fetch(`${backend_address}/api/products/`)
@@ -39,8 +40,24 @@ export default function Store() {
         console.log(error);
       });
   };
+  const getUserProducts = () => {
+    fetch(`${backend_address}/api/userproducts/${sessionStorage.getItem("id")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        var productIDs = []
+        data.map((product, index) => {
+          productIDs.push(product.id)
+        })
+        console.log(productIDs)
+        setUserProductsIDs(productIDs)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   useEffect(() => {
     Fetch();
+    getUserProducts();
   }, []);
   var cart_items
   function addToCart(item_id) {
@@ -95,7 +112,7 @@ export default function Store() {
                     {t("viewDetails")}
                   </Button>
                   <IconButton
-                    disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+                    disabled={sessionStorage.getItem("hasKey") == "false" || (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(value.id)) != -1) || (userProductsIDs.indexOf(parseInt(value.id)) != -1) ? true : false}
                     onClick={() => {
                       addToCart(value.id);
                     }}
