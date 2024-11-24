@@ -5,28 +5,22 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import default_album from '../../../assets/album.png';
 import './Cart.css';
 import { Avatar, Box, CircularProgress, Snackbar, TableContainer } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { rowHeightWarning } from '@mui/x-data-grid/hooks/features/rows/gridRowsUtils';
 import { useNavigate } from 'react-router-dom';
-import CheckIcon from '@mui/icons-material/Check';
-const backend_address = 'http://localhost:5000';
 import { SnackbarCloseReason } from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
+import { backend_address } from '../Components/global';
+import { emitCustomEvent } from 'react-custom-events';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,7 +45,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export function CustomizedTables() {
   const { t } = useTranslation()
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("")
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
@@ -73,7 +68,6 @@ export function CustomizedTables() {
       .catch((error) => {
         console.log(error);
       });
-    // console.log(data)
   };
   useEffect(() => {
     Fetch();
@@ -88,6 +82,7 @@ export function CustomizedTables() {
       const new_cart_items = cart_items.filter(x => x !== item);
       console.log("New cart items", new_cart_items)
       sessionStorage.setItem('cart', new_cart_items)
+      emitCustomEvent("updateCart", new_cart_items)
       navigate("/cart", { replace: true });
     }
     const cart_items = JSON.parse("[" + sessionStorage.getItem('cart') + "]")
@@ -101,7 +96,7 @@ export function CustomizedTables() {
 
     const PurchaseButton = (
       <div>
-      <Button variant="contained" color="success" onClick={() => handleClick()}>Purchase</Button>
+      <Button variant="contained" color="success" onClick={() => purchase()}>Purchase</Button>
       <Snackbar
         open={open}
         autoHideDuration={6000}
@@ -112,9 +107,10 @@ export function CustomizedTables() {
       </Snackbar>
     </div>
     )
-    const handleClick = () => {
+    const purchase = () => {
       if (total_cost > parseInt(sessionStorage.getItem('credits'))) {
-        console.log("insufficient funds")
+        setError("Transaction error, insufficient funds.")
+        return
       }
       else {
         // Transaction request
@@ -176,20 +172,26 @@ export function CustomizedTables() {
     ) : null))
     return (
       total_cost != 0 ? (
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableBody>
-            {table}
-            <StyledTableRow>
-              <StyledTableCell colSpan={3} align='right'>{t("totalCost")}</StyledTableCell>
-              <StyledTableCell>{total_cost.toFixed(2)} $</StyledTableCell>
-              <StyledTableCell>
-                {PurchaseButton}
-              </StyledTableCell>
-            </StyledTableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableBody>
+              {table}
+              <StyledTableRow>
+                <StyledTableCell colSpan={3} align='right'>{t("totalCost")}</StyledTableCell>
+                <StyledTableCell>{total_cost.toFixed(2)} $</StyledTableCell>
+                <StyledTableCell>
+                  {PurchaseButton}
+                </StyledTableCell>
+              </StyledTableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {error.length > 0 ?
+        <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
+        : null
+        }
+      </div>
     ) : <p>{t("noCartItems")}</p>
     )
   }

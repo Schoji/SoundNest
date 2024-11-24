@@ -383,6 +383,7 @@ api.add_resource(Keys, "/api/keys/")
 api.add_resource(Key, "/api/keys/<int:id>")
 api.add_resource(getLicenseKey, "/api/get_key/<int:id_user>")
 api.add_resource(assignLicenseKey, "/api/assign_key/<int:id_user>/<string:key1>")
+api.add_resource(getStudiosNotFromUser, "/api/studios_not_from/<int:id_user>")
 
 @app.route("/last_update")
 def last_update():

@@ -7,6 +7,10 @@ import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
 import { useNavigate } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import { subscribe, unsubscribe } from '../Components/updateTopBar';
+import { useEffect, useState } from 'react';
+import { backend_address } from '../Components/global';
+import { useCustomEventListener } from 'react-custom-events';
 const cache = createCache({
   key: 'css',
   prepend: true,
@@ -14,6 +18,21 @@ const cache = createCache({
 
 function TopBar() {
   const navigate = useNavigate()
+  const credits = parseFloat(sessionStorage.getItem("credits"))
+  const [funds, setFunds] = useState(credits)
+
+  function updateCredits() {
+    fetch(backend_address + "/api/users/" + sessionStorage.getItem("id"))
+    .then(response => response.json())
+    .then(data => {
+      setFunds(data.credits)
+      sessionStorage.setItem("credits", data.credits)
+    })
+    .catch(error => console.log(error))
+  }
+  useCustomEventListener("updateTopBar", () => {
+    updateCredits();
+  })
   return (
     <CacheProvider value={cache}>
     <div className="topbar">
@@ -32,7 +51,7 @@ function TopBar() {
             <AddCardRoundedIcon fontSize='small' />
           </IconButton>
           <div className="walletValueDiv">
-            <p>{parseFloat(sessionStorage.getItem('credits')).toFixed(2)}$</p>
+            <p>{funds ? parseFloat(funds).toFixed(2) : credits.toFixed(2)}$</p>
           </div>
           <div className="profileButtonDiv">
             <BasicMenu/>

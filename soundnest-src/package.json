@@ -117,6 +117,7 @@
     "jszip": "^3.10.1",
     "mousetrap": "^1.6.5",
     "react": "^18.2.0",
+    "react-custom-events": "^1.1.1",
     "react-dom": "^18.2.0",
     "react-flagkit": "^2.0.4",
     "react-flagpack": "^2.0.6",

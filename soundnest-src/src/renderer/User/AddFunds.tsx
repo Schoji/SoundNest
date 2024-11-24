@@ -13,6 +13,7 @@ import "../Components/MultiLang"
 import { useTranslation } from "react-i18next";
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { emitCustomEvent } from "react-custom-events";
 
 const cache = createCache({
   key: 'css',
@@ -22,12 +23,13 @@ const cache = createCache({
 export default function AddFunds() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   const addFunds = (fund_amount: string | number) => {
     fetch(backend_address + "/api/add_funds/" + sessionStorage.getItem("id") + "/" + fund_amount)
     .then(response => response.json())
     .then(data => {
       console.log(data)
-      UpdateUserInfo()
+      emitCustomEvent("updateTopBar")
       navigate("/add_funds", {replace: true})
     })
     .catch(error => error)

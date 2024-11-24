@@ -17,6 +17,7 @@ import { backend_address } from '../Components/global';
 
 import './SideBar.css';
 import '../Components/MultiLang';
+import { useCustomEventListener } from 'react-custom-events';
 
 export const Theme = () => {
   var dark;
@@ -56,7 +57,11 @@ export const Theme = () => {
 
 export default function SideBar() {
   const { t } = useTranslation()
-  let cartItems = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1;
+  let cart = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1
+  const [cartItems, setCartItems] = useState(cart)
+  useCustomEventListener("updateCart", (items) => {
+    setCartItems(items.length - 1)
+  })
   //https://typeofnan.dev/using-session-storage-in-react-with-hooks/
   return (
     <div className="sidebar">
@@ -98,7 +103,7 @@ export default function SideBar() {
       <Link to="/cart" className="cartButton">
         <div className="cartButtonIcon">
           <ShoppingCartRoundedIcon />
-          {cartItems !== 0 ? (
+          {cartItems ? (
             <div className="cartButtonBadge"> {cartItems} </div>
           ) : null}
         </div>

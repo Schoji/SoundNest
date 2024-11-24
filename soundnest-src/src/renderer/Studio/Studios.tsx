@@ -24,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
+import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 
 const cache = createCache({
   key: 'css',
@@ -36,12 +37,14 @@ export function AlertDialog({ studio_id }) {
   const [open, setOpen] = useState(false);
   const DeleteStudio = (studio_id) => {
     fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
-    .then(() => navigate('/studios', { replace: true }))
-      // .then((response) => console.log(response.json()))
+    .then(response => response.json())
+    .then(() => {
+      emitCustomEvent("updateStudios")
+      navigate("/studios", {replace: true})
+    })
     .catch((error) => {
       console.log(error);
     });
-
   };
 
   const handleClickOpen = () => {
@@ -51,7 +54,6 @@ export function AlertDialog({ studio_id }) {
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <React.Fragment>
       <IconButton className="deleteButton" onClick={handleClickOpen}>
@@ -74,8 +76,8 @@ export function AlertDialog({ studio_id }) {
         <DialogActions>
           <Button variant="contained" color='error' onClick={handleClose}>Cancel</Button>
           <Button variant="contained" color='success' onClick={() => {
-            handleClose();
             DeleteStudio(studio_id);
+            handleClose();
             }} autoFocus>
             {t("confirm")}
           </Button>
@@ -89,26 +91,24 @@ export function AlertDialog({ studio_id }) {
 export default function Studio() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [myStudiosData, setMyStudiosData] = useState(null);
-  const [otherStudiosData, setOtherStudiosData] = useState(null);
+  const [myStudiosData, setMyStudiosData] = useState([]);
+  const [otherStudiosData, setOtherStudiosData] = useState([]);
   function toCreateStudio() {
     navigate('/createstudio', { replace: true });
   }
-
   const getMyStudios = () => {
     fetch(`${backend_address}/api/userstudios/${sessionStorage.getItem("id")}`)
       .then((response) => {
         if (response.ok) return response.json()
-        else setMyStudiosData({})
+        else setMyStudiosData([])
       })
       .then((data) => setMyStudiosData(data))
       .catch((error) => {
         console.log(error);
       });
-    // console.log(data);
   };
   const getOtherStudios = () => {
-    fetch(`${backend_address}/api/studios/`)
+    fetch(`${backend_address}/api/studios_not_from/${sessionStorage.getItem("id")}`)
       .then((response) => response.json())
       .then((data) => setOtherStudiosData(data))
       .catch((error) => {
@@ -119,24 +119,10 @@ export default function Studio() {
     getMyStudios();
     getOtherStudios();
   }, []);
-
-  const otherStudios = otherStudiosData?.map((value, index) =>
-    value.id_user != sessionStorage.getItem("id") ?  (
-     <div className="studio">
-                <div className='studioImage'>
-                  {value.studio_dir === '/' ? (
-                    <img src={default_album} />
-                  ) : (
-                    <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
-                  )}
-                </div>
-                <h3>{value.name}</h3>
-                <p>{value.desc}</p>
-                <Button onClick={() => navigate("/studios/" + value.id,  { replace: true })}>{t("learnMore")}</Button>
-                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/>: null}
-
-    </div>
-    ) : null)
+  useCustomEventListener("updateStudios", () => {
+    getMyStudios();
+    getOtherStudios();
+  })
   return (
     <div className="all">
       <TopBar />
@@ -148,35 +134,50 @@ export default function Studio() {
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          {myStudiosData?
-          <div className="myStudios">
-          {myStudiosData?.map((myStudio, index) => (
-          <div className="myStudio">
-            <div className="myStudioImage">
-              {myStudio.studio_dir === '/' ? (
-                <img src={default_album} />
-              ) : (
-                <img src={`data:image/jpeg;base64,${myStudio.studio_dir}`} />
-              )}
+          {myStudiosData.length > 0 ?
+            <div className="myStudios">
+              {myStudiosData.map((myStudio, index) => (
+                <div className="myStudio">
+                  <div className="myStudioImage">
+                    {myStudio.studio_dir === '/' ?
+                      <img src={default_album} />
+                    :
+                      <img src={`data:image/jpeg;base64,${myStudio.studio_dir}`} />
+                    }
+                    </div>
+                  <h2>{myStudio.name}</h2>
+                  <p>{myStudio.desc}</p>
+                  {/* <AlertDialog studio_id={myStudio.id}/> */}
+                  <Button
+                    className="editStudio"
+                    onClick={() => {
+                      navigate(`/editstudio/${myStudio.id}`, { replace: true });
+                    }}
+                  >
+                    {t("edit")}
+                  </Button>
+                </div>
+              ))}
             </div>
-            <h2>{myStudio.name}</h2>
-            <p>{myStudio.desc}</p>
-            <Button
-              className="editStudio"
-              onClick={() => {
-                navigate(`/editstudio/${myStudio.id}`, { replace: true });
-              }}
-            >
-              {t("edit")}
-            </Button>
-          </div>
-           ))}
-           </div>
-          : <CircularProgress /> }
+            : <CircularProgress /> }
           <h1>{t("otherStudios")}</h1>
           <div className="otherStudios">
-            {otherStudios}
-          </div>
+            {otherStudiosData.length > 0 ? otherStudiosData?.map((value, index) => (
+              <div className="studio">
+                <div className='studioImage'>
+                  {value.studio_dir === '/' ?
+                    <img src={default_album} />
+                  :
+                    <img src={`data:image/jpeg;base64,${value.studio_dir}`} />
+                  }
+                </div>
+                <h3>{value.name}</h3>
+                <p>{value.desc}</p>
+                <Button onClick={() => navigate("/studios/" + value.id,  { replace: true })}>{t("learnMore")}</Button>
+                {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/>: null}
+              </div>
+            )) : null}
+            </div>
           </CacheProvider>
         </div>
       </div>

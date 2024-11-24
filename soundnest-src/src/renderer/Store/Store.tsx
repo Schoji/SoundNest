@@ -19,6 +19,7 @@ import createCache from '@emotion/cache';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
+import { emitCustomEvent } from 'react-custom-events';
 const backend_address = 'http://localhost:5000';
 
 const cache = createCache({
@@ -41,16 +42,16 @@ export default function Store() {
   useEffect(() => {
     Fetch();
   }, []);
-
+  var cart_items
   function addToCart(item_id) {
-    const cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
+    cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
     console.log('Cart status', cart_items);
     if (cart_items.indexOf(parseInt(item_id)) === -1) {
       sessionStorage.setItem(
         'cart',
         `${sessionStorage.getItem('cart')},${item_id}`,
       );
-      navigate(0);
+      emitCustomEvent("updateCart", cart_items)
     } else {
       console.log('Item is present, ignoring...');
     }

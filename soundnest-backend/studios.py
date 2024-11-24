@@ -15,6 +15,13 @@ from sqlalchemy import desc
 #6. Make plural class
 #7. Add resource
 
+def getStudioPic(path):
+    if path == "/":
+        return "/"
+    image_path = UPLOAD_FOLDER + "/studios/" + path
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('ascii')
+    
 class StudioModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user = db.Column(db.Integer, db.ForeignKey(UserModel.id))
@@ -113,3 +120,13 @@ class Studio(Resource):
         db.session.delete(studio)
         db.session.commit()
         return 204, "Studio was deleted succesfully."
+
+class getStudiosNotFromUser(Resource):
+    @marshal_with(studioFields)
+    def get(self, id_user):
+        Studios = StudioModel.query.filter(StudioModel.id_user != id_user).all()
+        if not Studios:
+            return "Studios not found.", 404
+        for studio in Studios:
+            studio.studio_dir = getStudioPic(studio.studio_dir)
+        return Studios
