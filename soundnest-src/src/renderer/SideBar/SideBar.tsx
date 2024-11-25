@@ -17,7 +17,7 @@ import { backend_address } from '../Components/global';
 
 import './SideBar.css';
 import '../Components/MultiLang';
-import { useCustomEventListener } from 'react-custom-events';
+import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 
 export const Theme = () => {
   var dark;
@@ -32,14 +32,19 @@ export const Theme = () => {
       document.getElementsByClassName("lightIcon")[0].classList.remove("active")
       document.getElementsByClassName("darkIcon")[0].classList.add("active")
       sessionStorage.setItem("theme", "dark");
+      emitCustomEvent("changeTheme", "dark")
+      emitCustomEvent("changeLogo", "dark")
       setIsDark(true)
     } else {
       document.documentElement.classList.remove("dark")
       document.getElementsByClassName("darkIcon")[0].classList.remove("active")
       document.getElementsByClassName("lightIcon")[0].classList.add("active")
       sessionStorage.setItem("theme", "light");
+      emitCustomEvent("changeTheme", "light")
+      emitCustomEvent("changeLogo", "light")
       setIsDark(false)
     }
+
   }, [isDark]);
   return (
   <Switch

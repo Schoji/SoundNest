@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Button, colors, FormControl } from '@mui/material';
+import { Button, colors, createTheme, FormControl, Radio, TextField, ThemeProvider } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
@@ -24,6 +24,8 @@ import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
 import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
+import { useCustomEventListener } from 'react-custom-events';
+import { green, grey, pink, red, yellow } from '@mui/material/colors';
 
 
 const backend_address = 'http://localhost:5000';
@@ -132,60 +134,119 @@ function ChangePicture(event) {
     link.click()
   }
   const { t } = useTranslation()
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
+  const [selectedValue, setSelectedValue] = useState(sessionStorage.getItem("logo"));
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value);
+    changeLogo(parseInt(event.target.value))
+  };
+
+  const controlProps = (item: string) => ({
+    checked: selectedValue === item,
+    onChange: handleChange,
+    value: item,
+    inputProps: { 'aria-label': item },
+  });
+
   return (
-    <div className="all">
-      <TopBar />
-      <SideBar />
-      <div className="main">
-        <div className="settings">
-          <div className="settingsContent">
-            <div className="avatar">
-              <form encType="multipart/form-data" onSubmit={AlterUser}>
-                <div className='settingsAvatar'>
-                  <div className='avatarImage'>
-                    <img src={pic}/>
+      <div className="all">
+        <TopBar />
+        <SideBar />
+        <div className="main">
+          <div className="settings">
+            <div className="settingsContent">
+              <div className="avatar">
+                <form encType="multipart/form-data" onSubmit={AlterUser}>
+                  <div className='settingsAvatar'>
+                    <div className='avatarImage'>
+                      <img src={pic}/>
+                    </div>
+                    <div className='changeAvatar'>
+                      <input id="file" type="file" onChange={ChangePicture}/>
+                    </div>
                   </div>
-                  <div className='changeAvatar'>
-                    <input id="file" type="file" onChange={ChangePicture}/>
+                  <div className='settingForm'>
+
+                  <ThemeProvider theme={materialtheme}>
+                    <TextField id="name" label="Name" defaultValue={sessionStorage.getItem('name')}/>
+                    <TextField id="surname" label="Surname" defaultValue={sessionStorage.getItem('surname')}/>
+                    <TextField id="username" label="Username" defaultValue={sessionStorage.getItem('username')}/>
+                    <TextField id="email" label="Email" defaultValue={sessionStorage.getItem('email')}/>
+                    <TextField multiline id="bio" label="Bio" defaultValue={sessionStorage.getItem('bio')}/>
+                    <Button type="submit" variant='contained'>Save</Button>
+                  </ThemeProvider>
+
                   </div>
-                </div>
-                <div className='settingForm'>
-                  <input id="name" value={sessionStorage.getItem('name')}/>
-                  <input id="surname" value={sessionStorage.getItem('surname')}/>
-                  <input id="username" value={sessionStorage.getItem('username')}/>
-                  <input id="email" value={sessionStorage.getItem('email')}/>
-                  <textarea id="bio" value={sessionStorage.getItem('bio')}/>
-                  <input type="submit" value={"Save"}/>
-                </div>
-              </form>
-            </div>
-            <div className='setLogo'>
-              <Link onClick={() => changeLogo(0)} to="/settings" className="link1">
-                  <img src={sessionStorage.getItem("theme") === "light" ? logo : logodark} />
-              </Link>
-              <Link onClick={() => changeLogo(1)} to="/settings" className="link1">
-                  <img src={sessionStorage.getItem("theme") === "light" ? logo_red : logo_red_darker}/>
-              </Link>
-              <Link onClick={() => changeLogo(2)} to="/settings" className="link1">
-                  <img src={sessionStorage.getItem("theme") === "light" ? logo_yellow : logo_yellow_darker}/>
-              </Link>
-              <Link onClick={() => changeLogo(3)} to="/settings" className="link1">
-                  <img src={sessionStorage.getItem("theme") === "light" ? logo_green : logo_green_darker}/>
-              </Link>
-              <Link onClick={() => changeLogo(4)} to="/settings" className="link1">
-                  <img src={sessionStorage.getItem("theme") === "light" ? logo_pink : logo_pink_darker} />
-              </Link>
-            </div>
-            <div className='exportButton'>
-              <Button onClick={exportUserInfo}>{t("exportUserInfo")}</Button>
+                </form>
+              </div>
+              <h1 className='setLogo'>Theme color</h1>
+              <div className='setLogo'>
+              <Radio {...controlProps('0')} sx={{
+                '& .MuiSvgIcon-root': {
+                    fontSize: 50,
+                  },
+                    color: grey[800],
+                    '&.Mui-checked': {
+                      color: grey[600],
+                    },
+                  }} />
+              <Radio {...controlProps('1')} sx={{
+                '& .MuiSvgIcon-root': {
+                    fontSize: 50,
+                  },
+                    color: red[800],
+                    '&.Mui-checked': {
+                      color: red[600],
+                    },
+                  }} />
+              <Radio {...controlProps('2')} sx={{
+                '& .MuiSvgIcon-root': {
+                    fontSize: 50,
+                  },
+                    color: yellow[800],
+                    '&.Mui-checked': {
+                      color: yellow[600],
+                    },
+                  }} />
+              <Radio {...controlProps('3')}sx={{
+                '& .MuiSvgIcon-root': {
+                    fontSize: 50,
+                  },
+                    color: green[800],
+                    '&.Mui-checked': {
+                      color: green[600],
+                    },
+                  }} />
+              <Radio {...controlProps('4')} sx={{
+                '& .MuiSvgIcon-root': {
+                    fontSize: 50,
+                  },
+                    color: pink[800],
+                    '&.Mui-checked': {
+                      color: pink[600],
+                    },
+                  }} />
+              </div>
+              <div className='exportButton'>
+                <Button onClick={exportUserInfo}>{t("exportUserInfo")}</Button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
 function changeLogo(logoValue) {
   sessionStorage.setItem("logo", logoValue);
+
 }

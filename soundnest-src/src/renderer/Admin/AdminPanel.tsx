@@ -6,15 +6,16 @@ import Button from '@mui/material/Button';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import './AdminPanel.css'
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridCellEditStopParams, GridCellEditStopReasons, GridColDef, MuiEvent } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import { Avatar, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Avatar, createTheme, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
 import default_album from '../../../assets/album.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang";
-const backend_address = 'http://localhost:5000';
+import { useCustomEventListener } from 'react-custom-events';
+import { backend_address } from '../Components/global';
 
 export default function AdminPanel() {
   const { t } = useTranslation();
@@ -83,24 +84,24 @@ export default function AdminPanel() {
     Fetch();
   };
   const columns: GridColDef[] = [
-    {field: 'id', headerName: 'ID'},
-    {field: 'avatar_dir', headerName: "Image",
+    {field: 'id', headerName: 'ID', width: 50},
+    {field: 'avatar_dir', headerName: "Image", width: 60,
       renderCell: (params) => (
       <Avatar variant='rounded' src={`data:image/jpeg;base64,${params.value}`}/>
     ),},
-    {field: 'username', headerName: "Username"},
-    {field: 'surname', headerName: "Surname"},
-    {field: 'email', headerName: "Email"},
-    {field: 'prefered_theme', headerName: "Prefered Theme"},
-    {field: 'credits', headerName: "Credits"},
-    {field: 'is_admin', headerName: "Admin"},
-    {field: 'Delete', headerName: "Delete",renderCell: (params) => (
+    {field: 'username', headerName: "Username", width: 125},
+    {field: 'surname', headerName: "Surname", width: 70},
+    {field: 'email', headerName: "Email", width: 170},
+    {field: 'prefered_theme', headerName: "Prefered Theme", width: 50},
+    {field: 'credits', headerName: "Credits", width: 50},
+    {field: 'is_admin', headerName: "Admin", width: 70},
+    {field: 'Delete', headerName: "Delete", width: 105, renderCell: (params) => (
       params.row.id != sessionStorage.getItem("id") ? <Button variant='contained' color='error' onClick={() => {
         DeleteUser(params.row.id)
         }}>
           {t("delete")}</Button>: null
     ),},
-    {field: 'Admin', headerName: "Add Admin",renderCell: (params) => (
+    {field: 'Admin', headerName: "Add Admin", width: 155 ,renderCell: (params) => (
       params.row.is_admin != true ? <Button variant='contained' color='info' onClick={() => {
         makeAdmin(params.row.id)
       }}>
@@ -126,72 +127,82 @@ export default function AdminPanel() {
     .then(data => console.log(data))
     .catch(error => console.log(error))
   }
-
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   return (
-    <div className="all">
-      <TopBar />
-      <SideBar />
-      <div className="main">
-        <div className="users">
-          <h1>{t("users")}</h1>
-          <DataGrid
-            rows={data}
-            columns={columns}
-            disableRowSelectionOnClick={true}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10]}
-            sx={{ border: 0 }}
-            />
-        </div>
-        <div>
-          <h1>{t("album")}</h1>
-          {products.length > 0 && studios.length > 0 ?
-          <form onSubmit={changeOwnership}>
-            <p>{t("studio")}</p>
+    <ThemeProvider theme={materialtheme}>
+      <div className="all">
+        <TopBar />
+        <SideBar />
+        <div className="main">
+          <div className="users">
+            <h1>{t("users")}</h1>
+            <DataGrid
+              rows={data}
+              columns={columns}
+              disableRowSelectionOnClick={true}
+              initialState={{ pagination: { paginationModel } }}
+              pageSizeOptions={[5, 10]}
+              sx={{ border: 0 }}
+              />
+          </div>
+          <div>
+            <h1>{t("album")}</h1>
+            {products.length > 0 && studios.length > 0 ?
+            <form onSubmit={changeOwnership}>
+              <p>{t("studio")}</p>
+                <select
+                  id="studio"
+                  // value={selectedStudio}
+                  onChange={handleStudioChange}
+                >
+                {studios.length > 0 && studios?.map((studio, index) => (
+                  <option value={studio.id}>{studio.id}-{studio.name}</option>
+                ))}
+                </select>
+
+              <p>{t("product")}</p>
               <select
-                id="studio"
-                // value={selectedStudio}
-                onChange={handleStudioChange}
-              >
-              {studios.length > 0 && studios?.map((studio, index) => (
-                <option value={studio.id}>{studio.id}-{studio.name}</option>
-              ))}
-              </select>
-
-            <p>{t("product")}</p>
-            <select
-                id="product"
-                // value={selectedProduct}
-                onChange={handleChange}
-              >
-              {products.length > 0 && products?.map((product, index) => (
-                <option value={product.id}>{product.id}-{product.album}</option>
-              ))}
-              </select>
+                  id="product"
+                  // value={selectedProduct}
+                  onChange={handleChange}
+                >
+                {products.length > 0 && products?.map((product, index) => (
+                  <option value={product.id}>{product.id}-{product.album}</option>
+                ))}
+                </select>
 
 
 
-                <div>
+                  <div>
 
-                  {studios[selectedStudio] === '/' || studios[selectedStudio - 1] === undefined ? (
-                    <img src={default_album} />
-                  ) : (
-                    <img src={`data:image/jpeg;base64,${studios[selectedStudio - 1].studio_dir}`} />
-                  )}
-                  <ArrowForwardIcon/>
-                  {products[selectedProduct] === '/' || products[selectedProduct - 1] === undefined ? (
-                    <img src={default_album} />
-                  ) : (
-                    <img src={`data:image/jpeg;base64,${products[selectedProduct - 1].item_path}`} />
-                  )}
+                    {studios[selectedStudio] === '/' || studios[selectedStudio - 1] === undefined ? (
+                      <img src={default_album} />
+                    ) : (
+                      <img src={`data:image/jpeg;base64,${studios[selectedStudio - 1].studio_dir}`} />
+                    )}
+                    <ArrowForwardIcon/>
+                    {products[selectedProduct] === '/' || products[selectedProduct - 1] === undefined ? (
+                      <img src={default_album} />
+                    ) : (
+                      <img src={`data:image/jpeg;base64,${products[selectedProduct - 1].item_path}`} />
+                    )}
 
-                </div>
-                <Button variant='contained' color='success' type='submit'>Save</Button>
+                  </div>
+                  <Button variant='contained' color='success' type='submit'>Save</Button>
 
-          </form>
-          : <h1>Loading</h1> }
+            </form>
+            : <h1>Loading</h1> }
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }

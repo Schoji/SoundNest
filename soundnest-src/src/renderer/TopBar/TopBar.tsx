@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import BasicMenu from './Menu';
-import LogoChange from '../Settings/SetLogo';
+import Logo from '../Settings/Logo';
 import SearchBar from './SearchBar';
 import { IconButton } from '@mui/material';
 import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
 import { useNavigate } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { subscribe, unsubscribe } from '../Components/updateTopBar';
 import { useEffect, useState } from 'react';
 import { backend_address } from '../Components/global';
 import { useCustomEventListener } from 'react-custom-events';
@@ -38,7 +37,7 @@ function TopBar() {
     <div className="topbar">
       <div className="topBarContent">
         <div className="iconDiv">
-          <LogoChange/>
+          <Logo/>
           <p>SoundNest</p>
         </div>
         <div className="searchInputDiv">

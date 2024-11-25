@@ -27,6 +27,21 @@ html, body, #root, .all {
 }
 
 :root.pink {
+  --bg: #fce4ec;
+  --window: #f8bbd0;
+  --button: #f48fb1;
+  --section: #f06292;
+  --section-hover: #ec407a;
+  --searchbar: #f8bbd0;
+  --searchbar-focused: #f48fb1;
+  --font-color: #4a2636;
+  --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
+  --reddish-button: #ff4081;
+  --reddish-button-hover: #ff5a8a;
+}
+
+:root.pink-dark {
   --bg: #3a1f2d;
   --window: #260e19;
   --button: #4a2636;
@@ -42,6 +57,21 @@ html, body, #root, .all {
 }
 
 :root.red {
+  --bg: #ffebee;
+  --window: #ffcdd2;
+  --button: #ef9a9a;
+  --section: #e57373;
+  --section-hover: #ef5350;
+  --searchbar: #ffcdd2;
+  --searchbar-focused: #e57373;
+  --font-color: #4a2121;
+  --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
+  --reddish-button: #c62828;
+  --reddish-button-hover: #ff4c4c;
+}
+
+:root.red-dark {
   --bg: #2e1b1b;
   --window: #1a0e0e;
   --button: #472525;
@@ -57,6 +87,21 @@ html, body, #root, .all {
 }
 
 :root.green {
+  --bg: #e8f5e9;
+  --window: #c8e6c9;
+  --button: #a5d6a7;
+  --section: #81c784;
+  --section-hover: #66bb6a;
+  --searchbar: #c8e6c9;
+  --searchbar-focused: #81c784;
+  --font-color: #214a21;
+  --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
+  --reddish-button: #43a047;
+  --reddish-button-hover: #5cd85c;
+}
+
+:root.green-dark {
   --bg: #1b2e1b;
   --window: #0e1a0e;
   --button: #254725;
@@ -72,6 +117,21 @@ html, body, #root, .all {
 }
 
 :root.yellow {
+  --bg: #fffde7;
+  --window: #fff9c4;
+  --button: #fff59d;
+  --section: #fff176;
+  --section-hover: #ffee58;
+  --searchbar: #fff9c4;
+  --searchbar-focused: #fff176;
+  --font-color: #4a4a21;
+  --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
+  --reddish-button: #ffb300;
+  --reddish-button-hover: #ffcc33;
+}
+
+:root.yellow-dark {
   --bg: #2e2e1b;
   --window: #1a1a0e;
   --button: #474725;

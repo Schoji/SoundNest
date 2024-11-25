@@ -33,12 +33,12 @@
   font-size: 17px;
   font-weight: 600;
 }
-.createStudio Button, .createStudio label {
+/* .createStudio Button, .createStudio label {
   background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 10px;
   box-shadow: 0px 0px 16px -8px var(--font-color);
-}
+} */
 .createStudio Button:hover, .createStudio label:hover {
   box-shadow: 0px 0px 19px -6px var(--font-color);
   background: var(--accent-gradient-hover);
@@ -62,9 +62,9 @@
   object-fit: cover;
   border-radius: 8px;
 }
-.createStudioImage label input {
+/* .createStudioImage label input {
   display: none;
-}
+} */
 .createStudioInputs {
   display: grid;
   grid-template-rows: auto 70px auto 1fr auto auto 45px;
@@ -74,7 +74,7 @@
   box-sizing: border-box;
   padding: 5px;
 }
-.createStudioInputs input {
+/* .createStudioInputs input {
   font-size: 17px;
   color: var(--font-color);
   background:
@@ -92,8 +92,8 @@
 .createStudioInputs input:hover:not(:focus) {
   border: 1.8px solid transparent;
   padding-left: 9.4px;
-}
-.createStudioInputs textarea {
+} */
+/* .createStudioInputs textarea {
   resize: none;
   min-height: 100px;
   font-size: 17px;
@@ -105,8 +105,8 @@
   border: 1px solid transparent;
   border-radius: 10px;
   padding: 10px;
-}
-.createStudioInputs textarea:focus {
+} */
+/* .createStudioInputs textarea:focus {
   outline: none;
   border: 3px solid transparent;
   padding-top: 8px;
@@ -117,7 +117,7 @@
   border: 1.8px solid transparent;
   padding-top: 9.4px;
   padding-left: 9.4px;
-}
+} */
 .createStudioInputs p:last-of-type {
   font-size: 14px;
   opacity: 0.7;

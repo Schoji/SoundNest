@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, Alert } from '@mui/material';
+import { TextField, FormControl, IconButton, Alert, createTheme, ThemeProvider } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
 import { validateData } from '../Components/InputValidation';
+import { useCustomEventListener } from 'react-custom-events';
 
 const cache = createCache({
   key: 'css',
@@ -83,6 +84,16 @@ export default function CreateStudio() {
 
   }
   const [descLength, setDescLength] = useState(0)
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    console.log("LOL")
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   return (
     <div className="all">
       <TopBar />
@@ -96,44 +107,53 @@ export default function CreateStudio() {
             <h1>{t("createYourStudio")}</h1>
           </div>
           <CacheProvider value={cache}>
-          <form onSubmit={AddStudio}  encType="multipart/form-data">
-            <div className="createStudioImage">
-              <p>{t("studioImagePreview")}</p>
-              <img src={pic} />
-              <div> </div>
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<FileUploadRoundedIcon />}
-              >
-                {t("uploadPhoto")}
-                <input type='file' onChange={ChangePicture} />
-              </Button>
-            </div>
-            <div className="createStudioInputs">
-              <p>{t("studioName")}</p>
-              <input id="name" type="text" placeholder={t("placeholderName")} />
-              <p>{t("studioDesc")}</p>
-              <textarea id="desc"
-              onChange={(e) => setDescLength(e.target.value.length)}
-              placeholder={t("placeholderDesc")} />
-              <p style={{color: descLength >= 10 && descLength <= 100 ? "green" : "red"}}>{descLength}/100</p>
-              {error ?
-              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : <div> </div>
-              }
-              <p>{t("createStudioNotif")}</p>
-              <Button
-                className="createButton"
-                variant="contained"
-                type="submit"
-                disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
-              >
-                {t("createStudio")}
-              </Button>
-            </div>
-          </form>
+            <ThemeProvider theme={materialtheme}>
+            <form onSubmit={AddStudio}  encType="multipart/form-data">
+              <div className="createStudioImage">
+                <p>{t("studioImagePreview")}</p>
+                <img src={pic} />
+                <div> </div>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<FileUploadRoundedIcon />}
+                >
+                  {t("uploadPhoto")}
+                  <input type='file' onChange={ChangePicture} />
+                </Button>
+              </div>
+              <div className="createStudioInputs">
+                <p>{t("studioName")}</p>
+                <TextField id="name"
+                label="Name"
+                type="text"
+                required
+                placeholder={t("placeholderName")} />
+                <p>{t("studioDesc")}</p>
+                <TextField id="desc"
+                multiline
+                required
+                label="Description"
+                onChange={(e) => setDescLength(e.target.value.length)}
+                placeholder={t("placeholderDesc")} />
+                <p style={{color: descLength >= 10 && descLength <= 100 ? "green" : "red"}}>{descLength}/100</p>
+                {error ?
+                <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : <div> </div>
+                }
+                <p>{t("createStudioNotif")}</p>
+                <Button
+                  className="createButton"
+                  variant="contained"
+                  type="submit"
+                  disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+                >
+                  {t("createStudio")}
+                </Button>
+              </div>
+            </form>
+            </ThemeProvider>
           </CacheProvider>
         </div>
       </div>

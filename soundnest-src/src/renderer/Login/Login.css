@@ -6,6 +6,9 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   background-color: #151515;
+  opacity: 0.8;
+  background-image: radial-gradient(circle at center center, #29292a, #151515), repeating-radial-gradient(circle at center center, #29292a, #29292a, 10px, transparent 20px, transparent 10px);
+  background-blend-mode: multiply;
 }
 .loginLogo {
   margin-top: 30px;

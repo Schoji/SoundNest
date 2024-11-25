@@ -101,7 +101,7 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem disabled onClick={() => {
+        <MenuItem onClick={() => {
           if (sessionStorage.getItem("id") === null) {
             navigate("/", {replace:true});
           }
@@ -109,7 +109,7 @@ export default function AccountMenu() {
             navigate("/settings", {replace:true});
           }
         }}>
-          {sessionStorage.getItem('avatar_dir') === "/" ? <Avatar src={user} className="profileButton"/> : <img src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} className='profileButton' />}
+          {sessionStorage.getItem('avatar_dir') === "/" ? <Avatar src={user}/> : <Avatar src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`} />}
           {sessionStorage.getItem("id") === null ? "Guest" : String(sessionStorage.getItem("name")) + String(" ") + String(sessionStorage.getItem("surname")) }
         </MenuItem>
         <Divider />

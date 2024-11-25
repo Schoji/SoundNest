@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, MenuItem, Input, Alert } from '@mui/material';
+import { TextField, FormControl, IconButton, MenuItem, Input, Alert, createTheme } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,9 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../Components/MultiLang'
 import { useTranslation } from 'react-i18next';
 import { validateData } from '../Components/InputValidation';
-const backend_address = 'http://localhost:5000';
+import { ThemeProvider } from '@mui/material';
+import { useCustomEventListener } from 'react-custom-events';
+import { backend_address } from '../Components/global';
 
 export function CreateSongs() {
   const { t } = useTranslation();
@@ -201,56 +203,68 @@ export default function CreateStudio() {
     );
   }
   const { t } = useTranslation()
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    console.log("LOL")
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   return (
-    <div className="all">
-      <TopBar />
-      <SideBar />
-      <div className="main">
-        <div className="createStudio">
-          <div className="createStudioTitle">
-            <IconButton
-              color="primary"
-              className="back"
-              onClick={() => {
-                navigate('/Store', { replace: true });
-              }}
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
-            <h1>{t("createYourItem")}</h1>
-          </div>
-          <div className="createStudioForm">
-            <form onSubmit={AddItem}  encType="multipart/form-data">
-              <FormControl className="form">
-                <img src={pic} />
-                <div className="formTextFields">
-                  <TextField type="file" onChange={ChangePicture} />
-                  <TextField required id="album" label="Album name" variant="outlined" />
-                  <TextField required id="artist" label="Artist" variant="outlined" />
-                  <TextField required id="desc" label="Description" multiline variant="outlined" />
-                  <TextField required id="price" label="Price" variant="outlined" />
-                  <InputLabel required id="demo-simple-select-label">{t("studio")}</InputLabel>
-                  <GenerateOptions/>
-                  <CreateSongs/>
-                  {error.length > 0 ?
-                  <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
-                  : null
-                  }
-                  <Button
-                    className="createButton"
-                    variant="contained"
-                    type="submit"
-                    disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
-                  >
-                    {t("createItem")}
-                  </Button>
-                </div>
+    <ThemeProvider theme={materialtheme}>
+      <div className="all">
+        <TopBar />
+        <SideBar />
+        <div className="main">
+          <div>
+            <div className="createStudioTitle">
+              <IconButton
+                color="primary"
+                className="back"
+                onClick={() => {
+                  navigate('/Store', { replace: true });
+                }}
+              >
+                <ArrowBackIosIcon />
+              </IconButton>
+              <h1>{t("createYourItem")}</h1>
+            </div>
+            <div>
+              <form onSubmit={AddItem}  encType="multipart/form-data">
 
-              </FormControl>
-            </form>
+                  <img src={pic} />
+                  <div>
+
+                    <TextField type="file" onChange={ChangePicture} />
+                    <TextField required id="album" label="Album name" variant="outlined" />
+                    <TextField required id="artist" label="Artist" variant="outlined" />
+                    <TextField required id="desc" label="Description" multiline variant="outlined" />
+                    <TextField required id="price" label="Price" variant="outlined" />
+                    <InputLabel required id="demo-simple-select-label">{t("studio")}</InputLabel>
+                    <GenerateOptions/>
+                    <CreateSongs/>
+                    {error.length > 0 ?
+                    <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
+                    : null
+                    }
+                    <Button
+                      className="createButton"
+                      variant="contained"
+                      type="submit"
+                      disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+                    >
+                      {t("createItem")}
+                    </Button>
+                  </div>
+
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }

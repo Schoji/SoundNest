@@ -1,22 +1,18 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable import/order */
-/* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Store.css';
 import default_album from '../../../assets/album.png';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Skeleton } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import UpdateUserInfo from '../Components/UpdateUserInfo';
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
 import { emitCustomEvent } from 'react-custom-events';

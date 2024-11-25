@@ -28,22 +28,22 @@
   padding: 5px;
 }
 
-.avatar input {
+/* .avatar input {
   background-color: #151515;
   margin-top: 2px;
   color: #ddd;
   border: 3px solid transparent;
   border-radius: 10px;
-}
+} */
 
-.avatar textarea {
+/* .avatar textarea {
   resize: none;
   background-color: #151515;
   margin-top: 2px;
   color: #ddd;
   border: 3px solid transparent;
   border-radius: 10px;
-}
+} */
 
 .settingsAvatar {
   display: grid;
@@ -80,15 +80,12 @@
 }
 
 .setLogo {
-  grid-column: 1/4;
-  display: grid;
+  display: flex;
+  justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
 }
 
-.setLogo img {
-  width: 100%;
-}
 
 .exportButton {
   display: grid;
