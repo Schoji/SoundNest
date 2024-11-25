@@ -2,14 +2,13 @@ import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import BottomBar from '../BottomBar/BottomBar';
 import { replace, useNavigate, useParams } from 'react-router-dom';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import "./TradeOffer.css"
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
 
 const cache = createCache({
   key: 'css',
@@ -100,7 +99,7 @@ export default function Tradeoffers() {
             </div>
           ))}
         </div>
-        ): <p>{t("noPendingTradeOffers")}</p>}
+        ): <p>{t("noPendingTradeoffers")}</p>}
         <h1>{t("historyTradeoffer")}</h1>
         <div>
           {userTradeHistory.length > 0 ?
@@ -129,7 +128,7 @@ export default function Tradeoffers() {
                 </tr>
               ))}
             </table>
-          : <p>{t("noPreviousTrade")}</p> }
+          : <p>{t("noPreviousTrades")}</p> }
         </div>
       </div>
     </div>

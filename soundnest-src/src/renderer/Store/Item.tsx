@@ -8,14 +8,14 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
 import '.././App.css';
 import default_album from "../../../assets/album.png"
-import BottomBar from '../BottomBar/BottomBar';
 import { useLocation, useParams } from 'react-router-dom';
 import { Box, Button, Paper, Skeleton, Table, TableCell, TableContainer, TableRow } from '@mui/material';
 import './Item.css';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
+import { emitCustomEvent } from 'react-custom-events';
 
 const cache = createCache({
   key: 'css',
@@ -74,6 +74,7 @@ export default function Item() {
   const [data, setData] = useState(null);
   const [trackData, setTrackData] = useState(null);
   const [userProductsIDs, setUserProductsIDs] = useState([])
+  const [cartItems, setCartItems] = useState([])
   const { item_id } = useParams()
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -111,7 +112,11 @@ export default function Item() {
     Fetch();
     getTracks();
     getUserProducts()
+
   }, [item_id]);
+  useEffect(() => {
+    setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
+  },[])
 
   function trackInfo() {
     const timestamps: any[] = [];
@@ -152,14 +157,16 @@ export default function Item() {
   }
 
   function addToCart() {
-    const cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
-    console.log('Cart status', cart_items);
-    if (cart_items.indexOf(parseInt(item_id)) === -1) {
+    setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')}]`));
+    console.log('Cart status', cartItems);
+    if (cartItems.indexOf(parseInt(item_id)) === -1) {
+      var fasterCart = JSON.parse(`[${sessionStorage.getItem('cart')},${item_id}]`)
+      setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')},${item_id}]`));
       sessionStorage.setItem(
         'cart',
         `${sessionStorage.getItem('cart')},${item_id}`,
       );
-      navigate(`/item/${item_id}`, { replace: true });
+      emitCustomEvent("updateCart", fasterCart)
     } else {
       console.log('Item is present, ignoring...');
     }

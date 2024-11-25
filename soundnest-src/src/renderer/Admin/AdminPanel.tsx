@@ -32,7 +32,6 @@ export default function AdminPanel() {
       .catch((error) => {
         console.log(error);
       });
-    console.log(data);
   };
 
   const getProducts = () => {

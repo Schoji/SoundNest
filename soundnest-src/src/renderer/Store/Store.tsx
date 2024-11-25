@@ -26,7 +26,8 @@ const cache = createCache({
 export default function Store() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
-  const [userProductsIDs, setUserProductsIDs] = useState([])
+  const [userProductsIDs, setUserProductsIDs] = useState(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
+  const [cartItems, setCartItems] = useState([])
   const { t } = useTranslation()
   const Fetch = () => {
     fetch(`${backend_address}/api/products/`)
@@ -44,7 +45,6 @@ export default function Store() {
         data.map((product, index) => {
           productIDs.push(product.id)
         })
-        console.log(productIDs)
         setUserProductsIDs(productIDs)
       })
       .catch((error) => {
@@ -52,19 +52,21 @@ export default function Store() {
       });
   }
   useEffect(() => {
+    setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
     Fetch();
     getUserProducts();
   }, []);
-  var cart_items
   function addToCart(item_id) {
-    cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
-    console.log('Cart status', cart_items);
-    if (cart_items.indexOf(parseInt(item_id)) === -1) {
+    setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')}]`));
+    console.log('Cart status', cartItems);
+    if (cartItems.indexOf(parseInt(item_id)) === -1) {
+      var fasterCart = JSON.parse(`[${sessionStorage.getItem('cart')},${item_id}]`)
+      setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')},${item_id}]`));
       sessionStorage.setItem(
         'cart',
         `${sessionStorage.getItem('cart')},${item_id}`,
       );
-      emitCustomEvent("updateCart", cart_items)
+      emitCustomEvent("updateCart", fasterCart)
     } else {
       console.log('Item is present, ignoring...');
     }

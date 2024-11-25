@@ -23,7 +23,7 @@
 .sideButtonInverted {
   background: var(--accent-gradient);
   color: var(--font-color);
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
 }
 :nth-child(1 of .sideButton) {
   border-radius: 8px 8px 0 0;

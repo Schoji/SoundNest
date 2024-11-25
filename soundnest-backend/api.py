@@ -332,6 +332,7 @@ class UserAuthentication(Resource):
          "email" : user.email,
          "bio" : user.bio,
          "prefered_theme": user.prefered_theme,
+         "prefered_colour": user.prefered_colour,
          "lang": user.lang,
          "credits": user.credits,
          "is_admin": user.is_admin,
@@ -382,6 +383,7 @@ api.add_resource(Key, "/api/keys/<int:id>")
 api.add_resource(getLicenseKey, "/api/get_key/<int:id_user>")
 api.add_resource(assignLicenseKey, "/api/assign_key/<int:id_user>/<string:key1>")
 api.add_resource(getStudiosNotFromUser, "/api/studios_not_from/<int:id_user>")
+api.add_resource(changeColour, "/api/change_colour/<int:id_user>/<int:colour>")
 
 @app.route("/last_update")
 def last_update():

@@ -69,6 +69,7 @@
 .settingForm {
   display: grid;
   grid-column: 2/2;
+  gap: 10px;
 
 }
 

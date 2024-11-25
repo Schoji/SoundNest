@@ -12,6 +12,7 @@ import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
 import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
 import { useState } from 'react';
 import { useCustomEventListener } from 'react-custom-events';
+import { backend_address } from '../Components/global';
 
 export default function Logo() {
   let setTheme = sessionStorage.getItem("theme");
@@ -35,7 +36,6 @@ export default function Logo() {
   // document.documentElement.classList.add("pink")
   const [currentLogo, setCurrentLogo] = useState(logo)
   useCustomEventListener("changeLogo", (theme) => {
-    console.log(theme)
     if (theme === "light") {
       setCurrentLogo(logoArray[parseInt(setLogo)])
     }

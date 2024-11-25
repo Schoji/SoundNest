@@ -6,7 +6,7 @@ import '../App.css';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import './Cart.css';
-import { Avatar, Box, CircularProgress, Snackbar, TableContainer } from '@mui/material';
+import { Avatar, Box, CircularProgress, createTheme, Snackbar, TableContainer } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
 import { backend_address } from '../Components/global';
 import { emitCustomEvent } from 'react-custom-events';
+import { ThemeProvider } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -200,7 +201,13 @@ export function CustomizedTables() {
   );
 }
 
+
 export default function Cart() {
+  let materialtheme = createTheme({
+    palette: {
+      mode: sessionStorage.getItem("theme") == "dark" ? "dark" : "light"
+    }
+  })
   const { t } = useTranslation()
   return (
     <div className="all">
@@ -208,16 +215,18 @@ export default function Cart() {
       <SideBar />
       <div className="main">
         <div className="library">
-          <div className="header">
-              <h1>
-                {t("cartOf")} {sessionStorage.getItem('name')}{' '}
-                {sessionStorage.getItem('surname')}
-              </h1>
+          <ThemeProvider theme={materialtheme}>
+            <div className="header">
+                <h1>
+                  {t("cartOf")} {sessionStorage.getItem('name')}{' '}
+                  {sessionStorage.getItem('surname')}
+                </h1>
+            </div>
+              <Box>
+                <CustomizedTables/>
+              </Box>
+              </ThemeProvider>
           </div>
-            <Box>
-              <CustomizedTables/>
-            </Box>
-        </div>
       </div>
     </div>
   );

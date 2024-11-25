@@ -1,7 +1,7 @@
 import '../App.css';
 import './Register.css'
 import { useNavigate } from 'react-router-dom';
-import { Alert, Button } from "@mui/material";
+import { Alert, Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 import logo from '../../../assets/icons/128x128.png';
 import { backend_address } from '../Components/global';
 import { useState } from 'react';
@@ -10,6 +10,11 @@ import { validateData } from '../Components/InputValidation';
 export default function RegisterWindow() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  let materialtheme = createTheme({
+    palette: {
+      mode: "dark"
+    }
+  })
   const register = (event) => {
     event.preventDefault();
     let name = event.target.name.value
@@ -67,37 +72,42 @@ export default function RegisterWindow() {
         <div className='registerLogo'>
           <img src={logo} alt="appLogo" />
         </div>
+        <ThemeProvider theme={materialtheme}>
         <div className='registerForm'>
             <form onSubmit={(event) => register(event)}>
-              <div>
-                <input
-                  id="name"
-                  type='text'
-                  placeholder="Name"
-                />
-                <input
-                  id="surname"
-                  type='text'
-                  placeholder="Surname"
-                />
-              </div>
-              <input
+              <TextField
+                id="name"
+                label="Name"
+                type='text'
+                placeholder="Name"
+              />
+              <TextField
+                id="surname"
+                label="Surname"
+                type='text'
+                placeholder="Surname"
+              />
+              <TextField
                 id="username"
+                label="Username"
                 type='text'
                 placeholder="Username"
               />
-              <input
+              <TextField
                 id="email"
+                label="Email"
                 type='text'
                 placeholder="E-mail"
               />
-              <input
+              <TextField
                 id="password"
+                label="Password"
                 type="password"
                 placeholder="Password"
               />
-               <input
+               <TextField
                 id="password1"
+                label="Repeat password"
                 type="password"
                 placeholder="Repeat Password"
               />
@@ -105,11 +115,11 @@ export default function RegisterWindow() {
                 <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
                 : null
                 }
-                <input type="submit" value='Create an account'/>
+                <Button variant="contained" type="submit" value='Create an account'>Create an account</Button>
                 <Button onClick={() => navigate("/login", {replace: true})}>Already have an account?</Button>
             </form>
-
           </div>
+          </ThemeProvider>
       </div>
   );
 }

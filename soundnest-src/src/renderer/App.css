@@ -27,13 +27,6 @@ html, body, #root, .all {
 }
 
 :root.pink {
-  --bg: #fce4ec;
-  --window: #f8bbd0;
-  --button: #f48fb1;
-  --section: #f06292;
-  --section-hover: #ec407a;
-  --searchbar: #f8bbd0;
-  --searchbar-focused: #f48fb1;
   --font-color: #4a2636;
   --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
@@ -42,14 +35,15 @@ html, body, #root, .all {
 }
 
 :root.pink-dark {
-  --bg: #3a1f2d;
-  --window: #260e19;
-  --button: #4a2636;
-  --section: #5c2e41;
-  --section-hover: #6a374e;
-  --searchbar: #4f2135;
-  --searchbar-focused: #63354b;
-  --font-color: #f2d5d9;
+  --bg: #151515;
+  --window: #000000;
+  --button: #1f1f1f;
+  --section: #252525;
+  --section-hover: #2a2a2a;
+  --searchbar: #151515;
+  --searchbar-focused: #202020;
+  --searchbar-focused-hover: #282828;
+  --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
   --reddish-button: #e91e63;
@@ -57,14 +51,7 @@ html, body, #root, .all {
 }
 
 :root.red {
-  --bg: #ffebee;
-  --window: #ffcdd2;
   --button: #ef9a9a;
-  --section: #e57373;
-  --section-hover: #ef5350;
-  --searchbar: #ffcdd2;
-  --searchbar-focused: #e57373;
-  --font-color: #4a2121;
   --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
   --reddish-button: #c62828;
@@ -72,14 +59,15 @@ html, body, #root, .all {
 }
 
 :root.red-dark {
-  --bg: #2e1b1b;
-  --window: #1a0e0e;
-  --button: #472525;
-  --section: #5a2e2e;
-  --section-hover: #703636;
-  --searchbar: #4a2121;
-  --searchbar-focused: #5e2c2c;
-  --font-color: #f2d2d2;
+  --bg: #151515;
+  --window: #000000;
+  --button: #1f1f1f;
+  --section: #252525;
+  --section-hover: #2a2a2a;
+  --searchbar: #151515;
+  --searchbar-focused: #202020;
+  --searchbar-focused-hover: #282828;
+  --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
   --reddish-button: #c62828;
@@ -87,14 +75,6 @@ html, body, #root, .all {
 }
 
 :root.green {
-  --bg: #e8f5e9;
-  --window: #c8e6c9;
-  --button: #a5d6a7;
-  --section: #81c784;
-  --section-hover: #66bb6a;
-  --searchbar: #c8e6c9;
-  --searchbar-focused: #81c784;
-  --font-color: #214a21;
   --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
   --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
   --reddish-button: #43a047;
@@ -102,14 +82,15 @@ html, body, #root, .all {
 }
 
 :root.green-dark {
-  --bg: #1b2e1b;
-  --window: #0e1a0e;
-  --button: #254725;
-  --section: #2e5a2e;
-  --section-hover: #367036;
-  --searchbar: #214a21;
-  --searchbar-focused: #2c5e2c;
-  --font-color: #d2f2d2;
+  --bg: #151515;
+  --window: #000000;
+  --button: #1f1f1f;
+  --section: #252525;
+  --section-hover: #2a2a2a;
+  --searchbar: #151515;
+  --searchbar-focused: #202020;
+  --searchbar-focused-hover: #282828;
+  --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
   --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
   --reddish-button: #43a047;
@@ -117,14 +98,6 @@ html, body, #root, .all {
 }
 
 :root.yellow {
-  --bg: #fffde7;
-  --window: #fff9c4;
-  --button: #fff59d;
-  --section: #fff176;
-  --section-hover: #ffee58;
-  --searchbar: #fff9c4;
-  --searchbar-focused: #fff176;
-  --font-color: #4a4a21;
   --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
   --reddish-button: #ffb300;
@@ -132,14 +105,15 @@ html, body, #root, .all {
 }
 
 :root.yellow-dark {
-  --bg: #2e2e1b;
-  --window: #1a1a0e;
-  --button: #474725;
-  --section: #5a5a2e;
-  --section-hover: #706f36;
-  --searchbar: #4a4a21;
-  --searchbar-focused: #5e5e2c;
-  --font-color: #f2f2d2;
+  --bg: #151515;
+  --window: #000000;
+  --button: #1f1f1f;
+  --section: #252525;
+  --section-hover: #2a2a2a;
+  --searchbar: #151515;
+  --searchbar-focused: #202020;
+  --searchbar-focused-hover: #282828;
+  --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
   --reddish-button: #ffb300;

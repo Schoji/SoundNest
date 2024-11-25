@@ -42,6 +42,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(80), nullable=False)
     bio = db.Column(db.Text())
     prefered_theme = db.Column(db.Integer, default=0) #0 - black, 1 - light
+    prefered_colour = db.Column(db.Integer, default=0) #0,1,2,3,4 -> blue,red,yellow,green,pink
     lang = db.Column(db.String(80), default="en")
     credits = db.Column(db.Float, default=0)
     is_admin = db.Column(db.Boolean, default=False)
@@ -59,6 +60,7 @@ userFields = {
     "email":fields.String,
     "password":fields.String,
     "prefered_theme":fields.Integer,
+    "prefered_colour":fields.Integer,
     "lang": fields.String,
     "credits":fields.Float,
     "is_admin":fields.Boolean,
@@ -198,3 +200,11 @@ class changeLang(Resource):
 
         db.session.commit()
         return "Language was changed successfully.", 200
+
+class changeColour(Resource):
+    def get(self, id_user, colour):
+        user = UserModel.query.filter_by(id=id_user).first()
+        user.prefered_colour = colour
+
+        db.session.commit()
+        return "Colour was changed successfully.", 200

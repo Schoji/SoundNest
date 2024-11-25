@@ -1,15 +1,21 @@
 import '../App.css';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Button } from "@mui/material";
+import { Alert, Button, createTheme, TextField } from "@mui/material";
 import logo from '../../../assets/icons/128x128.png';
 import { validateData } from '../Components/InputValidation';
 import { useState } from 'react';
 import { backend_address } from '../Components/global';
+import { ThemeProvider } from '@mui/material';
 
 export default function LoginWindow() {
   const [error, setError] = useState("")
   const navigate = useNavigate();
+  let materialtheme = createTheme({
+    palette: {
+      mode: "dark"
+    }
+  })
   function Login(event) {
     event.preventDefault();
     let username = event.target.username.value
@@ -45,30 +51,32 @@ export default function LoginWindow() {
         <div className='loginLogo'>
           <img src={logo} alt="appLogo" />
         </div>
+        <ThemeProvider theme={materialtheme}>
         <div className='loginForm'>
             <form onSubmit={Login}>
-              <input
-                name="username"
+              <TextField
+                id="username"
+                label="Username"
                 type="text"
                 placeholder="Username"
-                required
                 defaultValue="johndoe123"
               />
-              <input
-                name="password"
+              <TextField
+                id="password"
+                label="Password"
                 type="password"
                 placeholder="Password"
-                required
                 defaultValue="P@ssw0rd123"
               />
               {error.length > 0 ?
               <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
               : null
               }
-              <input type="submit" value="Login"/>
+              <Button variant="contained" type="submit" value="Login">Login</Button>
               <Button onClick={() => navigate("/register", {replace: true})}>Don't have an account?</Button>
             </form>
           </div>
+          </ThemeProvider>
       </div>
   );
 }

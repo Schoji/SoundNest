@@ -1,14 +1,9 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable import/order */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Studio.css';
 import React, { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
-import BottomBar from '../BottomBar/BottomBar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { replace, useNavigate, useParams } from 'react-router-dom';
@@ -19,8 +14,8 @@ import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
-
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
+import { emitCustomEvent } from 'react-custom-events';
 
 const cache = createCache({
   key: 'css',
@@ -34,6 +29,8 @@ export default function Studio() {
   const [data, setData] = useState(null);
   const [sp_data, sp_setData] = useState(null)
   const [otherStudiosData, setOtherStudiosData] = useState(null)
+  const [cartItems, setCartItems] = useState([])
+  const [userProductsIDs, setUserProductsIDs] = useState(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
 
   const getStudio = () => {
     fetch(backend_address + "/api/studio_with_user/" + studio_id)
@@ -56,22 +53,39 @@ export default function Studio() {
     .catch((error) => console.log(error))
   }
 
+  const getUserProducts = () => {
+    fetch(`${backend_address}/api/userproducts/${sessionStorage.getItem("id")}`)
+      .then((response) => response.json())
+      .then((data) => {
+        var productIDs = []
+        data.map((product, index) => {
+          productIDs.push(product.id)
+        })
+        setUserProductsIDs(productIDs)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   useEffect(() => {
+    setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
     getStudio();
     getStudiosProducts();
     getOtherStudios();
   }, [studio_id]);
 
   function addToCart(item_id) {
-    const cart_items = JSON.parse(`[${sessionStorage.getItem('cart')}]`);
-    console.log('Cart status', cart_items);
-    if (cart_items.indexOf(parseInt(item_id)) === -1) {
+    setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')}]`));
+    console.log('Cart status', cartItems);
+    if (cartItems.indexOf(parseInt(item_id)) === -1) {
+      var fasterCart = JSON.parse(`[${sessionStorage.getItem('cart')},${item_id}]`)
+      setCartItems(JSON.parse(`[${sessionStorage.getItem('cart')},${item_id}]`));
       sessionStorage.setItem(
         'cart',
         `${sessionStorage.getItem('cart')},${item_id}`,
       );
-      navigate(0);
+      emitCustomEvent("updateCart", fasterCart)
     } else {
       console.log('Item is present, ignoring...');
     }
@@ -149,6 +163,9 @@ export default function Studio() {
                     {t("viewDetails")}
                   </Button>
                   <IconButton
+                    disabled={sessionStorage.getItem("hasKey") == "false" ||
+                    (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(product.id)) != -1) ||
+                    (userProductsIDs.indexOf(parseInt(product.id)) != -1) ? true : false}
                     onClick={() => {
                       addToCart(product.id);
                     }}

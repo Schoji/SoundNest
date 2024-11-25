@@ -73,7 +73,6 @@ export default function CreateStudio() {
         studio_dir: fileBase64String,
       }),
     };
-    // eslint-disable-next-line promise/catch-or-return
     fetch(`${backend_address}/api/studios/`, requestOptions)
       .then((response) => {
         if (response.ok) navigate('/studios', { replace: true })

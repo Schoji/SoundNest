@@ -2,15 +2,23 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, FormControl, TextField } from '@mui/material';
+import { Button, FormControl, IconButton, TextField } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import default_album from '../../../assets/album.png';
-import './Studio.css'
-const backend_address = 'http://localhost:5000';
+import './EditStudio.css'
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
+import { backend_address } from '../Components/global';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export default function EditStudio() {
   const navigate = useNavigate();
@@ -57,7 +65,6 @@ export default function EditStudio() {
   };
   useEffect(() => {
     Fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function ChangePicture(event) {
@@ -88,22 +95,32 @@ export default function EditStudio() {
       <TopBar />
       <SideBar />
       <div className="main">
-        <div className="studioSettings">
-          <img src={pic}/>
-          <form encType="multipart/form-data" onSubmit={AlterStudio}>
-            <FormControl>
+        <CacheProvider value={cache}>
+          <div className="title">
+            <IconButton
+              className='icon'
+              onClick={() => {
+                navigate('/studios', { replace: true });
+              }}
+            >
+              <ArrowBackIosRoundedIcon />
+            </IconButton>
+            <h1>{t("albumDetails")}</h1>
+          </div>
+          <form encType="multipart/form-data" onSubmit={AlterStudio} className='studioDesc'>
+            <div className='pictureSelection'>
+              <img src={pic}/>
               <TextField id="file" type="file" onChange={ChangePicture}/>
+            </div>
+            <div className='otherInputs'>
               <TextField id="studio_name" label="Studio name" variant="outlined" defaultValue={data.name}/>
               <TextField id="desc" label="Description" multiline variant="outlined" defaultValue={data.desc}/>
-              <Button color="success" variant="contained" type="submit">
+              <Button variant="contained" type="submit">
                 {t("save")}
               </Button>
-              <Button color="error" variant="contained">
-              {t("cancel")}
-              </Button>
-            </FormControl>
+            </div>
           </form>
-        </div>
+        </CacheProvider>
       </div>
     </div>
   );

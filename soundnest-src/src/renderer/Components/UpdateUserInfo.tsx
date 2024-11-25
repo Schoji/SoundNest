@@ -17,6 +17,7 @@ export default function UpdateUserInfo() {
     sessionStorage.setItem("bio", user.bio)
     sessionStorage.setItem("name", user.name)
     sessionStorage.setItem("lang", user.lang)
+    sessionStorage.setItem("prefered_colour", user.prefered_colour)
   })
   .catch(error => console.log(error))
 }

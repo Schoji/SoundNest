@@ -10,30 +10,15 @@ import './Settings.css';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import JSZip from 'jszip';
 
-import logo from '../../../assets/icons/logo.png';
-import logodark from '../../../assets/icons/logo-dark.png';
-
-import logo_red from '../../../assets/icons/logo-red.png';
-import logo_yellow from '../../../assets/icons/logo-yellow.png';
-import logo_green from '../../../assets/icons/logo-green.png';
-import logo_pink from '../../../assets/icons/logo-pink.png';
-
-import logo_red_darker from '../../../assets/icons/logo-red-darker.png';
-import logo_yellow_darker from '../../../assets/icons/logo-yellow-darker.png';
-import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
-import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
 import { useCustomEventListener } from 'react-custom-events';
-import { green, grey, pink, red, yellow } from '@mui/material/colors';
-
-
-const backend_address = 'http://localhost:5000';
+import { green, grey, lightBlue, pink, red, yellow } from '@mui/material/colors';
+import { backend_address } from '../Components/global';
+import avatarIcon from '../../../assets/user.png'
 
 export default function Settings() {
   const navigate = useNavigate();
-  const [data, setData] = useState({});
-  const { studio_id } = useParams();
   const [pic, setPic] = useState("data:image/jpeg;base64," + String(sessionStorage.getItem("avatar_dir")));
   const [selectedFile, setSelectedFile] = useState([]);
   const [fileBase64String, setFileBase64String] = useState("");
@@ -148,6 +133,9 @@ function ChangePicture(event) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
     changeLogo(parseInt(event.target.value))
+    fetch(backend_address + "/api/change_colour/" + sessionStorage.getItem("id") + "/" + String(parseInt(event.target.value)))
+        .then(response => response.json())
+        .catch(error => console.log(error))
   };
 
   const controlProps = (item: string) => ({
@@ -168,7 +156,7 @@ function ChangePicture(event) {
                 <form encType="multipart/form-data" onSubmit={AlterUser}>
                   <div className='settingsAvatar'>
                     <div className='avatarImage'>
-                      <img src={pic}/>
+                      <img src={pic !== "data:image/jpeg;base64,/" ? pic : avatarIcon}/>
                     </div>
                     <div className='changeAvatar'>
                       <input id="file" type="file" onChange={ChangePicture}/>
@@ -181,7 +169,7 @@ function ChangePicture(event) {
                     <TextField id="surname" label="Surname" defaultValue={sessionStorage.getItem('surname')}/>
                     <TextField id="username" label="Username" defaultValue={sessionStorage.getItem('username')}/>
                     <TextField id="email" label="Email" defaultValue={sessionStorage.getItem('email')}/>
-                    <TextField multiline id="bio" label="Bio" defaultValue={sessionStorage.getItem('bio')}/>
+                    <TextField multiline id="bio" label="Bio" defaultValue={sessionStorage.getItem('bio') != "null" ? sessionStorage.getItem('bio') : "You have no bio."}/>
                     <Button type="submit" variant='contained'>Save</Button>
                   </ThemeProvider>
 
@@ -194,9 +182,9 @@ function ChangePicture(event) {
                 '& .MuiSvgIcon-root': {
                     fontSize: 50,
                   },
-                    color: grey[800],
+                    color: lightBlue[800],
                     '&.Mui-checked': {
-                      color: grey[600],
+                      color: lightBlue[600],
                     },
                   }} />
               <Radio {...controlProps('1')} sx={{

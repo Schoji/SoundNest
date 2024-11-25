@@ -65,6 +65,7 @@ export default function SideBar() {
   let cart = JSON.parse("[" + sessionStorage.getItem('cart') + "]").length - 1
   const [cartItems, setCartItems] = useState(cart)
   useCustomEventListener("updateCart", (items) => {
+    console.log(items)
     setCartItems(items.length - 1)
   })
   //https://typeofnan.dev/using-session-storage-in-react-with-hooks/
@@ -93,7 +94,7 @@ export default function SideBar() {
       </Link>
       ) : <div> </div>}
       {sessionStorage.getItem("hasKey") == "false" ? (
-      <Link to="/buykey" className="sideButton sideButtonInverted">
+      <Link to="/buykey" className="sideButtonInverted">
         <div><LockPersonRoundedIcon /></div>
         <p>Get full version</p>
       </Link>

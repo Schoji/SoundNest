@@ -129,11 +129,12 @@ export default function Studio() {
       <div className="main">
         <div className="studios">
         <CacheProvider value={cache}>
+        <div>
           <h1>{t("myStudios")}</h1>
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          {myStudiosData?.length > 0 ?
+          {myStudiosData ?
             <div className="myStudios">
               {myStudiosData.map((myStudio, index) => (
                 <div className="myStudio">
@@ -158,10 +159,11 @@ export default function Studio() {
                 </div>
               ))}
             </div>
-            : <CircularProgress /> }
+            : <p>You have no studios</p> }
+          </div>
           <h1>{t("otherStudios")}</h1>
           <div className="otherStudios">
-            {otherStudiosData.length > 0 ? otherStudiosData?.map((value, index) => (
+            {otherStudiosData?.map((value, index) => (
               <div className="studio">
                 <div className='studioImage'>
                   {value.studio_dir === '/' ?
@@ -171,11 +173,12 @@ export default function Studio() {
                   }
                 </div>
                 <h3>{value.name}</h3>
-                <p>{value.desc}</p>
+                <p>{String(value.desc).split(/\s+/).filter(Boolean).length < 3 && String(value.desc).length > 60 ? String(value.desc).replace(/[\n\r]+/g, "")
+                .replace(/(.{10})/g, "$1\n").slice(0, 57) + "..." : value.desc}</p>
                 <Button onClick={() => navigate("/studios/" + value.id,  { replace: true })}>{t("learnMore")}</Button>
                 {sessionStorage.getItem("is_admin") == "true" ? <AlertDialog studio_id={value.id}/>: null}
               </div>
-            )) : null}
+            ))}
             </div>
           </CacheProvider>
         </div>

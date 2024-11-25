@@ -61,6 +61,9 @@ export function GetCreds() {
   }
   useEffect(() => {
     window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
+
+      let classNames = ["root", "red", "yellow", "green", "pink"]
+      let classNamesDark = ["dark", "red-dark", "yellow-dark", "green-dark", "pink-dark"]
       const userInfo = JSON.parse(arg)
       sessionStorage.setItem('id', userInfo.id);
       sessionStorage.setItem('username', userInfo.username);
@@ -68,14 +71,18 @@ export function GetCreds() {
       sessionStorage.setItem('surname', userInfo.surname);
       sessionStorage.setItem('email', userInfo.email);
       sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+      sessionStorage.setItem('prefered_colour', userInfo.prefered_colour);
       sessionStorage.setItem('bio', userInfo.bio);
+
       if (userInfo.prefered_theme == 0) {
-        document.documentElement.classList.add("dark")
+        document.documentElement.classList.add(classNamesDark[userInfo.prefered_colour])
         sessionStorage.setItem("theme", "dark")
+        sessionStorage.setItem("logo", userInfo.prefered_colour)
       }
       else {
-        document.documentElement.classList.remove("dark")
+        document.documentElement.classList.add(classNames[userInfo.prefered_colour])
         sessionStorage.setItem("theme", "light")
+        sessionStorage.setItem("logo", userInfo.prefered_colour)
       }
       sessionStorage.setItem('credits', userInfo.credits);
       sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
@@ -95,6 +102,8 @@ export default function App() {
   const view = String(global.location.search).slice(-1)
   useEffect(() => {
     window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
+      let classNames = ["root", "red", "yellow", "green", "pink"]
+      let classNamesDark = ["dark", "red-dark", "yellow-dark", "green-dark", "pink-dark"]
       const userInfo = JSON.parse(arg)
       sessionStorage.setItem('id', userInfo.id);
       sessionStorage.setItem('username', userInfo.username);
@@ -102,10 +111,21 @@ export default function App() {
       sessionStorage.setItem('surname', userInfo.surname);
       sessionStorage.setItem('email', userInfo.email);
       sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+      sessionStorage.setItem('prefered_colour', userInfo.prefered_colour);
       sessionStorage.setItem('credits', userInfo.credits);
       sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
       sessionStorage.setItem('is_admin', userInfo.is_admin);
       sessionStorage.setItem('cart', '0');
+      if (userInfo.prefered_theme == 0) {
+        document.documentElement.classList.add(classNamesDark[userInfo.prefered_colour])
+        sessionStorage.setItem("theme", "dark")
+        sessionStorage.setItem("logo", userInfo.prefered_colour)
+      }
+      else {
+        document.documentElement.classList.add(classNames[userInfo.prefered_colour])
+        sessionStorage.setItem("theme", "light")
+        sessionStorage.setItem("logo", userInfo.prefered_colour)
+      }
       if (userInfo.prefered_theme == 0) {
         document.documentElement.classList.add("dark")
         sessionStorage.setItem("theme", "dark")

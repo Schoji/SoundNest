@@ -114,7 +114,7 @@ export default function Tradeoffer() {
         }
       })
       .catch((error) => console.log(error))
-      navigate("/katalog", {replace: true})
+      navigate("/store", {replace: true})
   }
 
   useEffect(() => {
