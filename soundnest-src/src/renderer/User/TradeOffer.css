@@ -29,18 +29,43 @@
 .tradeList {
   display: grid;
   grid-template-rows: 1fr;
+  gap: 5px;
 }
 .tradeObj {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-
-  background-color: var(--window);
+  grid-template-rows: auto 1fr 1fr;
   border-radius: 10px;
+  background-color: var(--section);
+}
+.tradeObj p:first-child {
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tradeObj p:first-child > img {
+  width: 10%;
+}
+.itemBox {
+  grid-row: 2/3;
+  grid-column: 1/-1;
+
 }
 .tradeObj:hover {
   background-color: red;
   cursor: pointer;
 }
-/* .tradeList img {
-  width: 10%;
-} */
+.item {
+  width: 50%;
+}
+.itemRows {
+  display: grid;
+  grid-column: 1/-1;
+  background-color: blue;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+}
+.itemRows img {
+  width: 20%;
+}

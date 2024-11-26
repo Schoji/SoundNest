@@ -60,39 +60,31 @@ export default function Tradeoffers() {
         {userTrades.length > 0 ?(
         <div className="tradeList">
           {userTrades?.map((trade, index) => (
-            <div className='tradeObj'>
-              {"user" in trade ?
-              <div onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>
-                <p>{t("tradeFrom")} </p>
-                  <img
-                      src={`data:image/jpeg;base64,${trade.user.pic}`}
-                      alt="Loading..."
-                  />
-                  <p>{trade.user.name} {trade.user.surname}</p>
-                  <p>{trade.trade_id}</p>
-              </div>
-              : null}
-              <div>
-                <p>{t("itemsYouReceive")}</p>
+            <div className='tradeObj' onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>
+              {/* Trade from: */}
+              <p>
+                <img
+                    src={`data:image/jpeg;base64,${trade.user.pic}`}
+                    alt="Loading..."
+                />{trade.user.name} {trade.user.surname} offered you a trade:
+              </p>
+              <div className='itemBox'>
+                <div className='itemRows'>
                 {trade.sent_items?.map((sent_item, index) => (
-                  <div>
-                    <img
-                      src={`data:image/jpeg;base64,${sent_item.picture}`}
-                      alt="Loading..."
-                    />
-                    <p>{sent_item.album} by {sent_item.artist}</p>
-                  </div>
-                ))}
-              </div>
-              <div>
-                <p>{t("itemsYouGive")}:</p>
+                  <img
+                    src={`data:image/jpeg;base64,${sent_item.picture}`}
+                    alt="Loading..."
+                    className="item"
+                  />
+                 ))}
+                </div>
                 {trade.received_items?.map((received_item, index) => (
-                  <div>
+                  <div className='itemRows'>
                     <img
                       src={`data:image/jpeg;base64,${received_item.picture}`}
                       alt="Loading..."
                     />
-                    <p>{received_item.album} by {received_item.artist}</p>
+                    {/* <p>{received_item.album} by {received_item.artist}</p> */}
                   </div>
                 ))}
               </div>

@@ -10,7 +10,7 @@ import { CacheProvider } from '@emotion/react';
 import "./TradeOffer.css"
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
 
 const cache = createCache({
   key: 'css',

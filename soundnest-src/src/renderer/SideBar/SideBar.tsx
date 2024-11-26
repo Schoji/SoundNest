@@ -20,12 +20,14 @@ import '../Components/MultiLang';
 import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 
 export const Theme = () => {
+  console.log(sessionStorage.getItem("theme"))
   var dark;
   if (sessionStorage.getItem("theme") == "dark") dark = true;
   else dark = false
 
   const [isDark, setIsDark] = useState(dark);
   //TODO
+
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add("dark")

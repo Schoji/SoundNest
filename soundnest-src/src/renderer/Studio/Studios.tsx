@@ -159,7 +159,7 @@ export default function Studio() {
                 </div>
               ))}
             </div>
-            : <p>You have no studios</p> }
+            : <div className="myStudio"> </div> }
           </div>
           <h1>{t("otherStudios")}</h1>
           <div className="otherStudios">

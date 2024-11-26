@@ -30,8 +30,7 @@ html, body, #root, .all {
   --font-color: #4a2636;
   --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
-  --reddish-button: #ff4081;
-  --reddish-button-hover: #ff5a8a;
+  --accent-color: #ff80ab;
 }
 
 :root.pink-dark {
@@ -46,16 +45,14 @@ html, body, #root, .all {
   --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #ff80ab 0%, #ff4081 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff8db7 0%, #ff557a 100%);
-  --reddish-button: #e91e63;
-  --reddish-button-hover: #ff5a8a;
+  --accent-color: #ff4081;
 }
 
 :root.red {
   --button: #ef9a9a;
   --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
-  --reddish-button: #c62828;
-  --reddish-button-hover: #ff4c4c;
+  --accent-color: #ff6b6b;
 }
 
 :root.red-dark {
@@ -68,17 +65,15 @@ html, body, #root, .all {
   --searchbar-focused: #202020;
   --searchbar-focused-hover: #282828;
   --font-color: #ddd;
-  --accent-gradient: linear-gradient(140deg, #ff6b6b 0%, #d32f2f 100%);
-  --accent-gradient-hover: linear-gradient(140deg, #ff7e7e 0%, #b71c1c 100%);
-  --reddish-button: #c62828;
-  --reddish-button-hover: #ff4c4c;
+  --accent-gradient: linear-gradient(140deg, #e65a5a 0%, #b02727 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #f26e6e 0%, #9a1616 100%);
+  --accent-color: #d32f2f;
 }
 
 :root.green {
   --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
   --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
-  --reddish-button: #43a047;
-  --reddish-button-hover: #5cd85c;
+  --accent-color: #66bb6a;
 }
 
 :root.green-dark {
@@ -93,15 +88,13 @@ html, body, #root, .all {
   --font-color: #ddd;
   --accent-gradient: linear-gradient(140deg, #66bb6a 0%, #388e3c 100%);
   --accent-gradient-hover: linear-gradient(140deg, #76c478 0%, #2e7d32 100%);
-  --reddish-button: #43a047;
-  --reddish-button-hover: #5cd85c;
+  --accent-color: #388e3c;
 }
 
 :root.yellow {
   --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
   --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
-  --reddish-button: #ffb300;
-  --reddish-button-hover: #ffcc33;
+  --accent-color: #ffd54f;
 }
 
 :root.yellow-dark {
@@ -114,10 +107,9 @@ html, body, #root, .all {
   --searchbar-focused: #202020;
   --searchbar-focused-hover: #282828;
   --font-color: #ddd;
-  --accent-gradient: linear-gradient(140deg, #ffd54f 0%, #f9a825 100%);
-  --accent-gradient-hover: linear-gradient(140deg, #ffe066 0%, #f57f17 100%);
-  --reddish-button: #ffb300;
-  --reddish-button-hover: #ffcc33;
+  --accent-gradient: linear-gradient(140deg, #e6be47 0%, #d18f1f 100%);
+  --accent-gradient-hover: linear-gradient(140deg, #f0cc5c 0%, #d07b14 100%);
+  --accent-color: #d18f1f;
 }
 
 :root {
