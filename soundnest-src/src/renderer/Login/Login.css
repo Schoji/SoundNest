@@ -4,7 +4,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr;
   background-color: #151515;
   opacity: 0.8;
   background-image: radial-gradient(circle at center center, #29292a, #151515), repeating-radial-gradient(circle at center center, #29292a, #29292a, 10px, transparent 20px, transparent 10px);
@@ -12,11 +12,10 @@
 }
 
 .loginLogo {
-  margin-top: 30px;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   grid-column: 2/3;
   grid-row: 1/2;
 }
@@ -25,9 +24,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   grid-column: 2/3;
-  grid-row: 3/4;
-  display: flex;
-  justify-content: center;
+  grid-row: 2/3;
 }
 
 /* .loginForm input {
@@ -75,7 +72,6 @@
 } */
 
 .loginForm form {
-  width: 100%;
   background: rgba(66, 52, 52, 0.3);
   border-radius: 20px;
   border-left: 1px solid rgba(255, 255, 255, 0.3);
@@ -85,7 +81,7 @@
   transition: all 0.2s ease-in-out;
   display: grid;
   gap: 5px;
-  padding: 35px;
+  padding: 25px;
 }
 
 .error {

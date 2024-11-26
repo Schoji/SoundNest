@@ -1,34 +1,106 @@
-.title {
-  display: flex;
+.editStudio {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+}
+.editStudio:not(input, textarea) {
+  user-select: none;
+}
+.editStudioTitle {
+  display: inline-flex;
   align-items: center;
   gap: 10px;
 }
-.icon {
+.editStudioTitle Button {
+  height: 40px;
+  width: 40px;
   background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 10px;
   box-shadow: 0px 0px 16px -8px var(--font-color);
 }
-.icon:hover {
+.editStudioTitle Button:hover {
   box-shadow: 0px 0px 19px -6px var(--font-color);
   background: var(--accent-gradient-hover);
 }
-.studioDesc {
+.editStudio form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
+  gap: 10px;
+}
+.editStudio .smallTitle {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.editStudioImage {
+  display: grid;
+  grid-template-rows: min-content auto auto 45px;
   gap: 5px;
-}
-.pictureSelection {
-  background-color: var(--section);
-  display: grid;
-}
-.pictureSelection img {
-  width: 100%;
-  border-radius: 50%;
-  background: var(--accent-gradient);
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
   padding: 5px;
 }
-.otherInputs {
-  background-color: var(--section);
+.editStudioImage img {
+  -webkit-user-drag: none;
+  width: calc(100% - 3px);
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--accent-color);
+}
+.editStudioImage .uploadPhoto {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.editStudioImage .uploadPhoto:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+.editStudioInputs {
   display: grid;
+  grid-template-rows: min-content auto min-content auto 68px min-content 45px;
+  gap: 5px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.editStudio .MuiInputBase-root {
+  background: var(--searchbar-focused);
+  border-radius: 10px;
+}
+.editStudio .MuiInputLabel-root.Mui-focused {
+  color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 0px var(--font-color));
+}
+.editStudio .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 5px var(--font-color));
+}
+.editStudioInputs .smallTitle:last-of-type {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+  opacity: 0.8;
+}
+.editStudioInputs .confirmButton {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.editStudioInputs .confirmButton:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+@media only screen and (max-width: 800px) {
+  .editStudio form {
+    grid-template-columns: 1fr;
+  }
 }

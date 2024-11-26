@@ -82,6 +82,7 @@
   display: flex;
   align-items: end;
   justify-content: center;
+  overflow: visible;
 }
 .themeButton {
   display: grid;
@@ -94,18 +95,29 @@
 }
 .active {
   color: var(--accent-color);
+  /* filter: drop-shadow(0 0 5px var(--font-color)) drop-shadow(0 0 0px var(--font-color)); */
 }
-.css-17jyosd-MuiSwitch-thumb {
+.MuiSwitch-thumb {
   background: var(--accent-gradient);
   border-radius: 5px !important;
 }
-.css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+.MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
   background: var(--accent-gradient);
   border-radius: 4px !important;
 }
-.css-tj8d99-MuiSwitch-track {
+.MuiSwitch-track {
   background: var(--accent-gradient);
   border-radius: 4px !important;
+}
+.MuiSwitch-switchBase.Mui-checked {
+  transform: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, filter 0.5s, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+}
+.MuiSwitch-switchBase {
+  transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, filter 0.5s, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+}
+.MuiSwitch-switchBase:hover {
+  background-color: transparent !important;
+  filter: drop-shadow(0 0 5px var(--font-color));
 }
 .cartButton {
   position: relative;
