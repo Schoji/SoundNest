@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, Alert, createTheme, ThemeProvider } from '@mui/material';
+import { TextField, IconButton, Alert, createTheme, ThemeProvider } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './CreateStudio.css';
 import default_album from '../../../assets/album.png';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
@@ -56,11 +56,11 @@ export default function CreateStudio() {
   function AddStudio(event) {
     event.preventDefault();
     if (validateData(event.target.name.value, "studioName") == false) {
-      setError("Provide a valid studio name (at least 3 characters long).")
+      setError(t("nameLengthError"))
       return
     }
     if (validateData(event.target.desc.value, "desciption") == false) {
-      setError("Provide a valid studio description (at least 10 characters long).")
+      setError(t("descLengthError"))
       return
     }
     const requestOptions = {
@@ -76,12 +76,13 @@ export default function CreateStudio() {
     fetch(`${backend_address}/api/studios/`, requestOptions)
       .then((response) => {
         if (response.ok) navigate('/studios', { replace: true })
-        else if (response.status == 409) setError("Studio name is already taken.")
+        else if (response.status == 409) setError(t("nameTakenError"))
         else console.log(response.json())
       })
       .catch(error => console.log(error));
 
   }
+  const [nameLength, setNameLength] = useState(0)
   const [descLength, setDescLength] = useState(0)
   const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
   useCustomEventListener("changeTheme", (theme) => {
@@ -109,10 +110,11 @@ export default function CreateStudio() {
             <ThemeProvider theme={materialtheme}>
             <form onSubmit={AddStudio}  encType="multipart/form-data">
               <div className="createStudioImage">
-                <p>{t("studioImagePreview")}</p>
+                <p className='smallTitle'>{t("studioImagePreview")}</p>
                 <img src={pic} />
                 <div> </div>
                 <Button
+                  className="uploadPhoto"
                   component="label"
                   role={undefined}
                   variant="contained"
@@ -120,31 +122,35 @@ export default function CreateStudio() {
                   startIcon={<FileUploadRoundedIcon />}
                 >
                   {t("uploadPhoto")}
-                  <input type='file' onChange={ChangePicture} />
+                  <input type='file' onChange={ChangePicture} style={{display: 'none'}} />
                 </Button>
               </div>
               <div className="createStudioInputs">
-                <p>{t("studioName")}</p>
+                <p className='smallTitle'>{t("studioName")}</p>
                 <TextField id="name"
-                label="Name"
-                type="text"
-                required
-                placeholder={t("placeholderName")} />
-                <p>{t("studioDesc")}</p>
+                  helperText={nameLength != 0 ? nameLength + "/30" : t("nameLengthNotif")}
+                  label={t("placeholderName")}
+                  onChange={(e) => setNameLength(e.target.value.length)}
+                />
+                <p className='smallTitle'>{t("studioDesc")}</p>
                 <TextField id="desc"
-                multiline
-                required
-                label="Description"
-                onChange={(e) => setDescLength(e.target.value.length)}
-                placeholder={t("placeholderDesc")} />
-                <p style={{color: descLength >= 10 && descLength <= 100 ? "green" : "red"}}>{descLength}/100</p>
+                  helperText={descLength != 0 ? descLength + "/100" : t("descLengthNotif")}
+                  multiline
+                  minRows={6}
+                  label={t("placeholderDesc")}
+                  onChange={(e) => setDescLength(e.target.value.length)}
+                />
                 {error ?
-                <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert> : <div> </div>
+                <Alert id="error"
+                  className="error"
+                  variant="filled"
+                  severity="error">
+                    {error}
+                </Alert> : <div> </div>
                 }
-                <p>{t("createStudioNotif")}</p>
+                <p className='smallTitle'>{t("createStudioNotif")}</p>
                 <Button
                   className="createButton"
-                  variant="contained"
                   type="submit"
                   disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
                 >

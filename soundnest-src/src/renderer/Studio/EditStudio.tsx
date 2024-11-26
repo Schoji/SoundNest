@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, FormControl, IconButton, TextField } from '@mui/material';
+import { Button, IconButton, TextField, createTheme, ThemeProvider, Alert } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
@@ -12,8 +12,11 @@ import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { useCustomEventListener } from 'react-custom-events';
+import { validateData } from '../Components/InputValidation';
 
 const cache = createCache({
   key: 'css',
@@ -26,9 +29,8 @@ export default function EditStudio() {
   const [data, setData] = useState({});
   const { studio_id } = useParams();
   const [pic, setPic] = useState(default_album);
-
-
   const [selectedFile, setSelectedFile] = useState([]);
+  const [error, setError] = useState("")
   const [fileBase64String, setFileBase64String] = useState("");
   const onFileChange = (e) => {
     setSelectedFile(e.target.files);
@@ -76,50 +78,105 @@ export default function EditStudio() {
   }
   function AlterStudio(event) {
     event.preventDefault();
+    if (validateData(event.target.name.value, "studioName") == false) {
+      setError(t("nameLengthError"))
+      return
+    }
+    if (validateData(event.target.desc.value, "desciption") == false) {
+      setError(t("descLengthError"))
+      return
+    }
     fetch(backend_address + "/api/studios/" + studio_id, {
       headers: {
         'Content-Type': 'application/json',
       },
       method:"PATCH",
       body: JSON.stringify({
-        'name' : event.target.studio_name.value,
+        'name' : event.target.name.value,
         'desc' : event.target.desc.value,
-        'studio_dir': fileBase64String
-      })
-    }).catch((error) => console.log(error))
+        'studio_dir': fileBase64String,
+      }),
+    })
+    .catch((error) => console.log(error))
     navigate("/studios", {replace:true});
   }
-
+  const [nameLength, setNameLength] = useState(0)
+  const [descLength, setDescLength] = useState(0)
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    console.log("LOL")
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   return (
     <div className="all">
       <TopBar />
       <SideBar />
       <div className="main">
         <CacheProvider value={cache}>
-          <div className="title">
-            <IconButton
-              className='icon'
-              onClick={() => {
-                navigate('/studios', { replace: true });
-              }}
-            >
-              <ArrowBackIosRoundedIcon />
-            </IconButton>
-            <h1>{t("albumDetails")}</h1>
+        <ThemeProvider theme={materialtheme}>
+          <div className="editStudio">
+            <div className="editStudioTitle">
+              <IconButton onClick={() => {navigate('/studios', { replace: true });}}>
+                <ArrowBackIosRoundedIcon />
+              </IconButton>
+              <h1>{t("createYourStudio")}</h1>
+            </div>
+            <form encType="multipart/form-data" onSubmit={AlterStudio}>
+              <div className='editStudioImage'>
+                <p className='smallTitle'>{t("studioImagePreview")}</p>
+                <img src={pic}/>
+                <div> </div>
+                <Button
+                  className="uploadPhoto"
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<FileUploadRoundedIcon />}
+                >
+                  {t("uploadPhoto")}
+                  <input type='file' onChange={ChangePicture} style={{display: 'none'}} />
+                </Button>
+              </div>
+              <div className='editStudioInputs'>
+                <p className='smallTitle'>{t("studioName")}</p>
+                <TextField id="name"
+                  helperText={nameLength != 0 ? nameLength + "/30" : t("nameLengthNotif")}
+                  onChange={(e) => setNameLength(e.target.value.length)}
+                  defaultValue={data.name}
+                />
+                <p className='smallTitle'>{t("studioDesc")}</p>
+                <TextField id="desc"
+                  helperText={descLength != 0 ? descLength + "/100" : t("descLengthNotif")}
+                  multiline
+                  minRows={6}
+                  onChange={(e) => setDescLength(e.target.value.length)}
+                  defaultValue={data.desc}
+                />
+                {error ?
+                <Alert id="error"
+                  className="error"
+                  variant="filled"
+                  severity="error">
+                    {error}
+                </Alert> : <div> </div>
+                }
+                <p className='smallTitle'>{t("createStudioNotif")}</p>
+                <Button
+                  className='confirmButton'
+                  type="submit"
+                >
+                  {t("save")}
+                </Button>
+              </div>
+            </form>
           </div>
-          <form encType="multipart/form-data" onSubmit={AlterStudio} className='studioDesc'>
-            <div className='pictureSelection'>
-              <img src={pic}/>
-              <TextField id="file" type="file" onChange={ChangePicture}/>
-            </div>
-            <div className='otherInputs'>
-              <TextField id="studio_name" label="Studio name" variant="outlined" defaultValue={data.name}/>
-              <TextField id="desc" label="Description" multiline variant="outlined" defaultValue={data.desc}/>
-              <Button variant="contained" type="submit">
-                {t("save")}
-              </Button>
-            </div>
-          </form>
+          </ThemeProvider>
         </CacheProvider>
       </div>
     </div>

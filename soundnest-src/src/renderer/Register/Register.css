@@ -5,7 +5,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 3fr;
   background-color: #151515;
   opacity: 0.8;
   background-image: radial-gradient(circle at center center, #29292a, #151515), repeating-radial-gradient(circle at center center, #29292a, #29292a, 10px, transparent 20px, transparent 10px);
@@ -13,20 +13,16 @@
   color: white;
 }
 .registerLogo {
-  margin-top: 30px;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   grid-column: 2/3;
   grid-row: 1/2;
 }
 
 .registerForm {
-  margin-top: 30px;
   grid-column: 2/3;
-  display: flex;
-  justify-content: center;
 }
 
 /* .registerForm input {
@@ -73,11 +69,10 @@
 } */
 
 .registerForm form {
-  padding: 35px;
+  padding: 25px;
   display: grid;
   gap: 5px;
   background: rgba(66, 52, 52, 0.3);
-  height: auto;
   border-radius: 20px;
   border-left: 1px solid rgba(255,255,255,0.3);
   border-top: 1px solid rgba(255,255,255,0.3);

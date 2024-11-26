@@ -77,36 +77,42 @@ export default function RegisterWindow() {
             <form onSubmit={(event) => register(event)}>
               <TextField
                 id="name"
+                size="small"
                 label="Name"
                 type='text'
                 placeholder="Name"
               />
               <TextField
                 id="surname"
+                size="small"
                 label="Surname"
                 type='text'
                 placeholder="Surname"
               />
               <TextField
-                id="username"
-                label="Username"
-                type='text'
-                placeholder="Username"
-              />
-              <TextField
                 id="email"
+                size="small"
                 label="Email"
                 type='text'
                 placeholder="E-mail"
               />
               <TextField
+                id="username"
+                size="small"
+                label="Username"
+                type='text'
+                placeholder="Username"
+              />
+              <TextField
                 id="password"
+                size="small"
                 label="Password"
                 type="password"
                 placeholder="Password"
               />
                <TextField
                 id="password1"
+                size="small"
                 label="Repeat password"
                 type="password"
                 placeholder="Repeat Password"

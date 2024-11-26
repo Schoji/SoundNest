@@ -129,14 +129,12 @@ export default function Studio() {
       <div className="main">
         <div className="studios">
         <CacheProvider value={cache}>
-        <div>
           <h1>{t("myStudios")}</h1>
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          {myStudiosData ?
             <div className="myStudios">
-              {myStudiosData.map((myStudio, index) => (
+              {myStudiosData ? myStudiosData.map((myStudio, index) => (
                 <div className="myStudio">
                   <div className="myStudioImage">
                     {myStudio.studio_dir === '/' ?
@@ -157,10 +155,8 @@ export default function Studio() {
                     {t("edit")}
                   </Button>
                 </div>
-              ))}
+              )) :<p>You have no studios</p> }
             </div>
-            : <div className="myStudio"> </div> }
-          </div>
           <h1>{t("otherStudios")}</h1>
           <div className="otherStudios">
             {otherStudiosData?.map((value, index) => (
