@@ -90,6 +90,7 @@ export function GetCreds() {
       sessionStorage.setItem('cart', '0');
       sessionStorage.setItem("logo", "0")
       sessionStorage.setItem("lang", userInfo.lang)
+      document.getElementsByClassName("all")[0].classList.add(userInfo.lang)
       sessionStorage.setItem("hasKey", userInfo.hasKey)
       i18n.changeLanguage(userInfo.lang)
     })
@@ -115,6 +116,7 @@ export default function App() {
       sessionStorage.setItem('credits', userInfo.credits);
       sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
       sessionStorage.setItem('is_admin', userInfo.is_admin);
+      document.getElementsByClassName("all")[0].classList.add(userInfo.lang)
       sessionStorage.setItem('cart', '0');
       if (userInfo.prefered_theme == 0) {
         document.documentElement.classList.add(classNamesDark[userInfo.prefered_colour])

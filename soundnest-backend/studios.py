@@ -22,6 +22,18 @@ def getStudioPic(path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('ascii')
     
+def createStudioPic(image):
+    file = image
+    file = file.split(",")[1]
+
+    img = Image.open(BytesIO(base64.b64decode(file)))
+    img = img_resize.resizeImage(img)
+    last_id = StudioModel.query.order_by(desc("id")).first()
+    avatar_dir = UPLOAD_FOLDER + "/studios/" + str(int(last_id.id) + 1) + ".jpg"
+    img.save(avatar_dir)
+    return str(last_id + 1) + ".jpg"
+
+
 class StudioModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user = db.Column(db.Integer, db.ForeignKey(UserModel.id))
@@ -51,11 +63,7 @@ class Studios(Resource):
     def get(self):
         Studios = StudioModel.query.all()
         for studio in Studios:
-            if studio.studio_dir != "/":
-                image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
-                with open(image_path, "rb") as image_file:
-                    data = base64.b64encode(image_file.read()).decode('ascii')
-                studio.studio_dir = data   
+            studio.studio_dir = getStudioPic(studio.studio_dir)
         return Studios
     
     @marshal_with(studioFields)
@@ -85,11 +93,7 @@ class Studio(Resource):
         if not studio:
             print("user not found")
             return studio, 404
-        if studio.studio_dir != "/":
-            image_path = UPLOAD_FOLDER + "/studios/" + studio.studio_dir
-            with open(image_path, "rb") as image_file:
-                data = base64.b64encode(image_file.read()).decode('ascii')
-            studio.studio_dir = data
+        studio.studio_dir = getStudioPic(studio.studio_dir)
         return studio
     
     @marshal_with(studioFields)
@@ -98,17 +102,16 @@ class Studio(Resource):
         studio = StudioModel.query.filter_by(id=id).first()
         if not studio:
             return 404, "Studio not found in database."
-        if args["studio_dir"]:
-            file = args["studio_dir"]
-            file = file.split(",")[1]
+        
+        if (StudioModel.query.filter_by(name=args["name"]).first()) and (StudioModel.query.filter_by(name=args["name"]).first().id != studio.id):
+            return "Studio with that name already exists.", 409
 
-            img = Image.open(BytesIO(base64.b64decode(file)))
-            img = img_resize.resizeImage(img)
-            studio_path = UPLOAD_FOLDER + "/studios/" + str(id) + ".jpg"
-            img.save(studio_path)
-            studio.studio_dir = str(id) + ".jpg"
-        studio.name = args["name"]
-        studio.desc = args["desc"]
+        if args["studio_dir"]:
+            studio.studio_dir = createStudioPic(args["studio_dir"])
+        if args["name"]:
+            studio.name = args["name"]
+        if args["desc"]:    
+            studio.desc = args["desc"]
         db.session.commit()
         return studio
     

@@ -97,14 +97,15 @@ export default function EditStudio() {
         'studio_dir': fileBase64String,
       }),
     })
+    .then(() => {
+      navigate("/studios", {replace:true});
+    })
     .catch((error) => console.log(error))
-    navigate("/studios", {replace:true});
   }
   const [nameLength, setNameLength] = useState(0)
   const [descLength, setDescLength] = useState(0)
   const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
   useCustomEventListener("changeTheme", (theme) => {
-    console.log("LOL")
     setTheme(theme)
   })
   let materialtheme = createTheme({
@@ -124,7 +125,7 @@ export default function EditStudio() {
               <IconButton onClick={() => {navigate('/studios', { replace: true });}}>
                 <ArrowBackIosRoundedIcon />
               </IconButton>
-              <h1>{t("createYourStudio")}</h1>
+              <h1>{t("editYourStudio")}</h1>
             </div>
             <form encType="multipart/form-data" onSubmit={AlterStudio}>
               <div className='editStudioImage'>
@@ -144,14 +145,17 @@ export default function EditStudio() {
                 </Button>
               </div>
               <div className='editStudioInputs'>
-                <p className='smallTitle'>{t("studioName")}</p>
-                <TextField id="name"
+                <p className='smallTitle'>{t("studioNameEdit")}</p>
+                <TextField
+                  key={data.name}
+                  id="name"
                   helperText={nameLength != 0 ? nameLength + "/30" : t("nameLengthNotif")}
                   onChange={(e) => setNameLength(e.target.value.length)}
                   defaultValue={data.name}
                 />
                 <p className='smallTitle'>{t("studioDesc")}</p>
-                <TextField id="desc"
+                <TextField
+                  id="desc"
                   helperText={descLength != 0 ? descLength + "/100" : t("descLengthNotif")}
                   multiline
                   minRows={6}

@@ -9,6 +9,7 @@ import "./TradeOffer.css"
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
 import { backend_address } from '../Components/global';
+import { Button } from '@mui/material';
 
 const cache = createCache({
   key: 'css',
@@ -59,36 +60,60 @@ export default function Tradeoffers() {
         <h1>{t("tradeOffers")}</h1>
         {userTrades.length > 0 ?(
         <div className="tradeList">
-          {userTrades?.map((trade, index) => (
-            <div className='tradeObj' onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>
+          {userTrades.length > 0 && userTrades?.map((trade, index) => (
+            <div className='tradeObj'>
               {/* Trade from: */}
               <p>
                 <img
                     src={`data:image/jpeg;base64,${trade.user.pic}`}
                     alt="Loading..."
-                />{trade.user.name} {trade.user.surname} offered you a trade:
+                />{trade.user.name} {trade.user.surname} offered:
               </p>
-              <div className='itemBox'>
                 <div className='itemRows'>
+
                 {trade.sent_items?.map((sent_item, index) => (
-                  <img
-                    src={`data:image/jpeg;base64,${sent_item.picture}`}
-                    alt="Loading..."
-                    className="item"
-                  />
+                  <div className='dropdown'>
+                    <img
+                      src={`data:image/jpeg;base64,${sent_item.picture}`}
+                      alt="Loading..."
+                      onClick={() => navigate(`/item/${sent_item.id}`)}
+                    />
+                    <div className='itemDescription'>
+                      <p>{sent_item.album}</p>
+                      <p>by</p>
+                      <p>{sent_item.artist}</p>
+                    </div>
+                  </div>
                  ))}
                 </div>
+                <p>
+                <img
+                    src={`data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`}
+                    alt="Loading..."
+                /> for your:
+                </p>
+                <div className='itemRows'>
+
                 {trade.received_items?.map((received_item, index) => (
-                  <div className='itemRows'>
+                  <div className='dropdown'>
                     <img
                       src={`data:image/jpeg;base64,${received_item.picture}`}
                       alt="Loading..."
+                      onClick={() => navigate(`/item/${received_item.id}`)}
                     />
-                    {/* <p>{received_item.album} by {received_item.artist}</p> */}
+                    <div className='itemDescription'>
+                      <p>{received_item.album}</p>
+                      <p>by</p>
+                      <p>{received_item.artist}</p>
+                    </div>
                   </div>
+                    // {/* <p>{received_item.album} by {received_item.artist}</p> */}
                 ))}
+                </div>
+                <Button variant='contained' onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>View</Button>
+                <Button variant='contained' color='success'>Accept</Button>
+                <Button variant='contained' color='error'>Decline</Button>
               </div>
-            </div>
           ))}
         </div>
         ): <p>{t("noPendingTradeoffers")}</p>}

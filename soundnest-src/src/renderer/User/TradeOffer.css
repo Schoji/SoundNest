@@ -7,11 +7,6 @@
   width: 20%;
 }
 
-.itemList {
-  gap: 5px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
 .itemList img {
   width: 100%;
   cursor: pointer;
@@ -34,38 +29,57 @@
 .tradeObj {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: auto auto auto auto auto;
   border-radius: 10px;
   background-color: var(--section);
-}
-.tradeObj p:first-child {
   gap: 5px;
+}
+.tradeObj p {
+  margin: 10px;
+  grid-column: 1/-1;
+  gap: 5px;
+  display: flex;
+  align-items: center;
+}
+.tradeObj p img{
+  width: 48px;
+}
+
+.itemRows {
+  margin: 10px;
+  background-color: var(--window);
+  display: grid;
+  grid-column: 1/-1;
+  gap: 5px;
+  display: flex;
+}
+.itemRows p:first-child {
+  grid-column: 1/-1;
+}
+.itemRows img {
+  width: 96px;
+}
+.itemRows img:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.itemDescription {
+  display: none;
+  position: absolute;
+  background-color: var(--section);
+  color: var(--font-color);
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+}
+.itemDescription > p {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.tradeObj p:first-child > img {
-  width: 10%;
-}
-.itemBox {
-  grid-row: 2/3;
-  grid-column: 1/-1;
-
-}
-.tradeObj:hover {
-  background-color: red;
-  cursor: pointer;
-}
-.item {
-  width: 50%;
-}
-.itemRows {
-  display: grid;
-  grid-column: 1/-1;
-  background-color: blue;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 5px;
-}
-.itemRows img {
-  width: 20%;
-}
+.dropdown:hover .itemDescription {display: block;}

@@ -66,6 +66,9 @@ i18n.use(initReactI18next).init({
         nameLengthError: "Provide a valid studio name (between 3 and 30 characters long).",
         descLengthError: "Provide a valid studio description (between 10 and 100 characters long).",
         nameTakenError: "Studio name is already taken.",
+        //Edit studio
+        editYourStudio: "Edit Your Studio.",
+        studioNameEdit: "What would you like your studio to be renamed to?",
         //Studio
         studioDetails: "Studio Details",
         studioOwned: "Studio is owned by",
@@ -169,6 +172,9 @@ i18n.use(initReactI18next).init({
         nameLengthError: "Podaj prawidłową nazwę studia (od 3 do 30 znaków).",
         descLengthError: "Podaj prawidłowy opis studia (od 10 do 100 znaków).",
         nameTakenError: "Nazwa studia jest już zajęta.",
+        //EditStudio
+        editYourStudio: "Edytuj swoje studio.",
+        studioNameEdit: "Jak chciałbyś nazwać swoje studio?",
         //Studio
         studioDetails: "Szczegóły studia",
         studioOwned: "Studio należy do",
@@ -272,6 +278,9 @@ i18n.use(initReactI18next).init({
         nameLengthError: "Geben Sie einen gültigen Studionamen ein (zwischen 3 und 30 Zeichen).",
         descLengthError: "Geben Sie eine gültige Studio-Beschreibung ein (zwischen 10 und 100 Zeichen).",
         nameTakenError: "Der Studio-Name ist bereits vergeben.",
+        //EditStudio
+        editYourStudio: "Studio bearbeiten.",
+        studioNameEdit: "Wie möchtest du dein Studio umbenennen?",
         //Studio
         studioDetails: "Studio-Details",
         studioOwned: "Studio gehört zu",
