@@ -10,25 +10,35 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/Schoji/SoundNest#readme",
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "url": "https://github.com/Schoji/SoundNest/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/Schoji/SoundNest.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "SoundNest team",
+    "email": "cplayek@gmail.com",
+    "url": "https://github.com/Schoji/SoundNest"
   },
   "contributors": [
     {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
+      "name": "Piotr Wittig",
+      "email": "piotr.wittig@gmail.com",
+      "url": "https://github.com/Schoji"
+    },
+    {
+      "name": "Jakub Kobuszewski",
+      "email": "jakub.kobuszewskii@gmail.com",
+      "url": "https://github.com/Kobucha96"
+    },
+    {
+      "name": "Feliks Łubiński",
+      "email": "flubinski@zsee.szczecin.pl",
+      "url": "https://github.com/FeliksLubinski"
     }
   ],
   "main": "./.erb/dll/main.bundle.dev.js",
@@ -194,8 +204,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "SoundNest",
+    "appId": "org.erb.SoundNest",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -234,6 +244,7 @@
       ]
     },
     "win": {
+      "icon": "/resources/assets/logo.ico",
       "target": [
         "nsis"
       ]
@@ -254,8 +265,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "soundnest",
+      "repo": "soundnest"
     }
   },
   "collective": {

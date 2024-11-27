@@ -18,10 +18,12 @@ import { backend_address } from '../Components/global';
 import avatarIcon from '../../../assets/user.png'
 
 export default function Settings() {
+
   const navigate = useNavigate();
   const [pic, setPic] = useState("data:image/jpeg;base64," + String(sessionStorage.getItem("avatar_dir")));
   const [selectedFile, setSelectedFile] = useState([]);
   const [fileBase64String, setFileBase64String] = useState("");
+
   const onFileChange = (e) => {
     setSelectedFile(e.target.files);
 
@@ -75,7 +77,6 @@ function ChangePicture(event) {
     )
       .then((response) => response.json())
       .then((data) => {
-        // eslint-disable-next-line promise/always-return
         if (data.length === 0) {
         } else {
           console.log(JSON.stringify(data));
@@ -163,7 +164,6 @@ function ChangePicture(event) {
                     </div>
                   </div>
                   <div className='settingForm'>
-
                   <ThemeProvider theme={materialtheme}>
                     <TextField id="name" label="Name" defaultValue={sessionStorage.getItem('name')}/>
                     <TextField id="surname" label="Surname" defaultValue={sessionStorage.getItem('surname')}/>
@@ -172,7 +172,6 @@ function ChangePicture(event) {
                     <TextField multiline id="bio" label="Bio" defaultValue={sessionStorage.getItem('bio') != "null" ? sessionStorage.getItem('bio') : "You have no bio."}/>
                     <Button type="submit" variant='contained'>Save</Button>
                   </ThemeProvider>
-
                   </div>
                 </form>
               </div>

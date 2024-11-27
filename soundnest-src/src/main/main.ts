@@ -101,6 +101,10 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  mainWindow.on('close', () => {
+    mainWindow = null;
+    app.quit()
+  });
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
@@ -160,7 +164,11 @@ const createLoginWindow = async () => {
 
   loginWindow.on('closed', () => {
     loginWindow = null;
+    app.exit()
   });
+  loginWindow.on("close", function () {
+    app.quit()
+  })
 
   // Open urls in the user's browser
   loginWindow.webContents.setWindowOpenHandler((edata) => {
@@ -192,11 +200,21 @@ const createSplashWindow = async() => {
     maximizable: false,
     icon: getAssetPath('icon.png'),
     webPreferences: {
-      devTools: false
+      devTools: false,
+      preload: app.isPackaged
+      ? path.join(__dirname, 'preload.js')
+      : path.join(__dirname, '../../.erb/dll/preload.js'),
       }
+
   });
-    splashWindow.loadFile(path.resolve(__dirname, '../../src/renderer/splash.html'))
+    splashWindow.loadFile(resolveHtmlPath('splash.html'))
+
+
+    splashWindow.on("close", function () {
+      app.quit()
+    })
 }
+
 
 /**
  * Add event listeners...
@@ -208,6 +226,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+  app.quit();
 });
 
 app
