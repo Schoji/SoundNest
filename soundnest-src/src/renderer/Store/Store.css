@@ -37,7 +37,7 @@
 }
 .storeProductImage > img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 6px;
   transition: all 0.5s ease;
 }
 .storeProduct:hover .storeProductImage img {

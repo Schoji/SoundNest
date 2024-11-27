@@ -114,7 +114,7 @@ export default function EditStudio() {
     }
   })
   return (
-    <div className="all">
+    <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">
@@ -149,6 +149,7 @@ export default function EditStudio() {
                 <TextField
                   key={data.name}
                   id="name"
+                  label={t("placeholderName")}
                   helperText={nameLength != 0 ? nameLength + "/30" : t("nameLengthNotif")}
                   onChange={(e) => setNameLength(e.target.value.length)}
                   defaultValue={data.name}
@@ -156,6 +157,8 @@ export default function EditStudio() {
                 <p className='smallTitle'>{t("studioDesc")}</p>
                 <TextField
                   id="desc"
+                  label={t("placeholderDesc")}
+                  InputLabelProps={{ shrink: true }}
                   helperText={descLength != 0 ? descLength + "/100" : t("descLengthNotif")}
                   multiline
                   minRows={6}
