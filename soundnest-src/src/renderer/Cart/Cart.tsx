@@ -201,7 +201,6 @@ export function CustomizedTables() {
   );
 }
 
-
 export default function Cart() {
   let materialtheme = createTheme({
     palette: {
@@ -210,7 +209,7 @@ export default function Cart() {
   })
   const { t } = useTranslation()
   return (
-    <div className="all">
+    <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">

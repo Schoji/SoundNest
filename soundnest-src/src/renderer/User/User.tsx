@@ -11,8 +11,7 @@ import { CacheProvider } from '@emotion/react';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
-
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
 
 const cache = createCache({
   key: 'css',
@@ -46,7 +45,7 @@ export default function User() {
   }, [user_id]);
 
   return (
-    <div className="all">
+    <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">

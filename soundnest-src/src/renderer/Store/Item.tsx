@@ -74,6 +74,7 @@ export default function Item() {
   const [data, setData] = useState(null);
   const [trackData, setTrackData] = useState(null);
   const [userProductsIDs, setUserProductsIDs] = useState([])
+  const [userProducts, setUserProducts] = useState(null)
   const [cartItems, setCartItems] = useState([])
   const { item_id } = useParams()
   const navigate = useNavigate();
@@ -102,6 +103,7 @@ export default function Item() {
         })
         console.log(productIDs)
         setUserProductsIDs(productIDs)
+        setUserProducts(data)
       })
       .catch((error) => {
         console.log(error);
@@ -172,11 +174,11 @@ export default function Item() {
     }
   }
   return (
-    <div className="all">
+    <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">
-        {data ?
+        {data && userProducts?
         <div className="item" id="item">
           <CacheProvider value={cache}>
             <div className="itemTitle">

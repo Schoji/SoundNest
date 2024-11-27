@@ -27,6 +27,7 @@ export default function Store() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [userProductsIDs, setUserProductsIDs] = useState(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
+  const [userProducts, setUserProducts] = useState(null);
   const [cartItems, setCartItems] = useState([])
   const { t } = useTranslation()
   const Fetch = () => {
@@ -46,6 +47,7 @@ export default function Store() {
           productIDs.push(product.id)
         })
         setUserProductsIDs(productIDs)
+        setUserProducts(data)
       })
       .catch((error) => {
         console.log(error);
@@ -71,13 +73,12 @@ export default function Store() {
       console.log('Item is present, ignoring...');
     }
   }
-
   return (
-    <div className="all">
+    <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">
-        {data ?
+        {data && userProducts?
         <div className="store">
           <h1>{t('store')}</h1>
           <Button
