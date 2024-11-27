@@ -8,13 +8,11 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import logo from '../../../assets/icons/1024x1024.png';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
 import { backend_address } from '../Components/global';
 import user from '../../../assets/user.png'
-import AddCardIcon from '@mui/icons-material/AddCard';
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
 import Flag from "react-flagkit"

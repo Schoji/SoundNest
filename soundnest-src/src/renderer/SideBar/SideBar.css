@@ -95,7 +95,10 @@
 }
 .active {
   color: var(--accent-color);
-  /* filter: drop-shadow(0 0 5px var(--font-color)) drop-shadow(0 0 0px var(--font-color)); */
+  filter: drop-shadow(0 0 7px var(--font-color)) brightness(1.3);
+}
+.MuiSwitch-switchBase:hover .MuiSwitch-thumb {
+  background: var(--accent-gradient-hover);
 }
 .MuiSwitch-thumb {
   background: var(--accent-gradient);
@@ -154,9 +157,6 @@
 .cartButton:hover::before {
   opacity: 1;
 }
-.cartButton:hover .cartButtonBadge {
-  background: var(--reddish-button-hover);
-}
 .cartButtonIcon {
   position: relative;
   height: 35px;
@@ -168,10 +168,11 @@
   position: absolute;
   top: -7px;
   right: -7px;
-  background: var(--reddish-button);
+  background: var(--reddish-button-hover);
   height: 18px;
   width: 18px;
   border-radius: 5px;
+  border: 1px solid var(--section-hover);
   font-size: 13px;
   display: flex;
   align-items: center;

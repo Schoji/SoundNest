@@ -1,19 +1,21 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { Button, colors, createTheme, FormControl, Radio, TextField, ThemeProvider } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, createTheme, Radio, TextareaAutosize, TextField, ThemeProvider } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
 import './Settings.css';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import JSZip from 'jszip';
-
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
 import { useCustomEventListener } from 'react-custom-events';
 import { green, grey, lightBlue, pink, red, yellow } from '@mui/material/colors';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
+import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import { backend_address } from '../Components/global';
 import avatarIcon from '../../../assets/user.png'
 
@@ -151,81 +153,85 @@ function ChangePicture(event) {
         <SideBar />
         <div className="main">
           <div className="settings">
-            <div className="settingsContent">
-              <div className="avatar">
-                <form encType="multipart/form-data" onSubmit={AlterUser}>
-                  <div className='settingsAvatar'>
-                    <div className='avatarImage'>
-                      <img src={pic !== "data:image/jpeg;base64,/" ? pic : avatarIcon}/>
-                    </div>
-                    <div className='changeAvatar'>
-                      <input id="file" type="file" onChange={ChangePicture}/>
-                    </div>
-                  </div>
-                  <div className='settingForm'>
-
-                  <ThemeProvider theme={materialtheme}>
-                    <TextField id="name" label="Name" defaultValue={sessionStorage.getItem('name')}/>
-                    <TextField id="surname" label="Surname" defaultValue={sessionStorage.getItem('surname')}/>
-                    <TextField id="username" label="Username" defaultValue={sessionStorage.getItem('username')}/>
-                    <TextField id="email" label="Email" defaultValue={sessionStorage.getItem('email')}/>
-                    <TextField multiline id="bio" label="Bio" defaultValue={sessionStorage.getItem('bio') != "null" ? sessionStorage.getItem('bio') : "You have no bio."}/>
-                    <Button type="submit" variant='contained'>Save</Button>
-                  </ThemeProvider>
-
-                  </div>
-                </form>
+            <h1>Profile Settings</h1>
+            <form encType="multipart/form-data" onSubmit={AlterUser}>
+              <div className='settingsAvatar'>
+                <img src={pic !== "data:image/jpeg;base64,/" ? pic : avatarIcon}/>
+                <Button
+                  className="uploadPhoto"
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<FileUploadRoundedIcon />}
+                >
+                  {t("uploadPhoto")}
+                  <input id="file" type='file' onChange={ChangePicture} style={{display: 'none'}} />
+                </Button>
               </div>
-              <h1 className='setLogo'>Theme color</h1>
-              <div className='setLogo'>
-              <Radio {...controlProps('0')} sx={{
-                '& .MuiSvgIcon-root': {
-                    fontSize: 50,
-                  },
-                    color: lightBlue[800],
-                    '&.Mui-checked': {
-                      color: lightBlue[600],
-                    },
-                  }} />
-              <Radio {...controlProps('1')} sx={{
-                '& .MuiSvgIcon-root': {
-                    fontSize: 50,
-                  },
-                    color: red[800],
-                    '&.Mui-checked': {
-                      color: red[600],
-                    },
-                  }} />
-              <Radio {...controlProps('2')} sx={{
-                '& .MuiSvgIcon-root': {
-                    fontSize: 50,
-                  },
-                    color: yellow[800],
-                    '&.Mui-checked': {
-                      color: yellow[600],
-                    },
-                  }} />
-              <Radio {...controlProps('3')}sx={{
-                '& .MuiSvgIcon-root': {
-                    fontSize: 50,
-                  },
-                    color: green[800],
-                    '&.Mui-checked': {
-                      color: green[600],
-                    },
-                  }} />
-              <Radio {...controlProps('4')} sx={{
-                '& .MuiSvgIcon-root': {
-                    fontSize: 50,
-                  },
-                    color: pink[800],
-                    '&.Mui-checked': {
-                      color: pink[600],
-                    },
-                  }} />
+              <div className='settingsInputs'>
+              <ThemeProvider theme={materialtheme}>
+                <TextField id="name"
+                  label="Name"
+                  defaultValue={sessionStorage.getItem('name')}
+                />
+                <TextField id="surname"
+                  label="Surname"
+                  defaultValue={sessionStorage.getItem('surname')}
+                />
+                <TextField id="username"
+                  label="Username"
+                  defaultValue={sessionStorage.getItem('username')}
+                />
+                <TextField id="email"
+                  label="Email"
+                  defaultValue={sessionStorage.getItem('email')}
+                />
+                <TextField id="bio"
+                  label="Bio"
+                  multiline
+                  minRows={5}
+                  defaultValue={sessionStorage.getItem('bio') != "null" ? sessionStorage.getItem('bio') : "You have no bio."}
+                />
+                <Button
+                  type="submit"
+                  className="confirmButton"
+                  startIcon={<SaveRoundedIcon />}
+                >
+                  {t("save")}
+                </Button>
+              </ThemeProvider>
               </div>
-              <div className='exportButton'>
-                <Button onClick={exportUserInfo}>{t("exportUserInfo")}</Button>
+            </form>
+            <h1>Other Settings</h1>
+            <div className='otherSettings'>
+              <h3>Themes</h3>
+              <div className='themeSettings'>
+                <Radio {...controlProps('0')}
+                  disableRipple
+                />
+                <Radio {...controlProps('1')}
+                  disableRipple
+                />
+                <Radio {...controlProps('2')}
+                  disableRipple
+                />
+                <Radio {...controlProps('3')}
+                  disableRipple
+                />
+                <Radio {...controlProps('4')}
+                  disableRipple
+                />
+              </div>
+              <h3>Private Data</h3>
+              <div className='dataSettings'>
+                <Button
+                  className='exportInfoButton'
+                  startIcon={<FileDownloadRoundedIcon />}
+                  onClick={exportUserInfo}
+                >
+                  {t("exportUserInfo")}
+                </Button>
               </div>
             </div>
           </div>
