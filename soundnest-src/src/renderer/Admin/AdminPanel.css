@@ -1,2 +1,41 @@
 .users {
+  background-color: var(--section);
+  border-radius: 10px;
+}
+.formAssignment {
+  background-color: var(--section);
+  border-radius: 10px;
+}
+.productAssignment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  border-radius: 10px;
+}
+.productSection {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 5px;
+  justify-content: center;
+}
+.imageContainer {
+  display: grid;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+.productSection img {
+  border-radius: 10px;
+  background: var(--accent-gradient);
+  transition: all 0.5s ease;
+
+}
+.productSection img:hover {
+  transform: scale(110%);
+
+}
+.successButton {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
 }

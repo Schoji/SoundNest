@@ -10,7 +10,7 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
 }
-.storeProduct {
+.storeProduct, .storeProductLoading {
   background: var(--section);
   display: grid;
   grid-template-columns: 4fr 1fr;
@@ -21,7 +21,10 @@
   padding: 5px;
   transition: background-color 0.5s;
 }
-.storeProduct >*:not(Button) {
+.storeProductLoading * {
+  margin: 2px;
+}
+.storeProduct >*:not(Button), .storeProductLoading>*:not(Button){
   grid-column: 1/3;
 }
 .storeProduct:hover {
@@ -59,3 +62,12 @@
   box-shadow: 0px 0px 19px -6px var(--font-color);
   background: var(--accent-gradient-hover);
 }
+.kobuch {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.margin {
+  margin-bottom: 10px;
+}
+

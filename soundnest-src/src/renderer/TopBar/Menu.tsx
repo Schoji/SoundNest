@@ -11,11 +11,12 @@ import Logout from '@mui/icons-material/Logout';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
-import { backend_address } from '../Components/global';
 import user from '../../../assets/user.png'
 import "../Components/MultiLang.ts"
 import { useTranslation } from 'react-i18next';
 import Flag from "react-flagkit"
+import { backend_address } from '../Components/global';
+import { emitCustomEvent } from 'react-custom-events';
 
 
 export default function AccountMenu() {
@@ -40,6 +41,7 @@ export default function AccountMenu() {
     .then(response => response.json())
     .catch(error => console.log(error))
     sessionStorage.setItem("lang", lang)
+    emitCustomEvent("changeLanguage")
   }
 
   function changeUserUI(language: string) {

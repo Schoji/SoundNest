@@ -13,7 +13,8 @@ import './Library.css';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
+import { Skeleton } from '@mui/material';
 
 const cache = createCache({
   key: 'css',
@@ -22,14 +23,25 @@ const cache = createCache({
 
 export default function Library() {
   const [data, setData] = useState([]);
+  const [status, setStatus] = useState("Loading")
   const navigate = useNavigate();
   const { t } = useTranslation()
   const Fetch = () => {
     fetch(backend_address + "/api/userproducts/" + sessionStorage.getItem('id'))
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          setStatus("OK")
+        }
+        if (response.status === 404) {
+          setStatus("No resource")
+          console.log(status)
+        }
+        return response.json()
+      })
       .then((d) => setData(d))
       .catch((error) => {
         console.log(error);
+        setStatus("No connection")
       });
     // console.log(data)
   };
@@ -43,10 +55,10 @@ export default function Library() {
       <div className="main">
         <div className="library">
           <h1>{t("yourLibrary")}</h1>
-          {data.length > 0?
+          {status == "OK" ?
           <div className="libraryAlbums">
             {data.map((value) => (
-              <div className="libraryProduct">
+              <div className="libraryProduct" onClick={() => navigate(`/item/${value.id}`)}>
                 <CacheProvider value={cache}>
                   <div className="libraryProductImage">
                     {value.item_path === '/' ? (
@@ -62,7 +74,22 @@ export default function Library() {
               </div>
             ))}
           </div>
-          : <p>You have no owned products.</p>}
+          : status == "No resource" ?
+          <p>You have currently no products.</p>
+          :
+          <div className="libraryAlbums">
+            {[...Array(6)].map((element, index) =>
+            <div className="libraryProductLoading">
+              <div className='libraryProductImage'>
+                <Skeleton variant="rectangular" animation="wave" width={"300px"} height={"300px"}/>
+              </div>
+              <Skeleton variant="rectangular" animation="wave" height={"60px"}/>
+              <Skeleton variant="rectangular" animation="wave" height={"40px"}/>
+              <Skeleton variant="rectangular" animation="wave" height={"70px"}/>
+            </div>
+           )}
+          </div>
+          }
         </div>
       </div>
     </div>

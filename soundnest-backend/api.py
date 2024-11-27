@@ -12,6 +12,8 @@ class UserProducts(Resource):
    def get(self, id_user):
       transactions = TransactionModel.query.filter_by(id_user = id_user).all()
       products = []
+      if not transactions:
+         return "Products not found.", 404
       for item in transactions:
          product = ProductModel.query.filter_by(id = item.id_product).first()
          if not product:

@@ -1,23 +1,26 @@
 import { backend_address } from "./global"
 export default function UpdateUserInfo() {
-  const id = sessionStorage.getItem("id")
   // sessionStorage.clear()
-  fetch(backend_address + "/api/users/" + id)
+  console.log(sessionStorage.getItem("id"))
+  fetch(backend_address + "/api/users/" + sessionStorage.getItem("id"))
   .then(response => response.json())
-  .then((user) => {
-    sessionStorage.setItem("id", user.id)
-    sessionStorage.setItem("credits", user.credits)
-    sessionStorage.setItem("avatar_dir", user.avatar_dir)
-    sessionStorage.setItem("prefered_theme", user.prefered_theme)
-    sessionStorage.setItem("is_admin", user.is_admin)
-    sessionStorage.setItem("credits", user.credits)
-    sessionStorage.setItem("username", user.username)
-    sessionStorage.setItem("email", user.email)
-    sessionStorage.setItem("surname", user.surname)
-    sessionStorage.setItem("bio", user.bio)
-    sessionStorage.setItem("name", user.name)
-    sessionStorage.setItem("lang", user.lang)
-    sessionStorage.setItem("prefered_colour", user.prefered_colour)
+  .then((arg) => {
+    const userInfo = JSON.parse(arg)
+    sessionStorage.setItem('id', userInfo.id);
+    sessionStorage.setItem('username', userInfo.username);
+    sessionStorage.setItem('name', userInfo.name);
+    sessionStorage.setItem('surname', userInfo.surname);
+    sessionStorage.setItem('email', userInfo.email);
+    sessionStorage.setItem('prefered_theme', userInfo.prefered_theme);
+    sessionStorage.setItem('prefered_colour', userInfo.prefered_colour);
+    sessionStorage.setItem('bio', userInfo.bio);
+    sessionStorage.setItem('credits', userInfo.credits);
+    sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
+    sessionStorage.setItem('is_admin', userInfo.is_admin);
+    sessionStorage.setItem('cart', '0');
+    sessionStorage.setItem("logo", "0")
+    sessionStorage.setItem("lang", userInfo.lang)
+    sessionStorage.setItem("hasKey", userInfo.hasKey)
   })
   .catch(error => console.log(error))
 }

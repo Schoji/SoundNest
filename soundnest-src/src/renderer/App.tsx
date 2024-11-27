@@ -59,10 +59,9 @@ export function GetCreds() {
       navigate("/buykey", {replace: true})
     })
   }
-  useEffect(() => {
-    window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
 
-      let classNames = ["root", "red", "yellow", "green", "pink"]
+  function getUserInfo(arg) {
+    let classNames = ["root", "red", "yellow", "green", "pink"]
       let classNamesDark = ["dark", "red-dark", "yellow-dark", "green-dark", "pink-dark"]
       const userInfo = JSON.parse(arg)
       sessionStorage.setItem('id', userInfo.id);
@@ -106,6 +105,10 @@ export function GetCreds() {
       sessionStorage.setItem("lang", userInfo.lang)
       sessionStorage.setItem("hasKey", userInfo.hasKey)
       i18n.changeLanguage(userInfo.lang)
+  }
+  useEffect(() => {
+    window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
+      getUserInfo(arg)
     })
   }, [])
   return <Store/>

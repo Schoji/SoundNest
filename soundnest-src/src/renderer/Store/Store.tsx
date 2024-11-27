@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
@@ -25,7 +24,7 @@ const cache = createCache({
 
 export default function Store() {
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
+  const [products, setProducts] = useState(null);
   const [userProductsIDs, setUserProductsIDs] = useState(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
   const [userProducts, setUserProducts] = useState(null);
   const [cartItems, setCartItems] = useState([])
@@ -33,14 +32,23 @@ export default function Store() {
   const Fetch = () => {
     fetch(`${backend_address}/api/products/`)
       .then((response) => response.json())
-      .then((d) => setData(d))
+      .then((d) => setProducts(d))
       .catch((error) => {
         console.log(error);
       });
   };
   const getUserProducts = () => {
     fetch(`${backend_address}/api/userproducts/${sessionStorage.getItem("id")}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        if (response.status == 404) {
+          setUserProducts(true)
+          throw new Error("User has no products.")
+
+        }
+      })
       .then((data) => {
         var productIDs = []
         data.map((product, index) => {
@@ -78,7 +86,7 @@ export default function Store() {
       <TopBar />
       <SideBar />
       <div className="main">
-        {data && userProducts?
+        {products && userProducts?
         <div className="store">
           <h1>{t('store')}</h1>
           <Button
@@ -89,7 +97,7 @@ export default function Store() {
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
           <div className="storeProducts">
-            {data?.map((value) => (
+            {products?.map((value) => (
               <div className="storeProduct">
                 <CacheProvider value={cache}>
                   <div className="storeProductImage">
@@ -124,9 +132,30 @@ export default function Store() {
           </div>
         </div>
         :
-        <div>
-          <Skeleton animation="wave" variant="rounded" width={800} height={600} />
-        </div>}
+
+        <div className="store">
+          <div className="storeProducts">
+          {[...Array(12)].map((element, index) =>
+            <div className="storeProductLoading">
+              <div className="kobuch">
+                <Skeleton animation="wave" variant="rounded" width={"240px"} height={"240px"} />
+              </div>
+              <Skeleton animation="wave" variant="rounded" width={"210px"} height={"40px"} />
+              <Skeleton animation="wave" variant="rounded" width={"180px"} height={"20px"} />
+              <Skeleton animation="wave" variant="rounded" width={"215px"} height={"60px"} />
+              <div className='kobuch'>
+                <Skeleton animation="wave" variant="rounded" width={"70px"} height={"30px"} />
+              </div>
+              <div className='kobuch'>
+                <Skeleton animation="wave" variant="rounded" width={"130px"} height={"40px"} />
+                <Skeleton animation="wave" variant="rounded" width={"70px"} height={"40px"} />
+              </div>
+              <div className='margin'></div>
+            </div>
+            )}
+          </div>
+        </div>
+        }
       </div>
     </div>
   );

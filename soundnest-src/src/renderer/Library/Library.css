@@ -24,6 +24,7 @@
 }
 .libraryProduct:hover {
   background: var(--section-hover);
+  cursor: pointer;
 }
 .libraryProduct:hover img {
   transform: scale(110%);
@@ -46,4 +47,16 @@
   .libraryAlbums {
     grid-template-columns: 1fr;
   }
+}
+
+.libraryProductLoading {
+  background: var(--section);
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  row-gap: 5px;
+  column-gap: 10px;
+  box-sizing: border-box;
 }

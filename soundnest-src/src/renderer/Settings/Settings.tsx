@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { Button, createTheme, Radio, TextareaAutosize, TextField, ThemeProvider } from '@mui/material';
+import { Alert, Button, createTheme, Radio, TextareaAutosize, TextField, ThemeProvider } from '@mui/material';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
@@ -12,12 +12,12 @@ import JSZip from 'jszip';
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
 import { useCustomEventListener } from 'react-custom-events';
-import { green, grey, lightBlue, pink, red, yellow } from '@mui/material/colors';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import { backend_address } from '../Components/global';
 import avatarIcon from '../../../assets/user.png'
+import UpdateUserInfo from '../Components/UpdateUserInfo';
 
 export default function Settings() {
 
@@ -25,11 +25,7 @@ export default function Settings() {
   const [pic, setPic] = useState("data:image/jpeg;base64," + String(sessionStorage.getItem("avatar_dir")));
   const [selectedFile, setSelectedFile] = useState([]);
   const [fileBase64String, setFileBase64String] = useState("");
-
-  const onFileChange = (e) => {
-    setSelectedFile(e.target.files);
-
-  }
+  const [response, setResponse] = useState({"status":"", "content":""});
 
   var picChanged = false;
 
@@ -77,28 +73,19 @@ function ChangePicture(event) {
     fetch(
       `${backend_address}/api/users/${sessionStorage.getItem("id")}`
     )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length === 0) {
-        } else {
-          console.log(JSON.stringify(data));
-          sessionStorage.clear();
-          sessionStorage.setItem('id', data.id);
-          sessionStorage.setItem('username', data.username);
-          sessionStorage.setItem('name', data.name);
-          sessionStorage.setItem('surname', data.surname);
-          sessionStorage.setItem('email', data.email);
-          sessionStorage.setItem('prefered_theme', data.prefered_theme);
-          sessionStorage.setItem('credits', data.credits);
-          sessionStorage.setItem('avatar_dir', data.avatar_dir);
-          sessionStorage.setItem('is_admin', data.is_admin);
+      .then(response => {
+        if (response.ok) {
+          setResponse({"status":"success", "content": "Information was altered successfully."})
+          UpdateUserInfo();
+        }
+        else {
+          console.log(response)
+          setResponse({"status":"error", "content": "Information was not altered."})
         }
       })
       .catch((error) => {
         console.log(error);
       });
-
-    navigate("/studios", {replace:true});
   }
 
   const exportUserInfo = async() => {
@@ -154,7 +141,7 @@ function ChangePicture(event) {
         <SideBar />
         <div className="main">
           <div className="settings">
-            <h1>Profile Settings</h1>
+            <h1>{t("profileSettings")}</h1>
             <form encType="multipart/form-data" onSubmit={AlterUser}>
               <div className='settingsAvatar'>
                 <img src={pic !== "data:image/jpeg;base64,/" ? pic : avatarIcon}/>
@@ -173,26 +160,26 @@ function ChangePicture(event) {
               <div className='settingsInputs'>
               <ThemeProvider theme={materialtheme}>
                 <TextField id="name"
-                  label="Name"
+                  label={t("name")}
                   defaultValue={sessionStorage.getItem('name')}
                 />
                 <TextField id="surname"
-                  label="Surname"
+                  label={t("surname")}
                   defaultValue={sessionStorage.getItem('surname')}
                 />
                 <TextField id="username"
-                  label="Username"
+                  label={t("username")}
                   defaultValue={sessionStorage.getItem('username')}
                 />
                 <TextField id="email"
-                  label="Email"
+                  label={t("Email address")}
                   defaultValue={sessionStorage.getItem('email')}
                 />
                 <TextField id="bio"
-                  label="Bio"
+                  label={t("Bio")}
                   multiline
                   minRows={5}
-                  defaultValue={sessionStorage.getItem('bio') != "null" ? sessionStorage.getItem('bio') : "You have no bio."}
+                  defaultValue={sessionStorage.getItem('bio') != "null" ? sessionStorage.getItem('bio') : t("bio")}
                 />
                 <Button
                   type="submit"
@@ -201,12 +188,16 @@ function ChangePicture(event) {
                 >
                   {t("save")}
                 </Button>
+                {response.status != "" ?
+                <Alert variant="filled" severity={response.status}>{response.content}</Alert>
+                : null }
               </ThemeProvider>
+
               </div>
             </form>
-            <h1>Other Settings</h1>
+            <h1>{t("otherSettings")}</h1>
             <div className='otherSettings'>
-              <h3>Themes</h3>
+              <h3>{t("themes")}</h3>
               <div className='themeSettings'>
                 <Radio {...controlProps('0')}
                   disableRipple
@@ -224,7 +215,7 @@ function ChangePicture(event) {
                   disableRipple
                 />
               </div>
-              <h3>Private Data</h3>
+              <h3>{t("privateData")}</h3>
               <div className='dataSettings'>
                 <Button
                   className='exportInfoButton'

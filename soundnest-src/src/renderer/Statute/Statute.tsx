@@ -4,6 +4,7 @@ import './Statute.css';
 import { useEffect, useState } from 'react';
 import { backend_address } from '../Components/global';
 import parse from 'html-react-parser';
+import { useCustomEventListener } from 'react-custom-events';
 export default function Regulamin() {
   const [statute, setStatute] = useState("")
 
@@ -14,6 +15,9 @@ export default function Regulamin() {
     .then(data => console.log(data))
     .catch(error => console.log(error))
   }
+  useCustomEventListener("changeLanguage", () => {
+    getStatute()
+  })
   useEffect(() => {
     getStatute()
   }, [])

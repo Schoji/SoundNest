@@ -8,7 +8,7 @@ import SideBar from '../SideBar/SideBar';
 import './AdminPanel.css'
 import { DataGrid, GridCellEditStopParams, GridCellEditStopReasons, GridColDef, MuiEvent } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import { Avatar, createTheme, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
+import { Alert, Avatar, createTheme, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
 import default_album from '../../../assets/album.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
@@ -19,16 +19,16 @@ import { backend_address } from '../Components/global';
 
 export default function AdminPanel() {
   const { t } = useTranslation();
-  UpdateUserInfo();
-  const [data, setData] = useState([]);
+  const [user, setUser] = useState([]);
   const [products, setProducts] = useState([]);
   const [studios, setStudios] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(0);
-  const [selectedStudio, setSelectedStudio] = useState(0);
-  const Fetch = () => {
+  const [selectedProduct, setSelectedProduct] = useState(1);
+  const [selectedStudio, setSelectedStudio] = useState(1);
+  const [response, setResponse] = useState({"status":"", "content":""});
+  const getUser = () => {
     fetch(backend_address + "/api/users/")
       .then((response) => response.json())
-      .then((d) => setData(d))
+      .then((d) => setUser(d))
       .catch((error) => {
         console.log(error);
       });
@@ -54,33 +54,59 @@ export default function AdminPanel() {
 
   const makeAdmin = (user_id) => {
     fetch(backend_address + "/api/make_admin/" + user_id)
-      .then((response) => response.json())
+    .then(response => {
+      if (response.ok) {
+        setResponse({"status":"success", "content": "Admin was added successfully."})
+      }
+      else {
+        setResponse({"status":"error", "content": "Admin could not be added."})
+      }
+      updateSite()
+    })
       .catch((error) => {
         console.log(error);
       });
+
   }
 
   const deleteAdmin = (user_id) => {
     fetch(backend_address + "/api/make_admin/" + user_id +  "/", {method: "DELETE"})
-      .then((response) => response.json())
+      .then(response => {
+        if (response.ok) {
+          setResponse({"status":"success", "content": "Admin was deleted successfully."})
+        }
+        else {
+          setResponse({"status":"error", "content": "Admin could not be deleted."})
+        }
+        updateSite()
+      })
       .catch((error) => {
         console.log(error);
       });
   }
-
-  useEffect(() => {
-    Fetch();
+  function updateSite() {
+    getUser();
     getProducts();
     getStudios();
+  }
+  useEffect(() => {
+    updateSite()
   }, []);
 
   const DeleteUser = (user_id) => {
     fetch(backend_address + "/api/users/" + user_id, {method: "DELETE"})
+    .then(response => {
+      if (response.ok) {
+        setResponse({"status":"success", "content": "User was deleted successfully."})
+      }
+      else {
+        setResponse({"status":"error", "content": "User could not be deleted."})
+      }
+      updateSite()
+    })
     .catch((error) => {
       console.log(error);
     })
-    Fetch();
-    Fetch();
   };
   const columns: GridColDef[] = [
     {field: 'id', headerName: 'ID', width: 50},
@@ -144,62 +170,69 @@ export default function AdminPanel() {
           <div className="users">
             <h1>{t("users")}</h1>
             <DataGrid
-              rows={data}
+              rows={user}
               columns={columns}
               disableRowSelectionOnClick={true}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[5, 10]}
               sx={{ border: 0 }}
               />
+          {response.status != "" ?
+           <Alert variant="filled" severity={response.status}>{response.content}</Alert>
+           : null }
           </div>
-          <div>
-            <h1>{t("album")}</h1>
+          <h1>{t("album")}</h1>
             {products.length > 0 && studios.length > 0 ?
-            <form onSubmit={changeOwnership}>
-              <p>{t("studio")}</p>
-                <select
-                  id="studio"
-                  // value={selectedStudio}
-                  onChange={handleStudioChange}
-                >
-                {studios.length > 0 && studios?.map((studio, index) => (
-                  <option value={studio.id}>{studio.id}-{studio.name}</option>
-                ))}
-                </select>
-
-              <p>{t("product")}</p>
-              <select
-                  id="product"
-                  // value={selectedProduct}
-                  onChange={handleChange}
-                >
-                {products.length > 0 && products?.map((product, index) => (
-                  <option value={product.id}>{product.id}-{product.album}</option>
-                ))}
-                </select>
-
-
-
-                  <div>
-
+            <form onSubmit={changeOwnership} className='formAssignment'>
+              <div className='productAssignment'>
+                <div className='productSection'>
+                  <p>{t("studio")}</p>
+                    <Select
+                      id="studio"
+                      // value={selectedStudio}
+                      onChange={handleStudioChange}
+                      defaultValue={1}
+                    >
+                    {studios.length > 0 && studios?.map((studio, index) => (
+                      <MenuItem value={studio.id}>{studio.id} - {studio.name}</MenuItem>
+                    ))}
+                    </Select>
+                    <div className='imageContainer'>
                     {studios[selectedStudio] === '/' || studios[selectedStudio - 1] === undefined ? (
-                      <img src={default_album} />
-                    ) : (
-                      <img src={`data:image/jpeg;base64,${studios[selectedStudio - 1].studio_dir}`} />
-                    )}
-                    <ArrowForwardIcon/>
-                    {products[selectedProduct] === '/' || products[selectedProduct - 1] === undefined ? (
-                      <img src={default_album} />
-                    ) : (
-                      <img src={`data:image/jpeg;base64,${products[selectedProduct - 1].item_path}`} />
-                    )}
-
+                        <img src={default_album} />
+                      ) : (
+                        <img src={`data:image/jpeg;base64,${studios[selectedStudio - 1].studio_dir}`} />
+                      )}
+                    </div>
+                </div>
+                <div className='productSection'>
+                <p>{t("product")}</p>
+                  <Select
+                      id="product"
+                      label="Studio"
+                      // value={selectedProduct}
+                      onChange={handleChange}
+                      defaultValue={1}
+                    >
+                    {products.length > 0 && products?.map((product, index) => (
+                      <MenuItem value={product.id}>{product.id} - {product.album}</MenuItem>
+                    ))}
+                  </Select>
+                  <div className='imageContainer'>
+                  {products[selectedProduct] === '/' || products[selectedProduct - 1] === undefined ? (
+                    <img src={default_album} />
+                  ) : (
+                    <img src={`data:image/jpeg;base64,${products[selectedProduct - 1].item_path}`} />
+                  )}
                   </div>
-                  <Button variant='contained' color='success' type='submit'>Save</Button>
+                </div>
+              </div>
+              <div className='successButton'>
+                <Button variant='contained' type='submit'>Save</Button>
+              </div>
 
             </form>
             : <h1>Loading</h1> }
-          </div>
         </div>
       </div>
     </ThemeProvider>

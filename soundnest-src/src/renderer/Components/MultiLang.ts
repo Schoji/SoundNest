@@ -1,7 +1,5 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { backend_address } from './global'
-import { useEffect, useState } from 'react'
 
 i18n.use(initReactI18next).init({
   lng: "en",
@@ -18,7 +16,7 @@ i18n.use(initReactI18next).init({
         cart: "Cart",
         //Library
         yourLibrary: "Your Library",
-        username: "User name",
+        username: "Username",
         surname: "Surname",
         preferedTheme: "Prefered theme",
         credits: "Credits",
@@ -41,6 +39,14 @@ i18n.use(initReactI18next).init({
         save: "Save",
         cancel: "Cancel",
         exportUserInfo: "Export user information",
+        name: "Name",
+        email: "Email",
+        bio: "Bio",
+        noBio: "You have no bio.",
+        otherSettings: "Other Settings",
+        themes: "Themes",
+        privateData: "Private Data",
+        profileSettings: "Profile Settings",
         //CreateItem
         nameOfTrack: "Name of the track",
         producer: "Producer",
@@ -142,11 +148,19 @@ i18n.use(initReactI18next).init({
         cartOf: "Koszyk użytkownika",
         addToCart: "Dodaj do koszyka",
         //PurchaseHistory
-        purchaseHistory: "Historia zakupów użytkownika",
+        purchaseHistory: "Historia zakupów",
         //Settings
         save: "Zapisz",
         cancel: "Anuluj",
         exportUserInfo: "Eksportuj informacje o użytkowniku",
+        name: "Nazwa",
+        email: "Email",
+        bio: "Bio",
+        noBio: "Nie masz opisu.",
+        otherSettings: "Inne ustawienia",
+        themes: "Motywy",
+        privateData: "Dane prywatne",
+        profileSettings: "Ustawienia profilu",
         //CreateItem
         nameOfTrack: "Nazwa utworu",
         producer: "Producent",
@@ -253,6 +267,14 @@ i18n.use(initReactI18next).init({
         save: "Speichern",
         cancel: "Abbrechen",
         exportUserInfo: "Benutzerinformationen exportieren",
+        name: "Name",
+        email: "E-Mail",
+        bio: "Bio",
+        noBio: "Du hast keine Bio.",
+        otherSettings: "Weitere Einstellungen",
+        themes: "Themen",
+        privateData: "Private Daten",
+        profileSettings: "Profileinstellungen",
         //CreateItem
         nameOfTrack: "Titel des Songs",
         producer: "Produzent",
