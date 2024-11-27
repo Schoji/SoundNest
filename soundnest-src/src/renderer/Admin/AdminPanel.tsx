@@ -137,7 +137,7 @@ export default function AdminPanel() {
   })
   return (
     <ThemeProvider theme={materialtheme}>
-      <div className="all">
+      <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
         <TopBar />
         <SideBar />
         <div className="main">
