@@ -21,12 +21,17 @@
   justify-content: center;
   align-items: center;
 }
+
 .tradeList {
   display: grid;
   grid-template-rows: 1fr;
   gap: 5px;
 }
-.tradeObj {
+.tradeList img {
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+}
+.tradeObj, .tradeObjHistory {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto auto auto auto auto;
@@ -41,13 +46,17 @@
   display: flex;
   align-items: center;
 }
+.username:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 .tradeObj p img{
   width: 48px;
 }
 
 .itemRows {
   margin: 10px;
-  background-color: var(--window);
+  /* background-color: var(--window); */
   display: grid;
   grid-column: 1/-1;
   gap: 5px;
@@ -58,10 +67,19 @@
 }
 .itemRows img {
   width: 96px;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  border-radius: 10px;
 }
 .itemRows img:hover {
   opacity: 0.8;
   cursor: pointer;
+}
+.buttons {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
 }
 .dropdown {
   position: relative;
@@ -73,7 +91,7 @@
   background-color: var(--section);
   color: var(--font-color);
   min-width: 140px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 19px -6px var(--font-color);
   z-index: 1;
   border-radius: 10px;
 }
@@ -83,3 +101,18 @@
   align-items: center;
 }
 .dropdown:hover .itemDescription {display: block;}
+
+.tradeObjHistory {
+  position: relative;
+}
+
+.accepted {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  z-index: 1;
+  background: lime;
+}
