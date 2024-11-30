@@ -71,10 +71,10 @@ export function OtherItems() {
 }
 
 export default function Item() {
-  const [data, setData] = useState(null);
-  const [trackData, setTrackData] = useState(null);
+  const [data, setData] = useState([]);
+  const [trackData, setTrackData] = useState([]);
   const [userProductsIDs, setUserProductsIDs] = useState([])
-  const [userProducts, setUserProducts] = useState(null)
+  const [userProducts, setUserProducts] = useState([])
   const [cartItems, setCartItems] = useState([])
   const { item_id } = useParams()
   const navigate = useNavigate();
@@ -95,7 +95,10 @@ export default function Item() {
 
   const getUserProducts = () => {
     fetch(`${backend_address}/api/userproducts/${sessionStorage.getItem("id")}`)
-      .then((response) => response.json())
+      .then(response => {
+        if (response.ok) return response.json()
+          throw new Error("User has no products.")
+      })
       .then((data) => {
         var productIDs = []
         data.map((product, index) => {
@@ -107,6 +110,7 @@ export default function Item() {
       })
       .catch((error) => {
         console.log(error);
+        setUserProducts([{}]);
       });
   }
 
@@ -178,7 +182,7 @@ export default function Item() {
       <TopBar />
       <SideBar />
       <div className="main">
-        {data && userProducts?
+        {data && userProducts.length > 0 ?
         <div className="item" id="item">
           <CacheProvider value={cache}>
             <div className="itemTitle">

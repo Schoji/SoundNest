@@ -7,7 +7,7 @@ import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../Components/MultiLang'
 import './Cart.css';
-import { CircularProgress, TableContainer } from '@mui/material';
+import { CircularProgress, createTheme, TableContainer, ThemeProvider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,8 +16,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-const backend_address = 'http://localhost:5000';
+import { backend_address } from '../Components/global';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -84,21 +83,28 @@ export function CustomizedTables() {
 
 export default function PurchaseHistory() {
   const { t } = useTranslation()
+  let materialtheme = createTheme({
+    palette: {
+      mode: sessionStorage.getItem("theme") == "dark" ? "dark" : "light"
+    }
+  })
   return (
     <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">
         <div className="library">
-          <div className="header">
-              <h1>
-                {t("purchaseHistory")}: {sessionStorage.getItem('name')}{' '}
-                {sessionStorage.getItem('surname')}
-              </h1>
-          </div>
-          <div className="albums">
-            <CustomizedTables/>
-          </div>
+          <ThemeProvider theme={materialtheme}>
+            <div className="header">
+                <h1>
+                  {t("purchaseHistory")}: {sessionStorage.getItem('name')}{' '}
+                  {sessionStorage.getItem('surname')}
+                </h1>
+            </div>
+            <div className="albums">
+              <CustomizedTables/>
+            </div>
+          </ThemeProvider>
         </div>
       </div>
     </div>

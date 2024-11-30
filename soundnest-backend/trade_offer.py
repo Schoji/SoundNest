@@ -37,6 +37,7 @@ class TradeOfferModel(db.Model):
     id_receiver = db.Column(db.Integer, db.ForeignKey(UserModel.id), nullable=True)
     id_item_sent = db.Column(db.Integer, db.ForeignKey(ProductModel.id), nullable=True)
     id_item_received = db.Column(db.Integer, db.ForeignKey(ProductModel.id), nullable=True)
+    status = db.Column(db.String(80), default="pending")
 
     def __repr__(self):
         return f"<TradeOfferModel> id: {self.id}, trade_id: {self.trade_id}, date: {self.date}, id_sender: {self.id_sender}, id_receiver: {self.id_receiver}, id_item_sent: {self.id_item_sent}, id_item_received: {self.id_item_received}."
@@ -49,6 +50,7 @@ tradeOfferFields = {
     "id_receiver": fields.Integer,
     "id_item_sent": fields.Integer,
     "id_item_received": fields.Integer,
+    "status": fields.String,
 }
 
 tradeOffer_args = reqparse.RequestParser()
@@ -59,22 +61,12 @@ tradeOffer_args.add_argument("id_receiver", type=str, help="Studio description")
 tradeOffer_args.add_argument("id_item_sent", type=str, help="Studio description")
 tradeOffer_args.add_argument("id_item_received", type=str, help="Studio description")
 
-class TradeHistoryModel(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    trade_id = db.Column(db.String(80))
-    date = db.Column(db.DateTime)
-    id_sender = db.Column(db.Integer, db.ForeignKey(UserModel.id))
-    id_receiver = db.Column(db.Integer, db.ForeignKey(UserModel.id))
-    id_item_sent = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
-    id_item_received = db.Column(db.Integer, db.ForeignKey(ProductModel.id))
-
-
 class getTradeToken(Resource):
     def get(self):
         while True:
             gen_uuid = uuid.uuid1()
             tradeOffers = TradeOfferModel.query.all()
-            tradeOffersFromHistory = TradeHistoryModel.query.all()
+            tradeOffersFromHistory = TradeOfferModel.query.filter(TradeOfferModel.status != "pending").all()
             for tradeOffer in tradeOffers:
                 if tradeOffer.trade_id == gen_uuid:
                     print("Duplicate UUID detected.")
@@ -125,11 +117,11 @@ class TradeOffer(Resource):
         db.session.commit()
         tradeOffers = TradeOfferModel.query.all()
         return tradeOffers, 204
-    
-class getUserTradeoffers(Resource):
+
+class getUserSentTradeoffers(Resource):
     def get(self, id_user):
         user = UserModel.query.filter_by(id=id_user).first()
-        tradeoffers = TradeOfferModel.query.filter_by(id_receiver=id_user).all()
+        tradeoffers = TradeOfferModel.query.filter_by(id_sender=id_user).order_by(desc(TradeOfferModel.status)).all()
 
         result = []
         trade_ids = []
@@ -142,12 +134,12 @@ class getUserTradeoffers(Resource):
                 trade_ids.append(tradeoffer.trade_id)
         trade_dict = {}
         for trade in trade_ids:
-            offers = TradeOfferModel.query.filter_by(trade_id = trade)
+            offers = TradeOfferModel.query.filter_by(trade_id = trade).all()
             sent_items = []
             received_items = []
             userid = 0
             for offer in offers:
-                userid = offer.id_sender
+                userid = offer.id_receiver
                 if (offer.id_item_sent != None):
                     item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
                     data = getProductPic(item.item_path)
@@ -181,6 +173,70 @@ class getUserTradeoffers(Resource):
                 },
                 "received_items": received_items,
                 "sent_items": sent_items,
+                "status": offers[0].status,
+            }
+            result.append(trade_dict)
+            trade_dict = {}
+        return result
+
+class getUserTradeoffers(Resource):
+    def get(self, id_user):
+        user = UserModel.query.filter_by(id=id_user).first()
+        tradeoffers = TradeOfferModel.query.filter_by(id_receiver=id_user).order_by(desc(TradeOfferModel.status)).all()
+
+        result = []
+        trade_ids = []
+
+        if not tradeoffers:
+            return "Trade offers not found", 404
+        
+        for tradeoffer in tradeoffers:
+            if (tradeoffer.trade_id not in trade_ids):
+                trade_ids.append(tradeoffer.trade_id)
+        trade_dict = {}
+        for trade in trade_ids:
+            offers = TradeOfferModel.query.filter_by(trade_id = trade).all()
+            sent_items = []
+            received_items = []
+            userid = 0
+            for offer in offers:
+                userid = offer.id_sender
+                if (offer.id_item_sent != None):
+                    item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
+                    data = getProductPic(item.item_path)
+                    sent_items.append({
+                        "id": item.id,
+                        "album": item.album,
+                        "artist": item.artist,
+                        "price": item.price,
+                        "picture": data
+                    })
+                
+                if (offer.id_item_received != None):
+                    item = ProductModel.query.filter_by(id = offer.id_item_received).first()
+                    if item != None:
+                        data = getProductPic(item.item_path)
+                        received_items.append({
+                            "id": item.id,
+                            "album": item.album,
+                            "artist": item.artist,
+                            "price": item.price,
+                            "picture": data
+                        })
+
+            user = UserModel.query.filter_by(id = userid).first()
+            trade_dict = {
+                "trade_id": trade,
+                "date": str(offers[0].date),
+                "user" : {
+                    "id": user.id,
+                    "name": user.name,
+                    "surname": user.surname,
+                    "pic": getUserPic(user.avatar_dir)
+                },
+                "received_items": received_items,
+                "sent_items": sent_items,
+                "status": offers[0].status,
             }
             result.append(trade_dict)
             trade_dict = {}
@@ -203,19 +259,12 @@ class ExchangeProducts(Resource):
                 transaction.id_user = user1
         
         for offer in tradeOffer:
-            db.session.add(TradeHistoryModel(
-                trade_id=offer.trade_id,
-                date=offer.date,
-                id_sender=offer.id_sender,
-                id_receiver=offer.id_receiver,
-                id_item_sent=offer.id_item_sent,
-                id_item_received=offer.id_item_received
-                ))
-            db.session.delete(offer)
+            db.session
+            offer.status = "accepted"
         db.session.commit()
         
         #validate other trade offers
-        all_offers = TradeOfferModel.query.all()
+        all_offers = TradeOfferModel.query.filter_by(status = "pending").all()
         for offer in all_offers:
             if offer.id_item_sent:
                 transaction = TransactionModel.query.filter_by(id_user = offer.id_sender, id_product = offer.id_item_sent).first()
@@ -224,7 +273,7 @@ class ExchangeProducts(Resource):
                     print(other_offers_with_same_id)
                     for invalid_offer in other_offers_with_same_id:
                         print("Trade no. ", offer.trade_id, " is no longer valid. Deleting.")
-                        db.session.delete(invalid_offer)
+                        invalid_offer.status = "canceled"
                     db.session.commit()
                     
             
@@ -235,7 +284,7 @@ class ExchangeProducts(Resource):
                     other_offers_with_same_id = TradeOfferModel.query.filter_by(trade_id = offer.trade_id).all()
                     for invalid_offer in other_offers_with_same_id:
                         print("Trade no. ", offer.trade_id, " is no longer valid. Deleting.")
-                        db.session.delete(invalid_offer)
+                        invalid_offer.status = "canceled"
                     db.session.commit()
                     
         db.session.commit()
@@ -244,65 +293,7 @@ class ExchangeProducts(Resource):
     def delete(self, trade_id):
         trades = TradeOfferModel.query.filter_by(trade_id=trade_id).all()
         for trade in trades:
-            db.session.delete(trade)
+            trade.status = "canceled"
         
         db.session.commit()
         return "Trade offer was deleted successfully.", 201
-
-class getUserTradeoffersHistory(Resource):
-    def get(self, id_user):
-        user = UserModel.query.filter_by(id=id_user).first()
-        tradeoffers = TradeOfferModel.query.filter_by(id_receiver=id_user).all()
-
-        result = []
-        trade_ids = []
-
-        if not tradeoffers:
-            return "Trade offers not found", 404
-        
-        for tradeoffer in tradeoffers:
-            if (tradeoffer.trade_id not in trade_ids):
-                trade_ids.append(tradeoffer.trade_id)
-        trade_dict = {}
-        for trade in trade_ids:
-            offers = TradeOfferModel.query.filter_by(trade_id = trade)
-            sent_items = []
-            received_items = []
-            userid = 0
-            for offer in offers:
-                userid = offer.id_sender
-                if (offer.id_item_sent != None):
-                    item = ProductModel.query.filter_by(id = offer.id_item_sent).first()
-                    data = getProductPic(item.item_path)
-                    sent_items.append({
-                        "id": item.id,
-                        "album": item.album,
-                        "artist": item.artist,
-                        "picture": data
-                    })
-                
-                if (offer.id_item_received != None):
-                    item = ProductModel.query.filter_by(id = offer.id_item_received).first()
-                    data = getProductPic(item.item_path)
-                    received_items.append({
-                        "id": item.id,
-                        "album": item.album,
-                        "artist": item.artist,
-                        "picture": data
-                    })
-            user = UserModel.query.filter_by(id = userid).first()
-            trade_dict = {
-                "trade_id": trade,
-                "date": str(offers[0].date),
-                "user" : {
-                    "id": user.id,
-                    "name": user.name,
-                    "surname": user.surname,
-                    "pic": getUserPic(user.avatar_dir)
-                },
-                "received_items": received_items,
-                "sent_items": sent_items,
-            }
-            result.append(trade_dict)
-            trade_dict = {}
-        return result

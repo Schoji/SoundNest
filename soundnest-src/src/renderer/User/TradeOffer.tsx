@@ -21,11 +21,11 @@ export default function Tradeoffer() {
   const { user_id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [userProducts1, setuserProducts1] = useState(null);
-  const [userProducts2, setuserProducts2] = useState(null);
+  const [userProducts1, setuserProducts1] = useState([]);
+  const [userProducts2, setuserProducts2] = useState([]);
 
-  const [userInfo1, setUserInfo1] = useState(null);
-  const [userInfo2, setUserInfo2] = useState(null);
+  const [userInfo1, setUserInfo1] = useState([]);
+  const [userInfo2, setUserInfo2] = useState([]);
 
   const [myItems, setMyItems] = useState([]);
   const [theirItems, setTheirItems] = useState([]);
@@ -49,16 +49,32 @@ export default function Tradeoffer() {
 
   const getUserProducts1 = () => {
     fetch(backend_address + "/api/userproducts/" + sessionStorage.getItem("id"))
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) return response.json();
+      else {
+        throw new Error("User has no products.")
+      }
+    })
     .then((data) => setuserProducts1(data))
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      console.log(error)
+      setuserProducts1([])
+    })
   }
 
   const getUserProducts2 = () => {
     fetch(backend_address + "/api/userproducts/" + user_id)
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) return response.json();
+      else {
+        throw new Error("User has no products.")
+      }
+    })
     .then((data) => setuserProducts2(data))
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      console.log(error)
+      setuserProducts2([])
+    })
   }
 
   function sendTradeOffer() {
@@ -135,76 +151,73 @@ export default function Tradeoffer() {
       <SideBar />
       <div className="main">
         <div className='layout'>
-          <div>
-            <h1>{t("user1Products")}:</h1>
-
-            {userInfo1?.avatar_dir !== '/' ? (
-                <img
-                  src={`data:image/jpeg;base64,${userInfo1?.avatar_dir}`}
+          <div className='tradeOffer'>
+            <div className='tradeHeader'>
+              <img
+                  src={`data:image/jpeg;base64,${userInfo1.avatar_dir}`}
                   alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <p>{userInfo1?.name} {userInfo1?.surname}</p>
-              <div className='itemList'>
-            {userProducts1?.map((product, index) => (
-              <div onClick={() => {
-                var dataset = {
-                  id: product.id,
-                  album: product.album,
-                  artist: product.artist,
-                  item_path: product.item_path
-                }
-                if (sessionStorage.getItem("tradeoffer_mine") === undefined) {
-                  sessionStorage.setItem("tradeoffer_mine", "")
-                }
-                if (document.getElementById(`image-${product.id}`)?.classList.contains("selected")) {
-                  document.getElementById(`image-${product.id}`)?.classList.remove("selected")
-                  sessionStorage.setItem("tradeoffer_mine", sessionStorage.getItem("tradeoffer_mine")?.replaceAll(`${product.id};`, ''))
+              />
+              <h2>
+                Your inventory:
+              </h2>
 
-                  setMyItems(myItems.filter((item) => {return item.id != product.id}))
+            </div>
+              <div className='items'>
+              {userProducts1.length > 0 && userProducts1?.map((product, index) => (
+                <img
+                id={`image-${product.id}`}
+                src={`data:image/jpeg;base64,${product.item_path}`}
+                alt="Loading..."
+                onClick={() => {
+                  var dataset = {
+                    id: product.id,
+                    album: product.album,
+                    artist: product.artist,
+                    item_path: product.item_path
+                  }
+                  if (sessionStorage.getItem("tradeoffer_mine") === undefined) {
+                    sessionStorage.setItem("tradeoffer_mine", "")
+                  }
+                  if (document.getElementById(`image-${product.id}`)?.classList.contains("selected")) {
+                    document.getElementById(`image-${product.id}`)?.classList.remove("selected")
+                    sessionStorage.setItem("tradeoffer_mine", sessionStorage.getItem("tradeoffer_mine")?.replaceAll(`${product.id};`, ''))
 
-                }
-                else {
-                  document.getElementById(`image-${product.id}`)?.classList.add("selected")
-                  sessionStorage.setItem("tradeoffer_mine", sessionStorage.getItem("tradeoffer_mine") + product.id + ";")
-                  if (myItems === undefined || myItems === null) {
-                    setMyItems([dataset])
+                    setMyItems(myItems.filter((item) => {return item.id != product.id}))
+
                   }
                   else {
-                    setMyItems(myItems => [...myItems, dataset])
+                    document.getElementById(`image-${product.id}`)?.classList.add("selected")
+                    sessionStorage.setItem("tradeoffer_mine", sessionStorage.getItem("tradeoffer_mine") + product.id + ";")
+                    if (myItems === undefined || myItems === null) {
+                      setMyItems([dataset])
+                    }
+                    else {
+                      setMyItems(myItems => [...myItems, dataset])
+                    }
                   }
-                }
-              }}>
-                {product.item_path !== '/' ? (
-                <img
-                  id={`image-${product.id}`}
-                  src={`data:image/jpeg;base64,${product.item_path}`}
-                  alt="Loading..."
+                }}
                 />
-              ) : (
-                <img src={default_album} />
-              )}
-              <p>{product.album}</p>
-              </div>
             ))}
             </div>
           </div>
-          <div>
-          <h1>{t("user2Products")}:</h1>
-          {userInfo2?.avatar_dir !== '/' ? (
-                <img
-                  src={`data:image/jpeg;base64,${userInfo2?.avatar_dir}`}
+          <div className='tradeOffer'>
+            <div className='tradeHeader'>
+              <img
+                  src={`data:image/jpeg;base64,${userInfo2.avatar_dir}`}
                   alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <p>{userInfo2?.name} {userInfo2?.surname}</p>
-              <div className='itemList'>
-              {userProducts2?.map((product, index) => (
-              <div onClick={() => {
+              />
+              <h2>
+                Their inventory:
+              </h2>
+
+            </div>
+              <div className='items'>
+              {userProducts2.length > 0 && userProducts2?.map((product, index) => (
+              <img
+                id={`image_theirs-${product.id}`}
+                src={`data:image/jpeg;base64,${product.item_path}`}
+                alt="Loading..."
+                onClick={() => {
                 var dataset = {
                   id: product.id,
                   album: product.album,
@@ -230,59 +243,53 @@ export default function Tradeoffer() {
                   }
                 }
 
-              }}>
-                {product.item_path !== '/' ? (
-                <img
-                  id={`image_theirs-${product.id}`}
-                  src={`data:image/jpeg;base64,${product.item_path}`}
-                  alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <p>{product.album}</p>
-              </div>
+              }}
+              />
             ))}
             </div>
           </div>
-          <div>
-            <h1>{t("youGive")}</h1>
-              <div className='itemList'>
+
+          <div className='tradeOffer'>
+            <div className='tradeHeader'>
+              <h2>
+                Your items:
+              </h2>
+            </div>
+            <p>These are the items you will lose in the trade.</p>
+            <div className='youritems'>
               {myItems?.length > 0 ? myItems?.map((item, index) => (
-                <div>
-                  <img
-                    // src={`data:image/jpeg;base64,${merged.item_path[merged.id.findIndex((element) => element == parseInt(item))]}`}
-                    src={`data:image/jpeg;base64,${item.item_path}`}
-                    alt="Loading..."
-                  />
-                  <p>{item.album}</p>
-                </div>
+                <img
+                src={`data:image/jpeg;base64,${item.item_path}`}
+                alt="Loading..."
+                />
               )): null}
             </div>
           </div>
-          <div>
-            <h1>{t("youGet")}</h1>
-            <div className='itemList'>
+          <div className='tradeOffer'>
+            <div className='tradeHeader'>
+              <h2>
+                Their items:
+              </h2>
+            </div>
+            <p>These are the items you will receive in the trade.</p>
+            <div className='youritems'>
               {theirItems?.length > 0 ? theirItems?.map((item, index) => (
-                <div>
-                  <img
-                    // src={`data:image/jpeg;base64,${merged.item_path[merged.id.findIndex((element) => element == parseInt(item))]}`}
-                    src={`data:image/jpeg;base64,${item.item_path}`}
-                    alt="Loading..."
-                  />
-                  <p>{item.album}</p>
-                </div>
+                <img
+                  key={index}
+                  src={`data:image/jpeg;base64,${item.item_path}`}
+                  alt="Loading..."
+                />
               )): null}
             </div>
           </div>
+          <div className='button'>
+          <CacheProvider value={cache}>
+              <Button variant='contained' onClick={sendTradeOffer}>
+                {t("sendTradeoffer")}
+              </Button>
+          </CacheProvider>
+          </div>
         </div>
-        <CacheProvider value={cache}>
-          <div className='felix'>
-          <Button variant='contained' onClick={sendTradeOffer}>
-            {t("sendTradeoffer")}
-          </Button>
-        </div>
-        </CacheProvider>
       </div>
     </div>
   );
