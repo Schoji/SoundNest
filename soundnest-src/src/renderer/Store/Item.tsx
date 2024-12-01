@@ -71,7 +71,7 @@ export function OtherItems() {
 }
 
 export default function Item() {
-  const [data, setData] = useState([]);
+  const [productData, setProductData] = useState([]);
   const [trackData, setTrackData] = useState([]);
   const [userProductsIDs, setUserProductsIDs] = useState([])
   const [userProducts, setUserProducts] = useState([])
@@ -80,11 +80,17 @@ export default function Item() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const Fetch = () => {
+  const getProduct = () => {
     fetch(backend_address + "/api/products_with_tags/" + item_id)
-    .then(response => response.json())
-    .then((d) => setData(d))
-    .catch((error) => console.log(error))
+    .then(response => {
+      if (response.ok) return response.json()
+      throw new Error("Connection refused.")
+    })
+    .then((d) => setProductData(d))
+    .catch((error) => {
+      console.log(error)
+      setProductData(false)
+    })
   }
   const getTracks = () => {
     fetch(backend_address + "/api/producttracks/" + item_id)
@@ -115,7 +121,7 @@ export default function Item() {
   }
 
   useEffect(() => {
-    Fetch();
+    getProduct();
     getTracks();
     getUserProducts()
 
@@ -182,7 +188,7 @@ export default function Item() {
       <TopBar />
       <SideBar />
       <div className="main">
-        {data && userProducts.length > 0 ?
+        {productData && userProducts.length > 0 ?
         <div className="item" id="item">
           <CacheProvider value={cache}>
             <div className="itemTitle">
@@ -196,33 +202,33 @@ export default function Item() {
               <h1>{t("albumDetails")}</h1>
             </div>
             <div className="itemDesc">
-              {data.item_path !== '/' ? (
+              {productData.item_path !== '/' ? (
                 <img
-                  src={`data:image/jpeg;base64,${data.item_path}`}
+                  src={`data:image/jpeg;base64,${productData.item_path}`}
                   alt="Loading..."
                 />
               ) : (
                 <img src={default_album} />
               )}
-              <h2>{data.album}</h2>
-              <h3>{data.artist}</h3>
-              <p>{data.desc}</p>
+              <h2>{productData.album}</h2>
+              <h3>{productData.artist}</h3>
+              <p>{productData.desc}</p>
               <p>
-                {data.tags != undefined ? JSON.parse((JSON.stringify(data.tags))).map((tag, index) => {
-                  if (index != JSON.parse((JSON.stringify(data.tags))).length - 1) return tag + ", " // siedziałem nad tym jebanym, skurwynyśkim gównem przez 30 minut a wystarczyło dać returna, rozpierdole ten program w chuj
+                {productData.tags != undefined ? JSON.parse((JSON.stringify(productData.tags))).map((tag, index) => {
+                  if (index != JSON.parse((JSON.stringify(productData.tags))).length - 1) return tag + ", " // siedziałem nad tym jebanym, skurwynyśkim gównem przez 30 minut a wystarczyło dać returna, rozpierdole ten program w chuj
                   else return tag
                 }) : null}</p>
               <h3>
-                {data.price === undefined ? data.price : data.price.toFixed(2)}$
+                {productData.price === undefined ? productData.price : productData.price.toFixed(2)}$
               </h3>
               <Button
               disabled={sessionStorage.getItem("hasKey") == "false" ||
-              (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(data.id)) != -1) ||
-              (userProductsIDs.indexOf(parseInt(data.id)) != -1) ? true : false}
+              (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(productData.id)) != -1) ||
+              (userProductsIDs.indexOf(parseInt(productData.id)) != -1) ? true : false}
               onClick={addToCart}>
                 {sessionStorage.getItem("hasKey") == "false" ? "Demo" :
-                JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(data.id)) != -1 ? "In cart" :
-                userProductsIDs.indexOf(parseInt(data.id)) != -1 ? "Owned" : t("addToCart")}
+                JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(productData.id)) != -1 ? "In cart" :
+                userProductsIDs.indexOf(parseInt(productData.id)) != -1 ? "Owned" : t("addToCart")}
                 </Button>
             </div>
             {trackInfo()}
@@ -240,11 +246,38 @@ export default function Item() {
           </CacheProvider>
         </div>
         :
-        // todo
-        <Box>
-          <Skeleton variant="rounded" width={1000} height={500} />
-        </Box>
-
+        <div className="item">
+          <div className="itemTitle">
+            <Skeleton animation="wave" variant="rounded" width={"50px"} height={"50px"} />
+            <Skeleton animation="wave" variant="rounded" width={"250px"} height={"50px"} />
+          </div>
+          <div className="itemDesc">
+            <Skeleton animation="wave" variant="rounded" width={"275px"} height={"275px"} />
+            <Skeleton animation="wave" variant="rounded" width={"200px"} height={"40px"} />
+            <Skeleton animation="wave" variant="rounded" width={"220px"} height={"30px"} />
+            <Skeleton animation="wave" variant="rounded" width={"275px"} height={"50px"} />
+            <Skeleton animation="wave" variant="rounded" width={"200px"} height={"30px"} />
+            <div className='kobuch'>
+              <Skeleton animation="wave" variant="rounded" width={"100px"} height={"30px"} />
+            </div>
+            <Skeleton animation="wave" variant="rounded" width={"275px"} height={"40px"} />
+          </div>
+          <div className="itemTracks">
+            {[...Array(10)].map((element, index) =>
+              <div className="track">
+               <Skeleton animation="wave" variant="rounded" width={"25px"} height={"50px"} />
+               <Skeleton animation="wave" variant="rounded" width={"20px"} height={"30px"} sx={{marginLeft: "10px"}}/>
+               <Skeleton animation="wave" variant="rounded" width={"150px"} height={"35px"} />
+               <Skeleton animation="wave" variant="rounded" width={"150px"} height={"35px"} />
+               <Skeleton animation="wave" variant="rounded" width={"150px"} height={"35px"} />
+              </div>
+            )}
+          </div>
+          <div className="itemTitle">
+            <Skeleton animation="wave" variant="rounded" width={"50px"} height={"50px"} />
+            <Skeleton animation="wave" variant="rounded" width={"250px"} height={"50px"} />
+          </div>
+        </div>
         }
       </div>
     </div>
