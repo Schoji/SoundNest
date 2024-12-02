@@ -103,9 +103,9 @@ export default function Studio() {
       <SideBar />
       <div className="main">
       {data ?
-        <div className="item" id="item">
+        <div className="studioSection">
           <CacheProvider value={cache}>
-            <div className="itemTitle">
+            <div className="title">
               <IconButton
                 onClick={() => {
                   navigate('/studios', { replace: true });
@@ -115,29 +115,32 @@ export default function Studio() {
               </IconButton>
               <h1>{t("studioDetails")}</h1>
             </div>
-            <div className="itemDesc">
-              {data.studio_dir !== '/' ? (
-                <img
-                  src={`data:image/jpeg;base64,${data.studio_dir}`}
-                  alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <h2>{data.name}</h2>
-              <p>{data.desc}</p>
-              <h2>{t("studioOwned")}</h2>
-              {data.user_picture !== '/' ? (
-                <img
-                  src={`data:image/jpeg;base64,${data.user_picture}`}
-                  alt="Loading..."
-                />
-              ) : (
-                <img src={default_album} />
-              )}
-              <p>{data.user_name}</p>
-              <p>{data.user_surname}</p>
-              <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>Check out</Button>
+            <div className='studioContainer'>
+              <div className='studioLeft'>
+                {data.studio_dir !== '/' ? (
+                  <img
+                    src={`data:image/jpeg;base64,${data.studio_dir}`}
+                    alt="Loading..."
+                  />
+                ) : (
+                  <img src={default_album} />
+                )}
+                <h2>{data.name}</h2>
+                <p>{data.desc}</p>
+              </div>
+              <div className='studioLeft'>
+                {data.user_picture !== '/' ? (
+                  <img
+                    src={`data:image/jpeg;base64,${data.user_picture}`}
+                    alt="Loading..."
+                  />
+                ) : (
+                  <img src={default_album} />
+                )}
+                <p>{data.user_name}</p>
+                <p>{data.user_surname}</p>
+                <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>Check out</Button>
+              </div>
             </div>
             {sp_data ?
             <div>

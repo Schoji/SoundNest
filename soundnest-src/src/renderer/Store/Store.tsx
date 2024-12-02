@@ -134,6 +134,7 @@ export default function Store() {
         :
 
         <div className="store">
+          <h1>{t('store')}</h1>
           <div className="storeProducts">
           {[...Array(12)].map((element, index) =>
             <div className="storeProductLoading">

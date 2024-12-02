@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
 from flask_cors import CORS
+from sqlalchemy_utils import database_exists
 
 DATABASES = ["sqllite", "mysql", "postgresql"]
 DATABASE = "sqllite"
@@ -36,3 +37,6 @@ app.config['CORS_HEADERS'] = 'application/json'
 
 db = SQLAlchemy(app)
 api = Api(app)
+
+if __name__ == "__main__":
+   db.create_all()

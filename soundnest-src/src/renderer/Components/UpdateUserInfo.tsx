@@ -4,8 +4,10 @@ export default function UpdateUserInfo() {
   console.log(sessionStorage.getItem("id"))
   fetch(backend_address + "/api/users/" + sessionStorage.getItem("id"))
   .then(response => response.json())
-  .then((arg) => {
-    const userInfo = JSON.parse(arg)
+  .then(arg => {
+    console.log(arg)
+    const userInfo = arg
+    console.log(arg)
     sessionStorage.setItem('id', userInfo.id);
     sessionStorage.setItem('username', userInfo.username);
     sessionStorage.setItem('name', userInfo.name);
@@ -21,6 +23,7 @@ export default function UpdateUserInfo() {
     sessionStorage.setItem("logo", "0")
     sessionStorage.setItem("lang", userInfo.lang)
     sessionStorage.setItem("hasKey", userInfo.hasKey)
+    console.log("User info was updated.")
   })
   .catch(error => console.log(error))
 }

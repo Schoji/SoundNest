@@ -8,7 +8,7 @@ import SideBar from '../SideBar/SideBar';
 import './AdminPanel.css'
 import { DataGrid, GridCellEditStopParams, GridCellEditStopReasons, GridColDef, MuiEvent } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import { Alert, Avatar, createTheme, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
+import { Alert, Avatar, createTheme, LinearProgress, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
 import default_album from '../../../assets/album.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang";
 import { useCustomEventListener } from 'react-custom-events';
 import { backend_address } from '../Components/global';
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function AdminPanel() {
   const { t } = useTranslation();
@@ -25,6 +26,7 @@ export default function AdminPanel() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [selectedStudio, setSelectedStudio] = useState(1);
   const [response, setResponse] = useState({"status":"", "content":""});
+  const navigate = useNavigate()
   const getUser = () => {
     fetch(backend_address + "/api/users/")
       .then((response) => response.json())
@@ -70,7 +72,7 @@ export default function AdminPanel() {
   }
 
   const deleteAdmin = (user_id) => {
-    fetch(backend_address + "/api/make_admin/" + user_id +  "/", {method: "DELETE"})
+    fetch(backend_address + "/api/make_admin/" + parseInt(user_id) +  "/", {method: "DELETE"})
       .then(response => {
         if (response.ok) {
           setResponse({"status":"success", "content": "Admin was deleted successfully."})
@@ -79,7 +81,11 @@ export default function AdminPanel() {
           setResponse({"status":"error", "content": "Admin could not be deleted."})
         }
         updateSite()
+        if (parseInt(user_id) == parseInt(sessionStorage.getItem("id"))) {
+          UpdateUserInfo()
+        }
       })
+      .then(() => navigate("/store"))
       .catch((error) => {
         console.log(error);
       });
@@ -112,7 +118,9 @@ export default function AdminPanel() {
     {field: 'id', headerName: 'ID', width: 50},
     {field: 'avatar_dir', headerName: "Image", width: 60,
       renderCell: (params) => (
-      <Avatar variant='rounded' src={`data:image/jpeg;base64,${params.value}`}/>
+      <div className='kobuch'>
+        <Avatar variant='circular' src={`data:image/jpeg;base64,${params.value}`}/>
+      </div>
     ),},
     {field: 'username', headerName: "Username", width: 125},
     {field: 'surname', headerName: "Surname", width: 70},
@@ -167,8 +175,47 @@ export default function AdminPanel() {
         <TopBar />
         <SideBar />
         <div className="main">
+          <h1>Dashboard</h1>
+          <div className='stats'>
+            <div className='stat'>
+              <div className='amount'>
+                <h1>Users</h1>
+                <LinearProgress variant="determinate" value={50}/>
+                <p>1</p>
+              </div>
+              <div className='icon'>
+                <PersonIcon fontSize='large'/>
+              </div>
+            </div>
+            <div className='stat'>
+              <div className='amount'>
+                <h1>Users</h1>
+                <p>1</p>
+              </div>
+              <div className='icon'>
+                <PersonIcon fontSize='large'/>
+              </div>
+            </div>
+            <div className='stat'>
+              <div className='amount'>
+                <h1>Users</h1>
+                <p>1</p>
+              </div>
+              <div className='icon'>
+                <PersonIcon fontSize='large'/>
+              </div>
+            </div>
+            <div className='stat'>
+              <div className='amount'>
+                <h1>Users</h1>
+                <p>1</p>
+              </div>
+              <div className='icon'>
+                <PersonIcon fontSize='large'/>
+              </div>
+            </div>
+          </div>
           <div className="users">
-            <h1>{t("users")}</h1>
             <DataGrid
               rows={user}
               columns={columns}
