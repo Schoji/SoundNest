@@ -1,16 +1,32 @@
 import '../App.css';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Button, createTheme, TextField } from "@mui/material";
-import logo from '../../../assets/icons/128x128.png';
+import { Alert, Button, Checkbox, createTheme, TextField } from "@mui/material";
+import logo from '../../../assets/icons/icons-dark/128x128.png';
 import { validateData } from '../Components/InputValidation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { backend_address } from '../Components/global';
 import { ThemeProvider } from '@mui/material';
 
 export default function LoginWindow() {
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("visitedRegister") == "true") {
+      sessionStorage.setItem("visitedRegister", "false")
+      setTimeout(() => {
+        document.getElementById("loginScreen").style.gridTemplateRows="220px 1fr"
+        document.getElementById("appLogo").style.marginBottom="32px"
+      }, 1)
+    }
+    else {
+      document.getElementById("loginScreen").style.gridTemplateRows="220px 1fr"
+      document.getElementById("appLogo").style.marginBottom="32px"
+    }
+  },[])
+
+
   let materialtheme = createTheme({
     palette: {
       mode: "dark"
@@ -47,9 +63,9 @@ export default function LoginWindow() {
     checkCreds();
   }
   return (
-      <div className='loginScreen'>
+      <div className='loginScreen' id='loginScreen'>
         <div className='loginLogo'>
-          <img src={logo} alt="appLogo" />
+          <img src={logo} alt="appLogo" id='appLogo'/>
         </div>
         <ThemeProvider theme={materialtheme}>
         <div className='loginForm'>
@@ -58,22 +74,31 @@ export default function LoginWindow() {
                 id="username"
                 label="Username"
                 type="text"
-                placeholder="Username"
                 defaultValue="johndoe123"
               />
               <TextField
                 id="password"
                 label="Password"
                 type="password"
-                placeholder="Password"
                 defaultValue="P@ssw0rd123"
               />
+              <div className='checkbox'>
+                <Checkbox
+                  disableRipple
+                />
+                <p>Keep me signed in</p>
+              </div>
               {error.length > 0 ?
-              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
-              : null
+              <Alert id="error"
+                className="error"
+                variant="filled"
+                severity="error"
+              >
+                {error}
+              </Alert> : <div> </div>
               }
-              <Button variant="contained" type="submit" value="Login">Login</Button>
-              <Button onClick={() => navigate("/register", {replace: true})}>Don't have an account?</Button>
+              <Button className='loginButton' variant="contained" type="submit" value="Login">Login</Button>
+              <Button className='registerButton' onClick={() => navigate("/register", {replace: true})}>Don't have an account?</Button>
             </form>
           </div>
           </ThemeProvider>

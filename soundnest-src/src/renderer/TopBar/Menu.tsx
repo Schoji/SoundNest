@@ -56,6 +56,7 @@ export default function AccountMenu() {
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
+            disableRipple
             size="small"
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"

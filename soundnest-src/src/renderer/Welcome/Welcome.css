@@ -1,51 +1,55 @@
+img {
+  -webkit-user-drag: none;
+}
 .container {
+  user-select: none;
   background-color: #151515;
-  opacity: 0.8;
-  background-image: radial-gradient(circle at center center, #29292a, #151515), repeating-radial-gradient(circle at center center, #29292a, #29292a, 10px, transparent 20px, transparent 10px);
-  background-blend-mode: multiply;
   margin: 0;
-  width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 220px 1fr;
 }
-
 .logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
+  margin-bottom: 42px;
+  place-self: end center;
   grid-column: 2/3;
   grid-row: 1/2;
-  animation: logoGlowOut .5s;
+  animation: logoGlowOut .3s;
 }
 .logo:hover {
-  filter: drop-shadow(0px 0px 15px #ffffff);
-  animation: logoGlowIn .5s;
+  filter: drop-shadow(0px 0px 10px #ddd);
+  animation: logoGlowIn .3s;
 }
-
-.container > p{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.content{
   grid-column: 2/3;
-  color: white;
+  display: grid;
+  grid-template-rows: min-content auto 45px;
+  height: 390.8px;
+  background-color: #252525;
+  border-radius: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 25px;
 }
-
-.continue {
-  height: 50px;
-  grid-column: 2/3;
-  grid-row: 4/4;
+.content h1 {
+  color: #ddd;
+  text-align: center;
 }
-.welcome {
-  font-size: larger;
-  grid-column: 2/3;
-  grid-row: 1/4;
+.content .continue {
+  background: linear-gradient(140deg, #0093ad 0%, #005867 100%);
+  color: #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px #ddd;
+}
+.content .continue:hover {
+  box-shadow: 0px 0px 19px -6px #ddd;
+  background: linear-gradient(140deg, #0094ae 0%, #007a90 100%);
 }
 .loader {
-  grid-column: 2/3;
-  grid-row: 3/4;
+  place-self: center center;
   height: 70px;
   display: flex;
   align-items: center;
@@ -58,7 +62,7 @@
   width: 10px;
   border-radius: 50px;
   margin: 0 5px;
-  animation: animate 1.2s linear infinite;
+  animation: animate 1.2s ease-in-out infinite, colors 6s linear infinite;
 }
 .stroke:nth-child(1) {
   animation-delay: 0s;
@@ -82,12 +86,12 @@
   animation-delay: 0s;
 }
 @keyframes logoGlowIn {
-  from {filter: drop-shadow(0px 0px 0px #ffffff);}
-  to {filter: drop-shadow(0px 0px 15px #ffffff);}
+  from {filter: drop-shadow(0px 0px 0px #ddd);}
+  to {filter: drop-shadow(0px 0px 10px #ddd);}
 }
 @keyframes logoGlowOut {
-  from {filter: drop-shadow(0px 0px 15px #ffffff);}
-  to {filter: drop-shadow(0px 0px 0px #ffffff);}
+  from {filter: drop-shadow(0px 0px 10px #ddd);}
+  to {filter: drop-shadow(0px 0px 0px #ddd);}
 }
 @keyframes animate {
   50% {
@@ -97,4 +101,29 @@
     height: 100%;
   }
 }
-
+@keyframes colors {
+  0% {
+    background-color: #d18f1f;
+    filter: drop-shadow(0 0 5px #d18f1f);
+  }
+  20% {
+    background-color: #00768b;
+    filter: drop-shadow(0 0 5px #00768b);
+  }
+  40% {
+    background-color: #ff4081;
+    filter: drop-shadow(0 0 5px #ff4081);
+  }
+  60% {
+    background-color: #d32f2f;
+    filter: drop-shadow(0 0 5px #d32f2f);
+  }
+  80% {
+    background-color: #388e3c;
+    filter: drop-shadow(0 0 5px #388e3c);
+  }
+  100% {
+    background-color: #d18f1f;
+    filter: drop-shadow(0 0 5px #d18f1f);
+  }
+}

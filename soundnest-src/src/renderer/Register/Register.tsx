@@ -2,14 +2,20 @@ import '../App.css';
 import './Register.css'
 import { useNavigate } from 'react-router-dom';
 import { Alert, Button, createTheme, TextField, ThemeProvider } from "@mui/material";
-import logo from '../../../assets/icons/128x128.png';
+import logo from '../../../assets/icons/icons-dark/128x128.png';
 import { backend_address } from '../Components/global';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { validateData } from '../Components/InputValidation';
 
 export default function RegisterWindow() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  sessionStorage.setItem("visitedRegister", "true")
+  setTimeout(() => {
+    document.getElementById("registerScreen").classList.add("clicked");
+    document.getElementById("appLogo").style.marginBottom="145px";
+  }, 1)
+
   let materialtheme = createTheme({
     palette: {
       mode: "dark"
@@ -68,61 +74,49 @@ export default function RegisterWindow() {
     }
 
   return (
-      <div className='registerScreen'>
+      <div className='registerScreen' id='registerScreen'>
         <div className='registerLogo'>
-          <img src={logo} alt="appLogo" />
+          <img src={logo} alt="appLogo" id="appLogo"/>
         </div>
         <ThemeProvider theme={materialtheme}>
         <div className='registerForm'>
-            <form onSubmit={(event) => register(event)}>
+            <form onSubmit={(event) => register(event)} onClick={() => {document.getElementById("registerScreen").classList.add("clicked")}}>
               <TextField
                 id="name"
-                size="small"
                 label="Name"
                 type='text'
-                placeholder="Name"
               />
               <TextField
                 id="surname"
-                size="small"
                 label="Surname"
                 type='text'
-                placeholder="Surname"
               />
               <TextField
                 id="email"
-                size="small"
                 label="Email"
                 type='text'
-                placeholder="E-mail"
               />
               <TextField
                 id="username"
-                size="small"
                 label="Username"
                 type='text'
-                placeholder="Username"
               />
               <TextField
                 id="password"
-                size="small"
                 label="Password"
                 type="password"
-                placeholder="Password"
               />
                <TextField
                 id="password1"
-                size="small"
                 label="Repeat password"
                 type="password"
-                placeholder="Repeat Password"
               />
                 {error.length > 0 ?
                 <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
-                : null
+                : <div> </div>
                 }
-                <Button variant="contained" type="submit" value='Create an account'>Create an account</Button>
-                <Button onClick={() => navigate("/login", {replace: true})}>Already have an account?</Button>
+                <Button className='createButton' variant="contained" type="submit" value='Create an account'>Create an account</Button>
+                <Button className='backButton' onClick={() => navigate("/login", {replace: true})}>Already have an account?</Button>
             </form>
           </div>
           </ThemeProvider>

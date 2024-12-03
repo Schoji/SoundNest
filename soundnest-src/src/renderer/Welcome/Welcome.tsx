@@ -2,7 +2,7 @@ import '../App.css';
 import './Welcome.css'
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@mui/material";
-import logo from '../../../assets/icons/128x128.png';
+import logo from '../../../assets/icons/icons-dark/128x128.png';
 
 export default function WelcomeWindow() {
   const navigate = useNavigate();
@@ -11,17 +11,19 @@ export default function WelcomeWindow() {
         <div className='logo'>
           <img src={logo} alt="appLogo" />
         </div>
-        <div className='loader'>
-          <span className="stroke"></span>
-          <span className="stroke"></span>
-          <span className="stroke"></span>
-          <span className="stroke"></span>
-          <span className="stroke"></span>
-          <span className="stroke"></span>
-          <span className="stroke"></span>
+        <div className='content'>
+          <h1>Welcome</h1>
+          <div className='loader'>
+            <span className="stroke"></span>
+            <span className="stroke"></span>
+            <span className="stroke"></span>
+            <span className="stroke"></span>
+            <span className="stroke"></span>
+            <span className="stroke"></span>
+            <span className="stroke"></span>
+          </div>
+          <Button onClick={() => navigate("/login", {replace: true})} className='continue' variant='contained'>Continue</Button>
         </div>
-        <p className='welcome'>Welcome</p>
-        <Button onClick={() => navigate("/login", {replace: true})} className='continue' variant='contained'>Continue</Button>
       </div>
   );
 }

@@ -12,6 +12,8 @@
   gap: 8px;
 }
 .iconDiv {
+  -webkit-app-region: no-drag;
+  -webkit-user-drag: none;
   padding-left: 18px;
   flex: 0 1 160px;
   display: flex;
@@ -21,6 +23,10 @@
 }
 .iconDiv img {
   height: 44px;
+  transition: all 0.2s;
+}
+.iconDiv:hover img {
+  filter: drop-shadow(0 0 5px var(--font-color));
 }
 .searchInputDiv {
   flex: 0 1 400px;
@@ -45,17 +51,15 @@
     linear-gradient(var(--searchbar-focused), var(--searchbar-focused)) padding-box,
     var(--accent-gradient) border-box;
   border: 3px solid transparent;
-  transition: background-color 150ms linear;
 }
 
 .searchInput:hover {
   background-color: var(--searchbar-focused);
-  transition: background-color 150ms linear;
 }
 
 .profileDiv {
   height: 60px;
-  flex: 0 0 290px;
+  flex: 0 0 300px;
   display: inline-flex;
   align-items: center;
   overflow: visible;
@@ -69,6 +73,7 @@
   color: var(--font-color);
   border-radius: 10px;
   box-shadow: 0px 0px 16px -5px var(--font-color);
+  transition: all 0.2s;
 }
 
 .profileDiv Button:not(.profileButtonDiv Button):hover {
@@ -83,26 +88,30 @@
 }
 
 .profileButtonDiv {
-  flex: 0 0 58px;
+  flex: 0 0 60px;
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
-  margin-left: -5px;
 }
 
 .profileButton {
   -webkit-app-region: no-drag;
   height: 38px;
-  border: 5px solid #5a5a5a;
-  border-radius: 100%;
-  transition: border 150ms height 150ms;
+  background:
+    linear-gradient(var(--searchbar-focused), var(--searchbar-focused)) padding-box,
+    var(--accent-gradient) border-box;
+  border: 5px solid transparent;
+  border-radius: 50%;
+  box-shadow: 0px 0px 16px -5px var(--font-color);
+  transition: all 0.2s;
 }
 
 .profileButton:hover {
-  opacity: 0.8;
   height: 44px;
-  border-width: 3px;
-  transition: border 150ms height 150ms;
+  background:
+    linear-gradient(var(--searchbar-focused), var(--searchbar-focused)) padding-box,
+    var(--accent-gradient-hover) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0px 0px 19px -3px var(--font-color);
 }
 
 .profileButton:active {

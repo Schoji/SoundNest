@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 2px solid var(--accent-color);
+  /* border: 2px solid var(--accent-color); */
 }
 .myStudioImage > img {
   width: 100%;
@@ -89,7 +89,7 @@ h1:last-child, .myStudios, .otherStudios {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 2px solid var(--accent-color);
+  /* border: 2px solid var(--accent-color); */
 }
 .studioImage img {
   width: 100%;

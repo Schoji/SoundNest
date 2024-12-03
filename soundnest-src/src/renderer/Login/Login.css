@@ -1,89 +1,76 @@
 .loginScreen {
+  user-select: none;
   margin: 0;
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 64px 1fr;
   background-color: #151515;
-  opacity: 0.8;
-  background-image: radial-gradient(circle at center center, #29292a, #151515), repeating-radial-gradient(circle at center center, #29292a, #29292a, 10px, transparent 20px, transparent 10px);
-  background-blend-mode: multiply;
+  transition: grid-template-rows 0.2s linear;
 }
-
 .loginLogo {
   margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  place-self: end center;
   grid-column: 2/3;
   grid-row: 1/2;
 }
-
-.loginForm {
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  grid-column: 2/3;
-  grid-row: 2/3;
+#appLogo {
+  -webkit-user-drag: none;
+  margin-bottom: 145px;
+  transition: margin-bottom 0.2s linear;
 }
-
-/* .loginForm input {
-  background: transparent;
-  width: 200px;
-  padding: 1em;
-  margin-bottom: 2em;
-  border: none;
-  border-left: 1px solid rgba(255,255,255,0.3);
-  border-top: 1px solid rgba(255,255,255,0.3);
-  border-radius: 5000px;
-  backdrop-filter: blur(10px);
-  box-shadow: 4px 4px 60px rgba(0,0,0,0.2);
-  color: #fff;
-  font-family: Montserrat, sans-serif;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-
-  &:hover {
-    background: rgba(255,255,255,0.1);
-    box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.2);
-  }
-  &[type="email"],
-  &[type="password"] {
-
-    &:focus {
-      background: rgba(255,255,255,0.1);
-      box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.2);
-    }
-  }
-  &[type="submit"] {
-    margin-top: 10px;
-    width: 150px;
-    font-size: 1rem;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    &:active {
-      background: rgba(255,255,255,0.2);
-    }
-  }
-} */
-
+.loginForm {
+  grid-column: 2/3;
+}
 .loginForm form {
-  background: rgba(66, 52, 52, 0.3);
+  display: grid;
+  grid-template-rows: auto auto auto 88px auto;
+  gap: 5px;
+  background: #252525;
+  color: #ddd;
   border-radius: 20px;
   border-left: 1px solid rgba(255, 255, 255, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
   box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
-  display: grid;
-  gap: 5px;
   padding: 25px;
 }
-
+.loginForm form .MuiInputBase-root {
+  border-radius: 10px;
+}
+.loginForm form .MuiInputLabel-root.Mui-focused {
+  color: #00768b !important;
+  filter: drop-shadow(0 0 0px #ddd);
+}
+.loginForm form .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #00768b !important;
+  filter: drop-shadow(0 0 5px #ddd);
+}
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+}
+.checkbox .MuiCheckbox-root.Mui-checked {
+  color: #00768b !important;
+}
 .error {
   margin: 10px;
+}
+form .loginButton {
+  background: linear-gradient(140deg, #0093ad 0%, #005867 100%);
+  color: #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px #ddd;
+}
+form .loginButton:hover {
+  box-shadow: 0px 0px 19px -6px #ddd;
+  background: linear-gradient(140deg, #0094ae 0%, #007a90 100%);
+}
+form .registerButton {
+  color: #ddd;
+  border-radius: 10px;
+}
+form .registerButton:hover {
+  background-color: #00768b51;
 }
