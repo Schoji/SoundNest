@@ -11,6 +11,7 @@ import "./TradeOffer.css"
 import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
+import default_user from "../../../assets/user.png";
 
 const cache = createCache({
   key: 'css',
@@ -154,8 +155,7 @@ export default function Tradeoffer() {
           <div className='tradeOffer'>
             <div className='tradeHeader'>
               <img
-                  src={`data:image/jpeg;base64,${userInfo1.avatar_dir}`}
-                  alt="Loading..."
+                  src={userInfo1.avatar_dir != "/" ? `data:image/jpeg;base64,${userInfo1.avatar_dir}` : default_user}
               />
               <h2>
                 Your inventory:
@@ -202,10 +202,7 @@ export default function Tradeoffer() {
           </div>
           <div className='tradeOffer'>
             <div className='tradeHeader'>
-              <img
-                  src={`data:image/jpeg;base64,${userInfo2.avatar_dir}`}
-                  alt="Loading..."
-              />
+              <img src={userInfo2.avatar_dir != "/" ? `data:image/jpeg;base64,${userInfo2.avatar_dir}` : default_user} />
               <h2>
                 Their inventory:
               </h2>

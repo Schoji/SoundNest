@@ -43,12 +43,14 @@ class UserTransactions(Resource):
       response = []
       for item in transactions:
          product = ProductModel.query.filter_by(id = item.id_product).first()
+         img = getProductPic(product.item_path)
          dataset = { 
              "id" : item.id,
              "date" : (item.date).strftime("%d/%m/%Y, %H:%M:%S"),
              "album" : product.album,
              "artist" : product.artist,
              "price" : product.price,
+             "item_path" : img,
          }
          response.append(dataset)
       return response

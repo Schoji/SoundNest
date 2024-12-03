@@ -85,7 +85,10 @@ export default function AdminPanel() {
           UpdateUserInfo()
         }
       })
-      .then(() => navigate("/store"))
+      .then(() => {
+        if (parseInt(user_id) == parseInt(sessionStorage.getItem("id")))
+        navigate("/store")
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -169,6 +172,11 @@ export default function AdminPanel() {
       mode: theme
     }
   })
+  let materialtheme1 = createTheme({
+    palette: {
+      mode: sessionStorage.getItem("theme") == "dark" ? "light" : "dark",
+    }
+  })
   return (
     <ThemeProvider theme={materialtheme}>
       <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
@@ -225,7 +233,9 @@ export default function AdminPanel() {
               sx={{ border: 0 }}
               />
           {response.status != "" ?
+          <ThemeProvider theme={materialtheme1}>
            <Alert variant="filled" severity={response.status}>{response.content}</Alert>
+           </ThemeProvider>
            : null }
           </div>
           <h1>{t("album")}</h1>
