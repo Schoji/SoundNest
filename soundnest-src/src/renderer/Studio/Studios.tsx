@@ -5,18 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
-import './Studio.css';
+import './Studios.css';
 import React, { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { replace, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { CircularProgress } from '@mui/material';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -25,6 +24,7 @@ import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
 import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
+import { Skeleton } from '@mui/material';
 
 const cache = createCache({
   key: 'css',
@@ -133,8 +133,9 @@ export default function Studio() {
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
+          {myStudiosData.length > 0 ?
             <div className="myStudios">
-              {myStudiosData ? myStudiosData.map((myStudio, index) => (
+              {myStudiosData.map((myStudio, index) =>
                 <div className="myStudio">
                   <div className="myStudioImage">
                     {myStudio.studio_dir === '/' ?
@@ -142,7 +143,7 @@ export default function Studio() {
                     :
                       <img src={`data:image/jpeg;base64,${myStudio.studio_dir}`} />
                     }
-                    </div>
+                  </div>
                   <h2>{myStudio.name}</h2>
                   <p>{String(myStudio.desc).split(/\s+/).filter(Boolean).length < 3 && String(myStudio.desc).length > 60 ? String(myStudio.desc).replace(/[\n\r]+/g, "")
                      .replace(/(.{10})/g, "$1\n") : myStudio.desc}</p>
@@ -155,9 +156,24 @@ export default function Studio() {
                     {t("edit")}
                   </Button>
                 </div>
-              )) :<p>You have no studios</p> }
+               )}
             </div>
+            :
+            <div className='myStudios'>
+              {[...Array(4)].map((element, index) =>
+              <div className='myStudio'>
+                <div className='myStudioImageSkeleton'>
+                  <Skeleton animation="wave" variant="rounded" width={"275px"} height={"275px"} />
+                </div>
+                <Skeleton animation="wave" variant="rounded" width={"215px"} height={"100px"} />
+                <Skeleton animation="wave" variant="rounded" width={"215px"} height={"110px"} />
+                <Skeleton animation="wave" variant="rounded" width={"215px"} height={"40px"} />
+              </div>
+           )}
+           </div>
+          }
           <h1>{t("otherStudios")}</h1>
+          {otherStudiosData.length > 0 ?
           <div className="otherStudios">
             {otherStudiosData?.map((value, index) => (
               <div className="studio">
@@ -176,6 +192,22 @@ export default function Studio() {
               </div>
             ))}
             </div>
+            :
+            <div className="otherStudios">
+              {[...Array(6)].map((element, index) =>
+              <div className="studio">
+                <div className='studioImageSkeleton'>
+                  <Skeleton animation="wave" variant="rounded" width={"275px"} height={"275px"} />
+                </div>
+                <Skeleton animation="wave" variant="rounded" width={"100px"} height={"40px"} />
+                <Skeleton animation="wave" variant="rounded" width={"200px"} height={"90px"} />
+                <div className='kobuch'>
+                  <Skeleton animation="wave" variant="rounded" width={"200px"} height={"30px"} />
+                </div>
+              </div>
+              )}
+            </div>
+            }
           </CacheProvider>
         </div>
       </div>

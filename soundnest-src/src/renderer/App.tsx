@@ -189,7 +189,6 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="purchasehistory" element={<PurchaseHistory />} />
           <Route path="tradeoffers" element={<Tradeoffers/>} />
-          <Route path="decidetradeoffers/:trade_id" element={<DecideTradeOffers/>} />
           <Route path="add_funds" element={<AddFunds/>} />
           <Route path="buykey" element={<BuyKey/>} />
         </Routes>

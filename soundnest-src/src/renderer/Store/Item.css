@@ -64,6 +64,9 @@
   text-align: left;
   gap: 5px;
 }
+.trackSkeleton {
+  background: none;
+}
 .track:first-of-type {
   border-radius: 10px 10px 0 0;
 }

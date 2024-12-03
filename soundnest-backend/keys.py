@@ -83,6 +83,8 @@ class assignLicenseKey(Resource):
             return "Invalid key.", 404
         
         key = KeyModel(key=key1, id_user = id_user)
+        user = UserModel.query.filter_by(id = id_user).first()
+        user.credits += 50
         db.session.add(key)
         db.session.commit()
         return 201

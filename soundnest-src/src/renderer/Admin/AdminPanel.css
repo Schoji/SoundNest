@@ -39,3 +39,35 @@
   justify-content: center;
   padding-bottom: 10px;
 }
+.kobuch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+.stat {
+  background: var(--section);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.amount {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  margin: 10px;
+  text-align: center;
+}
+.icon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon svg {
+  transform: scale(1.8);
+}

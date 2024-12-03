@@ -36,3 +36,6 @@ app.config['CORS_HEADERS'] = 'application/json'
 
 db = SQLAlchemy(app)
 api = Api(app)
+
+if __name__ == "__main__":
+   db.create_all()

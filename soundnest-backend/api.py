@@ -17,7 +17,7 @@ class UserProducts(Resource):
       for item in transactions:
          product = ProductModel.query.filter_by(id = item.id_product).first()
          if not product:
-                abort(404, "Product not found")
+            return "Products were not found", 404
          if os.path.exists(UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"):
                image_path = UPLOAD_FOLDER + "/products/" + str(product.id) + ".jpg"
                with open(image_path, "rb") as image_file:
@@ -38,15 +38,19 @@ class UserProducts(Resource):
 class UserTransactions(Resource):
    def get(self, id_user):
       transactions = TransactionModel.query.filter_by(id_user = id_user)
+      if not transactions:
+         return "User has no transactions", 404
       response = []
       for item in transactions:
          product = ProductModel.query.filter_by(id = item.id_product).first()
+         img = getProductPic(product.item_path)
          dataset = { 
              "id" : item.id,
              "date" : (item.date).strftime("%d/%m/%Y, %H:%M:%S"),
              "album" : product.album,
              "artist" : product.artist,
-             "price" : product.price
+             "price" : product.price,
+             "item_path" : img,
          }
          response.append(dataset)
       return response
@@ -57,7 +61,7 @@ class Search(Resource):
       products = ProductModel.query.filter(ProductModel.album.like("%" + search_str + "%")).all()
       studios = StudioModel.query.filter(StudioModel.name.like("%" + search_str + "%")).all()
       tracks = TrackModel.query.filter(TrackModel.name.like("%" + search_str + "%")).all()
-      users = UserModel.query.filter(UserModel.name.like("%" + search_str + "%")).all()
+      users = UserModel.query.filter(UserModel.username.like("%" + search_str + "%")).all()
       
       response = []
       search_id = 0
@@ -205,7 +209,12 @@ class getOtherProducts(Resource):
             tag_dict[x.id_product] = [x.id_tag]
          else:
             tag_dict[x.id_product].append(x.id_tag)
-      root_tags = tag_dict[int(id_product)]
+      try:
+         root_tags = tag_dict[int(id_product)]
+      except KeyError:
+         for product in ProductModel.query.all():
+            product.item_path = getProductPic(product.item_path)
+         return ProductModel.query.all()
       tag_dict.pop(id_product)
       similarity = {}
       for product_id in tag_dict:
@@ -375,8 +384,8 @@ api.add_resource(TradeOffers, "/api/trade_offers/")
 api.add_resource(TradeOffer, "/api/trade_offers/<int:id>/")
 api.add_resource(getTradeToken, "/api/trade_token/")
 api.add_resource(getUserTradeoffers, "/api/user_tradeoffers/<int:id_user>/")
+api.add_resource(getUserSentTradeoffers, "/api/user_senttradeoffers/<int:id_user>/")
 api.add_resource(ExchangeProducts, "/api/exchange_products/<string:trade_id>/")
-api.add_resource(getUserTradeoffersHistory, "/api/user_tradeoffers_history/<int:id_user>/")
 api.add_resource(MakeAdmin, "/api/make_admin/<int:id_user>/")
 api.add_resource(changeProductOwnership, "/api/change_product_ownership/<int:studio>/<int:product>/")
 api.add_resource(getStatute, "/api/statute/<string:lang>")

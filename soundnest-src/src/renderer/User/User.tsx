@@ -75,7 +75,7 @@ export default function User() {
               <h2>{data.surname}</h2>
               <p>{data.bio}</p>
               <Button
-              disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+              disabled={sessionStorage.getItem("hasKey") == "false" || data.id == sessionStorage.getItem("id") ? true : false}
               onClick={() => {
                 navigate(`/tradeoffer/${data.id}`, {replace: true})
               }}>
