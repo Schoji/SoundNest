@@ -1,4 +1,5 @@
 .topbar {
+  user-select: none;
   -webkit-app-region: drag;
   grid-column: 1/3;
   grid-row: 1/2;
@@ -23,10 +24,6 @@
 }
 .iconDiv img {
   height: 44px;
-  transition: all 0.2s;
-}
-.iconDiv:hover img {
-  filter: drop-shadow(0 0 5px var(--font-color));
 }
 .searchInputDiv {
   flex: 0 1 400px;
