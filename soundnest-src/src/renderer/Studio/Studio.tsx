@@ -103,32 +103,22 @@ export default function Studio() {
       <SideBar />
       <div className="main">
       {data ?
-        <div className="studioSection">
+        <div className="studioMain">
           <CacheProvider value={cache}>
-            <div className="title">
-              <IconButton
-                onClick={() => {
-                  navigate('/studios', { replace: true });
-                }}
-              >
-                <ArrowBackIosRoundedIcon />
-              </IconButton>
-              <h1>{t("studioDetails")}</h1>
-            </div>
-            <div className='studioContainer'>
-              <div className='studioLeft'>
-                {data.studio_dir !== '/' ? (
-                  <img
-                    src={`data:image/jpeg;base64,${data.studio_dir}`}
-                    alt="Loading..."
-                  />
-                ) : (
-                  <img src={default_album} />
-                )}
-                <h2>{data.name}</h2>
-                <p>{data.desc}</p>
-              </div>
-              <div className='studioLeft'>
+            <h1>{t("studioDetails")}</h1>
+            <div className='studioDetails'>
+              {data.studio_dir !== '/' ? (
+                <img
+                  src={`data:image/jpeg;base64,${data.studio_dir}`}
+                  alt="Loading..."
+                />
+              ) : (
+                <img src={default_album} />
+              )}
+              <h2>{data.name}</h2>
+              <p>{data.desc}</p>
+              <div className='studioOwner'>
+                <h3>Owned by:</h3>
                 {data.user_picture !== '/' ? (
                   <img
                     src={`data:image/jpeg;base64,${data.user_picture}`}
@@ -137,17 +127,17 @@ export default function Studio() {
                 ) : (
                   <img src={default_album} />
                 )}
-                <p>{data.user_name}</p>
-                <p>{data.user_surname}</p>
-                <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>Check out</Button>
+                <h2>{data.user_name} {data.user_surname}</h2>
+                <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>View profile</Button>
               </div>
             </div>
+            <h1>Studio Albums</h1>
             {sp_data ?
-            <div>
+            <div className='studioAlbums'>
               {sp_data.map((product, index) => (
-                <div className="storeProduct">
+                <div className="studioAlbum">
                 <CacheProvider value={cache}>
-                  <div className="storeProductImage">
+                  <div className="studioAlbumImage">
                     {product.item_path === '/' ? (
                       <img src={default_album} />
                     ) : (
@@ -180,35 +170,26 @@ export default function Studio() {
               ))}
             </div>
             : null }
-            <div>
-              <IconButton
-                onClick={() => {
-                  navigate('/studios', { replace: true });
-                }}
-              >
-                <AlbumRoundedIcon />
-              </IconButton>
-              <h1>{t("otherStudios")}</h1>
-              <div className='otherStudios'>
-                {otherStudiosData?.map((studio, key) => (
-                  <div className="product">
-                    <div className="productImage">
-                      {studio.studio_dir === '/' ? (
-                        <img src={default_album} />
-                      ) : (
-                        <img src={`data:image/jpeg;base64,${studio.studio_dir}`} />
-                      )}
-                    </div>
-                    <h2>{studio.name}</h2>
-                    <p>{studio.desc}</p>
-                    <Button key={key} onClick={() => {
-                      document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });
-                            changeSite(studio.id);
-                          }}>{t("viewDetails")}</Button>
+            <h1>{t("otherStudios")}</h1>
+            <div className='otherStudios2'>
+              {otherStudiosData?.map((studio, key) => (
+                <div className="otherStudio">
+                  <div className="otherStudioImage">
+                    {studio.studio_dir === '/' ? (
+                      <img src={default_album} />
+                    ) : (
+                      <img src={`data:image/jpeg;base64,${studio.studio_dir}`} />
+                    )}
                   </div>
-                      ))}
+                  <h2>{studio.name}</h2>
+                  <p>{studio.desc}</p>
+                  <Button key={key} onClick={() => {
+                    document.getElementById("item")?.scrollIntoView({ behavior: 'smooth' });
+                          changeSite(studio.id);
+                        }}>{t("viewDetails")}</Button>
                 </div>
-            </div>
+                    ))}
+              </div>
           </CacheProvider>
         </div>
         : null

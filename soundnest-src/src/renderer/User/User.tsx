@@ -1,6 +1,7 @@
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
 import '../App.css';
+import './User.css'
 import { useState, useEffect } from 'react';
 import default_album from '../../../assets/album.png';
 import Button from '@mui/material/Button';
@@ -50,19 +51,10 @@ export default function User() {
       <SideBar />
       <div className="main">
       {data ?
-        <div className="item" id="item">
+        <div className="user">
           <CacheProvider value={cache}>
-            <div className="itemTitle">
-              <IconButton
-                onClick={() => {
-                  navigate('/studios', { replace: true });
-                }}
-              >
-                <ArrowBackIosRoundedIcon />
-              </IconButton>
-              <h1>{t("userDetails")}</h1>
-            </div>
-            <div className="itemDesc">
+            <h1>{t("userDetails")}</h1>
+            <div className="userData">
               {data.avatar_dir !== '/' ? (
                 <img
                   src={`data:image/jpeg;base64,${data.avatar_dir}`}
@@ -71,8 +63,7 @@ export default function User() {
               ) : (
                 <img src={default_album} />
               )}
-              <h2>{data.name}</h2>
-              <h2>{data.surname}</h2>
+              <h1>{data.name} {data.surname}</h1>
               <p>{data.bio}</p>
               <Button
               disabled={sessionStorage.getItem("hasKey") == "false" || data.id == sessionStorage.getItem("id") ? true : false}
@@ -82,14 +73,11 @@ export default function User() {
                 {t("tradeOffer")}
               </Button>
             </div>
-          </CacheProvider>
-        </div>
-        : null
-        }
-        { studio_data ?
-        <div>
-          {studio_data.map((studio, index) => (
-            <div className="itemDesc">
+            <h1>User Studios</h1> {/*Tutaj trzeba dodać tłumaczenie pls */}
+            { studio_data ?
+            <div className='userStudios'>
+            {studio_data.map((studio) => (
+              <div className="userStudioDetails">
               {studio.studio_dir !== '/' ? (
                 <img
                   src={`data:image/jpeg;base64,${studio.studio_dir}`}
@@ -100,9 +88,12 @@ export default function User() {
               )}
               <h2>{studio.name}</h2>
               <p>{studio.desc}</p>
-              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>{t("checkout")}</Button>
+              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>{t("checkout")}</Button> {/*Tutaj też do tego guzika nowy tekst*/}
+              </div>
+            ))}
             </div>
-          ))}
+            : null }
+          </CacheProvider>
         </div>
         : null }
       </div>

@@ -1,0 +1,62 @@
+img {
+  -webkit-user-drag: none;
+}
+.user {
+  user-select: none;
+  display: grid;
+  grid-template-rows: min-content auto min-content auto;
+  gap: 10px;
+}
+.userData {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr 45px;
+  column-gap: 10px;
+  row-gap: 5px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.userData img {
+  grid-row: 1/4;
+  border-radius: 8px;
+}
+.userData Button {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.userData Button:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+.userStudios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.userStudioDetails {
+  background: var(--section);
+  display: grid;
+  grid-template-rows: auto auto auto 40px;
+  gap: 5px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.userStudioDetails img {
+  width: 100%;
+  border-radius: 8px;
+}
+.userStudioDetails Button {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.userStudioDetails Button:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
