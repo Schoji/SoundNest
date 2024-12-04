@@ -351,6 +351,71 @@ class UserAuthentication(Resource):
       }
       return dataset
 
+class getUserInfoWithKey(Resource):
+   def get(self, id_user):
+      user = UserModel.query.filter_by(id = id_user).first()
+      hasKey = False
+      if (KeyModel.query.filter_by(id_user = id_user).first()):
+         hasKey = True
+      return {
+         "id" : user.id,
+         "username" : user.username,
+         "name": user.name,
+         "surname": user.surname,
+         "avatar_dir": getUserPic(user.avatar_dir),
+         "email" : user.email,
+         "bio" : user.bio,
+         "prefered_theme": user.prefered_theme,
+         "prefered_colour": user.prefered_colour,
+         "lang": user.lang,
+         "credits": user.credits,
+         "is_admin": user.is_admin,
+         "hasKey": hasKey,
+      }
+
+class stats(Resource):
+    def get(self):
+        user_amount = UserModel.query.count()
+        user_amount_nk = KeyModel.query.count()
+        studios_amount = StudioModel.query.count()
+        product_amount = ProductModel.query.count()
+        transaction_amount = ProductModel.query.count()
+        top_user = UserModel.query.order_by(UserModel.credits.desc()).first()
+        users = UserModel.query.all()
+        
+        dataset = []
+        for user in users:
+           amount = StudioModel.query.filter_by(id_user = user.id).count()
+           if (amount > 0):
+            dataset.append({
+               "id": user.id,
+               "value": amount,
+               "label": str(user.name).capitalize() + " " + str(user.surname).capitalize(),
+               "name": user.name,
+               "surname": user.surname,
+            })
+            
+
+        total_balance = 0
+        for user in UserModel.query.all():
+           total_balance += user.credits
+
+        return {
+            "users": user_amount,
+            "users_no_keys": user_amount_nk,
+            "total_balance" : total_balance,
+            "studios" : studios_amount,
+            "products" : product_amount,
+            "transaction_amount" : transaction_amount,
+            "top_user": {
+               "id": top_user.id,
+               "name": top_user.name,
+               "surname" : top_user.surname,
+               "avatar_dir" : getUserPic(top_user.avatar_dir)
+            },
+            "user_contribution" : dataset,
+        }
+    
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
 api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
@@ -395,6 +460,8 @@ api.add_resource(getLicenseKey, "/api/get_key/<int:id_user>")
 api.add_resource(assignLicenseKey, "/api/assign_key/<int:id_user>/<string:key1>")
 api.add_resource(getStudiosNotFromUser, "/api/studios_not_from/<int:id_user>")
 api.add_resource(changeColour, "/api/change_colour/<int:id_user>/<int:colour>")
+api.add_resource(stats, "/api/stats/")
+api.add_resource(getUserInfoWithKey, "/api/user_with_key/<int:id_user>")
 
 @app.route("/last_update")
 def last_update():

@@ -119,6 +119,7 @@
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.4",
     "@mui/styled-engine-sc": "^6.1.4",
+    "@mui/x-charts": "^7.23.0",
     "@mui/x-data-grid": "^7.21.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",

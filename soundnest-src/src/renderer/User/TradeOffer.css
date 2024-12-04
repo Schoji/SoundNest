@@ -34,11 +34,12 @@
 .items, .youritems {
   margin: 10px;
   display: flex;
+  flex-wrap: wrap;
   gap: 5px;
 }
 
 .items img, .youritems img {
-  width: 128px;
+  width: 96px;
   border: 2px solid grey;
 }
 .youritems img {
@@ -49,7 +50,6 @@
 }
 .items img.selected {
   border: 2px solid var(--accent-color);
-  width: 128px;
 }
 .itemList img {
   width: 100%;
@@ -80,7 +80,7 @@
 }
 .tradeObj{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto auto auto;
   border-radius: 10px;
   background-color: var(--section);
@@ -88,7 +88,6 @@
 }
 .tradeObj p {
   margin: 10px;
-  grid-column: 1/-1;
   gap: 5px;
   display: flex;
   align-items: center;
@@ -104,16 +103,13 @@
 .itemRows {
   margin: 10px;
   /* background-color: var(--window); */
-  display: grid;
-  grid-column: 1/-1;
-  gap: 5px;
   display: flex;
-}
-.itemRows p:first-child {
-  grid-column: 1/-1;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 .itemRows img {
   width: 96px;
+  height: 96px;
   border: 2px solid var(--accent-color);
   box-shadow: 0px 0px 19px -6px var(--font-color);
   border-radius: 10px;
@@ -187,4 +183,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 }

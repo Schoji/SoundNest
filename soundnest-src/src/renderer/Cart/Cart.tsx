@@ -20,8 +20,9 @@ import { SnackbarCloseReason } from '@mui/material/Snackbar';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
 import { backend_address } from '../Components/global';
-import { emitCustomEvent } from 'react-custom-events';
+import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 import { ThemeProvider } from '@mui/material';
+import UpdateUserInfo from '../Components/UpdateUserInfo';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -90,7 +91,6 @@ export function CustomizedTables() {
     data.map((row) => (
       cart_items.indexOf(parseInt(row.id)) != -1 ? total_cost = total_cost + row.price : null
     ))
-    console.log(data)
     if (data.length == 0) {
       return <CircularProgress />
     }
@@ -125,10 +125,12 @@ export function CustomizedTables() {
                 id_product: row
               })
             };
-            console.log(backend_address + "/api/transactions")
             fetch(backend_address + "/api/transactions/", requestOptions)
               .then((response) => response.json())
-              .then((response) => console.log("Request number", key, " Response from server", response));
+              .then((response) => {
+                cartRemove(row)
+                console.log("Request number", key, " Response from server", response)
+              });
 
           }})
         }
@@ -148,7 +150,11 @@ export function CustomizedTables() {
             'email' : sessionStorage.getItem("email"),
             'credits' : new_balance
           })
-        }).catch((error) => console.log(error))
+        }).then(() => {
+          UpdateUserInfo()
+          emitCustomEvent("updateTopBar")
+        })
+        .catch((error) => console.log(error))
         sessionStorage.setItem('credits', new_balance)
 
         setOpen(true);
@@ -202,9 +208,13 @@ export function CustomizedTables() {
 }
 
 export default function Cart() {
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    setTheme(theme)
+  })
   let materialtheme = createTheme({
     palette: {
-      mode: sessionStorage.getItem("theme") == "dark" ? "dark" : "light"
+      mode: theme
     }
   })
   const { t } = useTranslation()

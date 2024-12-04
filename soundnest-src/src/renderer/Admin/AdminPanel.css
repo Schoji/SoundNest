@@ -55,6 +55,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.statchart {
+  background: var(--section);
+  border-radius: 10px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .amount {
   width: 100%;
   display: grid;
@@ -71,3 +79,10 @@
 .icon svg {
   transform: scale(1.8);
 }
+#credits {
+  background-color: rgba(231, 231, 3, 0.5) !important;
+}
+#credits .MuiLinearProgress-bar {
+  background-color: yellow !important;
+}
+

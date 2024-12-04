@@ -20,7 +20,6 @@ import { useEffect, useState } from 'react';
 import Studio from './Studio/Studio';
 import User from './User/User';
 import TradeOffer from './User/TradeOffer';
-import DecideTradeOffers from './User/DecideTradeOffers';
 import AddFunds from './User/AddFunds';
 import RegisterWindow from './Register/Register';
 import WelcomeWindow from './Welcome/Welcome';

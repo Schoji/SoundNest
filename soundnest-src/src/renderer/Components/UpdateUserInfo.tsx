@@ -1,13 +1,9 @@
 import { backend_address } from "./global"
 export default function UpdateUserInfo() {
-  // sessionStorage.clear()
-  console.log(sessionStorage.getItem("id"))
-  fetch(backend_address + "/api/users/" + sessionStorage.getItem("id"))
+  fetch(backend_address + "/api/user_with_key/" + sessionStorage.getItem("id"))
   .then(response => response.json())
   .then(arg => {
-    console.log(arg)
     const userInfo = arg
-    console.log(arg)
     sessionStorage.setItem('id', userInfo.id);
     sessionStorage.setItem('username', userInfo.username);
     sessionStorage.setItem('name', userInfo.name);
@@ -19,11 +15,9 @@ export default function UpdateUserInfo() {
     sessionStorage.setItem('credits', userInfo.credits);
     sessionStorage.setItem('avatar_dir', userInfo.avatar_dir);
     sessionStorage.setItem('is_admin', userInfo.is_admin);
-    sessionStorage.setItem('cart', '0');
-    sessionStorage.setItem("logo", "0")
     sessionStorage.setItem("lang", userInfo.lang)
+    console.log("AAAAAA", userInfo.hasKey)
     sessionStorage.setItem("hasKey", userInfo.hasKey)
-    console.log("User info was updated.")
   })
   .catch(error => console.log(error))
 }

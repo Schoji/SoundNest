@@ -167,7 +167,6 @@ export default function Tradeoffer() {
                 <img
                 id={`image-${product.id}`}
                 src={`data:image/jpeg;base64,${product.item_path}`}
-                alt="Loading..."
                 onClick={() => {
                   var dataset = {
                     id: product.id,

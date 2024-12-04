@@ -94,9 +94,9 @@ users = {
 studios = {
   "id_user": [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
   "name": [
-    "Sunset Productions", "Pixel Perfect", "Blue Wave Studios", "Golden Reel Films", "Crimson Lens",
-    "Echo Valley Studio", "Digital Horizons", "Nebula Narratives", "Silver Screen Creations", "Emerald Filmworks",
-    "Dreamscape Media", "Aurora Visuals", "Mystic Frames", "Opal Productions", "Infinity Imagery"
+    "Sunset Productions", "Pixel Perfect", "Blue Wave Studios", "Golden Reel", "Crimson Lens",
+    "Echo Valley Studio", "Digital Horizons", "Nebula Narratives", "Silver Screen Creations", "Emerald Musicworks",
+    "Dreamscape Note", "Aurora Audio", "Mystic Notes", "Opal Productions", "Infinity Music"
   ],
   "desc": [
     "A creative studio specializing in producing soulful acoustic tracks and live sessions.",
@@ -112,7 +112,7 @@ studios = {
     "Sound design studio creating unique audio effects for music and media.",
     "Artistic studio specializing in ambient and nature-inspired melodies.",
     "Professional recording space with a retro vibe for timeless tracks.",
-    "Production studio for orchestral arrangements and film scores.",
+    "Production studio for orchestral arrangements and track scores.",
     "Creative space for composing digital tracks and innovative audio storytelling."
   ],
   "studio_dir": [

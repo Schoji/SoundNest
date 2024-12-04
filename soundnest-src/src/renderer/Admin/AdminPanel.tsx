@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import '../App.css';
 import { Form, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -8,15 +6,16 @@ import SideBar from '../SideBar/SideBar';
 import './AdminPanel.css'
 import { DataGrid, GridCellEditStopParams, GridCellEditStopReasons, GridColDef, MuiEvent } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
-import { Alert, Avatar, createTheme, LinearProgress, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
+import { Alert, Avatar, colors, createTheme, LinearProgress, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider } from '@mui/material';
 import default_album from '../../../assets/album.png';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang";
 import { useCustomEventListener } from 'react-custom-events';
 import { backend_address } from '../Components/global';
 import PersonIcon from '@mui/icons-material/Person';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 export default function AdminPanel() {
   const { t } = useTranslation();
@@ -26,6 +25,7 @@ export default function AdminPanel() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [selectedStudio, setSelectedStudio] = useState(1);
   const [response, setResponse] = useState({"status":"", "content":""});
+  const [stats, setStats] = useState({})
   const navigate = useNavigate()
   const getUser = () => {
     fetch(backend_address + "/api/users/")
@@ -93,10 +93,17 @@ export default function AdminPanel() {
         console.log(error);
       });
   }
+  const getStats = () => {
+    fetch(backend_address + "/api/stats/")
+    .then(response => response.json())
+    .then(data => setStats(data))
+    .catch(error => console.log(error))
+  }
   function updateSite() {
     getUser();
     getProducts();
     getStudios();
+    getStats();
   }
   useEffect(() => {
     updateSite()
@@ -184,45 +191,58 @@ export default function AdminPanel() {
         <SideBar />
         <div className="main">
           <h1>Dashboard</h1>
+          {stats.hasOwnProperty("users") ?
           <div className='stats'>
             <div className='stat'>
               <div className='amount'>
-                <h1>Users</h1>
-                <LinearProgress variant="determinate" value={50}/>
-                <p>1</p>
+                <h3>Active users</h3>
+                <LinearProgress variant="determinate" value={parseFloat(stats.users_no_keys) / parseFloat(stats.users) * 100} sx={{height: "10px", borderRadius: "10px"}}/>
+                <p>{stats.users_no_keys}/{stats.users}</p>
               </div>
               <div className='icon'>
-                <PersonIcon fontSize='large'/>
+                <PersonIcon fontSize='large' color="primary"/>
               </div>
             </div>
             <div className='stat'>
               <div className='amount'>
-                <h1>Users</h1>
-                <p>1</p>
+                <h3>Total credits</h3>
+                <LinearProgress id="credits" variant="determinate" value={parseFloat(stats.total_balance) / 20000 * 100} sx={{height: "10px", borderRadius: "10px"}}/>
+                <p>{stats.total_balance}/20000$</p>
               </div>
               <div className='icon'>
-                <PersonIcon fontSize='large'/>
+                <AttachMoneyRoundedIcon fontSize='large' sx={{color: colors.yellow[500]}}/>
               </div>
             </div>
             <div className='stat'>
               <div className='amount'>
-                <h1>Users</h1>
-                <p>1</p>
+              <h3>Top contributors</h3>
               </div>
-              <div className='icon'>
-                <PersonIcon fontSize='large'/>
-              </div>
+                <div className='kobuch'>
+                  <PieChart series={[
+                      {
+                        arcLabel: (item) => `${item.name.charAt(0)}.${item.surname.charAt(0)}`,
+                        data: stats?.user_contribution
+                      },
+                    ]}
+                    width={100}
+                    height={100}
+                    margin={{ right: 0 }}
+                    slotProps = {{
+                      legend: { hidden: true } }}
+                  />
+                </div>
             </div>
             <div className='stat'>
               <div className='amount'>
-                <h1>Users</h1>
-                <p>1</p>
+                <h3>Top user</h3>
+                <p>1. {stats.top_user.name} {stats.top_user.surname}</p>
               </div>
               <div className='icon'>
-                <PersonIcon fontSize='large'/>
+                <Avatar sx={{ width: 64, height: 64 }} src={`data:image/jpeg;base64,${stats.top_user.avatar_dir}`}/>
               </div>
             </div>
           </div>
+          : null}
           <div className="users">
             <DataGrid
               rows={user}
@@ -267,7 +287,6 @@ export default function AdminPanel() {
                   <Select
                       id="product"
                       label="Studio"
-                      // value={selectedProduct}
                       onChange={handleChange}
                       defaultValue={1}
                     >
