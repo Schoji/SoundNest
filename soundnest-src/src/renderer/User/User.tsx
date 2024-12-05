@@ -23,8 +23,8 @@ export default function User() {
   const { user_id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
-  const [studio_data, setStudioData] = useState(null);
+  const [data, setData] = useState({});
+  const [studio_data, setStudioData] = useState({});
 
   const getUser = () => {
     fetch(backend_address + "/api/users/" + user_id)
@@ -50,7 +50,7 @@ export default function User() {
       <TopBar />
       <SideBar />
       <div className="main">
-      {data ?
+      {Object.keys(data).length > 1 ?
         <div className="user">
           <CacheProvider value={cache}>
             <h1>{t("userDetails")}</h1>
@@ -74,7 +74,7 @@ export default function User() {
               </Button>
             </div>
             <h1>User Studios</h1> {/*Tutaj trzeba dodać tłumaczenie pls */}
-            { studio_data ?
+            {Object.keys(studio_data).length > 1 ?
             <div className='userStudios'>
             {studio_data.map((studio) => (
               <div className="userStudioDetails">
@@ -95,7 +95,14 @@ export default function User() {
             : null }
           </CacheProvider>
         </div>
-        : null }
+        :
+        <div className='user'>
+          <h1>{t("userDetails")}</h1>
+          <div className='userData'>
+
+          </div>
+        </div>
+        }
       </div>
     </div>
   );

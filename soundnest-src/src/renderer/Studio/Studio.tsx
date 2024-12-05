@@ -16,6 +16,7 @@ import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
 import { emitCustomEvent } from 'react-custom-events';
+import { Skeleton } from '@mui/material';
 
 const cache = createCache({
   key: 'css',
@@ -26,9 +27,9 @@ export default function Studio() {
   const { studio_id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
-  const [sp_data, sp_setData] = useState(null)
-  const [otherStudiosData, setOtherStudiosData] = useState(null)
+  const [data, setData] = useState({});
+  const [sp_data, sp_setData] = useState({})
+  const [otherStudiosData, setOtherStudiosData] = useState([])
   const [cartItems, setCartItems] = useState([])
   const [userProductsIDs, setUserProductsIDs] = useState(JSON.parse(`[${sessionStorage.getItem('cart')}]`))
 
@@ -102,7 +103,7 @@ export default function Studio() {
       <TopBar />
       <SideBar />
       <div className="main">
-      {data ?
+      {Object.keys(data).length > 1 ?
         <div className="studioMain">
           <CacheProvider value={cache}>
             <h1>{t("studioDetails")}</h1>
@@ -132,7 +133,7 @@ export default function Studio() {
               </div>
             </div>
             <h1>Studio Albums</h1>
-            {sp_data ?
+            {Object.keys(sp_data).length > 1 ?
             <div className='studioAlbums'>
               {sp_data.map((product, index) => (
                 <div className="studioAlbum">
@@ -169,7 +170,25 @@ export default function Studio() {
               </div>
               ))}
             </div>
-            : null }
+            :
+            <div className='studioAlbums'>
+            {[...Array(4)].map((element, index) =>
+              <div className='studioAlbum'>
+                <div className='studioAlbumImage'>
+                  <Skeleton animation="wave" variant="rounded" width={"250px"} height={"250px"} />
+                </div>
+                <Skeleton animation="wave" variant="rounded" width={"100px"} height={"40px"} />
+                <Skeleton animation="wave" variant="rounded" width={"125px"} height={"40px"} />
+                <Skeleton animation="wave" variant="rounded" width={"75px"} height={"40px"} />
+                <div className='kobuch'>
+                  <Skeleton animation="wave" variant="rounded" width={"50px"} height={"40px"} />
+                </div>
+                <Skeleton animation="wave" variant="rounded" width={"225px"} height={"40px"} />
+              </div>
+            )}
+          </div>
+
+            }
             <h1>{t("otherStudios")}</h1>
             <div className='otherStudios2'>
               {otherStudiosData?.map((studio, key) => (
@@ -192,7 +211,51 @@ export default function Studio() {
               </div>
           </CacheProvider>
         </div>
-        : null
+        :
+        <div className='studioMainSkeleton'>
+          <h1>{t("studioDetails")}</h1>
+          <div className='studioDetails'>
+            <Skeleton id="imageSkeleton" animation="wave" variant="rounded" width={"300px"} height={"300px"} />
+            <Skeleton animation="wave" variant="rounded" width={"350px"} height={"50px"} />
+            <Skeleton animation="wave" variant="rounded" width={"600px"} height={"50px"} />
+            <div className='studioOwner'>
+              <Skeleton id="skeletonH3" animation="wave" variant="rounded" width={"140px"} height={"30px"} />
+              <Skeleton id="imageSkeleton2" animation="wave" variant="rounded" width={"100px"} height={"100px"} />
+              <Skeleton sx={{marginLeft: "20px"}} animation="wave" variant="rounded" width={"200px"} height={"50px"} />
+              <Skeleton sx={{marginLeft: "20px"}} animation="wave" variant="rounded" width={"550px"} height={"50px"} />
+            </div>
+          </div>
+          <h1>Studio Albums</h1>
+          <div className='studioAlbums'>
+            {[...Array(4)].map((element, index) =>
+              <div className='studioAlbum'>
+                <div className='studioAlbumImage'>
+                  <Skeleton animation="wave" variant="rounded" width={"250px"} height={"250px"} />
+                </div>
+                <Skeleton animation="wave" variant="rounded" width={"100px"} height={"40px"} />
+                <Skeleton animation="wave" variant="rounded" width={"125px"} height={"40px"} />
+                <Skeleton animation="wave" variant="rounded" width={"75px"} height={"40px"} />
+                <div className='kobuch'>
+                  <Skeleton animation="wave" variant="rounded" width={"50px"} height={"40px"} />
+                </div>
+                <Skeleton animation="wave" variant="rounded" width={"225px"} height={"40px"} />
+              </div>
+            )}
+          </div>
+          <h1>{t("otherStudios")}</h1>
+          <div className='otherStudios2'>
+            {[...Array(4)].map((element, index) =>
+            <div className="otherStudio">
+              <div className='otherStudioImage'>
+                <Skeleton animation="wave" variant="rounded" width={"250px"} height={"250px"} />
+              </div>
+              <Skeleton animation="wave" variant="rounded" width={"100px"} height={"40px"} />
+              <Skeleton animation="wave" variant="rounded" width={"125px"} height={"40px"} />
+              <Skeleton animation="wave" variant="rounded" width={"150px"} height={"30px"} />
+            </div>
+            )}
+          </div>
+        </div>
         }
       </div>
     </div>
