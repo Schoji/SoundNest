@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { backend_address } from '../renderer/Components/global';
 
 class AppUpdater {
   constructor() {
@@ -84,7 +85,6 @@ const createWindow = async () => {
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
-
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
@@ -160,6 +160,7 @@ const createLoginWindow = async () => {
       splashWindow?.hide();
       splashWindow?.webContents.closeDevTools();
       loginWindow?.show();
+      ipcMain.emit("loginWindowCreated", true)
   });
 
   loginWindow.on('closed', () => {
@@ -236,28 +237,63 @@ app
     loginWindow?.hide();
     createLoginWindow()
 
-    ipcMain.on('open-main-window', async (event, arg) => {
-      var creds = arg;
-      loginWindow?.hide();
-      loginWindow?.webContents.closeDevTools();
 
-      createWindow()
-      ipcMain.on("did-finish-load", async (event, arg) => {
-        console.log("finished loading..")
-        mainWindow?.webContents.send("soundnest-ipc", creds)
-      })
-      })
-
-      ipcMain.on('open-login-window', async (event, arg) => {
-        mainWindow?.hide();
-        mainWindow?.webContents.closeDevTools();
-
-        createLoginWindow();
-        })
-    // app.on('activate', () => {
-    //   // On macOS it's common to re-create a window in the app when the
-    //   // dock icon is clicked and there are no other windows open.
-    //   if (mainWindow === null) createWindow();
-    // });
+    app.on('activate', () => {
+      // On macOS it's common to re-create a window in the app when the
+      // dock icon is clicked and there are no other windows open.
+      if (mainWindow === null) createWindow();
+    });
   })
-  .catch(console.log);
+  .catch(error => console.log(error));
+
+ipcMain.once("loginWindowCreated", async (event, arg) => {
+  loginWindow?.webContents
+    .executeJavaScript('localStorage.getItem("token");', true)
+    .then(token => {
+      console.log("Executing TokenLogin")
+      console.log("TOKEN:", token)
+      if (token !== "undefined" && token !== null && token !== "None")
+      ipcMain.emit("open-main-window-token", token)
+    })
+  console.log("Login window created")
+})
+
+
+ipcMain.on('open-main-window-token', (token) => {
+  console.log("Logged with token.")
+  fetch(backend_address + "/api/user_with_token/" + token)
+  .then(response => response.json())
+  .then(data => {
+    loginWindow?.hide();
+    loginWindow?.webContents.closeDevTools();
+    createWindow()
+    ipcMain.on("did-finish-load", async (event, arg) => {
+      console.log("finished loading..")
+      mainWindow?.webContents.on("dom-ready", () => {
+        mainWindow?.webContents.send("soundnest-ipc", JSON.stringify(data))
+        mainWindow?.show()
+      })
+    })
+  })
+
+})
+
+ipcMain.on('open-login-window', async (event, arg) => {
+  mainWindow?.hide();
+  loginWindow?.webContents.executeJavaScript('localStorage.clear();');
+  mainWindow?.webContents.closeDevTools();
+  createLoginWindow();
+  })
+
+
+ipcMain.on('open-main-window', async (event, creds) => {
+  loginWindow?.hide();
+  loginWindow?.webContents.closeDevTools();
+  createWindow()
+  ipcMain.on("did-finish-load", async (event, arg) => {
+    console.log("finished loading..")
+    mainWindow?.webContents.on("dom-ready", () => {
+    mainWindow?.webContents.send("soundnest-ipc", creds)
+    })
+  })
+})

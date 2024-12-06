@@ -63,6 +63,10 @@ export function GetCreds() {
     let classNames = ["root", "red", "yellow", "green", "pink"]
       let classNamesDark = ["dark", "red-dark", "yellow-dark", "green-dark", "pink-dark"]
       const userInfo = JSON.parse(arg)
+      console.log(userInfo.token)
+      if (userInfo.token !== "null" && userInfo.token !== "undefined") {
+        localStorage.setItem("token", userInfo.token)
+      }
       sessionStorage.setItem('id', userInfo.id);
       sessionStorage.setItem('username', userInfo.username);
       sessionStorage.setItem('name', userInfo.name);
@@ -106,7 +110,7 @@ export function GetCreds() {
       i18n.changeLanguage(userInfo.lang)
   }
   useEffect(() => {
-    window.electron.ipcRenderer.on("soundnest-ipc", async (arg) => {
+    window.electron.ipcRenderer.once("soundnest-ipc", async (arg) => {
       getUserInfo(arg)
     })
   }, [])
@@ -121,6 +125,11 @@ export default function App() {
       let classNames = ["root", "red", "yellow", "green", "pink"]
       let classNamesDark = ["dark", "red-dark", "yellow-dark", "green-dark", "pink-dark"]
       const userInfo = JSON.parse(arg)
+      console.log(userInfo.token)
+      if (userInfo.token !== "null" && userInfo.token !== "undefined") {
+        localStorage.setItem("token", userInfo.token)
+      }
+
       sessionStorage.setItem('id', userInfo.id);
       sessionStorage.setItem('username', userInfo.username);
       sessionStorage.setItem('name', userInfo.name);

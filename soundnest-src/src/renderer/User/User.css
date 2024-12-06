@@ -7,6 +7,10 @@ img {
   grid-template-rows: min-content auto min-content auto;
   gap: 10px;
 }
+.userSkeleton {
+  display: inline-flex;
+  flex-direction: column;
+}
 .userData {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -18,7 +22,7 @@ img {
   box-sizing: border-box;
   padding: 5px;
 }
-.userData img {
+.userData img, #userDataImg {
   grid-row: 1/4;
   border-radius: 8px;
 }
