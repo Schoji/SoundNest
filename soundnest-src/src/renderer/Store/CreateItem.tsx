@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, MenuItem, Input, Alert, createTheme } from '@mui/material';
+import { TextField, FormControl, IconButton, MenuItem, Input, Alert, createTheme, Chip, OutlinedInput, Box } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from 'react-router-dom';
@@ -62,6 +62,81 @@ export function CreateSongs() {
         </IconButton>
   </div>
 )
+}
+
+function Tags() {
+  const [tagDict, setTagDict] = useState([])
+  const [allTags, setAllTags] = useState([])
+  function getTags() {
+    fetch(backend_address + "/api/tags")
+    .then(response => response.json())
+    .then(data => {
+      setAllTags(data)
+      var tempTagDict = []
+      data.map((tag, index) => {
+        tempTagDict.push(tag.tag_name)
+      })
+      setTagDict(tempTagDict)
+    })
+    .catch(error => console.log(error))
+
+  }
+  useEffect(() => {
+    getTags()
+  },[])
+  const [tags, setTags] = useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof tags>) => {
+    const {
+      target: { value },
+    } = event;
+    setTags(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  return (
+    <div>
+      <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel>Tags</InputLabel>
+        <Select
+          id="tags"
+          multiple
+          value={tags}
+          onChange={handleChange}
+          input={<OutlinedInput id="multipletag" label="Tag" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={tagDict[value + 1]} />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+        >
+          {allTags.map((tag) => (
+            <MenuItem
+              key={tag.tag_name}
+              value={tag.id}
+            >
+              {tag.tag_name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
+  );
 }
 
 export default function CreateStudio() {
@@ -126,6 +201,11 @@ export default function CreateStudio() {
       return
     }
 
+    if (event.target.multipletag.value == "") {
+      setError("Select at least 1 tag.")
+      return
+    }
+    var tags = event.target.multipletag.value.split(",")
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -145,6 +225,23 @@ export default function CreateStudio() {
         else console.log(response.json())
       })
       .then((response) => {
+        tags.map((tag, index) => {
+          fetch(backend_address + "/api/producttags/",
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id_product: parseInt(response.id),
+                id_tag: parseInt(tag)
+              }),
+            }
+          )
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.log(error))
+        })
+
+
         var songs = JSON.parse(sessionStorage.getItem("songs"))
         songs.map((value, index: any) => {
           if (validateData(value.name) == false) {
@@ -246,6 +343,7 @@ export default function CreateStudio() {
                     <InputLabel required id="demo-simple-select-label">{t("studio")}</InputLabel>
                     <GenerateOptions/>
                     <CreateSongs/>
+                    <Tags/>
                     {error.length > 0 ?
                     <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
                     : null
