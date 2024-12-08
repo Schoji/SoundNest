@@ -1,3 +1,8 @@
+.adminpanel {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 .users {
   background-color: var(--section);
   border-radius: 10px;

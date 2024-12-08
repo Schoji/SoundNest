@@ -8,7 +8,7 @@ import "./TradeOffer.css"
 import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
 import { backend_address } from '../Components/global';
-import { Button } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import nothing from "../../../assets/nothing.jpg";
 import default_user from "../../../assets/user.png";
 import default_album from "../../../assets/album.png";
@@ -30,11 +30,16 @@ export default function Tradeoffers() {
       if (response.ok) {
         return response
       }
-      return Promise.reject(response)
+      else {
+        throw new Error("No trades")
+      }
     })
     .then(response => response.json())
     .then((data) => setUserTrades(data))
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      console.log(error)
+      setUserTrades(null)
+    })
   }
 
   const getUserSentTrades = () => {
@@ -77,7 +82,7 @@ export default function Tradeoffers() {
       <SideBar />
       <div className="main">
         <h1>{t("tradeOffers")}</h1>
-        {userTrades.length > 0 ?(
+        {userTrades != null && userTrades.length > 0 ?(
         <div className="tradeList">
           {userTrades.length > 0 && userTrades?.map((trade, index) => (
             <div className={trade.status == "pending" ? "tradeObj" : trade.status == "accepted" ? "tradeObj overlayAccepted" : "tradeObj overlayDeclined"}>
@@ -153,7 +158,36 @@ export default function Tradeoffers() {
               </div>
           ))}
         </div>
-        ): <p>{t("noPendingTradeoffers")}</p>}
+        ) : userTrades == null ?
+        <p>User has no trades.</p>
+        :
+        <div className='tradeList'>
+          {[...Array(4)].map((element, index) =>
+            <div className='tradeObj'>
+              <p>
+                <Skeleton animation="wave" variant="circular" width={"80px"} height={"80px"} />
+                <Skeleton animation="wave" variant="rounded" width={"100px"} height={"40px"} />
+              </p>
+              <p>
+                <Skeleton animation="wave" variant="circular" width={"80px"} height={"80px"} />
+              </p>
+              <div className='itemRows'>
+                {[...Array(4)].map((element, index) =>
+                  <Skeleton animation="wave" variant="rounded" width={"80px"} height={"80px"} />
+                )}
+              </div>
+              <div className='itemRows'>
+                {[...Array(4)].map((element, index) =>
+                  <Skeleton animation="wave" variant="rounded" width={"80px"} height={"80px"} />
+                )}
+              </div>
+              <div className='buttons'>
+                <Skeleton sx={{marginLeft: "5px"}}animation="wave" variant="rounded" width={"500px"} height={"60px"} />
+                <Skeleton animation="wave" variant="rounded" width={"495px"} height={"60px"} />
+              </div>
+            </div>
+          )}
+        </div>}
         {/* trade offer sent by user */}
         {userTradeSent.length > 0 ?(
         <div className="tradeList">
@@ -218,7 +252,8 @@ export default function Tradeoffers() {
               </div>
           ))}
         </div>
-        ): null}
+        ):
+        null}
       </div>
     </div>
 
