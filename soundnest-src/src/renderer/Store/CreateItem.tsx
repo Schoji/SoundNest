@@ -53,13 +53,13 @@ export function CreateSongs() {
         <TextField required key={"name" + String(index)} variant="outlined" name='name' value={input.name} label={t("nameOfTrack")} onChange={event => handleFormChange(index, event)}/>
         <TextField required key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} label={t("producer")} onChange={event => handleFormChange(index, event)}/>
         <TextField required key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} label={t("songDuration")} onChange={event => handleFormChange(index, event)}/>
-        <IconButton color='primary' onClick={() => removeFields(index)}>
+        <IconButton disableRipple color='primary' onClick={() => removeFields(index)}>
           <RemoveRoundedIcon/>
         </IconButton>
       </div>
     )
   })}
-    <IconButton color='primary' onClick={addFields}>
+    <IconButton disableRipple color='primary' onClick={addFields}>
       <AddRoundedIcon/>
     </IconButton>
   </div>

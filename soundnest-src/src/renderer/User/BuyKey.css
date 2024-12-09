@@ -1,9 +1,74 @@
 .activationPage:not(#key) {
   user-select: none;
+  display: grid;
+  grid-template-rows: min-content auto min-content auto;
+  gap: 10px;
+}
+.activationPage Button {
+  height: 50px;
+  width: 400px;
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.activationPage Button:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+.verifyKey {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.verifyKey .MuiInputBase-root {
+  width: 500px;
+  background: var(--searchbar-focused);
+  border-radius: 10px;
+}
+.verifyKey .MuiInputLabel-root.Mui-focused {
+  color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 0px var(--font-color));
+}
+.verifyKey .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 5px var(--font-color));
+}
+.verifyKey Button {
+  place-self: start center;
+}
+.buyKey {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.buyKey Button {
+  place-self: center center;
+}
+#copyKey {
+  place-self: center center;
+  text-wrap: nowrap;
+  text-align: center;
+  height: min-content;
+  width: min-content;
+}
+#copy {
+  font-size: small;
+  opacity: 0.7;
+  margin-top: 10px;
 }
 #key {
-  transition: all 0.3s;
+  font-size: large;
 }
 #key:hover {
   filter: drop-shadow(0 0 8px var(--font-color));
+  cursor: pointer;
 }

@@ -10,9 +10,10 @@ import { replace, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
 import { backend_address } from '../Components/global';
-import { Alert } from '@mui/material';
+import { Alert, createTheme, TextField, ThemeProvider } from '@mui/material';
 import { validateData } from '../Components/InputValidation';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
+import { useCustomEventListener } from 'react-custom-events';
 
 
 export default function BuyKey() {
@@ -51,25 +52,48 @@ export default function BuyKey() {
     event.preventDefault()
     navigator.clipboard.writeText(event.target.textContent)
   }
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    console.log("LOL")
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   return (
     <div className={sessionStorage.getItem("lang") === "en" ? "all english" : sessionStorage.getItem("lang") === "pl" ? "all polish" : sessionStorage.getItem("lang") === "de" ? "all german" : "all"}>
       <TopBar />
       <SideBar />
       <div className="main">
         <div className='activationPage'>
+          <ThemeProvider theme={materialtheme}>
           <h1>App Activation</h1>
-          <div className='buyKey'>
-            <Button variant='contained' color="success" onClick={buyLicenseKey}>Buy license key</Button>
-            <p id="key" onClick={(e) => copyToClipboard(e)}>{key}</p>
-          </div>
           <form className='verifyKey' onSubmit={verifyKey}>
-            <input id="keyInput" placeholder="Enter your key here"/>
-            <Button type="submit" variant='contained'>Verify</Button>
+            <TextField 
+              id='keyInput'
+              label="Activation key"
+              variant='outlined'
+            />
             {error.length > 0 ?
               <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
               : null
               }
+            <Button type="submit" variant='contained'>Verify</Button>
           </form>
+          <h1>Key purchase</h1>
+          <div className='buyKey'>
+            <Button variant='contained' color="success" onClick={buyLicenseKey}>Buy license key</Button>
+            <span id='copyKey'>
+              {key.length > 0 ?
+                <p id='copy'>Click to copy to clipboard</p>
+                : null
+              }         
+              <p id="key" onClick={(e) => copyToClipboard(e)}>{key}</p>          
+            </span>
+          </div>
+          </ThemeProvider>
         </div>
       </div>
     </div>

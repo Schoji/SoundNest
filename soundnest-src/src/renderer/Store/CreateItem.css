@@ -1,4 +1,5 @@
 .createItem {
+  user-select: none;
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 10px;
@@ -23,6 +24,7 @@
 .createItem form {
   display: grid;
   grid-template-columns: 2fr 3fr;
+  grid-template-rows: auto auto 50px;
   gap: 10px;
 }
 .createItemImage {
@@ -70,15 +72,33 @@
   background: var(--searchbar-focused);
   border-radius: 10px;
 }
+.createItem .MuiInputLabel-root.Mui-focused {
+  color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 0px var(--font-color));
+}
+.createItem .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 5px var(--font-color));
+}
 .createSongList {
+  height: 100%;
   padding: 10px;
   display: grid;
   gap: 10px;
   box-sizing: border-box;
   grid-column: 1/-1;
-  width: 100%;
   background: var(--section);
   border-radius: 10px;
+  transform: height 1s;
+}
+.createSongList Button {
+  place-self: center center;
+  width: min-content;
+  color: var(--accent-color);
+  transform: all 0.3s;
+}
+.createSongList Button:hover {
+  filter: drop-shadow(0 0 5px var(--font-color)) drop-shadow(0 0 0px var(--font-color));
 }
 .song {
   display: grid;
