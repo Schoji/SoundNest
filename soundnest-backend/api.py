@@ -7,6 +7,8 @@ from productTags import *
 from tags import *
 from trade_offer import *
 from keys import *
+from auth_middleware import *
+from datetime import datetime, timedelta
 
 class UserProducts(Resource):
    def get(self, id_user):
@@ -322,12 +324,21 @@ class getStatute(Resource):
 
 #This function checks if user's credentials are matching. If they match, full user information is returned.
 class UserAuthentication(Resource):
-
-    def get(self, username, password):
+    def get(self, username, password, withtoken):
       user = UserModel.query.filter_by(username=username, password=encrypt_string(password)).first()
       if not user:
          return "User with this password was not found in database.", 404
       user.avatar_dir = getUserPic(user.avatar_dir)
+      if withtoken == "true":
+         token = jwt.encode(
+            {"user_id": user.id,
+            "expiresIn": str(datetime.strftime(datetime.now() + timedelta(days=30), '%Y-%m-%d %H:%M:%S'))
+            },
+            app.config["SECRET_KEY"],
+            algorithm="HS256",
+         )
+      else:
+         token = "None"
 
       key = KeyModel.query.filter_by(id_user = user.id).first()
       if (key):
@@ -348,6 +359,7 @@ class UserAuthentication(Resource):
          "credits": user.credits,
          "is_admin": user.is_admin,
          "hasKey": hasKey,
+         "token": token,
       }
       return dataset
 
@@ -415,10 +427,45 @@ class stats(Resource):
             },
             "user_contribution" : dataset,
         }
-    
+
+class ValidateToken(Resource):
+   token_required
+   def get(self):
+      pass
+
+class getUserInfoToken(Resource):
+   def get(self, token):
+      if not token:
+         return "Token is missing", 401
+      try:
+         data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+         user = UserModel.query.filter_by(id = data["user_id"]).first()
+         hasKey = False
+         if (KeyModel.query.filter_by(id_user = user.id).first()):
+            hasKey = True
+         return {
+            "id" : user.id,
+            "username" : user.username,
+            "name": user.name,
+            "surname": user.surname,
+            "avatar_dir": getUserPic(user.avatar_dir),
+            "email" : user.email,
+            "bio" : user.bio,
+            "prefered_theme": user.prefered_theme,
+            "prefered_colour": user.prefered_colour,
+            "lang": user.lang,
+            "credits": user.credits,
+            "is_admin": user.is_admin,
+            "hasKey": hasKey,
+            "token": token,
+         }
+      except:
+         return 404
+
+api.add_resource(ValidateToken, "/api/validate_token")
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
-api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>")
+api.add_resource(UserAuthentication, "/api/users/<string:username>/<string:password>/<string:withtoken>")
 api.add_resource(changeLang, "/api/change_lang/<int:id_user>/<string:lang>")
 api.add_resource(ThemeSwitcher, "/api/switch_theme/<int:id_user>")
 api.add_resource(addFunds, "/api/add_funds/<int:id_user>/<int:fund_amount>")
@@ -462,6 +509,7 @@ api.add_resource(getStudiosNotFromUser, "/api/studios_not_from/<int:id_user>")
 api.add_resource(changeColour, "/api/change_colour/<int:id_user>/<int:colour>")
 api.add_resource(stats, "/api/stats/")
 api.add_resource(getUserInfoWithKey, "/api/user_with_key/<int:id_user>")
+api.add_resource(getUserInfoToken, "/api/user_with_token/<string:token>")
 
 @app.route("/last_update")
 def last_update():

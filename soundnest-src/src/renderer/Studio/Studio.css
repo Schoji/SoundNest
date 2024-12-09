@@ -1,11 +1,15 @@
 img {
   -webkit-user-drag: none;
 }
-.studioMain {
+.studioMain, .studioMainSkeleton {
   user-select: none;
   display: grid;
   grid-template-rows: repeat(auto);
   gap: 10px;
+}
+.studioMainSkeleton {
+  display: inline-flex;
+  flex-direction: column;
 }
 .studioMain Button {
   background: var(--accent-gradient);
@@ -28,7 +32,7 @@ img {
   box-sizing: border-box;
   padding: 5px;
 }
-.studioDetails > img {
+.studioDetails > img, .studioDetails > #imageSkeleton {
   grid-row: 1/4;
   border-radius: 8px;
 }
@@ -43,10 +47,10 @@ img {
   box-sizing: border-box;
   padding: 5px;
 }
-.studioOwner > h3 {
+.studioOwner > h3, .studioOwner > #skeletonH3 {
   grid-column: 1/3;
 }
-.studioOwner > img {
+.studioOwner > img, .studioOwner > #imageSkeleton2 {
   grid-row: 2/4;
   width: 100%;
   border-radius: 6px;

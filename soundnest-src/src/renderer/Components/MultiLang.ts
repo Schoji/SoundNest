@@ -51,7 +51,7 @@ i18n.use(initReactI18next).init({
         //CreateItem
         nameOfTrack: "Name of the track",
         producer: "Producer",
-        songDuration: "Song duration in seconds",
+        songDuration: "Song duration",
         createYourItem: "Create your item",
         createItem: "Create item",
         //Item

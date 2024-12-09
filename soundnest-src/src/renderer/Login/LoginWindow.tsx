@@ -36,6 +36,7 @@ export default function LoginWindow() {
     event.preventDefault();
     let username = event.target.username.value
     let password = event.target.password.value
+    let keepSigned = event.target.keepSigned.checked
     if (validateData(username, "username") == false  && validateData(password, "password") == false){
       console.log("Creds did not pass validation.")
       setError("Please provide proper data.")
@@ -43,7 +44,7 @@ export default function LoginWindow() {
     }
 
     const checkCreds = () => {
-      fetch(`${backend_address}/api/users/${username}/${password}`)
+      fetch(`${backend_address}/api/users/${username}/${password}/${keepSigned}`)
       .then((response) => {
         if (response.ok) {
           return response.json()
@@ -84,6 +85,7 @@ export default function LoginWindow() {
               />
               <div className='checkbox'>
                 <Checkbox
+                  id="keepSigned"
                   disableRipple
                 />
                 <p>Keep me signed in</p>

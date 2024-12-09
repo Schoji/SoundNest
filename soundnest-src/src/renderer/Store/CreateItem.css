@@ -1,0 +1,100 @@
+.createItem {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+}
+.createItemTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.createItemTitle Button {
+  height: 40px;
+  width: 40px;
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.createItemTitle Button:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+.createItem form {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 10px;
+}
+.createItemImage {
+  display: grid;
+  grid-template-rows: min-content auto auto 45px;
+  gap: 5px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.createItemImage img {
+  -webkit-user-drag: none;
+  width: calc(100% - 3px);
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--accent-color);
+}
+.createItemImage .uploadPhoto {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.createItemImage .uploadPhoto:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}
+.createItem .smallTitle {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.createItemInputs {
+  display: grid;
+  grid-template-rows: repeat(min-content);
+  gap: 5px;
+  background: var(--section);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.createItem .MuiInputBase-root {
+  background: var(--searchbar-focused);
+  border-radius: 10px;
+}
+.createSongList {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  box-sizing: border-box;
+  grid-column: 1/-1;
+  width: 100%;
+  background: var(--section);
+  border-radius: 10px;
+}
+.song {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 3fr 2fr 1fr auto;
+}
+.createItem .createButton {
+  grid-column: 1/-1;
+}
+.createItem form .createButton {
+  background: var(--accent-gradient);
+  color: var(--font-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.createItem form .createButton:hover {
+  box-shadow: 0px 0px 19px -6px var(--font-color);
+  background: var(--accent-gradient-hover);
+}

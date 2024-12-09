@@ -163,6 +163,8 @@ export default function AccountMenu() {
           {t("settings")}
         </MenuItem>
         <MenuItem onClick={() => {
+          localStorage.clear();
+          localStorage.setItem("token", "undefined")
           sessionStorage.clear();
           window.electron.ipcRenderer.sendMessage('open-login-window', "LOL");
         }}>

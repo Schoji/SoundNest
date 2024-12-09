@@ -25,8 +25,8 @@ ProductTagsFields = {
 }
 
 ProductTags_args = reqparse.RequestParser()
-ProductTags_args.add_argument("tag_product", required=True, help="i.e. rock, pop")
-ProductTags_args.add_argument("tag_tag", required=True, help="i.e. rock, pop")
+ProductTags_args.add_argument("id_product", required=True, help="i2332")
+ProductTags_args.add_argument("id_tag", required=True, help="i.e. rock, pop")
 
 
 class ProductTags(Resource):

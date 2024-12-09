@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import default_album from "../../../assets/album.png"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
+import { useCustomEventListener } from 'react-custom-events';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,12 +55,16 @@ export default function PurchaseHistory() {
         console.log(error);
       });
   };
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
   useEffect(() => {
     Fetch();
   }, []);
+  useCustomEventListener("changeTheme", (theme) => {
+    setTheme(theme)
+  })
   let materialtheme = createTheme({
     palette: {
-      mode: sessionStorage.getItem("theme") == "dark" ? "dark" : "light"
+      mode: theme
     }
   })
   return (
@@ -67,53 +72,55 @@ export default function PurchaseHistory() {
       <TopBar />
       <SideBar />
       <div className="main">
-        <div className="library">
-          <ThemeProvider theme={materialtheme}>
-            <div className="header">
-                <h1>
-                  {t("purchaseHistory")}: {sessionStorage.getItem('name')}{' '}
-                  {sessionStorage.getItem('surname')}
-                </h1>
-            </div>
-            {dataStatus == "ok" && data.length > 0 ?
-            <div className="albums">
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableBody>
-                {data.toReversed().map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell>{row.date}</StyledTableCell>
-                    <StyledTableCell>
-                    <Avatar src={row.item_path != "/" ? `data:image/jpeg;base64,${row.item_path}` : default_album}/>
-                    </StyledTableCell>
-                    <StyledTableCell>{row.album}</StyledTableCell>
-                    <StyledTableCell>{row.artist}</StyledTableCell>
-                    <StyledTableCell>{row.price.toFixed(2)} $</StyledTableCell>
-                  </StyledTableRow>
-                ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            </div>
-            : dataStatus == "error" ?
-            <p>You have no purchases</p>
-            :
-            <TableContainer component={Paper}>
-              <Table>
-              {[...Array(8)].map((element, index) =>
-                <TableRow>
-                  {[...Array(5)].map((element, index) =>
-                  <TableCell>
-                    <Skeleton animation="wave" variant="rounded" width={"160px"} height={"30px"} />
-                  </TableCell>
-                  )}
-                </TableRow>
-              )}
-              </Table>
-            </TableContainer>
-            }
-          </ThemeProvider>
-        </div>
+        <ThemeProvider theme={materialtheme}>
+          <div className="library">
+
+              <div className="header">
+                  <h1>
+                    {t("purchaseHistory")}: {sessionStorage.getItem('name')}{' '}
+                    {sessionStorage.getItem('surname')}
+                  </h1>
+              </div>
+              {dataStatus == "ok" && data.length > 0 ?
+              <div className="albums">
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableBody>
+                  {data.toReversed().map((row) => (
+                    <StyledTableRow key={row.id}>
+                      <StyledTableCell>{row.date}</StyledTableCell>
+                      <StyledTableCell>
+                      <Avatar src={row.item_path != "/" ? `data:image/jpeg;base64,${row.item_path}` : default_album}/>
+                      </StyledTableCell>
+                      <StyledTableCell>{row.album}</StyledTableCell>
+                      <StyledTableCell>{row.artist}</StyledTableCell>
+                      <StyledTableCell>{row.price.toFixed(2)} $</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              </div>
+              : dataStatus == "error" ?
+              <p>You have no purchases</p>
+              :
+              <TableContainer component={Paper}>
+                <Table>
+                {[...Array(8)].map((element, index) =>
+                  <TableRow>
+                    {[...Array(5)].map((element, index) =>
+                    <TableCell>
+                      <Skeleton animation="wave" variant="rounded" width={"160px"} height={"30px"} />
+                    </TableCell>
+                    )}
+                  </TableRow>
+                )}
+                </Table>
+              </TableContainer>
+              }
+
+          </div>
+        </ThemeProvider>
       </div>
     </div>
   );

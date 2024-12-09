@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable camelcase */
 import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, MenuItem, Input, Alert, createTheme } from '@mui/material';
+import { TextField, FormControl, IconButton, MenuItem, Input, Alert, createTheme, Chip, OutlinedInput, Box } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
@@ -12,14 +12,15 @@ import './CreateItem.css';
 import default_album from '../../../assets/album.png';
 import { useState, useEffect } from 'react';
 import InputLabel from '@mui/material/InputLabel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import '../Components/MultiLang'
 import { useTranslation } from 'react-i18next';
 import { validateData } from '../Components/InputValidation';
 import { ThemeProvider } from '@mui/material';
 import { useCustomEventListener } from 'react-custom-events';
 import { backend_address } from '../Components/global';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 
 export function CreateSongs() {
   const { t } = useTranslation();
@@ -44,27 +45,101 @@ export function CreateSongs() {
     setInputFields(data)
   }
 
-  return (<div>
+  return (
+  <div className='createSongList'>
     {inputFields.map((input, index) => {
     return (
-      <div key={index}>
-        <TextField required key={"name" + String(index)} variant="outlined" name='name' value={input.name} placeholder={t("nameOfTrack")} onChange={event => handleFormChange(index, event)}/>
-        <TextField required key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} placeholder={t("producer")} onChange={event => handleFormChange(index, event)}/>
-        <TextField required key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} placeholder={t("songDuration")} onChange={event => handleFormChange(index, event)}/>
+      <div className="song" key={index}>
+        <TextField required key={"name" + String(index)} variant="outlined" name='name' value={input.name} label={t("nameOfTrack")} onChange={event => handleFormChange(index, event)}/>
+        <TextField required key={"producer" + String(index)} variant="outlined" name='producer' value={input.producer} label={t("producer")} onChange={event => handleFormChange(index, event)}/>
+        <TextField required key={"duration " + String(index)} variant="outlined" name='duration' value={input.duration} label={t("songDuration")} onChange={event => handleFormChange(index, event)}/>
         <IconButton color='primary' onClick={() => removeFields(index)}>
-        <FontAwesomeIcon icon={faMinus}/>
+          <RemoveRoundedIcon/>
         </IconButton>
-    </div>
+      </div>
     )
   })}
-  <IconButton color='primary' onClick={addFields}>
-        <FontAwesomeIcon icon={faPlus}/>
-        </IconButton>
+    <IconButton color='primary' onClick={addFields}>
+      <AddRoundedIcon/>
+    </IconButton>
   </div>
 )
 }
 
-export default function CreateStudio() {
+function Tags() {
+  const [tagDict, setTagDict] = useState([])
+  const [allTags, setAllTags] = useState([])
+  function getTags() {
+    fetch(backend_address + "/api/tags")
+    .then(response => response.json())
+    .then(data => {
+      setAllTags(data)
+      var tempTagDict = []
+      data.map((tag, index) => {
+        tempTagDict.push(tag.tag_name)
+      })
+      setTagDict(tempTagDict)
+    })
+    .catch(error => console.log(error))
+
+  }
+  useEffect(() => {
+    getTags()
+  },[])
+  const [tags, setTags] = useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof tags>) => {
+    const {
+      target: { value },
+    } = event;
+    setTags(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  return (
+    <FormControl sx={{width: "100%"}}>
+      <InputLabel>Tags</InputLabel>
+      <Select
+        id="tags"
+        multiple
+        value={tags}
+        onChange={handleChange}
+        input={<OutlinedInput id="multipletag" label="Tag" />}
+        renderValue={(selected) => (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {selected.map((value) => (
+              <Chip key={value} label={tagDict[value + 1]} />
+            ))}
+          </Box>
+        )}
+        MenuProps={MenuProps}
+      >
+        {allTags.map((tag) => (
+          <MenuItem
+            key={tag.tag_name}
+            value={tag.id}
+          >
+            {tag.tag_name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+}
+
+export default function CreateItem() {
   const navigate = useNavigate();
   const [pic, setPic] = useState(default_album);
 
@@ -126,6 +201,11 @@ export default function CreateStudio() {
       return
     }
 
+    if (event.target.multipletag.value == "") {
+      setError("Select at least 1 tag.")
+      return
+    }
+    var tags = event.target.multipletag.value.split(",")
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -145,6 +225,23 @@ export default function CreateStudio() {
         else console.log(response.json())
       })
       .then((response) => {
+        tags.map((tag, index) => {
+          fetch(backend_address + "/api/producttags/",
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id_product: parseInt(response.id),
+                id_tag: parseInt(tag)
+              }),
+            }
+          )
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.log(error))
+        })
+
+
         var songs = JSON.parse(sessionStorage.getItem("songs"))
         songs.map((value, index: any) => {
           if (validateData(value.name) == false) {
@@ -192,14 +289,17 @@ export default function CreateStudio() {
       <MenuItem value={parseInt(value.id)}>{value.name}</MenuItem>
     )
     return (
-              <Select
-                id="studio"
-                value={studioValue}
-                label="Studio"
-                onChange={handleChange}
-              >
-                {returnvalue}
-              </Select>
+      <FormControl>
+        <InputLabel>Studio</InputLabel>
+        <Select
+          id="studio"
+          value={studioValue}
+          label="Studio"
+          onChange={handleChange}
+        >
+          {returnvalue}
+        </Select>
+      </FormControl>
     );
   }
   const { t } = useTranslation()
@@ -219,49 +319,67 @@ export default function CreateStudio() {
         <TopBar />
         <SideBar />
         <div className="main">
-          <div>
-            <div className="createStudioTitle">
-              <IconButton
-                color="primary"
-                className="back"
-                onClick={() => {
-                  navigate('/Store', { replace: true });
-                }}
-              >
-                <ArrowBackIosIcon />
+          <div className='createItem'>
+            <div className="createItemTitle">
+              <IconButton onClick={() => {navigate('/studios', { replace: true });}}>
+                <ArrowBackIosRoundedIcon />
               </IconButton>
               <h1>{t("createYourItem")}</h1>
             </div>
-            <div>
-              <form onSubmit={AddItem}  encType="multipart/form-data">
-
+            <form onSubmit={AddItem}  encType="multipart/form-data">
+              <div className='createStudioImage'>
+                <p className='smallTitle'>Here is a quick preview of your item picture!</p>
                   <img src={pic} />
-                  <div>
-
-                    <TextField type="file" onChange={ChangePicture} />
-                    <TextField required id="album" label="Album name" variant="outlined" />
-                    <TextField required id="artist" label="Artist" variant="outlined" />
-                    <TextField required id="desc" label="Description" multiline variant="outlined" />
-                    <TextField required id="price" label="Price" variant="outlined" />
-                    <InputLabel required id="demo-simple-select-label">{t("studio")}</InputLabel>
-                    <GenerateOptions/>
-                    <CreateSongs/>
-                    {error.length > 0 ?
-                    <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
-                    : null
-                    }
-                    <Button
-                      className="createButton"
-                      variant="contained"
-                      type="submit"
-                      disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
-                    >
-                      {t("createItem")}
-                    </Button>
-                  </div>
-
-              </form>
-            </div>
+                  <div> </div>
+                  <Button
+                  className="uploadPhoto"
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<FileUploadRoundedIcon />}
+                >
+                  {t("uploadPhoto")}
+                  <input type='file' onChange={ChangePicture} style={{display: 'none'}} />
+                </Button>
+              </div>
+              <div className='createItemInputs'>
+                <p className='smallTitle'>How would you like your product to be called?</p>
+                <TextField
+                  id="album"
+                  label="Album name"
+                />
+                <TextField
+                  id="artist"
+                  label="Artist"
+                />
+                <TextField
+                  id="desc"
+                  label="Description"
+                  multiline
+                  minRows={6}
+                />
+                <TextField
+                  id="price"
+                  label="Price"
+                />
+                <GenerateOptions/>
+                <Tags/>
+                {error.length > 0 ?
+                <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
+                : null
+                }
+              </div>
+              <CreateSongs/>
+              <Button
+                  className="createButton"
+                  variant="contained"
+                  type="submit"
+                  disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+                >
+                  {t("createItem")}
+              </Button>
+            </form>
           </div>
         </div>
       </div>

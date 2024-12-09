@@ -12,6 +12,7 @@ import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
 import default_user from "../../../assets/user.png";
+import { Skeleton } from '@mui/material';
 
 const cache = createCache({
   key: 'css',
@@ -30,8 +31,6 @@ export default function Tradeoffer() {
 
   const [myItems, setMyItems] = useState([]);
   const [theirItems, setTheirItems] = useState([]);
-
-  const [tradeToken, setTradeToken] = useState(null)
 
   const getUserInfo1 = () => {
     fetch(backend_address + "/api/users/" + sessionStorage.getItem("id"))
@@ -154,16 +153,20 @@ export default function Tradeoffer() {
         <div className='layout'>
           <div className='tradeOffer'>
             <div className='tradeHeader'>
+              {userInfo1.avatar_dir ?
               <img
                   src={userInfo1.avatar_dir != "/" ? `data:image/jpeg;base64,${userInfo1.avatar_dir}` : default_user}
               />
+              :
+                <Skeleton animation="wave" variant="circular" width={"48px"} height={"48px"} />
+              }
               <h2>
                 Your inventory:
               </h2>
 
             </div>
               <div className='items'>
-              {userProducts1.length > 0 && userProducts1?.map((product, index) => (
+              {userProducts1.length > 0 ? userProducts1?.map((product, index) => (
                 <img
                 id={`image-${product.id}`}
                 src={`data:image/jpeg;base64,${product.item_path}`}
@@ -196,19 +199,30 @@ export default function Tradeoffer() {
                   }
                 }}
                 />
-            ))}
+            )):
+            <div className='items'>
+            {[...Array(12)].map((element, index) =>
+              <Skeleton animation="wave" variant="rounded" width={"96px"} height={"96px"} />
+            )}
+            </div>
+            }
             </div>
           </div>
           <div className='tradeOffer'>
             <div className='tradeHeader'>
+              {userInfo2.avatar_dir ?
               <img src={userInfo2.avatar_dir != "/" ? `data:image/jpeg;base64,${userInfo2.avatar_dir}` : default_user} />
+              :
+                <Skeleton animation="wave" variant="circular" width={"48px"} height={"48px"} />
+              }
               <h2>
                 Their inventory:
               </h2>
 
             </div>
               <div className='items'>
-              {userProducts2.length > 0 && userProducts2?.map((product, index) => (
+              {userProducts2.length > 0 ?
+              userProducts2?.map((product, index) => (
               <img
                 id={`image_theirs-${product.id}`}
                 src={`data:image/jpeg;base64,${product.item_path}`}
@@ -241,7 +255,13 @@ export default function Tradeoffer() {
 
               }}
               />
-            ))}
+            )):
+            <div className='items'>
+              {[...Array(12)].map((element, index) =>
+                <Skeleton animation="wave" variant="rounded" width={"96px"} height={"96px"} />
+              )}
+            </div>
+            }
             </div>
           </div>
 
