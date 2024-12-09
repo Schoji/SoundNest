@@ -329,8 +329,6 @@ class UserAuthentication(Resource):
       if not user:
          return "User with this password was not found in database.", 404
       user.avatar_dir = getUserPic(user.avatar_dir)
-      print(withtoken)
-      print(type(withtoken))
       if withtoken == "true":
          token = jwt.encode(
             {"user_id": user.id,
