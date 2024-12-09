@@ -56,21 +56,21 @@ export default function BuyKey() {
       <TopBar />
       <SideBar />
       <div className="main">
-        <h1>Pricing</h1>
-        <div className='choiceList'>
-          <div className='choice'>
+        <div className='activationPage'>
+          <h1>App Activation</h1>
+          <div className='buyKey'>
             <Button variant='contained' color="success" onClick={buyLicenseKey}>Buy license key</Button>
             <p id="key" onClick={(e) => copyToClipboard(e)}>{key}</p>
           </div>
+          <form className='verifyKey' onSubmit={verifyKey}>
+            <input id="keyInput" placeholder="Enter your key here"/>
+            <Button type="submit" variant='contained'>Verify</Button>
+            {error.length > 0 ?
+              <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
+              : null
+              }
+          </form>
         </div>
-        <form onSubmit={verifyKey}>
-          <input id="keyInput" placeholder="Enter your key here"/>
-          <Button type="submit" variant='contained'>Verify</Button>
-          {error.length > 0 ?
-            <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
-            : null
-            }
-        </form>
       </div>
     </div>
   );

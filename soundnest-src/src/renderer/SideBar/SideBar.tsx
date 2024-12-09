@@ -97,7 +97,7 @@ export default function SideBar() {
       {sessionStorage.getItem("hasKey") == "false" ? (
       <Link to="/buykey" className="sideButtonInverted">
         <div><LockPersonRoundedIcon /></div>
-        <p>Get full version</p>
+        <p>{t("getFullVersion")}</p>
       </Link>
       ) : <div> </div>}
       <div className='themeButtonDiv'>

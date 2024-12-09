@@ -13,6 +13,7 @@ i18n.use(initReactI18next).init({
         studio: "Studio",
         tradeOffers: "Trade Offers",
         adminPanel: "Admin Panel",
+        getFullVersion: "Get Full Version",
         cart: "Cart",
         //Library
         yourLibrary: "Your Library",
@@ -127,6 +128,7 @@ i18n.use(initReactI18next).init({
         studio: "Studio",
         tradeOffers: "Oferty Wymiany",
         adminPanel: "Panel Admina",
+        getFullVersion: "Uzyskaj pełną wersję",
         cart: "Koszyk",
         //Library
         yourLibrary: "Twoja biblioteka",
@@ -241,6 +243,7 @@ i18n.use(initReactI18next).init({
         studio: "Studio",
         tradeOffers: "Tauschangebote",
         adminPanel: "Admin-Panel",
+        getFullVersion: "Vollversion erhalten",
         cart: "Warenkorb",
         //Library
         yourLibrary: "Deine Bibliothek",

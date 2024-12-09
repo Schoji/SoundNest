@@ -62,7 +62,7 @@
 }
 .createStudioInputs {
   display: grid;
-  grid-template-rows: min-content auto min-content auto 68px min-content 45px;
+  grid-template-rows: min-content auto min-content auto auto min-content 45px;
   gap: 5px;
   background: var(--section);
   border-radius: 10px;
@@ -98,6 +98,9 @@
 .createStudioInputs .createButton:hover {
   box-shadow: 0px 0px 19px -6px var(--font-color);
   background: var(--accent-gradient-hover);
+}
+.Mui-disabled {
+  color: rgb(255, 255, 255, 0.3) !important;
 }
 @media only screen and (max-width: 800px) {
   .createStudio form {

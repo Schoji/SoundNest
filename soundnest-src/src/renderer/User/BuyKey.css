@@ -1,19 +1,9 @@
-.choiceList {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  height: auto;
+.activationPage:not(#key) {
+  user-select: none;
 }
-.choice {
-  grid-column: 2/3;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 50px;
-  background-color: var(--section);
-  border-radius: 10px;
+#key {
+  transition: all 0.3s;
 }
 #key:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  filter: drop-shadow(0 0 8px var(--font-color));
 }

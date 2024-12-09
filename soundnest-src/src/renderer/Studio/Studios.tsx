@@ -133,7 +133,7 @@ export default function Studio() {
           <Button onClick={toCreateStudio}>
             <FontAwesomeIcon icon={faPlus} size="2xl" beat />
           </Button>
-          {myStudiosData.length > 0 ?
+          {myStudiosData?.length > 0 ?
             <div className="myStudios">
               {myStudiosData.map((myStudio, index) =>
                 <div className="myStudio">
@@ -157,6 +157,10 @@ export default function Studio() {
                   </Button>
                 </div>
                )}
+            </div>
+            : sessionStorage.getItem("hasKey") == "false" ?
+            <div className='myStudios demo'>
+              <h3>Nothing here</h3>
             </div>
             :
             <div className='myStudios'>

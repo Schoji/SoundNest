@@ -22,9 +22,13 @@
   transition: background-color 0.3s;
 }
 .sideButtonInverted {
+  height: min-content;
+  min-height: 60px;
+  max-height: 70.8px;
   background: var(--accent-gradient);
   color: var(--font-color);
   border-radius: 8px;
+  transition-delay: 2s;
 }
 :nth-child(1 of .sideButton) {
   border-radius: 8px 8px 0 0;
@@ -62,14 +66,17 @@
 .sideButton div svg, .sideButtonInverted div svg {
   font-size: 34px;
 }
+.sideButton p {
+  white-space: nowrap;
+}
 .sideButton p, .sideButtonInverted p {
+  line-clamp: 2;
   display: flex;
   align-items: center;
   justify-content: left;
   margin-left: 5px;
   font-size: 20px;
   font-weight: 500;
-  white-space: nowrap;
 }
 .sideButton:hover {
   background: var(--section-hover);
@@ -185,7 +192,7 @@
     grid-template-columns: 50px 0fr;
     transition: 0.2s ease-in;
   }
-  .sideButton p, .cartButton p {
+  .sideButton p, .cartButton p, .sideButtonInverted p {
     display: none;
   }
   .themeButton {
