@@ -29,7 +29,15 @@ The application is built using the following technologies:
 * Flask (REST API): Powers the backend, handling authentication, database operations, and data exchanges.
 
 ## 📷 Showcase
+!["Soundnest"](https://github.com/user-attachments/assets/856ec225-2592-4ed1-b984-09ae42abde40)
 
+!["Soundnest2"](https://github.com/user-attachments/assets/e84f3f41-9efa-487e-aa45-9a52d641fc62)
+
+!["Soundnest3"](https://github.com/user-attachments/assets/63ecba88-a5f7-419d-8152-9eedb9cc9983)
+
+!["Soundnest4"](https://github.com/user-attachments/assets/507005d4-2761-4a45-ab61-45d96dd09079)
+
+!["Soundnest5"](https://github.com/user-attachments/assets/ed19a923-58e6-449b-81bb-81db471eac7b)
 
 ## 🛠️ Installation
 Prerequisites
