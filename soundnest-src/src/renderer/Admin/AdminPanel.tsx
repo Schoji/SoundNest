@@ -202,7 +202,7 @@ export default function AdminPanel() {
             <div className='stats'>
               <div className='stat'>
                 <div className='amount'>
-                  <h3>Active users</h3>
+                  <h3>{t("adminPanelUsersCount")}</h3>
                   <LinearProgress variant="determinate" value={parseFloat(stats.users_no_keys) / parseFloat(stats.users) * 100} sx={{height: "10px", borderRadius: "10px"}}/>
                   <p>{stats.users_no_keys}/{stats.users}</p>
                 </div>
@@ -212,7 +212,7 @@ export default function AdminPanel() {
               </div>
               <div className='stat'>
                 <div className='amount'>
-                  <h3>Total credits</h3>
+                  <h3>{t("adminPanelTotalCredits")}</h3>
                   <LinearProgress id="credits" variant="determinate" value={parseFloat(stats.total_balance) / 20000 * 100} sx={{height: "10px", borderRadius: "10px"}}/>
                   <p>{stats.total_balance}/20000$</p>
                 </div>
@@ -222,7 +222,7 @@ export default function AdminPanel() {
               </div>
               <div className='stat'>
                 <div className='amount'>
-                <h3>Top contributors</h3>
+                <h3>{t("adminPanelTopContributors")}</h3>
                 </div>
                   <div className='kobuch'>
                     <PieChart series={[
@@ -241,7 +241,7 @@ export default function AdminPanel() {
               </div>
               <div className='stat'>
                 <div className='amount'>
-                  <h3>Top user</h3>
+                  <h3>{t("adminPanelTopUser")}</h3>
                   <p>1. {stats.top_user.name} {stats.top_user.surname}</p>
                 </div>
                 <div className='icon'>

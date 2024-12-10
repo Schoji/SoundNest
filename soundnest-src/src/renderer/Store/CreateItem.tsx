@@ -328,7 +328,7 @@ export default function CreateItem() {
             </div>
             <form onSubmit={AddItem}  encType="multipart/form-data">
               <div className='createStudioImage'>
-                <p className='smallTitle'>Here is a quick preview of your item picture!</p>
+                <p className='smallTitle'>{t("picPreview")}</p>
                   <img src={pic} />
                   <div> </div>
                   <Button
@@ -344,24 +344,24 @@ export default function CreateItem() {
                 </Button>
               </div>
               <div className='createItemInputs'>
-                <p className='smallTitle'>How would you like your product to be called?</p>
+                <p className='smallTitle'>{t("newItemName")}</p>
                 <TextField
                   id="album"
-                  label="Album name"
+                  label={t("newAlbumName")}
                 />
                 <TextField
                   id="artist"
-                  label="Artist"
+                  label={t("newAlbumCreator")}
                 />
                 <TextField
                   id="desc"
-                  label="Description"
+                  label={t("newAlbumDescription")}
                   multiline
                   minRows={6}
                 />
                 <TextField
                   id="price"
-                  label="Price"
+                  label={t("newAlbumPrice")}
                 />
                 <GenerateOptions/>
                 <Tags/>

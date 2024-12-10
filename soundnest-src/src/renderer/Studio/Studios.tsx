@@ -146,7 +146,7 @@ export default function Studio() {
           </Button>
           {myStudiosData?.length > 0 ?
             <div className="myStudios">
-              {myStudiosData.map((myStudio, index) =>
+              {myStudiosData.map((myStudio) =>
                 <div className="myStudio">
                   <div className="myStudioImage">
                     {myStudio.studio_dir === '/' ?
@@ -166,6 +166,7 @@ export default function Studio() {
                   >
                     {t("edit")}
                   </Button>
+                  <AlertDialog studio_id={myStudio.id}/>
                 </div>
                )}
             </div>
