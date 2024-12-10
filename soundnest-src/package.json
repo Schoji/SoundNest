@@ -1,6 +1,7 @@
 {
   "name": "soundnest",
   "description": "Revolutionary music store",
+  "version": "1.0.0",
   "keywords": [
     "react",
     "typescript",
@@ -206,14 +207,19 @@
   },
   "build": {
     "productName": "SoundNest",
-    "appId": "org.erb.SoundNest",
+    "appId": "com.soundnest.app",
     "asar": true,
+    "copyright": "Copyright © 2024 SoundNest Team",
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
       "node_modules",
       "package.json"
     ],
+    "extraMetadata": {
+      "version": "1.0.1",
+      "description": "Revolutionary music store"
+    },
     "mac": {
       "sign": ".erb/scripts/notarize.js",
       "notarize": false,
@@ -245,7 +251,7 @@
       ]
     },
     "win": {
-      "icon": "/resources/assets/logo.ico",
+      "icon": "/assets/icon.ico",
       "target": [
         "nsis"
       ]

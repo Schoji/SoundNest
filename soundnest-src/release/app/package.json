@@ -2,6 +2,7 @@
   "name": "soundnest",
   "version": "1.0.0",
   "description": "Revolutionary music store",
+  "icon":"./resources/assets/icon.ico",
   "license": "MIT",
   "author": {
     "name": "SoundNest team",
