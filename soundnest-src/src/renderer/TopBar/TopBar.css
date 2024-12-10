@@ -26,34 +26,38 @@
   height: 44px;
 }
 .searchInputDiv {
-  flex: 0 1 400px;
+  flex: 0 1 40vw;
 }
-
-.searchInput {
+.searchInputDiv .MuiInputBase-root {
   -webkit-app-region: no-drag;
-  box-sizing: border-box;
-  padding-left: 10px;
   height: 40px;
-  width: 100%;
   background-color: var(--searchbar);
-  color: var(--font-color);
-  border: 3px solid transparent;
   border-radius: 10px;
-  transition: background-color 150ms linear;
+  transition: all 0.2 linear;
 }
-
-.searchInput:focus {
-  outline: none;
-  background:
-    linear-gradient(var(--searchbar-focused), var(--searchbar-focused)) padding-box,
-    var(--accent-gradient) border-box;
-  border: 3px solid transparent;
+.searchInputDiv .MuiInputBase-root:not(.Mui-focused) input {
+  opacity: 0.5;
 }
-
-.searchInput:hover {
-  background-color: var(--searchbar-focused);
+.searchInputDiv .MuiInputBase-root input::placeholder {
+  text-align: center;
+  margin-right: 35px;
 }
-
+.searchInputDiv .MuiInputLabel-root.Mui-focused {
+  color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 0px var(--font-color));
+}
+.searchInputDiv .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--accent-color) !important;
+  filter: drop-shadow(0 0 5px var(--font-color));
+}
+.searchInputDiv .MuiInputAdornment-root {
+  color: var(--font-color);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.searchInputDiv .MuiInputBase-root.Mui-focused .MuiInputAdornment-root {
+  opacity: 1;
+}
 .profileDiv {
   height: 60px;
   flex: 0 0 300px;
@@ -118,7 +122,7 @@
   position: absolute;
   display: grid;
   gap: 5px;
-  width: 400px;
+  width: 40vw;
   color: var(--font-color);
   background: var(--accent-gradient);
   max-height: calc(100% - 130px);
@@ -203,6 +207,9 @@
   }
   .iconDiv {
     flex: 0 1 50px;
+  }
+  .searchInputDiv {
+    flex: 0 1 55vw;
   }
   .walletValueDiv {
     display: none;

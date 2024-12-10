@@ -10,6 +10,10 @@ import AudiotrackRoundedIcon from '@mui/icons-material/AudiotrackRounded';
 import default_album from '../../../assets/album.png';
 import './TopBar.css';
 import { backend_address } from '../Components/global';
+import { createTheme, InputAdornment, TextField, ThemeProvider } from '@mui/material';
+import { useCustomEventListener } from 'react-custom-events';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import HorizontalRuleRoundedIcon from '@mui/icons-material/HorizontalRuleRounded';
 
 const cache = createCache({
   key: 'css',
@@ -24,6 +28,15 @@ export default function SearchBar() {
   const [searchResults, setSearchResults] = useState();
   let text;
   const min_length = 3;
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
 
   function changeSearch(event) {
     event.preventDefault();
@@ -45,11 +58,23 @@ export default function SearchBar() {
     }
   }
   return (
-    <CacheProvider value={cache}>
-        <input
-          type="text"
+    <ThemeProvider theme={materialtheme}>
+        <TextField
           id="input"
-          className="searchInput"
+          fullWidth
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon sx={{
+                    transform: "scaleX(-1)",
+                    marginRight: "5px",
+                  }}/>
+                  <p style={{fontWeight: "bolder"}}>|</p>
+                </InputAdornment>
+              ),
+            },
+          }}
           placeholder={t("search")}
           onChange={(e) => changeSearch(e)}
           onFocus={(e) => SearchOnFocus(e)}
@@ -106,6 +131,6 @@ export default function SearchBar() {
           ))
         ) : ( null )}
       </div>
-    </CacheProvider>
+    </ThemeProvider>
   );
 }
