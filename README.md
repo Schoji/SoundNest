@@ -46,7 +46,7 @@ Ensure you have the following installed:
 * Node.js
 * Python
 
-##⚡ Setup
+## ⚡ Setup
 1. Clone the repository:
 `git clone https://github.com/Schoji/SoundNest.git`
 
