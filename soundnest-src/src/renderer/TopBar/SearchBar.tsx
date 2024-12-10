@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { useTranslation } from 'react-i18next';
-import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,13 +12,6 @@ import { backend_address } from '../Components/global';
 import { createTheme, InputAdornment, TextField, ThemeProvider } from '@mui/material';
 import { useCustomEventListener } from 'react-custom-events';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import HorizontalRuleRoundedIcon from '@mui/icons-material/HorizontalRuleRounded';
-
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
-
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -28,7 +20,7 @@ export default function SearchBar() {
   const [searchResults, setSearchResults] = useState();
   let text;
   const min_length = 3;
-  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme") || "dark")
   useCustomEventListener("changeTheme", (theme) => {
     setTheme(theme)
   })

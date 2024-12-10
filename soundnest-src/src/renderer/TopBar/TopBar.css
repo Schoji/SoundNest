@@ -39,6 +39,8 @@
   opacity: 0.5;
 }
 .searchInputDiv .MuiInputBase-root input::placeholder {
+  color: var(--font-color);
+  opacity: 1;
   text-align: center;
   margin-right: 35px;
 }

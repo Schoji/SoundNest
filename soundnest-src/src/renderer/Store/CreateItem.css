@@ -80,6 +80,19 @@
   border-color: var(--accent-color) !important;
   filter: drop-shadow(0 0 5px var(--font-color));
 }
+.MuiMenu-paper::-webkit-scrollbar {
+  width: 10px;
+}
+.MuiMenu-paper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.MuiMenu-paper::-webkit-scrollbar-thumb {
+  background: var(--button);
+  border-radius: 10px;
+}
+.MuiMenu-paper::-webkit-scrollbar-thumb:hover {
+  background: var(--section);
+}
 .createSongList {
   height: 100%;
   padding: 10px;
