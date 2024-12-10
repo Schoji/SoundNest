@@ -1,26 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './Store.css';
+import "../Components/MultiLang.ts"
+
 import default_album from '../../../assets/album.png';
-import { useNavigate } from 'react-router-dom';
+import { backend_address } from '../Components/Global';
+
 import { Button, Skeleton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import "../Components/MultiLang.ts"
+import AddIcon from '@mui/icons-material/Add';
+
 import { useTranslation } from 'react-i18next';
 import { emitCustomEvent } from 'react-custom-events';
-import { backend_address } from '../Components/global';
-
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
 
 export default function Store() {
   const navigate = useNavigate();
@@ -94,39 +91,37 @@ export default function Store() {
               navigate("/createitem", { replace: true });
             }}
           >
-            <FontAwesomeIcon icon={faPlus} size="2xl" beat />
+            <AddIcon fontSize='large'/>
           </Button>
           <div className="storeProducts">
             {products?.map((value) => (
               <div className="storeProduct">
-                <CacheProvider value={cache}>
-                  <div className="storeProductImage">
-                    {value.item_path === '/' ? (
-                      <img src={default_album} />
-                    ) : (
-                      <img src={`data:image/jpeg;base64,${value.item_path}`} />
-                    )}
-                  </div>
-                  <h2>{value.album}</h2>
-                  <p>{value.artist}</p>
-                  <p>{value.desc}</p>
-                  <h3>{value.price.toFixed(2)}$</h3>
-                  <Button
-                    onClick={() => {
-                      navigate(`/item/${value.id}`, { replace: true });
-                    }}
-                  >
-                    {t("viewDetails")}
-                  </Button>
-                  <IconButton
-                    disabled={sessionStorage.getItem("hasKey") == "false" || (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(value.id)) != -1) || (userProductsIDs.indexOf(parseInt(value.id)) != -1) ? true : false}
-                    onClick={() => {
-                      addToCart(value.id);
-                    }}
-                  >
-                    <ShoppingCartRoundedIcon />
-                  </IconButton>
-                </CacheProvider>
+                <div className="storeProductImage">
+                  {value.item_path === '/' ? (
+                    <img src={default_album} />
+                  ) : (
+                    <img src={`data:image/jpeg;base64,${value.item_path}`} />
+                  )}
+                </div>
+                <h2>{value.album}</h2>
+                <p>{value.artist}</p>
+                <p>{value.desc}</p>
+                <h3>{value.price.toFixed(2)}$</h3>
+                <Button
+                  onClick={() => {
+                    navigate(`/item/${value.id}`, { replace: true });
+                  }}
+                >
+                  {t("viewDetails")}
+                </Button>
+                <IconButton
+                  disabled={sessionStorage.getItem("hasKey") == "false" || (JSON.parse("[" + sessionStorage.getItem('cart') + "]").indexOf(parseInt(value.id)) != -1) || (userProductsIDs.indexOf(parseInt(value.id)) != -1) ? true : false}
+                  onClick={() => {
+                    addToCart(value.id);
+                  }}
+                >
+                  <ShoppingCartRoundedIcon />
+                </IconButton>
               </div>
             ))}
           </div>

@@ -1,29 +1,29 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { Alert, Button, createTheme, Radio, TextareaAutosize, TextField, ThemeProvider } from '@mui/material';
+import { useNavigate} from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './Settings.css';
-import { useNavigate, useParams, Link } from 'react-router-dom';
-import JSZip from 'jszip';
-import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
-import { useCustomEventListener } from 'react-custom-events';
-import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
-import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
-import { backend_address } from '../Components/global';
+
+import { backend_address } from '../Components/Global';
 import avatarIcon from '../../../assets/user.png'
 import UpdateUserInfo from '../Components/UpdateUserInfo';
 
-export default function Settings() {
+import { Alert, Button, createTheme, Radio, TextField, ThemeProvider } from '@mui/material';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
+import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 
-  const navigate = useNavigate();
+import { useCustomEventListener } from 'react-custom-events';
+import JSZip from 'jszip';
+import { useTranslation } from 'react-i18next';
+
+
+export default function Settings() {
   const [pic, setPic] = useState("data:image/jpeg;base64," + String(sessionStorage.getItem("avatar_dir")));
-  const [selectedFile, setSelectedFile] = useState([]);
   const [fileBase64String, setFileBase64String] = useState("");
   const [response, setResponse] = useState({"status":"", "content":""});
 
@@ -75,12 +75,12 @@ function ChangePicture(event) {
     )
       .then(response => {
         if (response.ok) {
-          setResponse({"status":"success", "content": "Information was altered successfully."})
+          setResponse({"status":"success", "content": t("informationAlteredSuccessfully")})
           UpdateUserInfo();
         }
         else {
           console.log(response)
-          setResponse({"status":"error", "content": "Information was not altered."})
+          setResponse({"status":"error", "content": t("informationNotAltered")})
         }
       })
       .catch((error) => {
@@ -234,5 +234,4 @@ function ChangePicture(event) {
 
 function changeLogo(logoValue) {
   sessionStorage.setItem("logo", logoValue);
-
 }

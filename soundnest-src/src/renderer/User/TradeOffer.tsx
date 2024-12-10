@@ -1,23 +1,20 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
-import { useState, useEffect } from 'react';
-import default_album from '../../../assets/album.png';
-import Button from '@mui/material/Button';
-import { replace, useNavigate, useParams } from 'react-router-dom';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 import "./TradeOffer.css"
 import "../Components/MultiLang"
-import { useTranslation } from 'react-i18next';
-import { backend_address } from '../Components/global';
+
+import { backend_address } from '../Components/Global';
 import default_user from "../../../assets/user.png";
+
+import Button from '@mui/material/Button';
 import { Skeleton } from '@mui/material';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useTranslation } from 'react-i18next';
 
 export default function Tradeoffer() {
   const { user_id } = useParams();
@@ -161,9 +158,8 @@ export default function Tradeoffer() {
                 <Skeleton animation="wave" variant="circular" width={"48px"} height={"48px"} />
               }
               <h2>
-                Your inventory:
+                {t("yourInventory")}
               </h2>
-
             </div>
               <div className='items'>
               {userProducts1.length > 0 ? userProducts1?.map((product, index) => (
@@ -216,9 +212,8 @@ export default function Tradeoffer() {
                 <Skeleton animation="wave" variant="circular" width={"48px"} height={"48px"} />
               }
               <h2>
-                Their inventory:
+                {t("theirInventory")}
               </h2>
-
             </div>
               <div className='items'>
               {userProducts2.length > 0 ?
@@ -268,10 +263,10 @@ export default function Tradeoffer() {
           <div className='tradeOffer'>
             <div className='tradeHeader'>
               <h2>
-                Your items:
+                {t("yourItems")}
               </h2>
             </div>
-            <p>These are the items you will lose in the trade.</p>
+            <p>{t("itemsYouLose")}</p>
             <div className='youritems'>
               {myItems?.length > 0 ? myItems?.map((item, index) => (
                 <img
@@ -284,10 +279,10 @@ export default function Tradeoffer() {
           <div className='tradeOffer'>
             <div className='tradeHeader'>
               <h2>
-                Their items:
+                {t("theirItems")}
               </h2>
             </div>
-            <p>These are the items you will receive in the trade.</p>
+            <p>{t("itemsYouReceive")}</p>
             <div className='youritems'>
               {theirItems?.length > 0 ? theirItems?.map((item, index) => (
                 <img
@@ -299,11 +294,9 @@ export default function Tradeoffer() {
             </div>
           </div>
           <div className='button'>
-          <CacheProvider value={cache}>
-              <Button variant='contained' onClick={sendTradeOffer}>
-                {t("sendTradeoffer")}
-              </Button>
-          </CacheProvider>
+            <Button variant='contained' onClick={sendTradeOffer}>
+              {t("sendTradeoffer")}
+            </Button>
           </div>
         </div>
       </div>

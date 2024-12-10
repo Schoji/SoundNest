@@ -1,11 +1,14 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import '../App.css';
 import './Register.css'
-import { useNavigate } from 'react-router-dom';
-import { Alert, Button, createTheme, TextField, ThemeProvider } from "@mui/material";
+
+import { backend_address } from '../Components/Global';
 import logo from '../../../assets/icons/icons-dark/128x128.png';
-import { backend_address } from '../Components/global';
-import { useEffect, useState } from 'react';
 import { validateData } from '../Components/InputValidation';
+
+import { Alert, Button, createTheme, TextField, ThemeProvider } from "@mui/material";
 
 export default function RegisterWindow() {
   const navigate = useNavigate();

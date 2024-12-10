@@ -1,20 +1,22 @@
+import { useState } from 'react';
+import { useNavigate} from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './BuyKey.css';
-import { useState, useEffect } from 'react';
-import default_album from '../../../assets/album.png';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import { replace, useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
-import { backend_address } from '../Components/global';
-import { Alert, createTheme, TextField, ThemeProvider } from '@mui/material';
+
 import { validateData } from '../Components/InputValidation';
 import UpdateUserInfo from '../Components/UpdateUserInfo';
-import { useCustomEventListener } from 'react-custom-events';
+import { backend_address } from '../Components/Global';
 
+import { Alert, createTheme, TextField, ThemeProvider } from '@mui/material';
+import Button from '@mui/material/Button';
+
+import { useTranslation } from 'react-i18next';
+import { useCustomEventListener } from 'react-custom-events';
 
 export default function BuyKey() {
   const { t } = useTranslation()
@@ -69,9 +71,9 @@ export default function BuyKey() {
       <div className="main">
         <div className='activationPage'>
           <ThemeProvider theme={materialtheme}>
-          <h1>App Activation</h1>
+          <h1>{t("appActivation")}</h1>
           <form className='verifyKey' onSubmit={verifyKey}>
-            <TextField 
+            <TextField
               id='keyInput'
               label="Activation key"
               variant='outlined'
@@ -80,17 +82,17 @@ export default function BuyKey() {
               <Alert id="error" className="error" variant="filled" severity="error">{error}</Alert>
               : null
               }
-            <Button type="submit" variant='contained'>Verify</Button>
+            <Button type="submit" variant='contained'>{t("verify")}</Button>
           </form>
-          <h1>Key purchase</h1>
+          <h1>{t("keyPurchase")}</h1>
           <div className='buyKey'>
-            <Button variant='contained' color="success" onClick={buyLicenseKey}>Buy license key</Button>
+            <Button variant='contained' color="success" onClick={buyLicenseKey}>{t("buyLicenseKey")}</Button>
             <span id='copyKey'>
               {key.length > 0 ?
-                <p id='copy'>Click to copy to clipboard</p>
+                <p id='copy'>{t("clickToCopy")}</p>
                 : null
-              }         
-              <p id="key" onClick={(e) => copyToClipboard(e)}>{key}</p>          
+              }
+              <p id="key" onClick={(e) => copyToClipboard(e)}>{key}</p>
             </span>
           </div>
           </ThemeProvider>

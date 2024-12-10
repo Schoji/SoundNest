@@ -1,7 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect } from 'react';
 import { MemoryRouter as Router, Routes, Route, useNavigate} from 'react-router-dom';
+
 import './App.css';
 import './TopBar/TopBar.css';
+import "./Components/MultiLang";
+
 import Studios from './Studio/Studios';
 import Store from './Store/Store';
 import Library from './Library/Library';
@@ -16,16 +19,15 @@ import Cart from './Cart/Cart';
 import PurchaseHistory from './Cart/PurchaseHistory';
 import LoginWindow from './Login/LoginWindow';
 import Tradeoffers from './User/TradeOffers';
-import { useEffect, useState } from 'react';
 import Studio from './Studio/Studio';
 import User from './User/User';
 import TradeOffer from './User/TradeOffer';
 import AddFunds from './User/AddFunds';
 import RegisterWindow from './Register/Register';
 import WelcomeWindow from './Welcome/Welcome';
-import { useTranslation } from 'react-i18next';
-import "./Components/MultiLang";
 import BuyKey from './User/BuyKey';
+
+import { useTranslation } from 'react-i18next';
 import Mousetrap from 'mousetrap';
 
 export function GetCreds() {

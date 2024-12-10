@@ -1,26 +1,29 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-import Button from '@mui/material/Button';
-import { TextField, FormControl, IconButton, MenuItem, Input, Alert, createTheme, Chip, OutlinedInput, Box } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './CreateItem.css';
+import '../Components/MultiLang'
+
+import { validateData } from '../Components/InputValidation';
 import default_album from '../../../assets/album.png';
-import { useState, useEffect } from 'react';
+import { backend_address } from '../Components/Global';
+
 import InputLabel from '@mui/material/InputLabel';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import '../Components/MultiLang'
-import { useTranslation } from 'react-i18next';
-import { validateData } from '../Components/InputValidation';
-import { ThemeProvider } from '@mui/material';
-import { useCustomEventListener } from 'react-custom-events';
-import { backend_address } from '../Components/global';
+import Button from '@mui/material/Button';
+import { TextField, FormControl, IconButton, MenuItem, Alert, createTheme, Chip, OutlinedInput, Box } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import { ThemeProvider } from '@mui/material';
+
+import { useTranslation } from 'react-i18next';
+import { useCustomEventListener } from 'react-custom-events';
 
 export function CreateSongs() {
   const { t } = useTranslation();
@@ -67,6 +70,7 @@ export function CreateSongs() {
 }
 
 function Tags() {
+  const { t } = useTranslation();
   const [tagDict, setTagDict] = useState([])
   const [allTags, setAllTags] = useState([])
   function getTags() {
@@ -110,7 +114,7 @@ function Tags() {
 
   return (
     <FormControl sx={{width: "100%"}}>
-      <InputLabel>Tags</InputLabel>
+      <InputLabel>{t("tags")}</InputLabel>
       <Select
         id="tags"
         multiple
@@ -185,24 +189,24 @@ export default function CreateItem() {
   function AddItem(event) {
     event.preventDefault();
     if (validateData(event.target.album.value) == false) {
-      setError("Provide a valid product name.")
+      setError(t("provideValidProductName"))
       return
     }
     if (validateData(event.target.artist.value) == false) {
-      setError("Provide a valid artist name.")
+      setError(t("provideValidArtist"))
       return
     }
     if (validateData(event.target.desc.value, "description") == false) {
-      setError("Provide a valid description (at least 10 characters long).")
+      setError(t("provideValidDescription"))
       return
     }
     if (validateData(event.target.price.value, "price") == false) {
-      setError("Provide a valid price.")
+      setError(t("provideValidPrice"))
       return
     }
 
     if (event.target.multipletag.value == "") {
-      setError("Select at least 1 tag.")
+      setError(t("selectOneTag"))
       return
     }
     var tags = event.target.multipletag.value.split(",")
@@ -245,11 +249,11 @@ export default function CreateItem() {
         var songs = JSON.parse(sessionStorage.getItem("songs"))
         songs.map((value, index: any) => {
           if (validateData(value.name) == false) {
-            setError("Some of the songs' titles were invalid.")
+            setError(t("someSongTitlesInvalid"))
             return
           }
           if (validateData(value.producer) == false) {
-            setError("Some of the songs' producers were invalid.")
+            setError(t("someSongProducersInvalid"))
             return
           }
           const requestOptions1 = {
@@ -290,7 +294,7 @@ export default function CreateItem() {
     )
     return (
       <FormControl>
-        <InputLabel>Studio</InputLabel>
+        <InputLabel>{t("studio")}</InputLabel>
         <Select
           id="studio"
           value={studioValue}

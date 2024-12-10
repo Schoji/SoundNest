@@ -1,22 +1,21 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
-import React, { useState, useEffect } from 'react';
-import { replace, useNavigate, useParams } from 'react-router-dom';
-import createCache from '@emotion/cache';
 import "./TradeOffer.css"
-import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
-import { backend_address } from '../Components/global';
-import { Button, Skeleton } from '@mui/material';
+
+import { backend_address } from '../Components/Global';
 import nothing from "../../../assets/nothing.jpg";
 import default_user from "../../../assets/user.png";
 import default_album from "../../../assets/album.png";
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { Button, Skeleton } from '@mui/material';
+
+import { useTranslation } from 'react-i18next';
 
 export default function Tradeoffers() {
   const navigate = useNavigate();
@@ -88,7 +87,7 @@ export default function Tradeoffers() {
             <div className={trade.status == "pending" ? "tradeObj" : trade.status == "accepted" ? "tradeObj overlayAccepted" : "tradeObj overlayDeclined"}>
               {trade.status != "pending" ?
               <div className='overlayText'>
-                <h1>{trade.status == "accepted" ? "Accepted" : trade.status == "declined" ? "Declined" : "Canceled"}</h1>
+                <h1>{trade.status == "accepted" ? t("accepted") : trade.status == "declined" ? t("declined") : t("canceled")}</h1>
               </div>
               : null}
               <p>
@@ -112,7 +111,7 @@ export default function Tradeoffers() {
                         src={sent_item.picture != "/" ? `data:image/jpeg;base64,${sent_item.picture}` : default_album}
                         onClick={() => navigate(`/item/${sent_item.id}`)}
                       />
-                      <p>{sent_item.album} by {sent_item.artist} {sent_item.price.toFixed(2)}$</p>
+                      <p>{sent_item.album} {t("by")} {sent_item.artist} {sent_item.price.toFixed(2)}$</p>
                     </div>
                   </div>
                 </div>
@@ -135,11 +134,10 @@ export default function Tradeoffers() {
                             src={received_item.picture != "/" ? `data:image/jpeg;base64,${received_item.picture}` : default_user}
                             onClick={() => navigate(`/item/${received_item.id}`)}
                           />
-                          <p>{received_item.album} by {received_item.artist} {received_item.price.toFixed(2)}$</p>
+                          <p>{received_item.album} {t("by")} {received_item.artist} {received_item.price.toFixed(2)}$</p>
                         </div>
                     </div>
                   </div>
-                    // {/* <p>{received_item.album} by {received_item.artist}</p> */}
                 ))
                 :
                 <img
@@ -148,7 +146,6 @@ export default function Tradeoffers() {
                 />
                 }
                 </div>
-                {/* <Button variant='contained' onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>View</Button> */}
                 {trade.status == "pending" ?
                   <div className='buttons'>
                     <Button variant='contained' color='success' onClick={() => AcceptTrade(trade.trade_id)}>{t("tradeOfferAccept")}</Button>
@@ -193,7 +190,7 @@ export default function Tradeoffers() {
         <div className="tradeList">
           {userTradeSent.length > 0 && userTradeSent?.map((trade, index) => (
             <div className={trade.status == "pending" ? "tradeObj overlayPending" : trade.status == "accepted" ? "tradeObj overlayAccepted" : "tradeObj overlayDeclined"}>
-              <div className='overlayText'> <h1>{trade.status == "accepted" ? "Accepted" : trade.status == "declined" ? "Declined" : trade.status == "pending" ? "Pending" : "Canceled"}</h1> </div>
+              <div className='overlayText'> <h1>{trade.status == "accepted" ? t("accepted") : trade.status == "declined" ? t("declined") : trade.status == "pending" ? "Pending" : t("canceled")}</h1> </div>
               <p>
                 <img
                     src={sessionStorage.getItem("avatar_dir") != "/" ? `data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}` : default_user}
@@ -204,7 +201,7 @@ export default function Tradeoffers() {
                 <img
                     src={trade.user.pic != "/" ? `data:image/jpeg;base64,${trade.user.pic}`: default_user}
                 />
-                <span onClick={() => navigate(`/user/${trade.user.id}`)} className='username'>for {trade.user.name} {trade.user.surname}'s items:</span>({Date(trade.date).replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/,'$2-$1-$3')}):
+                <span onClick={() => navigate(`/user/${trade.user.id}`)} className='username'>{t("for")} {trade.user.name} {trade.user.surname}{t("sItems")}:</span>({Date(trade.date).replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/,'$2-$1-$3')}):
               </p>
                 <div className='itemRows'>
 
@@ -243,7 +240,6 @@ export default function Tradeoffers() {
                       <p>{received_item.artist}</p>
                     </div>
                   </div>
-                    // {/* <p>{received_item.album} by {received_item.artist}</p> */}
                 ))
                 :
                 <img src={nothing} />

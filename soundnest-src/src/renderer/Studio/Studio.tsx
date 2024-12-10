@@ -1,27 +1,23 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './Studio.css';
-import React, { useState, useEffect } from 'react';
+import "../Components/MultiLang"
+
 import default_album from '../../../assets/album.png';
+import { backend_address } from '../Components/Global';
+
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { replace, useNavigate, useParams } from 'react-router-dom';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
-import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
-import "../Components/MultiLang"
-import { useTranslation } from 'react-i18next';
-import { backend_address } from '../Components/global';
-import { emitCustomEvent } from 'react-custom-events';
 import { Skeleton } from '@mui/material';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useTranslation } from 'react-i18next';
+import { emitCustomEvent } from 'react-custom-events';
 
 export default function Studio() {
   const { studio_id } = useParams();
@@ -105,7 +101,6 @@ export default function Studio() {
       <div className="main">
       {Object.keys(data).length > 1 ?
         <div className="studioMain">
-          <CacheProvider value={cache}>
             <h1>{t("studioDetails")}</h1>
             <div className='studioDetails'>
               {data.studio_dir !== '/' ? (
@@ -119,7 +114,7 @@ export default function Studio() {
               <h2>{data.name}</h2>
               <p>{data.desc}</p>
               <div className='studioOwner'>
-                <h3>Owned by:</h3>
+                <h3>{t("studioOwned")}:</h3>
                 {data.user_picture !== '/' ? (
                   <img
                     src={`data:image/jpeg;base64,${data.user_picture}`}
@@ -129,15 +124,14 @@ export default function Studio() {
                   <img src={default_album} />
                 )}
                 <h2>{data.user_name} {data.user_surname}</h2>
-                <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>View profile</Button>
+                <Button onClick={() => navigate("/user/" + data.id_user, { replace: true })}>{t("viewProfile")}</Button>
               </div>
             </div>
-            <h1>Studio Albums</h1>
+            <h1>{t("studioAlbums")}</h1>
             {Object.keys(sp_data).length > 1 ?
             <div className='studioAlbums'>
               {sp_data.map((product, index) => (
                 <div className="studioAlbum">
-                <CacheProvider value={cache}>
                   <div className="studioAlbumImage">
                     {product.item_path === '/' ? (
                       <img src={default_album} />
@@ -166,7 +160,6 @@ export default function Studio() {
                   >
                     <ShoppingCartRoundedIcon />
                   </IconButton>
-                </CacheProvider>
               </div>
               ))}
             </div>
@@ -209,7 +202,6 @@ export default function Studio() {
                 </div>
                     ))}
               </div>
-          </CacheProvider>
         </div>
         :
         <div className='studioMainSkeleton'>
@@ -225,7 +217,7 @@ export default function Studio() {
               <Skeleton sx={{marginLeft: "20px"}} animation="wave" variant="rounded" width={"550px"} height={"50px"} />
             </div>
           </div>
-          <h1>Studio Albums</h1>
+          <h1>{t("studioAlbums")}</h1>
           <div className='studioAlbums'>
             {[...Array(4)].map((element, index) =>
               <div className='studioAlbum'>

@@ -1,27 +1,23 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, IconButton, TextField, createTheme, ThemeProvider, Alert } from '@mui/material';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
-import default_album from '../../../assets/album.png';
 import './EditStudio.css'
 import "../Components/MultiLang"
-import { useTranslation } from 'react-i18next';
-import { backend_address } from '../Components/global';
+
+import default_album from '../../../assets/album.png';
+import { validateData } from '../Components/InputValidation';
+import { backend_address } from '../Components/Global';
+
+import { Button, IconButton, TextField, createTheme, ThemeProvider, Alert } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import { useCustomEventListener } from 'react-custom-events';
-import { validateData } from '../Components/InputValidation';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useCustomEventListener } from 'react-custom-events';
+import { useTranslation } from 'react-i18next';
 
 export default function EditStudio() {
   const navigate = useNavigate();
@@ -118,7 +114,6 @@ export default function EditStudio() {
       <TopBar />
       <SideBar />
       <div className="main">
-        <CacheProvider value={cache}>
         <ThemeProvider theme={materialtheme}>
           <div className="editStudio">
             <div className="editStudioTitle">
@@ -183,8 +178,7 @@ export default function EditStudio() {
               </div>
             </form>
           </div>
-          </ThemeProvider>
-        </CacheProvider>
+        </ThemeProvider>
       </div>
     </div>
   );

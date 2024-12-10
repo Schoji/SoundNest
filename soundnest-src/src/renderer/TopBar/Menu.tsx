@@ -1,4 +1,11 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import "../Components/MultiLang.ts"
+
+import user from '../../../assets/user.png'
+import { backend_address } from '../Components/Global';
+
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,15 +16,11 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { ThemeProvider, createTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { Gavel, ShoppingBasket } from '@mui/icons-material';
-import user from '../../../assets/user.png'
-import "../Components/MultiLang.ts"
+
 import { useTranslation } from 'react-i18next';
 import Flag from "react-flagkit"
-import { backend_address } from '../Components/global';
 import { emitCustomEvent } from 'react-custom-events';
-
 
 export default function AccountMenu() {
   const { t, i18n } = useTranslation()

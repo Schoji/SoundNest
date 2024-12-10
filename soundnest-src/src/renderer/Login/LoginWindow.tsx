@@ -1,11 +1,14 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import '../App.css';
 import './Login.css';
-import { useNavigate } from 'react-router-dom';
-import { Alert, Button, Checkbox, createTheme, TextField } from "@mui/material";
+
 import logo from '../../../assets/icons/icons-dark/128x128.png';
 import { validateData } from '../Components/InputValidation';
-import { useEffect, useState } from 'react';
-import { backend_address } from '../Components/global';
+import { backend_address } from '../Components/Global';
+
+import { Alert, Button, Checkbox, createTheme, TextField } from "@mui/material";
 import { ThemeProvider } from '@mui/material';
 
 export default function LoginWindow() {
@@ -25,7 +28,6 @@ export default function LoginWindow() {
       document.getElementById("appLogo").style.marginBottom="32px"
     }
   },[])
-
 
   let materialtheme = createTheme({
     palette: {

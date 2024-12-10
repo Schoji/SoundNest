@@ -1,24 +1,20 @@
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './User.css'
-import { useState, useEffect } from 'react';
-import default_album from '../../../assets/album.png';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import { replace, useNavigate, useParams } from 'react-router-dom';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
-import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import { useTranslation } from 'react-i18next';
 import "../Components/MultiLang"
-import { backend_address } from '../Components/global';
+
+import { backend_address } from '../Components/Global';
+import default_album from '../../../assets/album.png';
+
+import Button from '@mui/material/Button';
 import { Skeleton } from '@mui/material';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useTranslation } from 'react-i18next';
 
 export default function User() {
   const { user_id } = useParams();
@@ -53,7 +49,6 @@ export default function User() {
       <div className="main">
       {Object.keys(data).length > 1 ?
         <div className="user">
-          <CacheProvider value={cache}>
             <h1>{t("userDetails")}</h1>
             <div className="userData">
               {data.avatar_dir !== '/' ? (
@@ -71,7 +66,7 @@ export default function User() {
                 {t("tradeOffer")}
               </Button>
             </div>
-            <h1>User Studios</h1> {/*Tutaj trzeba dodać tłumaczenie pls */}
+            <h1>{t("userStudios")}</h1>
             {Object.keys(studio_data).length > 1 ?
             <div className='userStudios'>
             {studio_data.map((studio) => (
@@ -86,7 +81,7 @@ export default function User() {
               )}
               <h2>{studio.name}</h2>
               <p>{studio.desc}</p>
-              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>{t("checkout")}</Button> {/*Tutaj też do tego guzika nowy tekst*/}
+              <Button onClick={() => navigate("/studios/" + studio.id, { replace: true })}>{t("Checkout")}</Button>
               </div>
             ))}
             </div>
@@ -104,7 +99,6 @@ export default function User() {
             )}
             </div>
             }
-          </CacheProvider>
         </div>
         :
         <div className='userSkeleton'>
@@ -115,7 +109,7 @@ export default function User() {
             <Skeleton animation="wave" variant="rounded" width={"700px"} height={"80px"} />
             <Skeleton animation="wave" variant="rounded" width={"700px"} height={"40px"} />
           </div>
-          <h1>User Studios</h1>
+          <h1>{t("userStudios")}</h1>
           <div className='userStudios'>
             {[...Array(3)].map((element, index) =>
               <div className='userStudioDetails'>

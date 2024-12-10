@@ -1,21 +1,26 @@
-import '../App.css';
-import { Form, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import './AdminPanel.css'
-import { DataGrid, GridCellEditStopParams, GridCellEditStopReasons, GridColDef, MuiEvent } from '@mui/x-data-grid';
-import { useState, useEffect } from 'react';
-import { Alert, Avatar, colors, createTheme, LinearProgress, MenuItem, Select, SelectChangeEvent, Skeleton, Table, TableCell, TableHead, TableRow, TextField, ThemeProvider } from '@mui/material';
-import default_album from '../../../assets/album.png';
+
 import UpdateUserInfo from '../Components/UpdateUserInfo';
-import { useTranslation } from 'react-i18next';
+import { backend_address } from '../Components/Global';
+import default_album from '../../../assets/album.png';
+
+import '../App.css';
+import './AdminPanel.css'
 import "../Components/MultiLang";
-import { useCustomEventListener } from 'react-custom-events';
-import { backend_address } from '../Components/global';
+
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { PieChart } from '@mui/x-charts/PieChart';
+import { Alert, Avatar, colors, createTheme, LinearProgress, MenuItem, Select, Skeleton, Table, TableCell, TableRow, ThemeProvider } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
-import { PieChart } from '@mui/x-charts/PieChart';
+
+import { useTranslation } from 'react-i18next';
+import { useCustomEventListener } from 'react-custom-events';
 
 export default function AdminPanel() {
   const { t } = useTranslation();
@@ -59,10 +64,10 @@ export default function AdminPanel() {
     fetch(backend_address + "/api/make_admin/" + user_id)
     .then(response => {
       if (response.ok) {
-        setResponse({"status":"success", "content": "Admin was added successfully."})
+        setResponse({"status":"success", "content": t("adminAddedSuccessfully")})
       }
       else {
-        setResponse({"status":"error", "content": "Admin could not be added."})
+        setResponse({"status":"error", "content": t("adminNotAdded")})
       }
       updateSite()
     })
@@ -76,10 +81,10 @@ export default function AdminPanel() {
     fetch(backend_address + "/api/make_admin/" + parseInt(user_id) +  "/", {method: "DELETE"})
       .then(response => {
         if (response.ok) {
-          setResponse({"status":"success", "content": "Admin was deleted successfully."})
+          setResponse({"status":"success", "content": t("adminDeletedSuccessfully")})
         }
         else {
-          setResponse({"status":"error", "content": "Admin could not be deleted."})
+          setResponse({"status":"error", "content": t("adminNotDeleted")})
         }
         updateSite()
         if (parseInt(user_id) == parseInt(sessionStorage.getItem("id"))) {
@@ -114,10 +119,10 @@ export default function AdminPanel() {
     fetch(backend_address + "/api/fully_delete_user/" + user_id)
     .then(response => {
       if (response.ok) {
-        setResponse({"status":"success", "content": "User was deleted successfully."})
+        setResponse({"status":"success", "content": t("userDeletedSuccessfully")})
       }
       else {
-        setResponse({"status":"error", "content": "User could not be deleted."})
+        setResponse({"status":"error", "content": t("userNotDeleted")})
       }
       updateSite()
     })
@@ -169,10 +174,10 @@ export default function AdminPanel() {
     fetch(backend_address + "/api/change_product_ownership/" + selectedStudio + "/" + selectedProduct + "/")
     .then(response => {
       if (response.ok) {
-        setResponse1({"status":"success", "content": "Ownership was changed successfully"})
+        setResponse1({"status":"success", "content": t("ownershipChangedSuccessfully")})
       }
       else {
-        setResponse1({"status":"error", "content": "Ownership could not be changed."})
+        setResponse1({"status":"error", "content": t("ownershipNotChanged")})
       }
     })
     .catch(error => console.log(error))
@@ -342,7 +347,7 @@ export default function AdminPanel() {
                   </div>
                 </div>
                 <div className='successButton'>
-                  <Button variant='contained' type='submit'>Save</Button>
+                  <Button variant='contained' type='submit'>{t("save")}</Button>
                 </div>
                 {response1.status != "" ?
                 <ThemeProvider theme={materialtheme1}>

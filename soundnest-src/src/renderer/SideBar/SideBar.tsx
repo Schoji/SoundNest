@@ -1,4 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import './SideBar.css';
+import '../Components/MultiLang';
+
+import { backend_address } from '../Components/Global';
 
 import LibraryMusicRoundedIcon from '@mui/icons-material/LibraryMusicRounded';
 import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
@@ -9,14 +15,9 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
+import { Switch } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import { Switch } from '@mui/material';
-import { backend_address } from '../Components/global';
-
-import './SideBar.css';
-import '../Components/MultiLang';
 import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 
 export const Theme = () => {
@@ -25,7 +26,6 @@ export const Theme = () => {
   else dark = false
 
   const [isDark, setIsDark] = useState(dark);
-  //TODO
 
   useEffect(() => {
     if (isDark) {
@@ -69,7 +69,6 @@ export default function SideBar() {
     console.log(items)
     setCartItems(items.length - 1)
   })
-  //https://typeofnan.dev/using-session-storage-in-react-with-hooks/
   return (
     <div className="sidebar">
       <Link to="/library" className="sideButton">

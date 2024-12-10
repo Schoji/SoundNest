@@ -1,25 +1,18 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
-import '../App.css';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
-import default_album from '../../../assets/album.png';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
 
+import '../App.css';
 import './Library.css';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import '../Components/MultiLang'
-import { backend_address } from '../Components/global';
-import { Skeleton } from '@mui/material';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { backend_address } from '../Components/Global';
+import default_album from '../../../assets/album.png';
+
+import { useTranslation } from 'react-i18next';
+import { Skeleton } from '@mui/material';
 
 export default function Library() {
   const [data, setData] = useState([]);
@@ -43,7 +36,6 @@ export default function Library() {
         console.log(error);
         setStatus("No connection")
       });
-    // console.log(data)
   };
   useEffect(() => {
     Fetch();
@@ -59,7 +51,6 @@ export default function Library() {
           <div className="libraryAlbums">
             {data.map((value) => (
               <div className="libraryProduct" onClick={() => navigate(`/item/${value.id}`)}>
-                <CacheProvider value={cache}>
                   <div className="libraryProductImage">
                     {value.item_path === '/' ? (
                       <img src={default_album} />
@@ -70,12 +61,11 @@ export default function Library() {
                   <h2>{value.album}</h2>
                   <p>{value.artist}</p>
                   <p>{value.desc}</p>
-                </CacheProvider>
               </div>
             ))}
           </div>
           : status == "No resource" ?
-          <p>You have currently no products.</p>
+          <p>{t("noProducts")}</p>
           :
           <div className="libraryAlbums">
             {[...Array(6)].map((element, index) =>

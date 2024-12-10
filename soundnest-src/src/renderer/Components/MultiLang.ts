@@ -21,6 +21,7 @@ i18n.use(initReactI18next).init({
         surname: "Surname",
         preferedTheme: "Prefered theme",
         credits: "Credits",
+        noProducts: "You have currently no products.",
         //Admin
         delete: "Delete",
         addAdmin: "Add Admin",
@@ -33,13 +34,25 @@ i18n.use(initReactI18next).init({
         adminPanelTotalCredits: "Total credits",
         adminPanelTopContributors: "Top Contributors",
         adminPanelTopUser: "Top user",
+        adminAddedSuccessfully: "Admin was added successfully.",
+        adminNotAdded: "Admin could not be added.",
+        adminDeletedSuccessfully: "Admin was deleted successfully.",
+        adminNotDeleted: "Admin could not be deleted.",
+        userDeletedSuccessfully: "User was deleted successfully.",
+        userNotDeleted: "User could not be deleted.",
+        ownershipChangedSuccessfully: "Ownership was changed successfully.",
+        ownershipNotChanged: "Ownership could not be changed.",
         //Cart
         totalCost: "Total cost",
         noCartItems: "Your cart is empty. Add some products to proceed.",
         cartOf: "Cart of",
         addToCart: "Add to Cart",
+        purchaseMadeSuccessfully: "Purchase was made successfully.",
+        purchase: "Purchase",
+        insufficientFunds: "Insufficient funds",
         //PurchaseHistory
         purchaseHistory: "Purchase history",
+        noPurchases: "You have no purchases.",
         //Settings
         save: "Save",
         cancel: "Cancel",
@@ -52,6 +65,8 @@ i18n.use(initReactI18next).init({
         themes: "Themes",
         privateData: "Private Data",
         profileSettings: "Profile Settings",
+        informationAlteredSuccessfully: "Information was altered successfully",
+        informationNotAltered: "Information was no altered.",
         //CreateItem
         nameOfTrack: "Name of the track",
         producer: "Producer",
@@ -64,7 +79,14 @@ i18n.use(initReactI18next).init({
         newAlbumCreator: "Artist",
         newAlbumDescription: "Description",
         newAlbumPrice: "Price",
-
+        tags: "Tags",
+        provideValidProductName: "Provide a valid product name.",
+        provideValidArtist: "Provide a valid artist name.",
+        provideValidDescription: "Provide a valid description (at least 10 characters long).",
+        provideValidPrice: "Provide a valid price.",
+        selectOneTag: "Select at least 1 tag.",
+        someSongTitlesInvalid: "Some of the songs' titles were invalid.",
+        someSongProducersInvalid: "Some of the songs' producers were invalid.",
 
         //Item
         viewDetails: "View Details",
@@ -90,8 +112,10 @@ i18n.use(initReactI18next).init({
         studioNameEdit: "What would you like your studio to be renamed to?",
         //Studio
         studioDetails: "Studio Details",
-        studioOwned: "Studio is owned by",
+        studioOwned: "Owned by",
         otherStudios: "Other studios",
+        studioAlbums: "Studio Albums",
+        viewProfile: "View profile",
         //Studios
         studioDeletionMessage: "This action cannot be undone. Are you 100% sure?",
         confirm: "Confirm",
@@ -115,9 +139,16 @@ i18n.use(initReactI18next).init({
         user1Products: "User 1 Products",
         user2Products: "User 2 Products",
         sendTradeoffer: "Send Tradeoffer",
+        //Tradeoffer
+        yourInventory: "Your inventory",
+        theirInventory: "Their inventory",
+        itemsYouLose: "These are the items you will lose in the trade.",
+        theirItems: "Their items",
+        itemsYouReceive: "These are the items you will receive in the trade.",
+
         //Tradeoffers
         itemsYouGive: "Items you will give",
-        itemsYouReceive: "Items you will receive",
+
         noPendingTradeoffers: "You have no pending trade offers.",
         historyTradeoffer: "History of your trade offers",
         trader: "Trader",
@@ -131,10 +162,26 @@ i18n.use(initReactI18next).init({
         tradeOffersNoOffer: "User has no trades.",
         incommingTradeOffer: "offered you",
         offeredItem: "for your",
+        accepted: "Accepted",
+        declined: "Declined",
+        canceled: "Canceled",
+        by: "by",
+        for: "for",
+        sItems: "'s items",
+
         //User
         userDetails: "User Details",
         tradeOffer: "Trade Offer",
         checkout: "Checkout",
+        userStudios: "User studios",
+        Checkout: "Check out",
+
+        //BuyKey
+        appActivation: "App activation",
+        verify: "Verify",
+        keyPurchase: "Key purchase",
+        buyLicenseKey: "Buy license key",
+        clickToCopy: "Click to copy to clipboard",
       }
     },
     pl: {
@@ -154,6 +201,7 @@ i18n.use(initReactI18next).init({
         surname: "Nazwisko",
         preferedTheme: "Preferowany motyw",
         credits: "Kredyty",
+        noProducts: "Aktualnie nie masz żadnych produktów.",
         //Admin
         delete: "Usuń",
         addAdmin: "Dodaj administratora",
@@ -166,13 +214,25 @@ i18n.use(initReactI18next).init({
         adminPanelTotalCredits: "Łączna liczba kredytów",
         adminPanelTopContributors: "Najwięksi współtwórcy",
         adminPanelTopUser: "Najlepszy użytkownik",
+        adminAddedSuccessfully: "Administrator został pomyślnie dodany.",
+        adminNotAdded: "Nie udało się dodać administratora.",
+        adminDeletedSuccessfully: "Administrator został pomyślnie usunięty.",
+        adminNotDeleted: "Nie udało się usunąć administratora.",
+        userDeletedSuccessfully: "Użytkownik został pomyślnie usunięty.",
+        userNotDeleted: "Nie udało się usunąć użytkownika.",
+        ownershipChangedSuccessfully: "Własność została pomyślnie zmieniona.",
+        ownershipNotChanged: "Nie udało się zmienić własności.",
         //Cart
         totalCost: "Całkowity koszt",
         noCartItems: "Twój koszyk jest pusty. Dodaj produkty, aby kontynuować.",
         cartOf: "Koszyk użytkownika",
         addToCart: "Dodaj do koszyka",
+        purchaseMadeSuccessfully: "Zakup został pomyślnie dokonany.",
+        purchase: "Zakup",
+        insufficientFunds: "Niewystarczające środki",
         //PurchaseHistory
         purchaseHistory: "Historia zakupów",
+        noPurchases: "Nie masz żadnych zakupów.",
         //Settings
         save: "Zapisz",
         cancel: "Anuluj",
@@ -185,6 +245,8 @@ i18n.use(initReactI18next).init({
         themes: "Motywy",
         privateData: "Dane prywatne",
         profileSettings: "Ustawienia profilu",
+        informationAlteredSuccessfully: "Informacje zostały pomyślnie zmienione.",
+        informationNotAltered: "Informacje nie zostały zmienione.",
         //CreateItem
         nameOfTrack: "Nazwa utworu",
         producer: "Producent",
@@ -197,6 +259,14 @@ i18n.use(initReactI18next).init({
         newAlbumCreator: "Wykonawca",
         newAlbumDescription: "Opis",
         newAlbumPrice: "Cena",
+        tags: "Tagi",
+        provideValidProductName: "Podaj poprawną nazwę produktu.",
+        provideValidArtist: "Podaj poprawną nazwę artysty.",
+        provideValidDescription: "Podaj poprawny opis (co najmniej 10 znaków).",
+        provideValidPrice: "Podaj poprawną cenę.",
+        selectOneTag: "Wybierz co najmniej 1 tag.",
+        someSongTitlesInvalid: "Niektóre tytuły piosenek są niepoprawne.",
+        someSongProducersInvalid: "Niektórzy producenci piosenek są niepoprawni.",
         //Item
         viewDetails: "Zobacz szczegóły",
         albumDetails: "Szczegóły albumu",
@@ -221,8 +291,10 @@ i18n.use(initReactI18next).init({
         studioNameEdit: "Jak chciałbyś nazwać swoje studio?",
         //Studio
         studioDetails: "Szczegóły studia",
-        studioOwned: "Studio należy do",
+        studioOwned: "Posiadane przez",
         otherStudios: "Inne studia",
+        studioAlbums: "Albumy studyjne",
+        viewProfile: "Zobacz profil",
         //Studios
         studioDeletionMessage: "Tej operacji nie można cofnąć. Czy jesteś pewien na 100%?",
         confirm: "Potwierdź",
@@ -246,9 +318,14 @@ i18n.use(initReactI18next).init({
         user1Products: "Produkty użytkownika 1",
         user2Products: "Produkty użytkownika 2",
         sendTradeoffer: "Wyślij ofertę wymiany",
+        //TradeOffer
+        yourInventory: "Twój ekwipunek",
+        theirInventory: "Ich ekwipunek",
+        itemsYouLose: "Oto przedmioty, które stracisz w trakcie wymiany.",
+        theirItems: "Ich przedmioty",
+        itemsYouReceive: "Oto przedmioty, które otrzymasz w trakcie wymiany.",
         //Tradeoffers
         itemsYouGive: "Przedmioty, które oddasz",
-        itemsYouReceive: "Przedmioty, które otrzymasz",
         noPendingTradeoffers: "Nie masz żadnych oczekujących ofert wymiany.",
         historyTradeoffer: "Historia twoich ofert wymiany",
         trader: "Handlarz",
@@ -262,10 +339,24 @@ i18n.use(initReactI18next).init({
         tradeOffersNoOffer: "Użytkownik nie ma żadnych ofert wymiany.",
         incommingTradeOffer: "zaproponował ci",
         offeredItem: "za twój",
+        accepted: "Zaakceptowane",
+        declined: "Odrzucone",
+        canceled: "Anulowane",
+        by: "przez",
+        for: "dla",
+        sItems: "przedmioty",
         //User
         userDetails: "Szczegóły użytkownika",
         tradeOffer: "Oferta wymiany",
-        checkout: "Do kasy"
+        checkout: "Do kasy",
+        userStudios: "Studio użytkownika",
+        Checkout: "Sprawdź",
+        //BuyKey
+        appActivation: "Aktywacja aplikacji",
+        verify: "Zweryfikuj",
+        keyPurchase: "Zakup klucza",
+        buyLicenseKey: "Kup klucz licencyjny",
+        clickToCopy: "Kliknij, aby skopiować do schowka",
       }
     },
     de: {
@@ -285,6 +376,7 @@ i18n.use(initReactI18next).init({
         surname: "Nachname",
         preferedTheme: "Bevorzugtes Thema",
         credits: "Credits",
+        noProducts: "Sie haben derzeit keine Produkte.",
         //Admin
         delete: "Löschen",
         addAdmin: "Admin hinzufügen",
@@ -297,13 +389,26 @@ i18n.use(initReactI18next).init({
         adminPanelTotalCredits: "Gesamtkredite",
         adminPanelTopContributors: "Top-Mitwirkende",
         adminPanelTopUser: "Top-Benutzer",
+        adminAddedSuccessfully: "Admin wurde erfolgreich hinzugefügt.",
+        adminNotAdded: "Admin konnte nicht hinzugefügt werden.",
+        adminDeletedSuccessfully: "Admin wurde erfolgreich entfernt.",
+        adminNotDeleted: "Admin konnte nicht entfernt werden.",
+        userDeletedSuccessfully: "Benutzer wurde erfolgreich entfernt.",
+        userNotDeleted: "Benutzer konnte nicht entfernt werden.",
+        ownershipChangedSuccessfully: "Eigentum wurde erfolgreich geändert.",
+        ownershipNotChanged: "Eigentum konnte nicht geändert werden.",
         //Cart
         totalCost: "Gesamtkosten",
         noCartItems: "Dein Warenkorb ist leer. Füge Produkte hinzu, um fortzufahren.",
         cartOf: "Warenkorb von",
         addToCart: "In den Warenkorb legen",
+        purchaseMadeSuccessfully: "Der Kauf wurde erfolgreich abgeschlossen.",
+        purchase: "Kauf",
+        insufficientFunds: "Unzureichende Mittel",
         //PurchaseHistory
         purchaseHistory: "Kaufhistorie von",
+        noPurchases: "Sie haben keine Einkäufe.",
+
         //Settings
         save: "Speichern",
         cancel: "Abbrechen",
@@ -316,6 +421,8 @@ i18n.use(initReactI18next).init({
         themes: "Themen",
         privateData: "Private Daten",
         profileSettings: "Profileinstellungen",
+        informationAlteredSuccessfully: "Informationen wurden erfolgreich geändert.",
+        informationNotAltered: "Informationen wurden nicht geändert.",
         //CreateItem
         nameOfTrack: "Titel des Songs",
         producer: "Produzent",
@@ -328,6 +435,15 @@ i18n.use(initReactI18next).init({
         newAlbumCreator: "Künstler",
         newAlbumDescription: "Beschreibung",
         newAlbumPrice: "Preis",
+        tags: "Tags",
+        provideValidProductName: "Geben Sie einen gültigen Produktnamen an.",
+        provideValidArtist: "Geben Sie einen gültigen Künstlernamen an.",
+        provideValidDescription: "Geben Sie eine gültige Beschreibung an (mindestens 10 Zeichen).",
+        provideValidPrice: "Geben Sie einen gültigen Preis an.",
+        selectOneTag: "Wählen Sie mindestens 1 Tag aus.",
+        someSongTitlesInvalid: "Einige Liedtitel sind ungültig.",
+        someSongProducersInvalid: "Einige der Produzenten der Lieder sind ungültig.",
+
         //Item
         viewDetails: "Details anzeigen",
         albumDetails: "Albumdetails",
@@ -352,8 +468,10 @@ i18n.use(initReactI18next).init({
         studioNameEdit: "Wie möchtest du dein Studio umbenennen?",
         //Studio
         studioDetails: "Studio-Details",
-        studioOwned: "Studio gehört zu",
+        studioOwned: "Im Besitz von",
         otherStudios: "Andere Studios",
+        studioAlbums: "Studioalben",
+        viewProfile: "Profil anzeigen",
         //Studios
         studioDeletionMessage: "Diese Aktion kann nicht rückgängig gemacht werden. Bist du dir zu 100% sicher?",
         confirm: "Bestätigen",
@@ -377,9 +495,14 @@ i18n.use(initReactI18next).init({
         user1Products: "Produkte von Benutzer 1",
         user2Products: "Produkte von Benutzer 2",
         sendTradeoffer: "Tauschangebot senden",
+        //TradeOffer
+        yourInventory: "Dein Inventar",
+        theirInventory: "Ihr Inventar",
+        itemsYouLose: "Dies sind die Gegenstände, die du bei dem Tausch verlierst.",
+        theirItems: "Ihre Gegenstände",
+        itemsYouReceive: "Dies sind die Gegenstände, die du beim Tausch erhältst.",
         //Tradeoffers
         itemsYouGive: "Gegenstände, die du gibst",
-        itemsYouReceive: "Gegenstände, die du bekommst",
         noPendingTradeoffers: "Du hast keine ausstehenden Tauschangebote.",
         historyTradeoffer: "Historie deiner Tauschangebote",
         trader: "Händler",
@@ -393,10 +516,24 @@ i18n.use(initReactI18next).init({
         tradeOffersNoOffer: "Der Benutzer hat keine Tauschangebote.",
         incommingTradeOffer: "hat dir angeboten",
         offeredItem: "für deinen",
+        accepted: "Akzeptiert",
+        declined: "Abgelehnt",
+        canceled: "Storniert",
+        by: "von",
+        for: "für",
+        sItems: "Gegenstände",
         //User
         userDetails: "Benutzerdetails",
         tradeOffer: "Tauschangebot",
-        checkout: "Zur Kasse"
+        checkout: "Zur Kasse",
+        userStudios: "Benutzerstudios",
+        Checkout: "Check out",
+        //BuyKey
+        appActivation: "App-Aktivierung",
+        verify: "Verifizieren",
+        keyPurchase: "Schlüssel kaufen",
+        buyLicenseKey: "Lizenzschlüssel kaufen",
+        clickToCopy: "Klicken, um in die Zwischenablage zu kopieren",
       },
     }
   }

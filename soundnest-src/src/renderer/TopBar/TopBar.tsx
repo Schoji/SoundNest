@@ -1,19 +1,16 @@
-/* eslint-disable jsx-a11y/alt-text */
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import BasicMenu from './Menu';
-import Logo from '../Settings/Logo';
 import SearchBar from './SearchBar';
+import Logo from '../Settings/Logo';
+
+import { backend_address } from '../Components/Global';
+
 import { IconButton } from '@mui/material';
 import AddCardRoundedIcon from '@mui/icons-material/AddCardRounded';
-import { useNavigate } from 'react-router-dom';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
-import { useEffect, useState } from 'react';
-import { backend_address } from '../Components/global';
+
 import { useCustomEventListener } from 'react-custom-events';
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
 
 function TopBar() {
   const navigate = useNavigate()
@@ -33,7 +30,6 @@ function TopBar() {
     updateCredits();
   })
   return (
-    <CacheProvider value={cache}>
     <div className="topbar">
       <div className="topBarContent">
         <div className="iconDiv">
@@ -58,7 +54,6 @@ function TopBar() {
         </div>
       </div>
     </div>
-    </CacheProvider>
   );
 }
 

@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+
 import '../App.css';
 import './Welcome.css'
-import { useNavigate } from 'react-router-dom';
-import { Button } from "@mui/material";
+
 import logo from '../../../assets/icons/icons-dark/128x128.png';
+
+import { Button } from "@mui/material";
 
 export default function WelcomeWindow() {
   const navigate = useNavigate();

@@ -28,6 +28,9 @@ The application is built using the following technologies:
 * React: For creating a dynamic and user-friendly UI.
 * Flask (REST API): Powers the backend, handling authentication, database operations, and data exchanges.
 
+## 📷 Showcase
+
+
 ## 🛠️ Installation
 Prerequisites
 Ensure you have the following installed:
@@ -35,25 +38,35 @@ Ensure you have the following installed:
 * Node.js
 * Python
 
-## Setup
+##⚡ Setup
 1. Clone the repository:
 `git clone https://github.com/Schoji/SoundNest.git`
 
-2. Install frontend dependencies (Electron/React):s
-`cd soundnest-src`
-`npm install`
+2. Install frontend dependencies (Electron/React):
+```
+cd soundnest-src
+npm install
+```
 
 3. Install backend dependencies (Flask):
-`cd ..`
-`cd soundnest-backend`
-`py -m venv .venv`
-`pip install -r requirements.txt`
+```
+cd ..
+cd soundnest-backend
+pip install venv #install virtual environment
+py -m venv .venv
+.venv/Scripts/activate #activate the virtual environment
+pip install -r requirements.txt
+```
 
 4. Run the Flask API:
-`py create_db.py`
-`py api.py`
+```
+py create_db.py #create a dummy database
+py api.py #start backend
+```
 
 5. Start the Electron app:
-`cd ..`
-`cd soundnest-src`
-`npm start`
+```
+cd ..
+cd soundnest-src
+npm start #start frontend
+```

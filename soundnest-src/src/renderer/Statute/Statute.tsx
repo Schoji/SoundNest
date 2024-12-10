@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import './Statute.css';
-import { useEffect, useState } from 'react';
-import { backend_address } from '../Components/global';
-import parse from 'html-react-parser';
+
+import { backend_address } from '../Components/Global';
+
 import { useCustomEventListener } from 'react-custom-events';
+import parse from 'html-react-parser';
+
 export default function Regulamin() {
   const [statute, setStatute] = useState("")
 

@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import TopBar from "../TopBar/TopBar";
 import SideBar from "../SideBar/SideBar";
-import { backend_address } from "../Components/global";
+
 import './AddFunds.css'
-import { Button } from "@mui/material";
+import "../Components/MultiLang"
+
+import { backend_address } from "../Components/Global";
 import george from '../../../assets/fund_george.png'
 import delma from '../../../assets/fund_delma.png'
 import monopoly from '../../../assets/fund_monopoly.png'
@@ -10,17 +14,12 @@ import pig from '../../../assets/fund_pig.png'
 import ratatuj from '../../../assets/fund_ratatuj.png'
 import breaking from '../../../assets/fund_breaking.png'
 import sonic from '../../../assets/fund_sonic.png'
-import { useNavigate } from "react-router-dom";
-import "../Components/MultiLang"
+
+import { Button } from "@mui/material";
+
 import { useTranslation } from "react-i18next";
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
 import { emitCustomEvent } from "react-custom-events";
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
 
 export default function AddFunds() {
   const navigate = useNavigate();
@@ -44,7 +43,6 @@ export default function AddFunds() {
       <div className="main">
         <h1>{t("addFunds")}</h1>
         <div className="fundOptions">
-          <CacheProvider value={cache}>
           <div className="fundOption">
             <div className="fundImage">
               <img src={ratatuj}/>
@@ -87,7 +85,6 @@ export default function AddFunds() {
             </div>
             <Button onClick={() => addFunds(1000)} variant="contained">1000$</Button>
           </div>
-          </CacheProvider>
         </div>
       </div>
     </div>

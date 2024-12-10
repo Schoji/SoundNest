@@ -1,19 +1,24 @@
 import { useEffect, useState } from 'react';
-import '../App.css';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
+import '../App.css';
 import '../Components/MultiLang'
 import './Cart.css';
-import { Avatar, CircularProgress, createTheme, Skeleton, TableContainer, ThemeProvider } from '@mui/material';
+
+import { backend_address } from '../Components/Global';
+import default_album from "../../../assets/album.png"
+
+import { Avatar, createTheme, Skeleton, TableContainer, ThemeProvider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import default_album from "../../../assets/album.png"
+
 import { useTranslation } from 'react-i18next';
-import { backend_address } from '../Components/global';
 import { useCustomEventListener } from 'react-custom-events';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -74,7 +79,6 @@ export default function PurchaseHistory() {
       <div className="main">
         <ThemeProvider theme={materialtheme}>
           <div className="library">
-
               <div className="header">
                   <h1>
                     {t("purchaseHistory")}: {sessionStorage.getItem('name')}{' '}
@@ -102,7 +106,7 @@ export default function PurchaseHistory() {
               </TableContainer>
               </div>
               : dataStatus == "error" ?
-              <p>You have no purchases</p>
+              <p>{t("noPurchases")}</p>
               :
               <TableContainer component={Paper}>
                 <Table>
@@ -118,7 +122,6 @@ export default function PurchaseHistory() {
                 </Table>
               </TableContainer>
               }
-
           </div>
         </ThemeProvider>
       </div>

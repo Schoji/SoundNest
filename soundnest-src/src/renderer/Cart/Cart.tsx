@@ -1,11 +1,16 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import '../App.css';
+import { useNavigate } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
+import '../App.css';
 import './Cart.css';
+import "../Components/MultiLang"
+
+import { backend_address } from '../Components/Global';
+import UpdateUserInfo from '../Components/UpdateUserInfo';
+
 import { Avatar, Box, CircularProgress, createTheme, Snackbar, TableContainer } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -15,14 +20,11 @@ import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
 import { SnackbarCloseReason } from '@mui/material/Snackbar';
-import { useTranslation } from 'react-i18next';
-import "../Components/MultiLang"
-import { backend_address } from '../Components/global';
-import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 import { ThemeProvider } from '@mui/material';
-import UpdateUserInfo from '../Components/UpdateUserInfo';
+
+import { useTranslation } from 'react-i18next';
+import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -97,20 +99,20 @@ export function CustomizedTables() {
 
     const PurchaseButton = (
       <div>
-      <Button variant="contained" color="success" onClick={() => purchase()}>Purchase</Button>
+      <Button variant="contained" color="success" onClick={() => purchase()}>{t("purchase")}</Button>
       <Snackbar
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         message="Note archived"
       >
-        <Alert severity='success'>Purchase was made successfully</Alert>
+        <Alert severity='success'>{t("purchaseMadeSuccessfully")}</Alert>
       </Snackbar>
     </div>
     )
     const purchase = () => {
       if (total_cost > parseInt(sessionStorage.getItem('credits'))) {
-        setError("Transaction error, insufficient funds.")
+        setError(t("insufficientFunds"))
         return
       }
       else {

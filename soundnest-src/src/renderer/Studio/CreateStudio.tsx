@@ -1,26 +1,24 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import TopBar from '../TopBar/TopBar';
+import SideBar from '../SideBar/SideBar';
+
+import '../App.css';
+import './CreateStudio.css';
+import "../Components/MultiLang"
+
+import default_album from '../../../assets/album.png';
+import { backend_address } from '../Components/Global';
+import { validateData } from '../Components/InputValidation';
+
 import Button from '@mui/material/Button';
 import { TextField, IconButton, Alert, createTheme, ThemeProvider } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import { useNavigate } from 'react-router-dom';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import TopBar from '../TopBar/TopBar';
-import SideBar from '../SideBar/SideBar';
-import '../App.css';
-import './CreateStudio.css';
-import default_album from '../../../assets/album.png';
-import { useState } from 'react';
-import "../Components/MultiLang"
-import { useTranslation } from 'react-i18next';
-import { backend_address } from '../Components/global';
-import { validateData } from '../Components/InputValidation';
-import { useCustomEventListener } from 'react-custom-events';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useTranslation } from 'react-i18next';
+import { useCustomEventListener } from 'react-custom-events';
 
 export default function CreateStudio() {
   const navigate = useNavigate();
@@ -106,60 +104,58 @@ export default function CreateStudio() {
             </IconButton>
             <h1>{t("createYourStudio")}</h1>
           </div>
-          <CacheProvider value={cache}>
-            <ThemeProvider theme={materialtheme}>
-            <form onSubmit={AddStudio}  encType="multipart/form-data">
-              <div className="createStudioImage">
-                <p className='smallTitle'>{t("studioImagePreview")}</p>
-                <img src={pic} />
-                <div> </div>
-                <Button
-                  className="uploadPhoto"
-                  component="label"
-                  role={undefined}
-                  variant="contained"
-                  tabIndex={-1}
-                  startIcon={<FileUploadRoundedIcon />}
-                >
-                  {t("uploadPhoto")}
-                  <input type='file' onChange={ChangePicture} style={{display: 'none'}} />
-                </Button>
-              </div>
-              <div className="createStudioInputs">
-                <p className='smallTitle'>{t("studioName")}</p>
-                <TextField id="name"
-                  helperText={nameLength != 0 ? nameLength + "/30" : t("nameLengthNotif")}
-                  label={t("placeholderName")}
-                  onChange={(e) => setNameLength(e.target.value.length)}
-                />
-                <p className='smallTitle'>{t("studioDesc")}</p>
-                <TextField id="desc"
-                  helperText={descLength != 0 ? descLength + "/100" : t("descLengthNotif")}
-                  multiline
-                  minRows={6}
-                  label={t("placeholderDesc")}
-                  onChange={(e) => setDescLength(e.target.value.length)}
-                />
-                {error ?
-                <Alert id="error"
-                  className="error"
-                  variant="filled"
-                  severity="error">
-                    {error}
-                </Alert> : <div> </div>
-                }
-                <p className='smallTitle'>{t("createStudioNotif")}</p>
-                <Button
-                  className="createButton"
-                  type="submit"
-                  disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
-                >
-                  {t("createStudio")}
-                </Button>
-              </div>
-            </form>
-            </ThemeProvider>
-          </CacheProvider>
+          <ThemeProvider theme={materialtheme}>
+          <form onSubmit={AddStudio}  encType="multipart/form-data">
+            <div className="createStudioImage">
+              <p className='smallTitle'>{t("studioImagePreview")}</p>
+              <img src={pic} />
+              <div> </div>
+              <Button
+                className="uploadPhoto"
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<FileUploadRoundedIcon />}
+              >
+                {t("uploadPhoto")}
+                <input type='file' onChange={ChangePicture} style={{display: 'none'}} />
+              </Button>
+            </div>
+            <div className="createStudioInputs">
+              <p className='smallTitle'>{t("studioName")}</p>
+              <TextField id="name"
+                helperText={nameLength != 0 ? nameLength + "/30" : t("nameLengthNotif")}
+                label={t("placeholderName")}
+                onChange={(e) => setNameLength(e.target.value.length)}
+              />
+              <p className='smallTitle'>{t("studioDesc")}</p>
+              <TextField id="desc"
+                helperText={descLength != 0 ? descLength + "/100" : t("descLengthNotif")}
+                multiline
+                minRows={6}
+                label={t("placeholderDesc")}
+                onChange={(e) => setDescLength(e.target.value.length)}
+              />
+              {error ?
+              <Alert id="error"
+                className="error"
+                variant="filled"
+                severity="error">
+                  {error}
+              </Alert> : <div> </div>
+              }
+              <p className='smallTitle'>{t("createStudioNotif")}</p>
+              <Button
+                className="createButton"
+                type="submit"
+                disabled={sessionStorage.getItem("hasKey") == "true" ? false : true}
+              >
+                {t("createStudio")}
+              </Button>
+            </div>
+          </form>
+          </ThemeProvider>
         </div>
       </div>
     </div>

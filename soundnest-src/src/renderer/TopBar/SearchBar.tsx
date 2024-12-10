@@ -1,17 +1,19 @@
-/* eslint-disable camelcase */
-import { useTranslation } from 'react-i18next';
-import createCache from '@emotion/cache';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import './TopBar.css';
+
+import { backend_address } from '../Components/Global';
+import default_album from '../../../assets/album.png';
+
 import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded';
 import AudiotrackRoundedIcon from '@mui/icons-material/AudiotrackRounded';
-import default_album from '../../../assets/album.png';
-import './TopBar.css';
-import { backend_address } from '../Components/global';
-import { createTheme, InputAdornment, TextField, ThemeProvider } from '@mui/material';
-import { useCustomEventListener } from 'react-custom-events';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import { createTheme, InputAdornment, TextField, ThemeProvider } from '@mui/material';
+
+import { useCustomEventListener } from 'react-custom-events';
+import { useTranslation } from 'react-i18next';
 
 export default function SearchBar() {
   const navigate = useNavigate();

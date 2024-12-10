@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useCustomEventListener } from 'react-custom-events';
+
 import logo from '../../../assets/icons/48x48.png';
 import logodark from '../../../assets/icons/icons-dark/48x48.png';
 
@@ -10,9 +13,6 @@ import logo_red_darker from '../../../assets/icons/logo-red-darker.png';
 import logo_yellow_darker from '../../../assets/icons/logo-yellow-darker.png';
 import logo_green_darker from '../../../assets/icons/logo-green-darker.png';
 import logo_pink_darker from '../../../assets/icons/logo-pink-darker.png';
-import { useState } from 'react';
-import { useCustomEventListener } from 'react-custom-events';
-import { backend_address } from '../Components/global';
 
 export default function Logo() {
   let setTheme = sessionStorage.getItem("theme");

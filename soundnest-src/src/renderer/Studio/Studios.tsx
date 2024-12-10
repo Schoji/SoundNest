@@ -1,35 +1,29 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable camelcase */
-/* eslint-disable import/order */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import TopBar from '../TopBar/TopBar';
 import SideBar from '../SideBar/SideBar';
+
 import '../App.css';
 import './Studios.css';
-import React, { useState, useEffect } from 'react';
+import "../Components/MultiLang"
+
 import default_album from '../../../assets/album.png';
+import { backend_address } from '../Components/Global';
+
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import DeleteIcon from '@mui/icons-material/Delete';
-import "../Components/MultiLang"
-import { useTranslation } from 'react-i18next';
-import { backend_address } from '../Components/global';
-import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 import { createTheme, Skeleton, ThemeProvider } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useTranslation } from 'react-i18next';
+import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
 
 export function AlertDialog({ studio_id }) {
   const { t } = useTranslation();
@@ -139,10 +133,9 @@ export default function Studio() {
       <SideBar />
       <div className="main">
         <div className="studios">
-        <CacheProvider value={cache}>
           <h1>{t("myStudios")}</h1>
           <Button onClick={toCreateStudio}>
-            <FontAwesomeIcon icon={faPlus} size="2xl" beat />
+            <AddIcon fontSize='large' />
           </Button>
           {myStudiosData?.length > 0 ?
             <div className="myStudios">
@@ -224,7 +217,6 @@ export default function Studio() {
               )}
             </div>
             }
-          </CacheProvider>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
-import { backend_address } from "./global"
+import { backend_address } from "./Global"
+
 export default function UpdateUserInfo() {
   fetch(backend_address + "/api/user_with_key/" + sessionStorage.getItem("id"))
   .then(response => response.json())

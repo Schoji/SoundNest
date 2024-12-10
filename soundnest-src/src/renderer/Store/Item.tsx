@@ -1,26 +1,23 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
 import TopBar from '.././TopBar/TopBar';
 import SideBar from ".././SideBar/SideBar";
-import React, { useState, useEffect } from "react";
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
+
+import '.././App.css';
+import './Item.css';
+import "../Components/MultiLang"
+
+import { backend_address } from '../Components/Global';
+import default_album from "../../../assets/album.png"
+
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import AlbumRoundedIcon from '@mui/icons-material/AlbumRounded';
-import '.././App.css';
-import default_album from "../../../assets/album.png"
-import { useLocation, useParams } from 'react-router-dom';
-import { Box, Button, Paper, Skeleton, Table, TableCell, TableContainer, TableRow } from '@mui/material';
-import './Item.css';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import "../Components/MultiLang"
-import { backend_address } from '../Components/global';
-import { emitCustomEvent } from 'react-custom-events';
+import { Button, Skeleton } from '@mui/material';
 
-const cache = createCache({
-  key: 'css',
-  prepend: true,
-});
+import { useTranslation } from 'react-i18next';
+import { emitCustomEvent } from 'react-custom-events';
 
 export function OtherItems() {
   const navigate = useNavigate();
@@ -42,7 +39,6 @@ export function OtherItems() {
 
   function changeSite(id) {
     navigate("/item/" + id + "/", { replace: true});
-    //weird behaviour
   }
   return (
     <div className='otherItems'>
@@ -190,7 +186,6 @@ export default function Item() {
       <div className="main">
         {productData && userProducts.length > 0 ?
         <div className="item" id="item">
-          <CacheProvider value={cache}>
             <div className="itemTitle">
               <IconButton
                 onClick={() => {
@@ -215,7 +210,7 @@ export default function Item() {
               <p>{productData.desc}</p>
               <p>
                 {productData.tags != undefined ? JSON.parse((JSON.stringify(productData.tags))).map((tag, index) => {
-                  if (index != JSON.parse((JSON.stringify(productData.tags))).length - 1) return tag + ", " // siedziałem nad tym jebanym, skurwynyśkim gównem przez 30 minut a wystarczyło dać returna, rozpierdole ten program w chuj
+                  if (index != JSON.parse((JSON.stringify(productData.tags))).length - 1) return tag + ", "
                   else return tag
                 }) : null}</p>
               <h3>
@@ -243,7 +238,6 @@ export default function Item() {
               <h1>{t("otherProducts")}</h1>
             </div>
             <OtherItems />
-          </CacheProvider>
         </div>
         :
         <div className="item">
