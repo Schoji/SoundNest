@@ -31,6 +31,7 @@
   align-items: center;
 }
 .myStudio {
+  position: relative;
   background-color: var(--section);
   display: grid;
   grid-template-columns: auto 1fr;
@@ -64,6 +65,21 @@
   width: 100%;
   border-radius: 6px;
   transition: all 0.5s ease;
+}
+.myStudio .deleteButton {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  background: var(--reddish-button);
+  color: var(--font-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px var(--font-color);
+}
+.myStudio .deleteButton:hover {
+  background: var(--reddish-button-hover);
+  box-shadow: 0px 0px 19px -6px var(--font-color);
 }
 h1:last-child, .myStudios, .studios .otherStudios {
   grid-column: 1/3;
