@@ -461,7 +461,40 @@ class getUserInfoToken(Resource):
          }
       except:
          return 404
+class fullyDeleteUser(Resource):
+   def get(self, id_user):
+      user = UserModel.query.filter_by(id = id_user).first()
+      
+      studios = StudioModel.query.filter_by(id_user = id_user).all()
 
+      for studio in studios:
+         products = ProductModel.query.filter_by(id_studio = studio.id).all()
+         for product in products:
+            product_tags = ProductTagsModel.query.filter_by(id_product = product.id).all()
+            for producttags in product_tags:
+               print(producttags)
+               db.session.delete(producttags)
+            print(product)
+            db.session.delete(product)
+         print(studio)
+         db.session.delete(studio)
+      
+      trades = TradeOfferModel.query.filter_by(id_receiver=id_user).all()
+      for trade in trades:
+         print(trade)
+         db.session.delete(trade)
+      trades2 = TradeOfferModel.query.filter_by(id_sender=id_user).all()
+      for trade in trades2:
+         print(trade)
+         db.session.delete(trade)
+      transactions = TransactionModel.query.filter_by(id_user = id_user).all()
+      for transaction in transactions:
+         print(transaction)
+         db.session.delete(transaction)
+
+      print(user)
+      db.session.delete(user)
+      db.session.commit()
 api.add_resource(ValidateToken, "/api/validate_token")
 api.add_resource(Users, "/api/users/")
 api.add_resource(User, "/api/users/<int:id>")
@@ -510,6 +543,7 @@ api.add_resource(changeColour, "/api/change_colour/<int:id_user>/<int:colour>")
 api.add_resource(stats, "/api/stats/")
 api.add_resource(getUserInfoWithKey, "/api/user_with_key/<int:id_user>")
 api.add_resource(getUserInfoToken, "/api/user_with_token/<string:token>")
+api.add_resource(fullyDeleteUser, "/api/fully_delete_user/<int:id_user>")
 
 @app.route("/last_update")
 def last_update():

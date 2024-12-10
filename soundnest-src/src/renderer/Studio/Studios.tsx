@@ -24,7 +24,7 @@ import "../Components/MultiLang"
 import { useTranslation } from 'react-i18next';
 import { backend_address } from '../Components/global';
 import { emitCustomEvent, useCustomEventListener } from 'react-custom-events';
-import { Skeleton } from '@mui/material';
+import { createTheme, Skeleton, ThemeProvider } from '@mui/material';
 
 const cache = createCache({
   key: 'css',
@@ -35,6 +35,15 @@ export function AlertDialog({ studio_id }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
+  useCustomEventListener("changeTheme", (theme) => {
+    setTheme(theme)
+  })
+  let materialtheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   const DeleteStudio = (studio_id) => {
     fetch(`${backend_address}/api/studios/${studio_id}`, {method: "DELETE"})
     .then(response => response.json())
@@ -56,6 +65,7 @@ export function AlertDialog({ studio_id }) {
   };
   return (
     <React.Fragment>
+      <ThemeProvider theme={materialtheme}>
       <IconButton className="deleteButton" onClick={handleClickOpen}>
         <DeleteIcon fontSize="small"></DeleteIcon>
       </IconButton>
@@ -83,6 +93,7 @@ export function AlertDialog({ studio_id }) {
           </Button>
         </DialogActions>
       </Dialog>
+      </ThemeProvider>
     </React.Fragment>
   );
 }

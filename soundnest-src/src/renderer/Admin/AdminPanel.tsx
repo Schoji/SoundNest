@@ -25,6 +25,7 @@ export default function AdminPanel() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [selectedStudio, setSelectedStudio] = useState(1);
   const [response, setResponse] = useState({"status":"", "content":""});
+  const [response1, setResponse1] = useState({"status":"", "content":""});
   const [stats, setStats] = useState({})
   const navigate = useNavigate()
   const getUser = () => {
@@ -110,7 +111,7 @@ export default function AdminPanel() {
   }, []);
 
   const DeleteUser = (user_id) => {
-    fetch(backend_address + "/api/users/" + user_id, {method: "DELETE"})
+    fetch(backend_address + "/api/fully_delete_user/" + user_id)
     .then(response => {
       if (response.ok) {
         setResponse({"status":"success", "content": "User was deleted successfully."})
@@ -165,9 +166,15 @@ export default function AdminPanel() {
 
   const changeOwnership = (event) => {
     event.preventDefault()
-    fetch(backend_address + "/api/change_product_ownership/" + event.target.studio.value + "/" + event.target.product.value + "/")
-    .then(response => response.json())
-    .then(data => console.log(data))
+    fetch(backend_address + "/api/change_product_ownership/" + selectedStudio + "/" + selectedProduct + "/")
+    .then(response => {
+      if (response.ok) {
+        setResponse1({"status":"success", "content": "Ownership was changed successfully"})
+      }
+      else {
+        setResponse1({"status":"error", "content": "Ownership could not be changed."})
+      }
+    })
     .catch(error => console.log(error))
   }
   const [theme, setTheme] = useState(sessionStorage.getItem("theme"))
@@ -317,7 +324,7 @@ export default function AdminPanel() {
                   <p>{t("product")}</p>
                     <Select
                         id="product"
-                        label="Studio"
+                        label="Product"
                         onChange={handleChange}
                         defaultValue={1}
                       >
@@ -337,6 +344,11 @@ export default function AdminPanel() {
                 <div className='successButton'>
                   <Button variant='contained' type='submit'>Save</Button>
                 </div>
+                {response1.status != "" ?
+                <ThemeProvider theme={materialtheme1}>
+                <Alert variant="filled" severity={response1.status}>{response1.content}</Alert>
+                </ThemeProvider>
+                : null}
 
               </form>
               :

@@ -42,10 +42,15 @@ class Transactions(Resource):
     @marshal_with(transactionFields)
     def post(self):
         args = transaction_args.parse_args()
-
         if TransactionModel.query.filter_by(id_user=args["id_user"], id_product=args["id_product"]).first():
             print("Duplicated item found. Ignoring...")
             return "Item already belongs to a user", 201
+        
+        item = ProductModel.query.filter_by(id=args["id_product"]).first()
+        seller_studio = StudioModel.query.filter_by(id = item.id_studio).first()
+        seller = UserModel.query.filter_by(id = seller_studio.id_user).first()
+        seller.credits += item.price
+        print(seller)
         transaction = TransactionModel(id_user=args["id_user"], id_product=args["id_product"])
         
         db.session.add(transaction)
