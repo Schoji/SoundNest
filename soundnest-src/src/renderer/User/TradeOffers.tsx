@@ -93,10 +93,10 @@ export default function Tradeoffers() {
               : null}
               <p>
                 <img src={trade.user.pic != "/" ? `data:image/jpeg;base64,${trade.user.pic}` : default_user} />
-                <span onClick={() => navigate(`/user/${trade.user.id}`)} className='username'>{trade.user.name} {trade.user.surname}</span> offered you ({Date(trade.date).replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/,'$2-$1-$3')}):
+                <span onClick={() => navigate(`/user/${trade.user.id}`)} className='username'>{trade.user.name} {trade.user.surname}</span> {t("incommingTradeOffer")} ({Date(trade.date).replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/,'$2-$1-$3')}):
               </p>
               <p>
-                  <img src={sessionStorage.getItem("avatar_dir") != "/" ? `data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`: default_user}/> for your:
+                  <img src={sessionStorage.getItem("avatar_dir") != "/" ? `data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}`: default_user}/> {t("offeredItem")}:
               </p>
               <div className='itemRows'>
 
@@ -151,15 +151,15 @@ export default function Tradeoffers() {
                 {/* <Button variant='contained' onClick={() => navigate(`/decidetradeoffers/${trade.trade_id}`)}>View</Button> */}
                 {trade.status == "pending" ?
                   <div className='buttons'>
-                    <Button variant='contained' color='success' onClick={() => AcceptTrade(trade.trade_id)}>Accept</Button>
-                    <Button variant='contained' color='error' onClick={() => DeclineTrade(trade.trade_id)}>Decline</Button>
+                    <Button variant='contained' color='success' onClick={() => AcceptTrade(trade.trade_id)}>{t("tradeOfferAccept")}</Button>
+                    <Button variant='contained' color='error' onClick={() => DeclineTrade(trade.trade_id)}>{t("tradeOfferDecline")}</Button>
                   </div>
                 : null}
               </div>
           ))}
         </div>
         ) : userTrades == null ?
-        <p>User has no trades.</p>
+        <p>{t(tradeOffersNoOffer)}</p>
         :
         <div className='tradeList'>
           {[...Array(4)].map((element, index) =>
@@ -198,7 +198,7 @@ export default function Tradeoffers() {
                 <img
                     src={sessionStorage.getItem("avatar_dir") != "/" ? `data:image/jpeg;base64,${sessionStorage.getItem("avatar_dir")}` : default_user}
                 />
-                You offered:
+                {t(tradeOffersUrOffer)}:
               </p>
               <p>
                 <img
